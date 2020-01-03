@@ -10,11 +10,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  def create
-    super
-    user = User.new(configure_sign_up_params)
-    user.save()
-  end
+  # def create
+  #   super
+  # end
 
   # GET /resource/edit
   # def edit
@@ -43,22 +41,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  def configure_sign_up_params
-    edit_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up,
-      keys: [:sap_key, :university_name, :faculty_name, :department_name, :contact_email,
-             :max_choice_student, :max_choice_laboratory, :start_datetime, :end_datetime,
-             :release_flag, :init_setup_flag])
-  end
-
-  # パラメーターを強引に変更
-  # htmlにhiddenとして書くのはセキュリティ的に良くないと感じた
-  def edit_sign_up_params
-    params[:user] = { sap_key: User.generate_sap_key,
-                      university_name: '〇〇大学',
-                      start_datetime:  DateTime.now,
-                      end_datetime:    DateTime.now }
-  end
+  # def configure_sign_up_params
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+  # end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params

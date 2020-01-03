@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :admin do
-    get    'mypage', to: 'user_list/index'
+    get    'mypage', to: 'user_list#index'
     get    'init_setup/first'
     put    'init_setup/first_setup'
     patch  'init_setup/first_setup'
@@ -41,12 +41,12 @@ Rails.application.routes.draw do
     post 'signin',          to: 'devise/sessions#create',       as: :user_session
     delete 'signout',       to: 'devise/sessions#destroy',      as: :destroy_user_session
     get 'signup',           to: 'devise/registrations#new',     as: :new_user_registration
-    post 'signup',          to: 'devise/registrations#create',  as: :user_registration
+    post 'signup',          to: 'devise/registrations#create',    as: :user_registration
     get 'signup/cancel',    to: 'devise/registrations#cancel',  as: :cancel_user_registration
-    get 'user',             to: 'devise/registrations#edit',    as: :edit_user_registration
-    patch 'user',           to: 'devise/registrations#update'
-    put 'user',             to: 'devise/registrations#update',  as: :update_user_registration
-    delete 'user',          to: 'devise/registrations#destroy', as: :destroy_user_registration
+    #get 'mypage/edit',      to: 'devise/registrations#edit',      as: :edit_user_registration
+    #patch 'mypage',         to: 'devise/registrations#update'
+    #put 'mypage',           to: 'devise/registrations#update',    as: :update_user_registration
+    delete 'mypage',        to: 'devise/registrations#destroy', as: :destroy_user_registration
     get 'password',         to: 'devise/passwords#new',         as: :new_user_password
     post 'password',        to: 'devise/passwords#create',      as: :user_password
     get 'password/edit',    to: 'devise/passwords#edit',        as: :edit_user_password
