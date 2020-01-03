@@ -1,0 +1,2 @@
+module Sap::LaboratoryHelper
+end

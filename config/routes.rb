@@ -1,4 +1,39 @@
 Rails.application.routes.draw do
+  root 'home#index'
+
+  namespace :admin do
+    get    'mypage', to: 'user_list/index'
+    get    'init_setup/first'
+    put    'init_setup/first_setup'
+    patch  'init_setup/first_setup'
+    get    'init_setup/second'
+    post   'init_setup/second_setup'
+    get    'csv_import/new'
+    post   'csv_import/create'
+    get    'download/laboratory'
+    get    'download/student'
+    get    'config/edit'
+    put    'config/update'
+    patch  'config/update'
+    delete 'init/all'
+    delete 'init/laboratory'
+    delete 'init/student'
+    resources :laboratories, only: [:new, :create, :edit, :update, :destroy]
+    resources :students,     only: [:new, :create, :edit, :udpate, :destroy]
+  end
+
+  # sap
+  namespace :sap do
+    get    'signin', to: 'sessions#new'
+    post   'signin', to: 'sessions#create'
+    delete 'signout', to: 'sessions#destroy'
+    get 'laboratory/index'
+    get 'laboratory/choice'
+    get 'student/index'
+    get 'student/choice'
+    get 'assign_list/index'
+  end
+
   devise_for :users, skip: :all
 
   devise_scope :user do
@@ -21,10 +56,5 @@ Rails.application.routes.draw do
     get 'confirmation',     to: 'devise/confirmations#show',    as: :user_confirmation
     post 'confirmation',    to: 'devise/confirmations#create'
   end
-  resources :users
-
-  root 'home#index'
-
-  # sap
-  
+  resources :users  
 end

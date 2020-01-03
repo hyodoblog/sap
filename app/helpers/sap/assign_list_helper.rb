@@ -1,0 +1,2 @@
+module Sap::AssignListHelper
+end

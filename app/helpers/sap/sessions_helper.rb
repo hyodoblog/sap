@@ -1,0 +1,2 @@
+module Sap::SessionsHelper
+end
