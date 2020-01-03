@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
   end
 
   create_table "configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
     t.string "sap_key", null: false
     t.string "university_name", null: false
     t.string "faculty_name", null: false
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.boolean "init_setup_flag", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_configs_on_user_id"
   end
 
   create_table "laboratories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -105,6 +107,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
 
   add_foreign_key "assign_lists", "laboratories"
   add_foreign_key "assign_lists", "students"
+  add_foreign_key "configs", "users"
   add_foreign_key "laboratories", "users"
   add_foreign_key "laboratory_choices", "laboratories"
   add_foreign_key "laboratory_choices", "students"

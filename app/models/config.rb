@@ -31,7 +31,7 @@ class Config < ApplicationRecord
     presence: true
   validates :end_datetime,
     presence: true
-  validates :view_datetime,
+  validates :view_end_datetime,
     presence: true
 
   def self.generate_sap_key

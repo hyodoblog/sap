@@ -1,7 +1,7 @@
 ja:
   activerecord:
     attributes:
-      user:
+      config:
         sap_key: SAPキー
         university_name: 大学名
         faculty_name: 学部名

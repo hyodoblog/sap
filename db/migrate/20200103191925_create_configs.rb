@@ -1,6 +1,7 @@
 class CreateConfigs < ActiveRecord::Migration[5.2]
   def change
     create_table :configs do |t|
+      t.references :user, foreign_key: true
       t.string   :sap_key,               null: false
       t.string   :university_name,       null: false
       t.string   :faculty_name,          null: false

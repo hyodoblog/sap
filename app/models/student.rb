@@ -23,4 +23,26 @@ class Student < ApplicationRecord
   validates :student_num,
     presence: true,
     length: { maximum: 30 }
+
+  def self.csv_import(csv_file, user_id)
+    CSV.foreach(csv_file.path, headers: true) do |row|
+      student = Student.new(student_params(row, user_id))
+      unless student.save
+        return false, student.errors.full_messages
+      end
+    end
+    return true, nil
+  end
+
+  private
+  
+  def self.student_params(row, user_id)
+    student_num = row[0].to_s
+    name        = row[1].to_s
+    loginid     = row[2].to_s
+    password    = row[3].to_s
+    student_params = { 'user_id' => user_id, 'loginid' => loginid, 'password' => password,
+                       'password_confirmation' => password_confirmation, 'name' => name,
+                       'student_num' => student_num }
+  end
 end

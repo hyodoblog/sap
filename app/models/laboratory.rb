@@ -30,4 +30,27 @@ class Laboratory < ApplicationRecord
       greater_than_or_equal_to: 0
       # greater_than: 0
     }
+
+  def self.csv_import(csv_file, user_id)
+    CSV.foreach(csv_file.path, headers: true) do |row|
+      laboratory = Laboratory.new(laboratory_params(row, user_id))
+      unless laboratory.save
+        return false, laboratory.errors.full_messages
+      end
+    end
+    return true, nil
+  end
+
+  private
+
+  def self.laboratory_params(row, user_id)
+    laboratory_name = row[0].to_s
+    name            = row[1].to_s
+    max_num         = row[2].to_i
+    loginid         = row[3].to_s
+    password        = row[4].to_s
+    laboratory_params = { 'user_id' => user_id, 'loginid' => loginid, 'password' => password,
+                          'password_confirmation' => password, 'name' => name,
+                          'laboratory_name' => laboratory_name, 'max_num' => max_num }
+  end
 end
