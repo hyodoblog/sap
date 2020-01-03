@@ -1,0 +1,18 @@
+nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-dark.bg-dark
+	= link_to 'SAP', root_path, class: 'navbar-brand'
+	button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+		span.navbar-toggler-icon
+
+	.collapse.navbar-collapse#navbarSupportedContent
+		ul.navbar-nav.ml-auto
+			- if user_signed_in?
+				li.nav-item.dropdown
+					= header_link_dropdown("管理者画面", [])
+					
+				li.nav-item
+					= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' }
+			- else
+				li.nav-item
+					= header_link_item("ログイン", new_user_session_path)
+				li.nav-item
+					= header_link_item("新規登録", new_user_registration_path)

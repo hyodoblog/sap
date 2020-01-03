@@ -25,7 +25,8 @@ ActiveRecord::Schema.define(version: 2020_01_03_024124) do
   create_table "laboratories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.string "loginid", null: false
-    t.string "password", null: false
+    t.string "password_digest", null: false
+    t.string "name", null: false
     t.string "laboratory_name", null: false
     t.integer "max_num"
     t.datetime "created_at", null: false
@@ -56,7 +57,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_024124) do
   create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.string "loginid", null: false
-    t.string "password", null: false
+    t.string "password_digest", null: false
     t.string "name", null: false
     t.string "student_num", null: false
     t.datetime "created_at", null: false

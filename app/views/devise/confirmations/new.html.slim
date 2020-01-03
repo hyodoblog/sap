@@ -1,0 +1,15 @@
+.row.sign-in-up-form
+  .col-lg-6.offset-lg-3
+    = render "devise/shared/error_messages", resource: resource
+    = form_with model: resource, url: confirmation_path, class: 'card', local: true do |f|
+      .card-header 本人確認メール再送
+      main.card-body
+        .form-group.row
+          = f.label :email, "メールアドレス", class: "col-lg-4 control-label"
+          .col-lg-8
+            = f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email",
+                                    value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
+        .form-group.row
+          .col-lg-9.offset-lg-3
+            .float-right
+              = f.submit value: "再送", class: "btn btn-primary", data: { disable_with: "送信中..." }

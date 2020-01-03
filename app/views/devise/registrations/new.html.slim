@@ -1,0 +1,25 @@
+.row.sign-in-up-form
+  .col-lg-6.offset-lg-3
+    = render "devise/shared/error_messages", locals: { resource: resource }
+    = form_with model: @user, url: new_user_registration_path, class: 'card', local: true do |f|
+      .card-header 新規登録
+      main.card-body
+        .form-group.row
+          = f.label :email, "メールアドレス", class: "col-lg-4 control-label"
+          .col-lg-8
+            = f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email"
+        .form-group.row
+          = f.label :password, "パスワード", class: "col-lg-4 control-label"
+          .col-lg-8
+            = f.password_field :password, class: "form-control", autocomplete: "new-password"
+            - if @minimum_password_length
+              em.small = "最低 #{@minimum_password_length} 文字以上"
+        .form-group.row
+          = f.label :password_confirmation, "パスワード再入力", class: "col-lg-4 control-label"
+          .col-lg-8
+            = f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password"
+
+        .form-group.row
+          .col-lg-9.offset-lg-3
+            .float-right
+              = f.submit value: "登録", class: "btn btn-success", data: { disable_with: "送信中..." }

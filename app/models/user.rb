@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_one :laboratory, dependent: :destroy
   accepts_nested_attributes_for :student, :laboratory
 
+  validates :sap_key,
+    presence: true
   validates :university_name,
     presence: true,
     length: { maximum: 30 }
@@ -37,4 +39,11 @@ class User < ApplicationRecord
     presence: true
   validates :end_datetime,
     presence: true
+
+  def self.generate_sap_key
+    begin
+      sap_key = SecureRandom.hex
+    end while self.exists?(sap_key: sap_key)
+    return sap_key
+  end
 end

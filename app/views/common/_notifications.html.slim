@@ -1,0 +1,6 @@
+- flash.each do |key, value|
+  - case key
+  - when "notice" then
+    = content_tag(:div, value, class: "text-center bg-primary text-white mb-0")
+  - when "alert" then
+    = content_tag(:div, value, class: "text-center bg-danger text-white mb-0")

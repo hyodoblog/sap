@@ -1,0 +1,80 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+
+@import "bootstrap";
+@import "font-awesome";
+@import "tempusdominus-bootstrap-4.css";
+
+body {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+$xl: 1200px;
+$lg: 992px;
+$md: 768px;
+$sm: 576px;
+
+@mixin xl {
+  @media (min-width: ($xl)) {
+    @content;
+  }
+}
+@mixin lg {
+  @media (min-width: ($lg)) {
+    @content;
+  }
+}
+@mixin md {
+  @media (min-width: ($md)) {
+    @content;
+  }
+}
+@mixin sm {
+  @media (min-width: ($sm)) {
+    @content;
+  }
+}
+
+// devise page
+.sign-in-up-form {
+  margin-top: 60px;
+  @include sm {
+    margin-top: 80px;
+  }
+  @include md {
+    margin-top: 100px;
+  }
+  @include lg {
+    margin-top: 150px;
+  }
+  @include xl {
+    margin-top: 180px;
+  }
+}
+
+// init setting page
+.init-setting-form {
+  @include sm {
+    margin-top: 20px;
+  }
+  @include md {
+    margin-top: 35px;
+  }
+  @include lg {
+    margin-top: 50px;
+  }
+  @include xl {
+    margin-top: 70px;
+  }
+}

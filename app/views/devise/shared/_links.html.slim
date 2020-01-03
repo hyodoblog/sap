@@ -1,0 +1,6 @@
+- if controller_name != 'sessions'
+  = link_to "ログイン", new_session_path(resource_name), class: 'd-block mb-1'
+- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+  = link_to "パスワードを忘れた場合", new_password_path(resource_name), class: 'd-block mb-1'
+- if devise_mapping.confirmable? && controller_name != 'confirmations'
+  = link_to "確認用のメールが届かない場合", new_confirmation_path(resource_name), class: 'd-block mb-1'

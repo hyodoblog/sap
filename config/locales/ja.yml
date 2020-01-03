@@ -1,0 +1,25 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        university_name: 大学名
+        faculty_name: 学部名
+        department_name: 学科名
+        contact_email: 連絡先メール
+        max_choice_student: 最大学生希望人数
+        max_choice_labratory: 最大研究室希望数
+        start_datetime: 希望提出開始日
+        end_datetime: 希望提出終了日
+        release_flag: リリースフラグ
+        init_setup_flag: 初期設定フラグ
+      student:
+        loginid: ログインID
+        password: パスワード
+        name: 名前
+        student_num: 学籍番号
+      laboratory:
+        loginid: ログインID
+        password: パスワード
+        name: 名前
+        laboratory_name: 研究室名
+        max_num: 最大配属人数

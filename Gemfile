@@ -12,7 +12,9 @@ gem 'rails', '5.2.4'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'puma', '~> 3.11'
+gem 'dotenv-rails'
 
+gem 'bcrypt'
 gem 'devise'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
@@ -41,6 +43,7 @@ group :development, :test do
   gem 'faker'
   gem 'html2slim'
   gem 'rspec-rails'
+  gem 'spring-commands-rspec'
 end
 
 group :development do
