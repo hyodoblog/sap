@@ -60,9 +60,9 @@
           td = laboratory.max_num
           td = laboratory.loginid
           - unless @config.release_flag
-            td = link_to '編集', '/admin/laboratories/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark'
+            td = link_to '編集', '/admin/laboratory/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark'
             td = link_to '削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
-                         'data-url' => '/admin/laboratories/'+laboratory.id.to_s, 'data-text' => '「'+laboratory.laboratory_name+'」を削除します。',
+                         'data-url' => '/admin/laboratory/'+laboratory.id.to_s, 'data-text' => '「'+laboratory.laboratory_name+'」を削除します。',
                          'data-target' => '#delete-user-modal'
 
   hr class='my-5' style='border-width:4px'
@@ -93,9 +93,9 @@
           td = student.name
           td = student.loginid
           - unless @config.release_flag
-            td = link_to '編集', '/admin/students/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark'
+            td = link_to '編集', '/admin/student/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark'
             td = link_to '削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
-                        'data-url' => '/admin/students/'+student.id.to_s+'/edit', 'data-text' => '「'+student.name+'」を削除します。',
+                        'data-url' => '/admin/student/'+student.id.to_s, 'data-text' => '「'+student.name+'」を削除します。',
                         'data-target' => '#delete-user-modal'
 
 - if @config && !@config.release_flag

@@ -34,6 +34,7 @@ class Admin::CsvImportController < Admin::ApplicationController
         redirect_back fallback_location: root_path and return
       end
     end
+    flash[:notices] = flash_notice_messages
     redirect_to admin_init_setup_second_skip_path
   end
 

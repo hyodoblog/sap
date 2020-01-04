@@ -20,8 +20,8 @@ Rails.application.routes.draw do
     delete 'init/all'
     delete 'init/laboratory'
     delete 'init/student'
-    resources :laboratories, only: [:new, :create, :edit, :update, :destroy]
-    resources :students,     only: [:new, :create, :edit, :udpate, :destroy]
+    resources :laboratory, only: [:new, :create, :edit, :update, :destroy]
+    resources :student,    only: [:new, :create, :edit, :update, :destroy]
   end
 
   # sap

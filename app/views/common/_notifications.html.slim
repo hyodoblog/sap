@@ -5,6 +5,6 @@
   - when 'notices' then
     .bg-primary.mb-0
       - value.each do |v|
-        p.text-center.text-white.m-0 v
+        p.text-center.text-white.m-0 = v
   - when "alert" then
     = content_tag(:div, value, class: "text-center bg-danger text-white mb-0")

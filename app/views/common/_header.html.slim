@@ -8,6 +8,8 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-dark.bg-dark
 			- if user_signed_in?
 				li.nav-item.dropdown
 					= header_link_dropdown("管理者画面", [])
+				li.nav-item
+					= link_to '管理者画面', admin_mypage_path, class: 'nav-link'
 					
 				li.nav-item
 					= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' }
