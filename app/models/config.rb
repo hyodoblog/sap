@@ -7,10 +7,13 @@ class Config < ApplicationRecord
     presence: true,
     length: { maximum: 30 }
   validates :faculty_name,
+    allow_blank: true,
     length: { maximum: 30 }
   validates :department_name,
+    allow_blank: true,
     length: { maximum: 30 }
   validates :contact_email,
+    allow_blank: true,
     format: {
       with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
       message: 'はメールアドレスのフォーマットで入力してください'

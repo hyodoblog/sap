@@ -26,9 +26,13 @@ class Student < ApplicationRecord
 
   def self.csv_import(csv_file, user_id)
     CSV.foreach(csv_file.path, headers: true) do |row|
-      student = Student.new(student_params(row, user_id))
-      unless student.save
-        return false, student.errors.full_messages
+      if row.length == 4
+        student = Student.new(student_params(row, user_id))
+        unless student.save
+          return false, student.errors.full_messages
+        end
+      else
+        return false, ['カラム数が一致していません', '学生は4カラムです']
       end
     end
     return true, nil
@@ -42,7 +46,7 @@ class Student < ApplicationRecord
     loginid     = row[2].to_s
     password    = row[3].to_s
     student_params = { 'user_id' => user_id, 'loginid' => loginid, 'password' => password,
-                       'password_confirmation' => password_confirmation, 'name' => name,
+                       'password_confirmation' => password, 'name' => name,
                        'student_num' => student_num }
   end
 end

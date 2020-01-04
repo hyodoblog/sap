@@ -1,0 +1,140 @@
+.jumbotron.mt-5
+  // 初回ログイン時のみ
+  - if  !@config
+    h1.display-5 はじめまして
+    p.lead システムを使用するには以下の2ステップが必要です。
+    hr.my-3
+    ul
+      li.mt-1 Step 1：大学名や稼働期間などの初期設定
+      li.mt-1 Step 2：学生と研究室のデータを追加
+    hr.my-3
+    p.lead 早速ですが初期設定をしましょう！。
+    = link_to '初期設定開始', admin_init_setup_first_path, class: 'btn btn-primary', role: 'button'
+  - else
+    - if @config.release_flag
+      h1.display-5 配属一覧
+      p.lead 現在の配属状況が確認できます。
+    - else
+      h1.display-5 ユーザー管理画面
+      p.lead 学生と研究室の管理を行って下さい！
+      hr.my-3
+      p.lead システムを稼働すると編集ができなくなります。
+      p.lead 稼働開始は設定画面から行えます。
+
+- if @config
+  .d-flex.align-items-center.justify-content-between.mt-3
+    h2 ユーザー一覧
+    - unless @config.release_flag
+      div
+        = link_to 'csvインポート', admin_csv_import_new_path, class: 'btn btn-success btn-sm mr-2'
+        = link_to '全削除', '#', class: 'btn btn-danger btn-sm delete-btn', 'data-toggle' => 'modal',
+                  'data-url' => admin_init_all_path, 'data-text' => '全学生・研究室を削除します。',
+                  'data-target' => '#delete-user-modal'
+  
+  hr.my-4 style='border-width:4px'
+
+  .d-flex.align-items-center.justify-content-between.mt-5.mb-3
+    h3 研究室一覧
+    - unless @config.release_flag
+      div
+        = link_to '研究室を追加', new_admin_laboratory_path, class: 'btn btn-success mr-2 btn-sm'
+        = link_to '全研究室削除', '#', class: 'btn btn-danger delete-btn btn-sm', 'data-toggle' => 'modal',
+                  'data-url' => admin_init_laboratory_path, 'data-text' => '全研究室を削除します。',
+                  'data-target' => '#delete-user-modal'
+
+  table.table.table-hover
+    thead.thead-dark
+      tr
+        th 研究室名
+        th 名前
+        th 最大配属人数
+        th ログインID
+        - unless @config.release_flag
+          th
+          th
+    tbody
+      - @laboratories.each do |laboratory|
+        tr
+          td = laboratory.laboratory_name
+          td = laboratory.name
+          td = laboratory.max_num
+          td = laboratory.loginid
+          - unless @config.release_flag
+            td = link_to '編集', '/admin/laboratories/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark'
+            td = link_to '削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
+                         'data-url' => '/admin/laboratories/'+laboratory.id.to_s, 'data-text' => '「'+laboratory.laboratory_name+'」を削除します。',
+                         'data-target' => '#delete-user-modal'
+
+  hr class='my-5' style='border-width:4px'
+
+  .d-flex.align-items-center.justify-content-between.mt-5.mb-3
+    h3 学生一覧
+    - unless @config.release_flag
+      div
+        = link_to '学生を追加', new_admin_student_path, class: 'btn btn-success mr-2 btn-sm'
+        = link_to '全学生削除', '#', class: 'btn btn-danger delete-btn btn-sm', 'data-toggle' => 'modal',
+                   'data-url' => admin_init_student_path, 'data-text' => '全学生を削除します。',
+                   'data-target' => '#delete-user-modal'
+
+  table.table.table-hover
+    thead.thead-dark
+      tr
+        th 学籍番号
+        th 名前
+        th ログインID
+        - unless @config.release_flag
+          th
+          th
+
+    tbody
+      - @students.each do |student|
+        tr
+          td = student.student_num
+          td = student.name
+          td = student.loginid
+          - unless @config.release_flag
+            td = link_to '編集', '/admin/students/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark'
+            td = link_to '削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
+                        'data-url' => '/admin/students/'+student.id.to_s+'/edit', 'data-text' => '「'+student.name+'」を削除します。',
+                        'data-target' => '#delete-user-modal'
+
+- if @config && !@config.release_flag
+  <!-- Modal -->
+  .modal.fade#delete-user-modal tabindex='-1' role='dialog' aria-hidden='true'
+    .modal-dialog role='document'
+      .modal-content
+        .modal-header
+          h5.modal-title#exampleModalLabel ユーザー削除確認
+          button.close type='button' data-dismiss='modal' aria-label='Close'
+            span aria-hidden='true' &times;
+        .modal-body
+          p#delete-user-modal-body-text
+          h5.text-danger 本当に削除しますか？
+        .modal-footer
+          button.btn.btn-secondary data-dismiss='modal' Close
+          = link_to '削除', '#', class: 'btn btn-danger', id: 'delete-user-modal-btn', method: :delete
+
+// 削除ボダンのモーダル
+// 時々二重定数の定義というエラーがでるため、varで定数を定義
+javascript:
+  var URL_ATTR = 'href';
+  var DELETE_BTN_CLASS = 'delete-btn';
+  var DELETE_MODAL_ATTR = 'data-url';
+  var DELETE_USER_MODAL_ID = 'delete-user-modal';
+  var DELETE_USER_MODAL_BTN_ID = 'delete-user-modal-btn';
+  var DELETE_USER_MODAL_BODY_TEXT_ID = 'delete-user-modal-body-text';
+
+  var delete_btn_class_els = document.getElementsByClassName(DELETE_BTN_CLASS);
+  for(var i = 0;i < delete_btn_class_els.length;i++) {
+    delete_btn_class_els[i].onclick = function (event) {
+      // 属性データ取得
+      var url = event.target.dataset.url;
+      var text = event.target.dataset.text;
+
+      // 属性データセット
+      var delete_modal_btn_el = document.getElementById(DELETE_USER_MODAL_BTN_ID);
+      delete_modal_btn_el.setAttribute(URL_ATTR, url);
+      var delete_modal_body_text_el = document.getElementById(DELETE_USER_MODAL_BODY_TEXT_ID);
+      delete_modal_body_text_el.innerHTML = text;
+    }
+  }

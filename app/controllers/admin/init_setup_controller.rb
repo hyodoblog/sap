@@ -5,22 +5,24 @@ class Admin::InitSetupController < Admin::ApplicationController
     begin
       @config = Config.find(current_user.config.id)
     rescue NoMethodError => exception
-      @config = Config.new()
+      @config = Config.new(flash[:config])
     end
   end
 
   def first_setup
     config = Config.new(config_params)
     if config.save
-      flash[:notice] = "ステップ1完了"
+      flash[:notice] = "ステップ1完了　入力した設定を保存しました"
       redirect_to admin_init_setup_second_path
     else
+      flash[:config] = config
       flash[:error_messages] = config.errors.full_messages
       redirect_back fallback_location: root_path
     end
   end
 
   def first_skip
+    Config.create(config_params_setup)
     redirect_to admin_init_setup_second_path
   end
 
@@ -54,17 +56,18 @@ class Admin::InitSetupController < Admin::ApplicationController
       if csv_import_flag
         flash_notice_messages.push('学生のcsvファイルのインポート成功')
       else
-        laboratories = Laboratory.where(admin_id: current_user.config.id)
+        flash[:notices] = flash_notice_messages
         flash[:error_messages] = ['学生データをもう一度確認下さい'] | error_messages
         redirect_back fallback_location: root_path and return
       end
     end
-    redirect_to admin_mypage_path	
+    redirect_to admin_init_setup_second_skip_path
   end
 
   def second_skip
-    config = Config.find(current_user.config.id)
-    config.update(init_setup_flag: true)
+    config = Config.find_by(user_id: current_user.id)
+    config.update_attributes(init_setup_flag: true)
+    flash[:notice] = "初期設定完了"
     redirect_to admin_mypage_path	
   end
 
@@ -74,7 +77,16 @@ class Admin::InitSetupController < Admin::ApplicationController
     params.require(:config).permit(:user_id, :sap_key, :university_name, :faculty_name, :department_name,
                                    :contact_email, :max_choice_student, :max_choice_laboratory,
                                    :start_datetime, :end_datetime, :view_end_datetime)
-    
+  end
+
+  def config_params_setup
+    now_datetime = DateTime.now
+    params = { 'user_id' => current_user.id, 'sap_key' => Config.generate_sap_key, 'university_name' => '〇〇大学',
+               'faculty_name' => '', 'department_name' => '', 'contact_email' => '',
+               'max_choice_student' => 0, 'max_choice_laboratory' => 0, 'start_datetime' => now_datetime,
+               'end_datetime' => now_datetime, 'view_end_datetime' => now_datetime, 'release_flag' => false,
+               'init_setup_flag' => false }
+    return params
   end
 
   def csv_file_laboratory_params

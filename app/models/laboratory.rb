@@ -33,9 +33,13 @@ class Laboratory < ApplicationRecord
 
   def self.csv_import(csv_file, user_id)
     CSV.foreach(csv_file.path, headers: true) do |row|
-      laboratory = Laboratory.new(laboratory_params(row, user_id))
-      unless laboratory.save
-        return false, laboratory.errors.full_messages
+      if row.length == 5
+        laboratory = Laboratory.new(laboratory_params(row, user_id))
+        unless laboratory.save
+          return false, laboratory.errors.full_messages
+        end
+      else
+        return false, ['カラム数が一致していません', '研究室は5カラムです']
       end
     end
     return true, nil

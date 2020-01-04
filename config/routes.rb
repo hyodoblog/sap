@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :admin do
-    get    'mypage', to: 'user_list#index'
+    get    'mypage', to: 'mypage#index'
     get    'init_setup/first'
     put    'init_setup/first', to: 'init_setup#first_setup'
     patch  'init_setup/first', to: 'init_setup#first_setup'
