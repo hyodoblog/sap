@@ -3,19 +3,19 @@ class Admin::InitController < Admin::ApplicationController
     laboratories_destroy
     students_destroy
     flash[:notice] = '全学生・研究室を削除しました'
-    redirect_to admin_mypage_path
+    redirect_to admin_root_path
   end
 
   def laboratory
     laboratories_destroy
     flash[:notice] = '全研究室を削除しました'
-    redirect_to admin_mypage_path
+    redirect_to admin_root_path
   end
 
   def student
     students_destroy
     flash[:notice] = '全学生を削除しました'
-    redirect_to admin_mypage_path
+    redirect_to admin_root_path
   end
 
   private

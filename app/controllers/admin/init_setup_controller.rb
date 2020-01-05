@@ -68,7 +68,7 @@ class Admin::InitSetupController < Admin::ApplicationController
     config = Config.find_by(user_id: current_user.id)
     config.update_attributes(init_setup_flag: true)
     flash[:notice] = "初期設定完了"
-    redirect_to admin_mypage_path	
+    redirect_to admin_root_path
   end
 
   private
@@ -101,7 +101,7 @@ class Admin::InitSetupController < Admin::ApplicationController
   def check_init_setup_flag
     begin
       if current_user.config.init_setup_flag
-        redirect_to admin_mypage_path
+        redirect_to admin_root_path
       end
     rescue NoMethodError => exception
       # 何もしない

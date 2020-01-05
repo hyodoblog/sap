@@ -29,3 +29,6 @@
 # docker
 /docker/mysql/data
 vendor/bundle/
+
+# env file
+.env

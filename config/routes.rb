@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :admin do
-    get    'mypage', to: 'mypage#index'
+    root   'home#index'
     get    'init_setup/first'
     put    'init_setup/first', to: 'init_setup#first_setup'
     patch  'init_setup/first', to: 'init_setup#first_setup'
@@ -14,12 +14,12 @@ Rails.application.routes.draw do
     post   'csv_import/create'
     get    'download/laboratory'
     get    'download/student'
-    get    'config/edit'
-    put    'config/update'
-    patch  'config/update'
     delete 'init/all'
     delete 'init/laboratory'
     delete 'init/student'
+    get    'config/edit'
+    put    'config', to: 'config#update'
+    patch  'config', to: 'config#update'
     resources :laboratory, only: [:new, :create, :edit, :update, :destroy]
     resources :student,    only: [:new, :create, :edit, :update, :destroy]
   end

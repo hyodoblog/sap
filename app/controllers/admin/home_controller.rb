@@ -1,4 +1,4 @@
-class Admin::MypageController < Admin::ApplicationController
+class Admin::HomeController < Admin::ApplicationController
   def index
     begin
       @config = Config.find(current_user.id)

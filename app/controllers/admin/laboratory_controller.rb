@@ -9,7 +9,7 @@ class Admin::LaboratoryController < ApplicationController
     laboratory = Laboratory.new(laboratory_params)
     if laboratory.save(context: :registration)
       flash[:notice] = laboratory.laboratory_name+'を追加しました'
-      redirect_to admin_mypage_path
+      redirect_to admin_root_path
     else
       flash[:laboratory] = laboratory
       flash[:error_messages] = laboratory.errors.full_messages
@@ -22,7 +22,7 @@ class Admin::LaboratoryController < ApplicationController
 
   def update
     if @laboratory.update(laboratory_params)
-      redirect_to admin_mypage_path
+      redirect_to admin_root_path
     else
       flash[:error_messages] = @laboratory.errors.full_messages
       redirect_back fallback_location: root_path
@@ -32,7 +32,7 @@ class Admin::LaboratoryController < ApplicationController
   def destroy
     @laboratory.destroy
     flash[:notice] = "「#{@laboratory.laboratory_name}」を削除しました"
-    redirect_to admin_mypage_path
+    redirect_to admin_root_path
   end
 
   private

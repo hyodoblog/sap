@@ -1,2 +1,77 @@
-h1 Admin::Config#edit
-p Find me in app/views/admin/config/edit.html.slim
+.row
+  .col-lg-8.offset-lg-2
+    h3.my-4 SAP設定
+    = render 'admin/shared/notifications'
+    = form_with model: @config, url: admin_config_path, class: 'card mb-5', local: true do |f|
+      .card-header 変更する場合は以下より行って下さい
+      main.card-body
+        = f.hidden_field :user_id, value: current_user.id
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :university_name, '大学名'
+            .badge.text-danger *
+          .col-lg-8
+            = f.text_field :university_name, class: 'form-control', autofocus: true, autocomplete: 'university_name'
+        .form-group.row
+          = f.label :faculty_name, '学部名', class: 'col-lg-4 control-label'
+          .col-lg-8
+            = f.text_field :faculty_name, class: 'form-control', autofocus: true, autocomplete: 'faculty_name'
+        .form-group.row
+          = f.label :department_name, '学科名', class: 'col-lg-4 control-label'
+          .col-lg-8
+            = f.text_field :faculty_name, class: 'form-control', autofocus: true, autocomplete: 'department_name'
+        .form-group.row
+          = f.label :contact_email, '連絡先メール', class: 'col-lg-4 control-label'
+          .col-lg-8
+            = f.text_field :contact_email, class: 'form-control', autofocus: true, autocomplete: 'contact_email'
+            e.small 学生または研究室がパスワードを忘れた場合に送信できるメールアドレス
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :max_choice_student, '最大学生希望人数'
+            .badge.text-danger *
+          .col-lg-8
+            = f.number_field :max_choice_student, class: 'form-control', autofocus: true, autocomplete: 'max_choice_student'
+            e.small 研究室が希望できる学生の人数
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :max_choice_laboratory, '最大研究室希望数'
+            .badge.text-danger *
+          .col-lg-8
+            = f.number_field :max_choice_laboratory, class: 'form-control', autofocus: true, autocomplete: 'max_choice_laboratory'
+            e.small 学生が希望できる研究室の数
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :start_datetime, '希望提出開始日'
+            .badge.text-danger *
+          .col-lg-8
+            .input-group
+              = f.text_field :start_datetime, id: 'start_datetime', class: 'form-control datepicker', autocomplete: 'start_datetime', data: { target: '#start_datetime' }
+              .input-group-append data-target='#start_datetime' data-toggle='datetimepicker'
+                .input-group-text
+                  i.fa.fa-calendar
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :end_datetime, '希望提出終了日'
+            .badge.text-danger *
+          .col-lg-8
+            .input-group
+              = f.text_field :end_datetime, id: 'end_datetime', class: 'form-control datepicker', autocomplete: 'end_datetime', data: { target: '#end_datetime' }
+              .input-group-append data-target='#end_datetime' data-toggle='datetimepicker'
+                .input-group-text
+                  i.fa.fa-calendar
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :view_end_datetime, '配属閲覧終了日'
+            .badge.text-danger *
+          .col-lg-8
+            .input-group
+              = f.text_field :view_end_datetime, id: 'view_end_datetime', class: 'form-control datepicker', autocomplete: 'view_end_datetime', data: { target: '#view_end_datetime' }
+              .input-group-append data-target='#view_end_datetime' data-toggle='datetimepicker'
+                .input-group-text
+                  i.fa.fa-calendar
+            e.small 学生が希望できる研究室の数
+
+        .form-group.row
+          .col-lg-9.offset-lg-3
+            .float-right
+              = f.submit value: '編集', class: 'btn btn-success', data: { disable_with: '編集中...' }

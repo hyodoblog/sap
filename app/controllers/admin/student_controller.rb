@@ -9,7 +9,7 @@ class Admin::StudentController < Admin::ApplicationController
     student = Student.new(student_params)
     if student.save(context: :registration)
       flash[:notice] = student.name+'を追加しました'
-      redirect_to admin_mypage_path
+      redirect_to admin_root_path
     else
       flash[:student] = student
       flash[:error_messages] = student.errors.full_messages
@@ -22,7 +22,7 @@ class Admin::StudentController < Admin::ApplicationController
 
   def update
     if @student.update(student_params)
-      redirect_to admin_mypage_path
+      redirect_to admin_root_path
     else
       flash[:error_messages] = @student.errors.full_messages
       redirect_back fallback_location: root_path
@@ -32,7 +32,7 @@ class Admin::StudentController < Admin::ApplicationController
   def destroy
     @student.destroy
     flash[:notice] = "「#{@student.name}」を削除しました"
-    redirect_to admin_mypage_path
+    redirect_to admin_root_path
   end
 
   private
