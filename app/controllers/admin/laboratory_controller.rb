@@ -1,4 +1,4 @@
-class Admin::LaboratoryController < ApplicationController
+class Admin::LaboratoryController < Admin::ApplicationController
   before_action :set_laboratory, only: %i[edit update destroy]
 
   def new

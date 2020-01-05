@@ -20,6 +20,10 @@ Rails.application.routes.draw do
     get    'config/edit'
     put    'config', to: 'config#update'
     patch  'config', to: 'config#update'
+    put    'release/on'
+    patch  'release/on'
+    put    'release/off'
+    patch  'release/off'
     resources :laboratory, only: [:new, :create, :edit, :update, :destroy]
     resources :student,    only: [:new, :create, :edit, :update, :destroy]
   end

@@ -1,4 +1,4 @@
-class Admin::ConfigController < ApplicationController
+class Admin::ConfigController < Admin::ApplicationController
   before_action :set_config
 
   def edit

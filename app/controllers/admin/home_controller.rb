@@ -1,4 +1,6 @@
 class Admin::HomeController < Admin::ApplicationController
+  skip_before_action :check_release_flag!
+  
   def index
     begin
       @config = Config.find(current_user.id)

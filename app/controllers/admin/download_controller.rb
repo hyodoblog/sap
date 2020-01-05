@@ -1,4 +1,4 @@
-class Admin::DownloadController < ApplicationController
+class Admin::DownloadController < Admin::ApplicationController
   def laboratory
     download_file_path = 'public/csv_template/laboratory.csv'
     send_file download_file_path
