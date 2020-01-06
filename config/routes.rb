@@ -33,11 +33,11 @@ Rails.application.routes.draw do
     get    'signin', to: 'sessions#new'
     post   'signin', to: 'sessions#create'
     delete 'signout', to: 'sessions#destroy'
-    get 'laboratory/index'
-    get 'laboratory/choice'
-    get 'student/index'
-    get 'student/choice'
-    get 'assign_list/index'
+    get 'laboratory', to: 'laboratory#index'
+    post 'laboratory', to: 'laboratory#choice'
+    get 'student', to: 'student#index'
+    post 'student', to: 'student#choice'
+    get 'assign_list', to: 'assign_list#index'
   end
 
   devise_for :users, skip: :all

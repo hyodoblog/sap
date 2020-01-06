@@ -1,4 +1,4 @@
-class Sap::AssignListController < ApplicationController
+class Sap::AssignListController < Sap::ApplicationController
   def index
   end
 end

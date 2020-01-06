@@ -13,8 +13,9 @@
   - else
     - if @config.release_flag
       h1.display-5 ユーザー一覧画面
-      p.lead システム稼働中は編集が行なえません。
-      = link_to '稼働を止める', '#', class: 'btn btn-danger pull-right', 'data-toggle' => 'modal', 'data-target' => '#release-modal'
+      p.lead SAP稼働中は編集が行なえません。
+      = link_to '学生と研究室のログインページ', "/sap/signin?sap_key=#{@config.sap_key}", class: 'btn btn-link', target: :_blank
+      = link_to 'SAP稼働を止める', '#', class: 'btn btn-danger pull-right', 'data-toggle' => 'modal', 'data-target' => '#release-modal'
     - else
       h1.display-5 ユーザー管理画面
       p.lead 学生と研究室の管理を行って下さい！
@@ -122,23 +123,24 @@
           = link_to '削除', '#', class: 'btn btn-danger', id: 'delete-user-modal-btn', method: :delete
 
 / Modal
-.modal.fade#release-modal tabindex="-1" role="dialog" aria-hidden="true"
-  .modal-dialog role="document"
-    .modal-content
-      .modal-header
-        h5.modal-title#exampleModalLabel SAPの稼働を止めます
-        button.close type="button" data-dismiss="modal" aria-label="Close"
-          span aria-hidden="true" &times;
-      .modal-body
-        p 注意点
-        p ・学生と研究室がログインと希望提出ができなくなる
-        p ・アルゴリズムが実行され、配属一覧ページが閲覧できる
-        p = "・期限は#{@config.view_end_datetime.to_s(:datetime_jp)}までです。"
-        p  →後から変更できます。
-        h5 class="text-danger" 本当に稼働を止めますか？
-      .modal-footer
-        button.btn.btn-secondary type="button" data-dismiss="modal" Close
-        = link_to '稼働を止める', admin_release_off_path, class: 'btn btn-danger', method: :put
+- if @config
+  .modal.fade#release-modal tabindex="-1" role="dialog" aria-hidden="true"
+    .modal-dialog role="document"
+      .modal-content
+        .modal-header
+          h5.modal-title#exampleModalLabel SAPの稼働を止めます
+          button.close type="button" data-dismiss="modal" aria-label="Close"
+            span aria-hidden="true" &times;
+        .modal-body
+          p 注意点
+          p ・学生と研究室がログインと希望提出ができなくなる
+          p ・アルゴリズムが実行され、配属一覧ページが閲覧できる
+          p = "・期限は#{@config.view_end_datetime.to_s(:datetime_jp)}までです。"
+          p  →後から変更できます。
+          h5 class="text-danger" 本当に稼働を止めますか？
+        .modal-footer
+          button.btn.btn-secondary type="button" data-dismiss="modal" Close
+          = link_to '稼働を止める', admin_release_off_path, class: 'btn btn-danger', method: :put
 
 // 削除ボダンのモーダル
 // 時々二重定数の定義というエラーがでるため、varで定数を定義

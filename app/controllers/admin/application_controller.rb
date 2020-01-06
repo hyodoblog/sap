@@ -10,6 +10,8 @@ class Admin::ApplicationController < ApplicationController
       if @config.release_flag
         redirect_to admin_root_path
       end
+    rescue
+      
     end
   end
 end

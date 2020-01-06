@@ -10,7 +10,7 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-dark.bg-dark
 					= link_to '管理者画面', admin_root_path, class: 'nav-link'
 				- if @config && @config.release_flag
 					li.nav-item
-						= header_link_item('配属一覧', sap_assign_list_index_path)
+						= header_link_item('配属一覧', sap_assign_list_path)
 				- else
 					li.nav-item.dropdown
 						= header_link_dropdown('ユーザー追加', [new_admin_laboratory_path, new_admin_student_path, admin_csv_import_new_path])
@@ -23,7 +23,19 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-dark.bg-dark
 				li.nav-item
 					= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' }
 			- else
-				li.nav-item
-					= header_link_item('ログイン', new_user_session_path)
-				li.nav-item
-					= header_link_item('新規登録', new_user_registration_path)
+				- if session[:sap_key]
+					- if session[:laboratory_id]
+						li.nav-item
+							= header_link_item('希望提出', sap_laboratory_path+"?sap_key="+session[:sap_key])
+					- if session[:student_id]
+						li.nav-item
+							= header_link_item('希望提出', sap_student_path+"?sap_key="+session[:sap_key])
+					li.nav-item
+						= header_link_item('配属一覧', sap_assign_list_path+"?sap_key="+session[:sap_key])
+					li.nav-item
+						= link_to 'ログアウト', sap_signout_path+"?sap_key="+session[:sap_key], method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' }
+				- else
+					li.nav-item
+						= header_link_item('ログイン', new_user_session_path)
+					li.nav-item
+						= header_link_item('新規登録', new_user_registration_path)

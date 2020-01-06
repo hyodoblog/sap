@@ -1,2 +1,21 @@
-h1 Sap::Sessions#new
-p Find me in app/views/sap/sessions/new.html.slim
+.row
+  .col-lg-6.offset-lg-3
+    .text-center.my-5
+      h2.my-2 = @config.university_name
+      h2.my-2 = @config.department_name
+      h2.my-2 = @config.faculty_name
+    = form_with scope: :sap_session, url: sap_signin_path+"?sap_key="+@config.sap_key, class: 'card', local: true do |f|
+      .card-header ログインページ
+      main.card-body
+        .form-group.row
+          = f.label :loginid, "ログインID", class: "col-lg-4 control-label"
+          .col-lg-8
+            = f.text_field :loginid, class: "form-control"
+        .form-group.row
+          = f.label :password, "パスワード", class: "col-lg-4 control-label"
+          .col-lg-8
+            = f.password_field :password, class: "form-control"
+        .form-group.row
+          .col-lg-9.offset-lg-3
+            .float-right
+              = f.submit value: "ログイン", class: "btn btn-primary", data: { disable_with: "送信中..." }

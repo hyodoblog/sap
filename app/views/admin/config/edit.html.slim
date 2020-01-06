@@ -3,8 +3,8 @@
     h3.my-4 
       |
         SAP設定
-      = link_to '稼働開始', '#', class: 'btn btn-danger btn-sm pull-right', 'data-toggle' => 'modal', 'data-target' => '#release-modal'
-    = render 'admin/shared/notifications'
+      = link_to 'SAP稼働開始', '#', class: 'btn btn-danger btn-sm pull-right', 'data-toggle' => 'modal', 'data-target' => '#release-modal'
+    = render 'common/form_notifications'
     = form_with model: @config, url: admin_config_path, class: 'card mb-5', local: true do |f|
       .card-header 変更する場合は以下より行って下さい
       main.card-body
@@ -16,13 +16,13 @@
           .col-lg-8
             = f.text_field :university_name, class: 'form-control', autofocus: true, autocomplete: 'university_name'
         .form-group.row
-          = f.label :faculty_name, '学部名', class: 'col-lg-4 control-label'
+          = f.label :department_name, '学部名', class: 'col-lg-4 control-label'
+          .col-lg-8
+            = f.text_field :department_name, class: 'form-control', autofocus: true, autocomplete: 'department_name'
+        .form-group.row
+          = f.label :faculty_name, '学科名', class: 'col-lg-4 control-label'
           .col-lg-8
             = f.text_field :faculty_name, class: 'form-control', autofocus: true, autocomplete: 'faculty_name'
-        .form-group.row
-          = f.label :department_name, '学科名', class: 'col-lg-4 control-label'
-          .col-lg-8
-            = f.text_field :faculty_name, class: 'form-control', autofocus: true, autocomplete: 'department_name'
         .form-group.row
           = f.label :contact_email, '連絡先メール', class: 'col-lg-4 control-label'
           .col-lg-8

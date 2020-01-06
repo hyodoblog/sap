@@ -1,7 +1,7 @@
 .row
   .col-lg-8.offset-lg-2
     h3.my-4 初期設定
-    = render 'admin/shared/notifications'
+    = render 'common/form_notifications'
     = form_with url: admin_init_setup_second_path, method: 'post', class: 'card', local: true do |f|
       .card-header ステップ 2：学生と研究室の登録<br>（後で変更ができます）
       main.card-body

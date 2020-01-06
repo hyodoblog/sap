@@ -1,7 +1,7 @@
 .row
   .col-lg-8.offset-lg-2
     h3.my-4 研究室編集
-    = render 'admin/shared/notifications'
+    = render 'common/form_notifications'
     = form_with model: @laboratory, url: admin_laboratory_path, class: 'card mb-5', local: true do |f|
       .card-header 以下の情報を入力して下さい
       main.card-body

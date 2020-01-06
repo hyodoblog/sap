@@ -1,2 +1,45 @@
-h1 Sap::Student#index
-p Find me in app/views/sap/student/index.html.slim
+.jumbotron.mt-4
+  h1.display-5 研究室希望提出フォーム
+  p.lead.mt-4 配属を希望する研究室を左の一覧からドラックアンドドロップで右の並べてください！
+  hr.my-4
+  p ・1番上の研究室が第1希望となり、下にいくにつれ順位が下がります。
+  p ・希望のはみ出た分は提出の際に自動で削除されますのでそのままで問題ありません。
+  p ・応募期間中は何回でも提出が可能です。
+  p ・配属一覧の更新は一時間おきに実行されます。
+  p.text-danger ⚠希望が空欄の場合ランダムで配属されますので、できるだけ希望しましょう！
+
+= render 'common/form_notifications'
+
+.row
+  .col-6
+    h4 研究室一覧
+    = form_with scope: :choice_laboratory, local: true do |f|
+      ul#choice_laboratory_left.list-group.overflow-auto.m-2 style="height:30rem"
+        - @laboratories.each do |laboratory|
+          li.list-group-item.choice-list-item style="white-space:nowrap"
+            = "#{laboratory.laboratory_name} - 最大人数：#{laboratory.max_num.to_s}"
+            = f.hidden_field 'items[][laboratory_id]', value: laboratory.id
+  .col-6
+    h4 希望提出フォーム
+    = form_with scope: :choice_laboratory, url: sap_student_path+'?sap_key='+session[:sap_key], class: 'row m-2', local: true do |f|
+      .col-3.p-0
+        ul.list-group
+          - for rank in 1..@config.max_choice_laboratory do
+            li.list-group-item.d-none.d-lg-block = '第'+rank.to_s+'希望'
+            li.list-group-item.d-block.d-lg-none = rank
+      .col-9.p-0
+        ul#choice_laboratory_right.list-group.overflow-auto style="min-height:2rem"
+          - @choice_laboratories.each do |choice_laboratory|
+            li.list-group-item.choice-list-item style="white-space:nowrap"
+              = "#{choice_laboratory.laboratory.laboratory_name} - 最大人数：#{choice_laboratory.laboratory.max_num.to_s}"
+              = f.hidden_field 'items[][laboratory_id]', value: choice_laboratory.laboratory.id
+      = f.submit '希望提出', class: 'btn btn-lg btn-primary btn-block mt-4'
+
+javascript:
+  options = {
+    group: 'shared', // set both lists to same group
+    animation: 150
+  };
+  new Sortable(choice_laboratory_left, options);
+
+  new Sortable(choice_laboratory_right, options);

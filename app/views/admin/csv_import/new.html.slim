@@ -1,7 +1,7 @@
 .row
   .col-lg-8.offset-lg-2
     h3.mt-5.mb-4 CSVインポート
-    = render 'admin/shared/notifications'
+    = render 'common/form_notifications'
     = form_with url: admin_csv_import_create_path, method: 'post', class: 'card', local: true do |f|
       .card-header ユーザーを一括で追加できます
       main.card-body
