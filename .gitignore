@@ -32,3 +32,6 @@ vendor/bundle/
 
 # env file
 .env
+
+# gcloud
+app.yaml

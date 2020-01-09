@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 2020_01_03_191925) do
 
   create_table "assign_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
     t.bigint "laboratory_id"
     t.bigint "student_id"
     t.boolean "confirm", default: false
@@ -20,6 +21,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.datetime "updated_at", null: false
     t.index ["laboratory_id"], name: "index_assign_lists_on_laboratory_id"
     t.index ["student_id"], name: "index_assign_lists_on_student_id"
+    t.index ["user_id"], name: "index_assign_lists_on_user_id"
   end
 
   create_table "configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -107,6 +109,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
 
   add_foreign_key "assign_lists", "laboratories"
   add_foreign_key "assign_lists", "students"
+  add_foreign_key "assign_lists", "users"
   add_foreign_key "configs", "users"
   add_foreign_key "laboratories", "users"
   add_foreign_key "laboratory_choices", "laboratories"

@@ -4,11 +4,13 @@ class Admin::ReleaseController < Admin::ApplicationController
 
   def on
     @config.update_attributes(release_flag: true)
+    flash[:notice] = 'SAPのログインページを発行しました'
     redirect_to admin_root_path
   end
 
   def off
     @config.update_attributes(release_flag: false)
+    flash[:notice] = 'SAPの稼働を止めました'
     redirect_to admin_root_path
   end
 

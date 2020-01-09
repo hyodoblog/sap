@@ -1,2 +1,19 @@
-h1 Sap::AssignList#index
-p Find me in app/views/sap/assign_list/index.html.slim
+h3.my-4 配属一覧
+- if @last_update_time.nil?
+  p 未実行です
+- else
+  p = "最新更新時間：#{@last_update_time.to_s(:datetime_jp)}"
+
+table.table.table-hover
+  thead.thead-dark
+    tr
+      th 研究室名
+      th 学生
+  tbody
+    - @assign_list.each do |laboratory_name, student_array|
+      tr
+        td = laboratory_name
+        td
+          - student_array.each do |student_name|
+            = student_name
+            span.mx-2

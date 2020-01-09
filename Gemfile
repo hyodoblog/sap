@@ -10,9 +10,11 @@ ruby '2.6.5'
 
 gem 'rails', '5.2.4'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'puma', '~> 3.11'
 gem 'dotenv-rails'
+
+gem "mysql2", "~> 0.4.8"
+gem "appengine", "~> 0.4.1"
 
 gem 'bcrypt'
 gem 'devise'

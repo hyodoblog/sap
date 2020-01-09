@@ -1,5 +1,5 @@
 class Sap::ApplicationController < ApplicationController
-  before_action :set_config, :check_sap_key
+  before_action :check_sap_key, :set_config
 
   private
 
@@ -20,7 +20,12 @@ class Sap::ApplicationController < ApplicationController
   end
 
   def set_config
-    admin_id = Config.find_by(sap_key: params[:sap_key])
+    if user_signed_in?
+      sap_key = current_user.config.sap_key
+    else
+      sap_key = params[:sap_key]
+    end
+    admin_id = Config.find_by(sap_key: sap_key)
     @config = Config.find_by(user_id: admin_id)
   end
 end

@@ -44,40 +44,24 @@
             .badge.text-danger *
           .col-lg-8
             .input-group
-              = f.text_field :start_datetime, id: 'start_datetime', class: 'form-control datepicker', autocomplete: 'start_datetime', data: { target: '#start_datetime' }
-              .input-group-append data-target='#start_datetime' data-toggle='datetimepicker'
-                .input-group-text
-                  i.fa.fa-calendar
+              = f.datetime_select :start_datetime, class: 'form-control datepicker', autocomplete: 'start_datetime'
         .form-group.row
           .col-lg-4.control-label
             = f.label :end_datetime, '希望提出終了日'
             .badge.text-danger *
           .col-lg-8
             .input-group
-              = f.text_field :end_datetime, id: 'end_datetime', class: 'form-control datepicker', autocomplete: 'end_datetime', data: { target: '#end_datetime' }
-              .input-group-append data-target='#end_datetime' data-toggle='datetimepicker'
-                .input-group-text
-                  i.fa.fa-calendar
+              = f.datetime_select :end_datetime, class: 'form-control datepicker', autocomplete: 'end_datetime'
         .form-group.row
           .col-lg-4.control-label
             = f.label :view_end_datetime, '配属閲覧終了日'
             .badge.text-danger *
           .col-lg-8
             .input-group
-              = f.text_field :view_end_datetime, id: 'view_end_datetime', class: 'form-control datepicker', autocomplete: 'view_end_datetime', data: { target: '#view_end_datetime' }
-              .input-group-append data-target='#view_end_datetime' data-toggle='datetimepicker'
-                .input-group-text
-                  i.fa.fa-calendar
+              = f.datetime_select :view_end_datetime, class: 'form-control datepicker', autocomplete: 'view_end_datetime'
 
         .form-group.row
           .col-lg-9.offset-lg-3
             .float-right
               = link_to 'スキップ', admin_init_setup_first_skip_path, class: "btn btn-outline-secondary mr-2"
               = f.submit value: '登録してステップ2へ', class: 'btn btn-success', data: { disable_with: 'ステップ1送信中...' }      
-
-javascript:
-  var data = { 'data-format': 'yyyy-MM-dd hh:mm:ss' };
-  $(function () {
-    $('.datepicker').attr(data);
-    $('.datepicker').datetimepicker();
-  });

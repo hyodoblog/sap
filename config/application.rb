@@ -35,5 +35,9 @@ module App
     config.active_record.default_timezone = :local
     config.i18n.default_locale = :ja
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
+
+    # whenever config
+    config.autoload_paths += %W(#{config.root}/lib)
+    config.enable_dependency_loading = true
   end
 end

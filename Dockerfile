@@ -23,3 +23,5 @@ ADD ./Gemfile.lock $APP_ROOT/Gemfile.lock
 RUN bundle install
 
 ADD . $APP_ROOT
+
+CMD /bin/sh -c "rm -f tmp/pids/server.pid && cron && bundle exec rails s -p 8080 -b '0.0.0.0'"

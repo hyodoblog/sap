@@ -8,18 +8,19 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-dark.bg-dark
 			- if user_signed_in?
 				li.nav-item
 					= link_to '管理者画面', admin_root_path, class: 'nav-link'
-				- if @config && @config.release_flag
-					li.nav-item
-						= header_link_item('配属一覧', sap_assign_list_path)
-				- else
-					li.nav-item.dropdown
-						= header_link_dropdown('ユーザー追加', [new_admin_laboratory_path, new_admin_student_path, admin_csv_import_new_path])
-						.dropdown-menu aria-labelledby='navbarDropdown'
-							= link_to '研究室追加', new_admin_laboratory_path, class: 'dropdown-item'
-							= link_to '学生追加', new_admin_student_path, class: 'dropdown-item'
-							= link_to 'csvインポート', admin_csv_import_new_path, class: 'dropdown-item'
-					li.nav-item
-						= header_link_item('設定', admin_config_edit_path)
+				-if @config
+					- if @config.release_flag
+						li.nav-item
+							= header_link_item('配属一覧', sap_assign_list_path)
+					- else
+						li.nav-item.dropdown
+							= header_link_dropdown('ユーザー追加', [new_admin_laboratory_path, new_admin_student_path, admin_csv_import_new_path])
+							.dropdown-menu aria-labelledby='navbarDropdown'
+								= link_to '研究室追加', new_admin_laboratory_path, class: 'dropdown-item'
+								= link_to '学生追加', new_admin_student_path, class: 'dropdown-item'
+								= link_to 'csvインポート', admin_csv_import_new_path, class: 'dropdown-item'
+						li.nav-item
+							= header_link_item('設定', admin_config_edit_path)
 				li.nav-item
 					= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' }
 			- else
