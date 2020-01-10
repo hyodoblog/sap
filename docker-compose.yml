@@ -5,19 +5,22 @@ services:
     volumes:
       - .:/app
       - bundle:/usr/local/bundle
+    command: /bin/sh -c "rm -f tmp/pids/server.pid && cron && bundle exec rails s -p 3000 -b '0.0.0.0'"
     ports:
-      - '8080:8080'
+      - '3000:3000'
     depends_on:
-      - db
+      - mysql
     tty: true
     stdin_open: true
 
-  db:
+  mysql:
     image: mysql:5.7
     volumes:
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./docker/mysql/data:/var/lib/mysql
     environment:
+      MYSQL_DATABASE: app_development
+      MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: password
       TZ: "Asia/Tokyo"
     ports:

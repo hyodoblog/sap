@@ -13,8 +13,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'puma', '~> 3.11'
 gem 'dotenv-rails'
 
-gem "mysql2", "~> 0.4.8"
-gem "appengine", "~> 0.4.1"
+gem "mysql2", "~> 0.5", '< 0.6.0'
 
 gem 'bcrypt'
 gem 'devise'

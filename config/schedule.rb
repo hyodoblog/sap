@@ -20,6 +20,7 @@
 # Learn more: http://github.com/javan/whenever
 
 set :output, 'log/crontab.log'
+ENV.each { |k, v| env(k, v) }
 ENV['RAILS_ENV'] ||= 'development'
 set :environment, ENV['RAILS_ENV']
 

@@ -5,3 +5,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+!/tmp/pids/.keep
+docker/*
+Dockerfile
+docker-compose.yaml
