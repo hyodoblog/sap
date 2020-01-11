@@ -23,3 +23,9 @@ ADD ./Gemfile.lock $APP_ROOT/Gemfile.lock
 RUN bundle install
 
 ADD . $APP_ROOT
+
+COPY start.sh /usr/bin/
+RUN chmod +x /usr/bin/start.sh
+ENTRYPOINT ["start.sh"]
+
+CMD ["bin/start"]
