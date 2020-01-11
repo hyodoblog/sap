@@ -20,12 +20,7 @@ class Sap::ApplicationController < ApplicationController
   end
 
   def set_config
-    if user_signed_in?
-      sap_key = current_user.config.sap_key
-    else
-      sap_key = params[:sap_key]
-    end
-    admin_id = Config.find_by(sap_key: sap_key)
+    admin_id = Config.find_by(sap_key: params[:sap_key]).user_id
     @config = Config.find_by(user_id: admin_id)
   end
 end

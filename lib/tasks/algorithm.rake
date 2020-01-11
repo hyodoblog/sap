@@ -7,7 +7,7 @@ namespace :algorithm do
     users.each do |user|
       
       # SAPが稼働しているかチェック
-      unless user.config.release_flag
+      unless !user.config.nil? && user.config.release_flag
         next
       end
 

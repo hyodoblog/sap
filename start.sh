@@ -5,14 +5,17 @@ if [ -n "$PORT" ]; then
 fi
 
 # migration
-bundle exec db:migrate RAILS_ENV=production
+#bundle exec rails db:migrate RAILS_ENV=production
+bundle exec rails db:migrate
 
 # assets precompile
-bundle exec rake assets:precompile RAILS_ENV=production
+#bundle exec rake assets:precompile RAILS_ENV=production
 
 # Remove a potentially pre-existing server.pid for Rails.
 rm -f tmp/pids/server.pid
 
 bundle exec whenever --update-crontab
 
-bundle exec s -p $RAILS_PORT -b 0.0.0.0
+cron
+
+bundle exec rails s -p $RAILS_PORT -b 0.0.0.0

@@ -93,7 +93,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # devise
-  config.action_mailer.default_url_options = { host: 'student-assignment-program.appspot.com', port: 8080 }
+  config.action_mailer.default_url_options = { host: ENV['HOST'], port: ENV['PORT'] }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

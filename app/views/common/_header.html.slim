@@ -11,7 +11,7 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-dark.bg-dark
 				-if @config
 					- if @config.release_flag
 						li.nav-item
-							= header_link_item('配属一覧', sap_assign_list_path)
+							= header_link_item('配属一覧', sap_assign_list_path+"?sap_key="+@config.sap_key)
 					- else
 						li.nav-item.dropdown
 							= header_link_dropdown('ユーザー追加', [new_admin_laboratory_path, new_admin_student_path, admin_csv_import_new_path])
