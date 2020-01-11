@@ -2,6 +2,7 @@ class Sap::LaboratoryController < Sap::ApplicationController
   before_action :check_laboratory
 
   def index
+    @laboratory = Laboratory.find(session[:laboratory_id])
     @choice_students = LaboratoryChoice.where(laboratory_id: session[:laboratory_id])
     choice_students_id_array = @choice_students.map{|choice| choice.student.id}
     @students = Student.where(user_id: @config.user_id).where.not(id: choice_students_id_array)

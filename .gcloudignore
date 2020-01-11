@@ -7,5 +7,7 @@
 !/tmp/.keep
 !/tmp/pids/.keep
 docker/*
-Dockerfile
-docker-compose.yaml
+docker-compose.yml.developmnet
+docker-compose.yml.production
+Dockerfile.developmnet
+Dockerfile.production

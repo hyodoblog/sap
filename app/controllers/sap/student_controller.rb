@@ -2,6 +2,7 @@ class Sap::StudentController < Sap::ApplicationController
   before_action :check_student
 
   def index
+    @student = Student.find(session[:student_id])
     @choice_laboratories = StudentChoice.where(student_id: session[:student_id])
     choice_laboratories_id_array = @choice_laboratories.map{|choice| choice.laboratory.id}
     @laboratories = Laboratory.where(user_id: @config.user_id).where.not(id: choice_laboratories_id_array)
@@ -52,4 +53,5 @@ class Sap::StudentController < Sap::ApplicationController
       redirect_to root_path
     end
   end
+
 end

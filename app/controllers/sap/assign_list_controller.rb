@@ -1,5 +1,6 @@
 class Sap::AssignListController < Sap::ApplicationController
   skip_before_action :check_sap_key, if: -> { user_signed_in? }
+  skip_before_action :check_view_end_datetime
 
   def index
     laboratories = Laboratory.where(user_id: @config.user_id)

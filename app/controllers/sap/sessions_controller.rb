@@ -1,5 +1,5 @@
 class Sap::SessionsController < Sap::ApplicationController
-  skip_before_action :check_sap_key
+  skip_before_action :check_sap_key, :check_view_end_datetime
 
   def new
   end

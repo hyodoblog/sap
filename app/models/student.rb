@@ -7,7 +7,7 @@ class Student < ApplicationRecord
 
   validates :loginid,
     presence: true,
-    uniqueness: true,
+    uniqueness: { scope: [:user_id]  },
     length: { maximum: 16 },
     format: {
       with: /\A[a-z0-9]+\z/,

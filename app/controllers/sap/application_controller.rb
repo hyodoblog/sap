@@ -1,5 +1,5 @@
 class Sap::ApplicationController < ApplicationController
-  before_action :check_sap_key, :set_config
+  before_action :check_sap_key, :set_config, :check_view_end_datetime
 
   private
 
@@ -22,5 +22,13 @@ class Sap::ApplicationController < ApplicationController
   def set_config
     admin_id = Config.find_by(sap_key: params[:sap_key]).user_id
     @config = Config.find_by(user_id: admin_id)
+  end
+
+  def check_view_end_datetime
+    view_end_datetime = Config.find_by(sap_key: params[:sap_key]).view_end_datetime
+    now_datetime = Time.zone.now
+    if now_datetime >= view_end_datetime
+      redirect_to(sap_assign_list_path+'?sap_key='+params[:sap_key])
+    end
   end
 end
