@@ -1,6 +1,5 @@
 class Sap::AssignListController < Sap::ApplicationController
   skip_before_action :check_sap_key, if: -> { user_signed_in? }
-  skip_before_action :check_view_end_datetime
 
   def index
     laboratories = Laboratory.where(user_id: @config.user_id)
@@ -19,9 +18,13 @@ class Sap::AssignListController < Sap::ApplicationController
       assigns = AssignList.where(laboratory_id: laboratory.id)
       assign_array = []
       assigns.each do |assign|
-        assign_array.push(assign.student.student_num)
+        assign_student_array = []
+        assign_student_array.push(assign.student.student_num)
+        assign_student_array.push(assign.confirm)
+        assign_array.push(assign_student_array)
       end
       @assign_list[laboratory.name] = assign_array
     end
+    logger.debug(@assign_list)
   end
 end

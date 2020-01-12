@@ -5,7 +5,11 @@ class Sap::ApplicationController < ApplicationController
 
   def check_sap_key
     if session[:sap_key]
-      admin_id = Config.find_by(sap_key: session[:sap_key]).user_id
+      begin
+        admin_id = Config.find_by(sap_key: session[:sap_key]).user_id
+      rescue => exception
+        redirect_to(root_path)
+      end
       if session[:laboratory_id]
         user_id = Laboratory.find(session[:laboratory_id]).user_id
       elsif session[:student_id]
@@ -20,15 +24,31 @@ class Sap::ApplicationController < ApplicationController
   end
 
   def set_config
-    admin_id = Config.find_by(sap_key: params[:sap_key]).user_id
-    @config = Config.find_by(user_id: admin_id)
+    begin
+      admin_id = Config.find_by(sap_key: params[:sap_key]).user_id
+      @config = Config.find_by(user_id: admin_id)
+    rescue => exception
+      redirect_to(root_path)
+    end
+  end
+
+  def check_release_flag
+    begin
+      unless Config.find_by(sap_key: params[:sap_key]).release_flag
+        flash[:alert] = 'SAPが稼働していないためアクセスできません'
+        redirect_to(sap_signin_path+'?sap_key='+params[:sap_key])
+      end
+    rescue => exception
+      redirect_to(root_path)
+    end
   end
 
   def check_view_end_datetime
     view_end_datetime = Config.find_by(sap_key: params[:sap_key]).view_end_datetime
     now_datetime = Time.zone.now
     if now_datetime >= view_end_datetime
-      redirect_to(sap_assign_list_path+'?sap_key='+params[:sap_key])
+      flash[:alert] = '閲覧期限が過ぎています'
+      redirect_to(sap_signin_path+'?sap_key='+params[:sap_key])
     end
   end
 end

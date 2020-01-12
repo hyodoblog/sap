@@ -29,32 +29,31 @@ namespace :algorithm do
 
       laboratories = Laboratory.where(user_id: user_id)
       students = Student.where(user_id: user_id)
+      AssignList.where(user_id: user_id).delete_all
 
       # Step 1
       # 全ての学生を未配属にする
       current_assign_list = algorithm_step1(laboratories)
-      puts(current_assign_list)
 
       # Step 2
       # 配属希望を記入した学生の配属処理
-      current_assign_list = algorithm_step2(current_assign_list,
-                                            student_choice_list,
-                                            laboratory_choice_list,
-                                            max_laboratory_num_list)
-      puts(current_assign_list)
-
+      # マッチングが高い学生は確定させる
+      current_assign_list, max_laboratory_num_list = algorithm_step2(current_assign_list,
+                                                                     student_choice_list,
+                                                                     laboratory_choice_list,
+                                                                     max_laboratory_num_list,
+                                                                     user_id)
+            
       # Step 3
       # 配属されていない学生をランダムで配属
       current_assign_list = algorithm_step3(current_assign_list,
                                             max_laboratory_num_list,
                                             students)
-      puts(current_assign_list)
 
       # --- アルゴリズム終了 ----
       # -----------------------
-                                          
+
       # データベースへの反映
-      AssignList.where(user_id: user_id).delete_all
       current_assign_list.each do |laboratory_id, student_array|
         student_array.each do |student_id|
           AssignList.create(user_id: user_id, laboratory_id: laboratory_id, student_id: student_id)
@@ -86,10 +85,10 @@ namespace :algorithm do
   # 研究室が希望した学生の希望リストを整理
   def laboratory_choice_list_make(user_id)
     laboratories = Laboratory.where(user_id: user_id)
-                            .joins(:laboratory_choice)
-                            .includes(:laboratory_choice)
-                            .order('laboratory_choices.laboratory_id')
-                            .order('laboratory_choices.rank')
+                             .joins(:laboratory_choice)
+                             .includes(:laboratory_choice)
+                             .order('laboratory_choices.laboratory_id')
+                             .order('laboratory_choices.rank')
     laboratory_choice_list = {}
     laboratories.each do |laboratory|
       student_array = []
@@ -117,28 +116,55 @@ namespace :algorithm do
     end
   end
 
-  def algorithm_step2(current_assign_list, student_choice_list, lab_choice_list, max_laboratory_num_list)
-    student_choice_list.each do |student_id, choice_lab_array|
-      if current_assign_list.value?(student_id)
+  def algorithm_step2(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list, user_id)
+    student_choice_list.each do |student_id, choice_laboratory_array|
+      # 仮配属されている学生はスキップ
+      if check_assign?(current_assign_list, student_id)
         next
       end
-      choice_lab_array.each do |labratory_id|
-        # 人数制限をチェック
-        if check_lab_limit(current_assign_list, labratory_id, max_laboratory_num_list[labratory_id])
-          current_assign_list[labratory_id].push(student_id)
+
+      choice_laboratory_array.each_with_index do |laboratory_id, index|
+        choice_student_array = laboratory_choice_list[laboratory_id]
+        max_laboratory_num = max_laboratory_num_list[laboratory_id]
+        # 学生が第一希望で選んでいる研究室で研究室とのマッチングが高いかチェック
+        # 高ければ配属を確定させリストからその学生を除く
+        if index === 0 && !choice_student_array.nil? && check_matching?(choice_student_array, max_laboratory_num, student_id)
+          AssignList.create(user_id: user_id, laboratory_id: laboratory_id, student_id: student_id, confirm: true)
+          max_laboratory_num_list[laboratory_id] = max_laboratory_num - 1
           break
+        end
+
+        # 人数制限をチェック
+        # 余裕があればとりあえず配属
+        if check_laboratory_limit?(current_assign_list, laboratory_id, max_laboratory_num)
+          current_assign_list[laboratory_id].push(student_id)
+          break
+        # 研究室が希望する学生の優先順位をチェック
         else
-          # 研究室が希望する生徒の優先順位をチェック
-          choice_student_array = laboratory_choice_list[labratory_id]
-          current_assign_student_array = current_assign_list[labratory_id]
+          current_assign_student_array = current_assign_list[laboratory_id]
           check_flag, swap_student_id = check_student_priority(current_assign_student_array,
-                                                              choice_student_array, student_id)
-          if check_flag
-            current_assign_list[labratory_id].delete(swap_student_id)
-            current_assign_list[labratory_id].push(student_id)
-            student_choice_list[swap_student_id].delete(labratory_id)
+                                                               choice_student_array, student_id)
+          if check_flag # 優先順位が高い学生と一番低い学生を入れ替え、配属を取り消された学生はもう一度アルゴリズムstep２を実施
+            current_assign_list[laboratory_id].delete(swap_student_id)
+            current_assign_list[laboratory_id].push(student_id)
+            student_choice_list[swap_student_id].delete(laboratory_id)
             student_choice_list = { swap_student_id => student_choice_list[swap_student_id] }
-            current_assign_list = algorithm_step2(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list)
+            current_assign_list = algorithm_step2(current_assign_list, student_choice_list,
+                                                  laboratory_choice_list, max_laboratory_num_list)
+            break
+          end
+        end
+      end
+    end
+    return current_assign_list, max_laboratory_num_list
+  end
+
+  def algorithm_step3(current_assign_list, max_laboratory_num_list, students)
+    students.each do |student|
+      unless check_student_exist?(current_assign_list, student.id)
+        current_assign_list.each do |laboratory_id, assign_student_array|
+          if check_laboratory_limit?(current_assign_list, laboratory_id, max_laboratory_num_list[laboratory_id])
+            current_assign_list[laboratory_id].push(student.id)
             break
           end
         end
@@ -147,32 +173,48 @@ namespace :algorithm do
     return current_assign_list
   end
 
-  def algorithm_step3(current_assign_list, max_laboratory_num_list, students)
-    students.each do |student|
-      unless check_student_exist(current_assign_list, student.id)
-        current_assign_list.each do |labratory_id, assign_student_array|
-          if check_lab_limit(current_assign_list, labratory_id, max_laboratory_num_list[labratory_id])
-            current_assign_list[labratory_id].push(student.id)
-            break
-          end
-        end
+  # 仮配属チェック
+  # current_assign_listにstudent_idが含まれているかチェック
+  # 含まれていれば    true
+  # 含まれていなければ false
+  def check_assign?(current_assign_list, student_id)
+    current_assign_list.each do |laboratory_id, student_array|
+      if student_array.include?(student_id)
+        return true
       end
     end
-    return current_assign_list
+    return false
+  end
+
+  # マッチング度合いをチェック
+  # 高ければ true
+  # 低ければ false
+  def check_matching?(choice_student_array, max_laboratory_num, student_id)
+    rank = 1
+    puts(choice_student_array)
+    choice_student_array.each do |choice_student_id|
+      if max_laboratory_num < rank
+        return false
+      elsif choice_student_id === student_id
+        return true
+      end
+      rank += 1
+    end
+    return false
   end
 
   # 研究室の最大配属人数をチェック
   # 超えていなければ true
   # 超えていれば    false
-  def check_lab_limit(current_assign_list, labratory_id, max_lab_num)
-    if max_lab_num.nil? || current_assign_list[labratory_id].length < max_lab_num
+  def check_laboratory_limit?(current_assign_list, laboratory_id, max_laboratory_num)
+    if max_laboratory_num.nil? || current_assign_list[laboratory_id].length < max_laboratory_num
       return true
     else
       return false
     end
   end
 
-  # 研究室が希望している生徒の優先度をチェック
+  # 研究室が希望している学生の優先度をチェック
   # 優先順位が高く入れ替える場合 true
   # 入れ替えない場合           false
   def check_student_priority(current_assign_student_array, choice_student_array, student_id)
@@ -206,8 +248,8 @@ namespace :algorithm do
   # リストの中に学生が存在するかどうかチェック
   # 存在すれば    true
   # 存在しなければ false
-  def check_student_exist(current_assign_list, student_id)
-    current_assign_list.each do |labratory_id, assign_student_array|
+  def check_student_exist?(current_assign_list, student_id)
+    current_assign_list.each do |laboratory_id, assign_student_array|
       assign_student_array.each do |assign_student_id|
         if assign_student_id == student_id
           return true
