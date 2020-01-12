@@ -11,6 +11,17 @@ h2.my-3 学生希望提出
 
 = render 'common/form_notifications'
 
+- if @laboratory_assign_confirm
+  .row.alert.alert-warning#resubmit-warning
+    .col-md-9
+      ul
+        li 現在あなたの研究室へ配属が確定している学生がいます。
+        li 再提出すると学生の確定がリセットさせます。
+        li それでも再提出を希望する場合は「再提出を希望する」ボタンを押して下さい。
+    .col-md-3
+      input.btn.btn-danger.pull-right type="button" value="再提出を希望する" onclick="resubmit()"
+  .alert.alert-info#resubmit-notice １時間ごとにアルゴリズムを実行しているため、提出した後は反映までしばらくお待ち下さい！
+
 .row
   .col-6
     h4 学生一覧
@@ -34,7 +45,7 @@ h2.my-3 学生希望提出
             li.list-group-item.choice-list-item style="white-space:nowrap"
               = "#{choice_student.student.student_num} - #{choice_student.student.name}"
               = f.hidden_field 'items[][student_id]', value: choice_student.student.id
-      = f.submit '希望提出', class: 'btn btn-lg btn-primary btn-block mt-4'
+      = f.submit '希望提出', class: 'btn btn-lg btn-primary btn-block mt-4', id: 'resubmit-btn'
 
 javascript:
   options = {
@@ -44,3 +55,16 @@ javascript:
   new Sortable(choice_student_left, options);
 
   new Sortable(choice_student_right, options);
+
+  window.onload = function() {
+    if (document.getElementById('resubmit-warning') != null) {
+      document.getElementById('resubmit-btn').style.display ="none";
+      document.getElementById('resubmit-notice').style.display ="none";
+    }
+  }
+
+  function resubmit() {
+    document.getElementById('resubmit-btn').style.display ="block";
+    document.getElementById('resubmit-notice').style.display ="block";
+    document.getElementById('resubmit-warning').style.display ="none";
+  }

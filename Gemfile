@@ -34,7 +34,6 @@ gem 'jquery-rails'
 gem 'sassc-rails'
 gem 'slim-rails'
 gem 'sprockets', '~> 4.0'
-gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
