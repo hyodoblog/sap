@@ -4,8 +4,8 @@ class Admin::HomeController < Admin::ApplicationController
   def index
     begin
       @config = Config.find_by(user_id: current_user.id)
-      @laboratories = Laboratory.all()
-      @students = Student.all()
+      @laboratories = Laboratory.where(user_id: current_user.id)
+      @students = Student.where(user_id: current_user.id)
     rescue ActiveRecord::RecordNotFound => exception
       @config = nil
     end

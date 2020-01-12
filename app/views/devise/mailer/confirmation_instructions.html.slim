@@ -1,0 +1,9 @@
+p ようこそSAPへ
+
+p = "はじめまして#{@email}さん"
+
+p このメールは送信専用です。
+
+p 以下のリンクをクリックすることで会員登録が完了します。
+
+= link_to '本人確認を認証する', controller: 'devise/confirmations', action: 'create', confirmation_token: @token %></p>
