@@ -12,12 +12,13 @@
  *
  */
 
-@import "bootstrap";
-@import "font-awesome";
-@import "tempusdominus-bootstrap-4.css";
+@import 'bootstrap';
+@import 'font-awesome';
+@import 'tempusdominus-bootstrap-4.css';
+@import 'animate.min.css';
 
 body {
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 
 $xl: 1200px;
@@ -76,5 +77,124 @@ $sm: 576px;
   }
   @include xl {
     margin-top: 70px;
+  }
+}
+
+// home
+
+#home {
+  img {
+    width: 100%;
+  }
+  h1 {
+    color: #777;
+    font-family: ten-mincho, serif;
+  }
+  h2 {
+    color: #555;
+    font-family: ヒラギノ角ゴ ProN, W3;
+  }
+  h4 {
+    color: #444;
+    font-family: ten-mincho, serif;
+  }
+  p {
+    width: 90%;
+    color: #777;
+    font-family: 	YuMincho, 'Yu Mincho', serif;
+    font-size: 16px;
+    @include sm {
+      font-size: 17px;
+    }
+    @include md {
+      font-size: 18px;
+    }
+    @include lg {
+      font-size: 19px;
+    }
+    @include xl {
+      font-size: 20px;
+    }
+  }
+}
+
+#top {
+  z-index: -1;
+  position: relative;
+  height: 600px;
+  @include md {
+    height: 100vh;
+  }
+  img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+#top * {
+  position: absolute;
+}
+
+#top h1 {
+  width: 100%;
+  text-align: center;
+  top: 520px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  @include sm {
+    top: 540px;
+    font-size: 24px;
+  }
+  @include md {
+    top: 80%;
+    font-size: 32px;
+  }
+  @include lg {
+    font-size: 40px;
+  }
+  @include xl {
+    top: 85%;
+    font-size: 48px;
+  }
+}
+
+#about {
+  .about-img-wrap {
+    margin-bottom: 35px;
+    @include md {
+      margin-bottom: 0px;
+      position: relative;
+    }
+  }
+  img {
+    width: 100%;
+    max-height: 330px;
+    @include md {
+      position: absolute;
+      top: 50%;
+      left:50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+#service {
+  background-color: #FAFAFA;
+  img {
+    width: 150px;
+    height: 150px;
+    @include sm {
+      width: 160px;
+      height: 160px;
+    }
+    @include md {
+      width: 180px;
+      height: 180px;
+    }
+    @include lg {
+      width: 200px;
+      height: 200px;
+    }
   }
 }

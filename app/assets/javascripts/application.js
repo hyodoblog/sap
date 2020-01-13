@@ -19,3 +19,4 @@
 //= require moment/ja.js
 //= require tempusdominus-bootstrap-4.js
 //= require Sortable.min.js
+//= require jquery.waypoints.min.js
