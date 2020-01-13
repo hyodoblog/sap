@@ -22,4 +22,5 @@
         .form-group.row
           .col-lg-9.offset-lg-3
             .float-right
+              = link_to "ログイン", new_user_session_path, class: "btn btn-outline-secondary mr-2"
               = f.submit value: "登録", class: "btn btn-success", data: { disable_with: "送信中..." }

@@ -25,9 +25,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    Laboratory.where(user_id: current_user.id).destroy_all
+    Student.where(user_id: current_user.id).destroy_all
+    Config.where(user_id: current_user.id).destroy_all
+    super
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign

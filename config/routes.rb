@@ -30,14 +30,14 @@ Rails.application.routes.draw do
 
   # sap
   namespace :sap do
-    get    'signin', to: 'sessions#new'
-    post   'signin', to: 'sessions#create'
-    delete 'signout', to: 'sessions#destroy'
-    get 'laboratory', to: 'laboratory#index'
-    post 'laboratory', to: 'laboratory#choice'
-    get 'student', to: 'student#index'
-    post 'student', to: 'student#choice'
-    get 'assign_list', to: 'assign_list#index'
+    get    'signin',      to: 'sessions#new'
+    post   'signin',      to: 'sessions#create'
+    delete 'signout',     to: 'sessions#destroy'
+    get    'laboratory',  to: 'laboratory#index'
+    post   'laboratory',  to: 'laboratory#choice'
+    get    'student',     to: 'student#index'
+    post   'student',     to: 'student#choice'
+    get    'assign_list', to: 'assign_list#index'
   end
 
   devise_for :users, skip: :all
@@ -47,12 +47,12 @@ Rails.application.routes.draw do
     post 'signin',          to: 'devise/sessions#create',       as: :user_session
     delete 'signout',       to: 'devise/sessions#destroy',      as: :destroy_user_session
     get 'signup',           to: 'devise/registrations#new',     as: :new_user_registration
-    post 'signup',          to: 'devise/registrations#create',    as: :user_registration
+    post 'signup',          to: 'devise/registrations#create',  as: :user_registration
     get 'signup/cancel',    to: 'devise/registrations#cancel',  as: :cancel_user_registration
-    #get 'mypage/edit',      to: 'devise/registrations#edit',      as: :edit_user_registration
-    #patch 'mypage',         to: 'devise/registrations#update'
-    #put 'mypage',           to: 'devise/registrations#update',    as: :update_user_registration
-    delete 'mypage',        to: 'devise/registrations#destroy', as: :destroy_user_registration
+    #get 'mypage/edit',     to: 'devise/registrations#edit',    as: :edit_user_registration
+    #patch 'mypage',        to: 'devise/registrations#update'
+    #put 'mypage',          to: 'devise/registrations#update',  as: :update_user_registration
+    delete 'admin',         to: 'users/registrations#destroy', as: :destroy_user_registration
     get 'password',         to: 'devise/passwords#new',         as: :new_user_password
     post 'password',        to: 'devise/passwords#create',      as: :user_password
     get 'password/edit',    to: 'devise/passwords#edit',        as: :edit_user_password

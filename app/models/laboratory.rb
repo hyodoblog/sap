@@ -1,6 +1,6 @@
 class Laboratory < ApplicationRecord
   has_secure_password
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many :student_choice,    dependent: :destroy
   has_many :laboratory_choice, dependent: :destroy
   has_many :assign_list,       dependent: :destroy

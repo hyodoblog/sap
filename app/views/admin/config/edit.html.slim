@@ -3,9 +3,9 @@
     h3.my-4 
       |
         SAP設定
-      = link_to 'SAP稼働開始', '#', class: 'btn btn-danger btn-sm pull-right', 'data-toggle' => 'modal', 'data-target' => '#release-modal'
+      = link_to 'SAP稼働開始', '#', class: 'btn btn-primary btn-sm pull-right', 'data-toggle' => 'modal', 'data-target' => '#release-modal'
     = render 'common/form_notifications'
-    = form_with model: @config, url: admin_config_path, class: 'card mb-5', local: true do |f|
+    = form_with model: @config, url: admin_config_path, class: 'card', local: true do |f|
       .card-header 変更する場合は以下より行って下さい
       main.card-body
         = f.hidden_field :user_id, value: current_user.id
@@ -63,12 +63,14 @@
           .col-lg-8
             .input-group
               = f.datetime_select :view_end_datetime, class: 'form-control datepicker', autocomplete: 'view_end_datetime'
-            e.small 学生が希望できる研究室の数
+            e.small SAP稼働を止めた後でも学生と研究室が配属一覧ページを閲覧できる期限
 
         .form-group.row
           .col-lg-9.offset-lg-3
             .float-right
               = f.submit value: '編集', class: 'btn btn-success', data: { disable_with: '編集中...' }
+    .text-center.my-3 = link_to 'アカウントを削除', '#', class: 'text-danger', 'data-toggle' => 'modal', 'data-target' => '#acound-delete-modal'
+
 
 / Modal
 .modal.fade#release-modal tabindex="-1" role="dialog" aria-hidden="true"
@@ -80,11 +82,25 @@
           span aria-hidden="true" &times;
       .modal-body
         p 設定した稼働期間中の注意点
-        p ・管理者でもユーザーの管理ができない
-        p ・アルゴリズムが実行され、配属一覧ページが閲覧できる
-        p = "・期限は#{@config.view_end_datetime.to_s(:datetime_jp)}までです。"
-        p  →後から変更できます。
+        p ・管理者でもメンバーの管理ができない
+        p ・１時間ごとにアルゴリズムが実行される
+        p ・配属一覧ページが解放される
+        p = "・閲覧期限は#{@config.view_end_datetime.to_s(:datetime_jp)}までです。"
         h5 class="text-danger" 本当に稼働開始しますか？
       .modal-footer
         button.btn.btn-secondary type="button" data-dismiss="modal" Close
-        = link_to '稼働開始', admin_release_on_path, class: 'btn btn-success', method: :put
+        = link_to '稼働開始', admin_release_on_path, class: 'btn btn-primary', method: :put
+
+.modal.fade#acound-delete-modal tabindex="-1" role="dialog" aria-hidden="true"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        h5.modal-title#exampleModalLabel アカウントを削除します
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+      .modal-body
+        p 削除すると全てのデータを復元することができません
+        h5 class="text-danger" 本当に削除しますか？
+      .modal-footer
+        button.btn.btn-secondary type="button" data-dismiss="modal" Close
+        = link_to '削除', destroy_user_registration_path, class: 'btn btn-danger', method: :delete

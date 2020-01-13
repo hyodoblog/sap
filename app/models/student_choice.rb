@@ -1,6 +1,6 @@
 class StudentChoice < ApplicationRecord
-  belongs_to :student
-  belongs_to :laboratory
+  belongs_to :student, optional: true
+  belongs_to :laboratory, optional: true
 
   validates :rank,
     presence: true,

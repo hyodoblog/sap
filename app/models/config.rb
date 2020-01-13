@@ -1,5 +1,5 @@
 class Config < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
 
   validates :sap_key,
     presence: true

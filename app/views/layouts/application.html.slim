@@ -1,5 +1,5 @@
 doctype html
-html
+html.h-100
   head
     meta(name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no")
     title
@@ -8,8 +8,10 @@ html
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-  body
-    = render 'common/header_notifications'
-    = render 'common/header'
-    div class="container" style="padding:0"
-      = yield
+  body.d-flex.flex-column.h-100
+    main.flex-shrink-0
+      = render 'common/header_notifications'
+      = render 'common/header'
+      div class="container" style="padding:0"
+        = yield
+    = render 'common/footer'

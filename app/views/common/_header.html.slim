@@ -1,4 +1,4 @@
-nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-dark.bg-dark
+nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 	= link_to 'SAP', root_path, class: 'navbar-brand'
 	button.navbar-toggler type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'
 		span.navbar-toggler-icon
@@ -6,37 +6,37 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-dark.bg-dark
 	.collapse.navbar-collapse#navbarSupportedContent
 		ul.navbar-nav.ml-auto
 			- if user_signed_in?
-				li.nav-item
-					= link_to '管理者画面', admin_root_path, class: 'nav-link'
-				-if @config
+				- if @config && @config.init_setup_flag
+					li.nav-item
+						= header_link_item('管理者画面', admin_root_path, '')
 					- if @config.release_flag
 						li.nav-item
-							= header_link_item('配属一覧', sap_assign_list_path+"?sap_key="+@config.sap_key)
+							= header_link_item('配属一覧', sap_assign_list_path, "?sap_key="+@config.sap_key)
 					- else
 						li.nav-item.dropdown
-							= header_link_dropdown('ユーザー追加', [new_admin_laboratory_path, new_admin_student_path, admin_csv_import_new_path])
+							= header_link_dropdown('メンバー追加', [new_admin_laboratory_path, new_admin_student_path, admin_csv_import_new_path])
 							.dropdown-menu aria-labelledby='navbarDropdown'
 								= link_to '研究室追加', new_admin_laboratory_path, class: 'dropdown-item'
 								= link_to '学生追加', new_admin_student_path, class: 'dropdown-item'
 								= link_to 'csvインポート', admin_csv_import_new_path, class: 'dropdown-item'
 						li.nav-item
-							= header_link_item('設定', admin_config_edit_path)
+							= header_link_item('設定', admin_config_edit_path, "")
 				li.nav-item
 					= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' }
 			- else
 				- if session[:sap_key]
 					- if session[:laboratory_id]
 						li.nav-item
-							= header_link_item('希望提出', sap_laboratory_path+"?sap_key="+session[:sap_key])
+							= header_link_item('希望提出', sap_laboratory_path, "?sap_key="+session[:sap_key])
 					- if session[:student_id]
 						li.nav-item
-							= header_link_item('希望提出', sap_student_path+"?sap_key="+session[:sap_key])
+							= header_link_item('希望提出', sap_student_path, "?sap_key="+session[:sap_key])
 					li.nav-item
-						= header_link_item('配属一覧', sap_assign_list_path+"?sap_key="+session[:sap_key])
+						= header_link_item('配属一覧', sap_assign_list_path, "?sap_key="+session[:sap_key])
 					li.nav-item
 						= link_to 'ログアウト', sap_signout_path+"?sap_key="+session[:sap_key], method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' }
 				- else
 					li.nav-item
-						= header_link_item('ログイン', new_user_session_path)
+						= header_link_item('ログイン', new_user_session_path, "")
 					li.nav-item
-						= header_link_item('新規登録', new_user_registration_path)
+						= header_link_item('新規登録', new_user_registration_path, "")

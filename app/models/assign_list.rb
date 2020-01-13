@@ -1,5 +1,5 @@
 class AssignList < ApplicationRecord
-  belongs_to :user
-  belongs_to :laboratory
-  belongs_to :student
+  belongs_to :user, optional: true
+  belongs_to :laboratory, optional: true
+  belongs_to :student, optional: true
 end
