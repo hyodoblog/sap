@@ -1,29 +1,5 @@
-.row
-  .col-lg-8.offset-lg-2
-    h3.my-4 研究室編集
-    = render 'common/form_notifications'
-    = form_with model: @laboratory, url: admin_laboratory_path, class: 'card mb-5', local: true do |f|
-      .card-header 以下の情報を入力して下さい
-      main.card-body
-        = f.hidden_field :user_id, value: current_user.id
-        .form-group.row
-          .col-lg-4.control-label
-            = f.label :laboratory_name, '研究室名'
-            .badge.text-danger *
-          .col-lg-8
-            = f.text_field :laboratory_name, class: 'form-control', autofocus: true, autocomplete: 'laboratory_name'
-        .form-group.row
-          .col-lg-4.control-label
-            = f.label :name, '名前'
-            .badge.text-danger *
-          .col-lg-8
-            = f.text_field :name, class: 'form-control', autofocus: true, autocomplete: 'name'
-        .form-group.row
-          = f.label :max_num, '最大配属人数', class: 'col-lg-4 control-label'
-          .col-lg-8
-            = f.number_field :max_num, class: 'form-control', autofocus: true, autocomplete: 'max_num'
-
-        .form-group.row
-          .col-lg-9.offset-lg-3
-            .float-right
-              = f.submit value: '編集', class: 'btn btn-success', data: { disable_with: '編集中...' }      
+= render partial: 'admin/shared/laboratory_form',
+         locals: { title: '研究室編集',
+                   model: @laboratory,
+                   url: admin_laboratory_path,
+                   action_name: 'edit'}
