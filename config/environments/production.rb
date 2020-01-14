@@ -98,7 +98,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :enable_starttls_auto => true,
-    :address => "smtp.gmail.com",
+    :address => "smtp.sendgrid.net",
     :port => 587,
     :domain => 'smtp.gmail.com',
     :user_name => ENV['DEVISE_EMAIL_ADDRESS'],
