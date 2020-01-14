@@ -4,6 +4,8 @@ class Sap::ApplicationController < ApplicationController
   private
 
   def check_sap_key
+    logger.debug(session[:sap_key])
+    logger.debug("fdsfasfs")
     if session[:sap_key]
       begin
         admin_id = Config.find_by(sap_key: session[:sap_key]).user_id
@@ -13,9 +15,11 @@ class Sap::ApplicationController < ApplicationController
       if session[:laboratory_id]
         user_id = Laboratory.find(session[:laboratory_id]).user_id
       elsif session[:student_id]
-         user_id = Student.find(session[:student_id]).user_id
+        user_id = Student.find(session[:student_id]).user_id
       end
-      unless user_id === admin_id
+      logger.debug(user_id)
+      logger.debug(admin_id)
+      unless user_id == admin_id
         redirect_to(sap_signin_path+"?sap_key="+session[:sap_key])
       end
     else
@@ -25,8 +29,7 @@ class Sap::ApplicationController < ApplicationController
 
   def set_config
     begin
-      admin_id = Config.find_by(sap_key: params[:sap_key]).user_id
-      @config = Config.find_by(user_id: admin_id)
+      @config = Config.find_by(sap_key: params[:sap_key])
     rescue => exception
       redirect_to(root_path)
     end

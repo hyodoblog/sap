@@ -125,37 +125,38 @@ $sm: 576px;
   @include md {
     height: 100vh;
   }
+  * {
+    position: absolute;
+  }
+  .overlap {
+    z-index: 10000;
+  }
   img {
     height: 100%;
     object-fit: cover;
   }
-}
-
-#top * {
-  position: absolute;
-}
-
-#top h1 {
-  width: 100%;
-  text-align: center;
-  top: 520px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 24px;
-  @include sm {
-    top: 540px;
+  h1 {
+    width: 100%;
+    text-align: center;
+    top: 520px;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 24px;
-  }
-  @include md {
-    top: 80%;
-    font-size: 32px;
-  }
-  @include lg {
-    font-size: 40px;
-  }
-  @include xl {
-    top: 85%;
-    font-size: 48px;
+    @include sm {
+      top: 540px;
+      font-size: 24px;
+    }
+    @include md {
+      top: 80%;
+      font-size: 32px;
+    }
+    @include lg {
+      font-size: 40px;
+    }
+    @include xl {
+      top: 85%;
+      font-size: 46px;
+    }
   }
 }
 

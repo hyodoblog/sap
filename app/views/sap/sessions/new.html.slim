@@ -1,9 +1,9 @@
 .row
   .col-lg-6.offset-lg-3
     .text-center.my-5
-      h2.my-2 = @config.university_name
-      h2.my-2 = @config.department_name
-      h2.my-2 = @config.faculty_name
+      h2.my-3 = @config.university_name
+      h3.my-2 = @config.faculty_name
+      h3.my-2 = @config.department_name
     = form_with scope: :sap_session, url: sap_signin_path+"?sap_key="+@config.sap_key, class: 'card', local: true do |f|
       .card-header ログインページ
       main.card-body
