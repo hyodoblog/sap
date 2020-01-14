@@ -8,12 +8,16 @@ class Sap::LaboratoryController < Sap::ApplicationController
     @students = Student.where(user_id: @config.user_id).where.not(id: choice_students_id_array)
 
     @laboratory_assign_confirm = false
-    assigns = AssignList.where(laboratory_id: session[:laboratory_id])
-    assigns.each do |assign|
-      if assign.confirm
-        @laboratory_assign_confirm = true
-        break
+    begin
+      assigns = AssignList.where(laboratory_id: session[:laboratory_id])
+      assigns.each do |assign|
+        if assign.confirm
+          @laboratory_assign_confirm = true
+          break
+        end
       end
+    rescue
+      @laboratory_assign_confirm = false
     end
   end
 

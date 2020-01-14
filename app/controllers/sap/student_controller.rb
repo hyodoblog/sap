@@ -6,10 +6,13 @@ class Sap::StudentController < Sap::ApplicationController
     @choice_laboratories = StudentChoice.where(student_id: session[:student_id])
     choice_laboratories_id_array = @choice_laboratories.map{|choice| choice.laboratory.id}
     @laboratories = Laboratory.where(user_id: @config.user_id).where.not(id: choice_laboratories_id_array)
-
-    assign = AssignList.find_by(student_id: session[:student_id])
-    @student_assign_confirm = assign.confirm
-    @student_assign_laboratory_name = assign.laboratory.laboratory_name
+    begin
+      assign = AssignList.find_by(student_id: session[:student_id])
+      @student_assign_confirm = assign.confirm
+      @student_assign_laboratory_name = assign.laboratory.laboratory_name
+    rescue
+      @student_assign_confirm = nil
+    end
   end
 
   def choice

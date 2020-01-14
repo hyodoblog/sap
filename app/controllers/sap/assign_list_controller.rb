@@ -25,11 +25,15 @@ class Sap::AssignListController < Sap::ApplicationController
       end
       @assign_list[laboratory.name] = assign_array
     end
-
-    if session[:student_id]
-      assign = AssignList.find_by(student_id: session[:student_id])
-      @student_assign_confirm = assign.confirm
-      @student_assign_laboratory_name = assign.laboratory.laboratory_name
+    
+    begin
+      if session[:student_id]
+        assign = AssignList.find_by(student_id: session[:student_id])
+        @student_assign_confirm = assign.confirm
+        @student_assign_laboratory_name = assign.laboratory.laboratory_name
+      end
+    rescue
+      @student_assign_confirm = nil
     end
   end
 end
