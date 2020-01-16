@@ -81,8 +81,11 @@
         button.close type="button" data-dismiss="modal" aria-label="Close"
           span aria-hidden="true" &times;
       .modal-body
-        p 設定した稼働期間中の注意点
+        p 稼働期間中の注意点
         p ・管理者でもメンバーの管理ができない
+        p.pl-3.small →稼動を一度止めれば再度編集が可能
+        p.pl-3.small ただし、止めている間は学生と研究室がログインできない
+        p ・登録した学生と研究室が専用のログインページでログインができるようになる
         p ・１時間ごとにアルゴリズムが実行される
         p ・配属一覧ページが解放される
         p = "・閲覧期限は#{@config.view_end_datetime.to_s(:datetime_jp)}までです。"
