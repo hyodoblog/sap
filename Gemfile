@@ -24,6 +24,10 @@ gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
 # Cron
 gem 'whenever', :require => false
 
+# seo
+gem 'sitemap_generator'
+gem 'meta-tags'
+
 # View
 gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.4.1'
