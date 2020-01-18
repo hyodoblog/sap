@@ -6,9 +6,31 @@ services:
       - .:/app
       - bundle:/usr/local/bundle
     ports:
-      - '8080:8080'
+      - 8080:8080
+    environment:
+      - APP_NAME: Student-Assignment-Program
+      - HOST: localhost
+      - PORT: 8080
+      - RAILS_ENV: production
+      - SENDGRID_USER_NAME: sgw4yxgv@kke.com
+      - SNEDGRID_PASSWORD: 9G66fcurFC4z8Hb8
+    depends_on:
+      - mysql
     tty: true
     stdin_open: true
 
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - mysql-data:/var/lib/mysql
+    entrypoint:
+      - MYSQL_USER: root
+      - MYSQL_PASSWORD: password
+      - TZ: Asia/Tokyo
+    ports:
+      - 3306:3306
+
 volumes:
   bundle:
+  mysql-data:

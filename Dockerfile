@@ -14,7 +14,7 @@ RUN apt-get update -qq && \
 ENV APP_ROOT /app
 
 # 作業ディレクトリの作成、設定
-RUN mkdir $APP_ROOT 
+RUN mkdir $APP_ROOT
 WORKDIR $APP_ROOT
 
 ADD ./Gemfile $APP_ROOT/Gemfile
@@ -23,3 +23,9 @@ ADD ./Gemfile.lock $APP_ROOT/Gemfile.lock
 RUN bundle install
 
 ADD . $APP_ROOT
+
+COPY start.sh /usr/bin/
+RUN chmod +x /usr/bin/start.sh
+ENTRYPOINT ["start.sh"]
+
+CMD ["bin/start"]

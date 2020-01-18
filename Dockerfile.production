@@ -14,7 +14,7 @@ RUN apt-get update -qq && \
 ENV APP_ROOT /app
 
 # 作業ディレクトリの作成、設定
-RUN mkdir $APP_ROOT 
+RUN mkdir $APP_ROOT
 WORKDIR $APP_ROOT
 
 ADD ./Gemfile $APP_ROOT/Gemfile
