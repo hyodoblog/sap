@@ -90,7 +90,7 @@ class Admin::InitSetupController < Admin::ApplicationController
     params = { 'user_id' => current_user.id, 'sap_key' => Config.generate_sap_key, 'university_name' => '〇〇大学',
                'faculty_name' => '', 'department_name' => '', 'contact_email' => '',
                'max_choice_student' => 0, 'max_choice_laboratory' => 0, 'start_datetime' => now_datetime,
-               'end_datetime' => now_datetime, 'view_end_datetime' => now_datetime + 1.days, 'release_flag' => false,
+               'end_datetime' => now_datetime + 1.days, 'view_end_datetime' => now_datetime + 2.days, 'release_flag' => false,
                'init_setup_flag' => false }
     return params
   end

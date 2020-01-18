@@ -2,14 +2,14 @@ class Admin::ConfigController < Admin::ApplicationController
   before_action :set_config
 
   def edit
-    @config.start_datetime = @config.start_datetime.to_s(:datetime_jp)
-    @config.end_datetime = @config.end_datetime.to_s(:datetime_jp)
-    @config.view_end_datetime = @config.view_end_datetime.to_s(:datetime_jp)
   end
 
   def update
-    if config_params[:end_datetime] >= config_params[:view_end_datetime]
-      flash[:error_messages] = ['閲覧期間を希望提出期間より遅く設定して下さい！']
+    if config_params[:start_datetime] >= config_params[:end_datetime]
+      flash[:error_messages] = ['希望終了日を希望開始日より後に設定して下さい！']
+      redirect_back(fallback_location: root_path) and return
+    elsif config_params[:end_datetime] >= config_params[:view_end_datetime]
+      flash[:error_messages] = ['閲覧期間を希望終了日より後に設定して下さい！']
       redirect_back(fallback_location: root_path) and return
     end
     if @config.update(config_params)

@@ -1,6 +1,6 @@
 .row
   .col-lg-8.offset-lg-2
-    h3.mt-5.mb-4 マイページ編集
+    h3.mt-5.mb-4 アカウント編集
     = render 'devise/shared/error_messages', resource: resource
     = form_with model: resource, as: resource_name, url: update_user_registration_path, method: :put, class: 'card mb-5', local: true do |f|
       .card-header アカウント情報を編集して下さい！

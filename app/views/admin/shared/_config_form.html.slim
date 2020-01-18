@@ -79,7 +79,7 @@
               .input-group-append data-target='#view_end_datetime' data-toggle='datetimepicker'
                 .input-group-text
                   i.fa.fa-calendar
-            p.mb-0.small SAP稼働を止めた後でも学生と研究室が配属一覧ページを閲覧できる期限
+            p.mb-0.small SAP稼働を止めた後でも学生と研究室が配属一覧ページを閲覧できる期限。
             p.small 希望提出終了日より遅く設定して下さい！
 
         .form-group.row
@@ -108,7 +108,7 @@
           p ・登録した学生と研究室が専用のログインページでログインができるようになる
           p ・１時間ごとにアルゴリズムが実行される
           p ・配属一覧ページが解放される
-          p = "・閲覧期限は#{@config.view_end_datetime}までです。"
+          p = "・閲覧期限は#{model.view_end_datetime.to_s(:datetime_jp)}までです。"
           h5 class="text-danger" 本当に稼働開始しますか？
         .modal-footer
           button.btn.btn-secondary type="button" data-dismiss="modal" Close
@@ -117,6 +117,6 @@
 javascript:
   $(function () {
     $('.datepicker').datetimepicker({
-      format: 'YYYY年MM月DD日 HH時mm分ss秒'
+      format: 'YYYY-MM-DD HH:mm:ss'
     });
   });

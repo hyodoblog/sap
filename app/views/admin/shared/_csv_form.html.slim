@@ -18,6 +18,7 @@
           '・文字化けする場合は
           = link_to 'こちら', 'https://docs.google.com/spreadsheets/d/15bBbbsVXuyT3r3igJNfKhqnKzaUHrxVQ_USkKJImrfY/edit?usp=sharing', target: :_blank
         hr.my-4
+        p.small どちらか一方でも可
         = form_with url: url, method: 'post', local: true do |f|
           .form-group.row
             .col-lg-5.control-label
@@ -27,7 +28,7 @@
               .input-group
                 label.input-group-btn
                   span.btn.btn-primary
-                    | ファイルを選択
+                    'ファイルを選択
                     = f.file_field :csv_file_laboratory, accept: 'text/csv', class: 'd-none', autocomplete: 'csv_file_laboratory'
                 input.form-control type='text' readonly=''
           .form-group.row
@@ -38,7 +39,7 @@
               .input-group
                 label.input-group-btn
                   span.btn.btn-primary
-                    | ファイルを選択
+                    'ファイルを選択
                     = f.file_field :csv_file_student, accept: 'text/csv', class: 'd-none', autocomplete: 'csv_file_student'
                 input.form-control type='text' readonly=''
 
