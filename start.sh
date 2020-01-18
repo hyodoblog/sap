@@ -20,5 +20,9 @@ rm -f tmp/pids/server.pid
 bundle exec whenever --update-crontab
 cron
 
+# sitemap
+# send google and bing to ping
+bundle exec rails sitemap:refresh
+
 # start rails app
 bundle exec rails s -p $RAILS_PORT -b 0.0.0.0
