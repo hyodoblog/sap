@@ -1,0 +1,29 @@
+.row
+  .col-lg-8.offset-lg-2
+    h3.mt-5.mb-4
+      'マイページ
+      = link_to '編集', edit_user_registration_path, class: 'btn btn-outline-secondary pull-right'
+    .card
+      .card-header アカウント情報
+      main.card-body
+        .row
+          .col-lg-4
+            p メールアドレス
+          .col-lg-8
+            p = @user.email
+      
+    .text-center.my-3 = link_to 'アカウントを削除', '#', class: 'text-danger', 'data-toggle' => 'modal', 'data-target' => '#acound-delete-modal'
+
+.modal.fade#acound-delete-modal tabindex="-1" role="dialog" aria-hidden="true"
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        h5.modal-title#exampleModalLabel アカウントを削除します
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+      .modal-body
+        p 削除すると全てのデータを復元することができません
+        h5 class="text-danger" 本当に削除しますか？
+      .modal-footer
+        button.btn.btn-secondary type="button" data-dismiss="modal" Close
+        = link_to '削除', destroy_user_registration_path, class: 'btn btn-danger', method: :delete

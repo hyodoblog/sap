@@ -19,7 +19,7 @@ Rails.application.configure do
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+      'Cache-Control' => 'public, max-age=#{2.days.to_i}'
     }
   else
     config.action_controller.perform_caching = false
@@ -60,14 +60,14 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # devise
-  config.action_mailer.default_url_options = { host: ENV['HOST'], port: ENV['PORT'] }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 8080 }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :enable_starttls_auto => true,
-    :address => "smtp.sendgrid.net",
+    :address => 'smtp.sendgrid.net',
     :port => 587,
-    :domain => ENV['HOST'],
+    :domain => 'localhost',
     :user_name => ENV['SENDGRID_USER_NAME'],
     :password => ENV['SNEDGRID_PASSWORD'],
     :authentication => :plain

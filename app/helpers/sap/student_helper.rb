@@ -1,2 +1,0 @@
-module Sap::StudentHelper
-end

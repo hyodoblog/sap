@@ -4,11 +4,14 @@ if [ -n "$PORT" ]; then
   RAILS_PORT=$PORT
 fi
 
+# create database
+bundle exec rails db:create
+
 # migration
-bundle exec rails db:migrate RAILS_ENV=production
+bundle exec rails db:migrate
 
 # precompile
-bundle exec rake assets:precompile RAILS_ENV=production
+bundle exec rake assets:precompile
 
 # Remove a potentially pre-existing server.pid for Rails.
 rm -f tmp/pids/server.pid

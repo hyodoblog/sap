@@ -1,6 +1,6 @@
 .jumbotron.mt-5
   // 初回ログイン時のみ
-  - if  !@config
+  - if  !@config || !@config.init_setup_flag
     h1.display-5 はじめまして
     p.lead システムを使用するには以下の2ステップが必要です。
     hr.my-3
@@ -23,7 +23,7 @@
       p.lead システムを稼働すると編集ができなくなります。
       p.lead 稼働開始は設定画面から行えます。
 
-- if @config
+- if @config && @config.init_setup_flag
   .d-flex.align-items-center.justify-content-between.mt-3
     h2 ユーザー一覧
     - unless @config.release_flag
@@ -133,9 +133,9 @@
             span aria-hidden="true" &times;
         .modal-body
           p 注意点
-          p ・学生と研究室がログインと希望提出ができなくなる
-          p ・アルゴリズムが実行され、配属一覧ページが閲覧できる
-          p = "・期限は#{@config.view_end_datetime.to_s(:datetime_jp)}までです。"
+          p ・学生と研究室が希望提出をできなくなる
+          p ・下記の閲覧期限まで配属一覧を閲覧できる
+          p.small = "期限：#{@config.view_end_datetime.to_s(:datetime_jp)}"
           p  →後から変更できます。
           h5 class="text-danger" 本当に稼働を止めますか？
         .modal-footer

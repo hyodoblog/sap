@@ -10,20 +10,26 @@ class Admin::InitSetupController < Admin::ApplicationController
   end
 
   def first_setup
+    if config_params[:end_datetime] >= config_params[:view_end_datetime]
+      flash[:error_messages] = ['閲覧期間を希望提出期間より遅く設定して下さい！']
+      redirect_back(fallback_location: root_path) and return
+    end
     config = Config.new(config_params)
     if config.save
       flash[:notice] = "ステップ1完了　入力した設定を保存しました"
-      redirect_to admin_init_setup_second_path
+      redirect_to(admin_init_setup_second_path)
     else
       flash[:config] = config
       flash[:error_messages] = config.errors.full_messages
-      redirect_back fallback_location: root_path
+      redirect_back(fallback_location: root_path)
     end
   end
 
   def first_skip
-    Config.create(config_params_setup)
-    redirect_to admin_init_setup_second_path
+    unless Config.find_by(user_id: current_user.id)
+      Config.create(config_params_setup)
+    end
+    redirect_to(admin_init_setup_second_path)
   end
 
   def second
@@ -34,7 +40,7 @@ class Admin::InitSetupController < Admin::ApplicationController
     unless params[:csv_file_laboratory] || params[:csv_file_student]
       error_messages = ['最低でもどちらか一方のcsvファイルを選択してください']
       flash[:error_messages] = error_messages
-      redirect_back fallback_location: root_path and return
+      redirect_back(fallback_location: root_path) and return
     end
 
     # csv import
@@ -47,7 +53,7 @@ class Admin::InitSetupController < Admin::ApplicationController
         flash_notice_messages.push('研究室のcsvファイルのインポート成功')
       else
         flash[:error_messages] = ['研究室データをもう一度確認下さい'] | error_messages
-        redirect_back fallback_location: root_path and return
+        redirect_back(fallback_location: root_path) and return
       end
     end
     # student
@@ -58,17 +64,17 @@ class Admin::InitSetupController < Admin::ApplicationController
       else
         flash[:notices] = flash_notice_messages
         flash[:error_messages] = ['学生データをもう一度確認下さい'] | error_messages
-        redirect_back fallback_location: root_path and return
+        redirect_back(fallback_location: root_path)and return
       end
     end
-    redirect_to admin_init_setup_second_skip_path
+    redirect_to(admin_init_setup_second_skip_path)
   end
 
   def second_skip
     config = Config.find_by(user_id: current_user.id)
     config.update_attributes(init_setup_flag: true)
     flash[:notice] = "初期設定完了"
-    redirect_to admin_root_path
+    redirect_to(admin_root_path)
   end
 
   private
@@ -84,7 +90,7 @@ class Admin::InitSetupController < Admin::ApplicationController
     params = { 'user_id' => current_user.id, 'sap_key' => Config.generate_sap_key, 'university_name' => '〇〇大学',
                'faculty_name' => '', 'department_name' => '', 'contact_email' => '',
                'max_choice_student' => 0, 'max_choice_laboratory' => 0, 'start_datetime' => now_datetime,
-               'end_datetime' => now_datetime, 'view_end_datetime' => now_datetime, 'release_flag' => false,
+               'end_datetime' => now_datetime, 'view_end_datetime' => now_datetime + 1.days, 'release_flag' => false,
                'init_setup_flag' => false }
     return params
   end
@@ -101,7 +107,7 @@ class Admin::InitSetupController < Admin::ApplicationController
   def check_init_setup_flag
     begin
       if current_user.config.init_setup_flag
-        redirect_to admin_root_path
+        redirect_to(admin_root_path)
       end
     rescue NoMethodError => exception
       # 何もしない

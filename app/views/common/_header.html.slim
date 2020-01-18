@@ -6,7 +6,7 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 	.collapse.navbar-collapse#navbarSupportedContent
 		ul.navbar-nav.ml-auto
 			- if user_signed_in?
-				- if @config && @config.init_setup_flag
+				- if (@config && @config.init_setup_flag)
 					li.nav-item
 						= header_link_item('管理者画面', admin_root_path, '')
 					- if @config.release_flag
@@ -21,6 +21,8 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 								= link_to 'csvインポート', admin_csv_import_new_path, class: 'dropdown-item'
 						li.nav-item
 							= header_link_item('設定', admin_config_edit_path, "")
+						li.nav-item
+							= header_link_item('マイページ', admin_mypage_show_path, "")
 				li.nav-item
 					= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' }
 			- else

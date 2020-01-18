@@ -10,8 +10,8 @@ ruby '2.6.5'
 
 gem 'rails', '5.2.4'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'puma', '~> 3.11'
 gem 'dotenv-rails'
+gem 'puma', '~> 3.11'
 
 gem "mysql2", "~> 0.5", '< 0.6.0'
 
@@ -23,8 +23,6 @@ gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
 
 # Cron
 gem 'whenever', :require => false
-
-# Mail
 
 # View
 gem 'autoprefixer-rails'
