@@ -8,6 +8,7 @@ html.h-100
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = favicon_link_tag 'favicon.ico'
+    = analytics_init if Rails.env.production?
   body.d-flex.flex-column.h-100
     main.flex-shrink-0
       = render 'common/header_notifications'

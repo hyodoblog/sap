@@ -27,6 +27,7 @@ gem 'whenever', :require => false
 # seo
 gem 'sitemap_generator'
 gem 'meta-tags'
+gem 'google-analytics-rails'
 
 # View
 gem 'autoprefixer-rails'

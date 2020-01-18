@@ -102,6 +102,7 @@ GEM
       railties (>= 3.2, < 6.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    google-analytics-rails (1.1.1)
     hpricot (0.8.6)
     html2slim (0.2.0)
       hpricot
@@ -269,6 +270,7 @@ DEPENDENCIES
   dotenv-rails
   faker
   font-awesome-rails
+  google-analytics-rails
   html2slim
   jquery-rails
   listen (>= 3.0.5, < 3.2)

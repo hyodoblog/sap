@@ -105,4 +105,7 @@ Rails.application.configure do
     :password => ENV['SNEDGRID_PASSWORD'],
     :authentication => :plain
   }
+
+  # Google Analytics
+  GA.tracker = ENV['GOOGLE_ANALYTICS_TRACHING_ID']
 end
