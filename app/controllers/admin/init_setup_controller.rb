@@ -20,6 +20,7 @@ class Admin::InitSetupController < Admin::ApplicationController
 
     begin
       config = Config.find(current_user.config.id)
+      config.update(config_params)
     rescue NoMethodError => exception
       config = Config.new(config_params)
     end
