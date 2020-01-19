@@ -91,7 +91,7 @@
                 = link_to 'スキップ', admin_init_setup_first_skip_path, class: "btn btn-outline-secondary mr-2"
                 = f.submit value: '登録してステップ2へ', class: 'btn btn-success', data: { disable_with: 'ステップ1送信中...' }
 
-- if controller_name == 'config'
+- if controller_name == 'config' && model
   / Modal
   .modal.fade#release-modal tabindex="-1" role="dialog" aria-hidden="true"
     .modal-dialog role="document"

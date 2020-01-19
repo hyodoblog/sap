@@ -30,10 +30,8 @@
 
 # env file
 .env*
-docker/mysql/data*
-
-# gcloud
-cloudbuild.yaml
+/docker/postgres/*
+!/docker/postgres/.keep
 
 # sitemap
 public/sitemap*

@@ -7,13 +7,11 @@ git_source(:github) do |repo|
 end
 
 ruby '2.6.5'
-
 gem 'rails', '5.2.4'
+gem 'pg', '~> 1.2', '>= 1.2.2'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'dotenv-rails'
 gem 'puma', '~> 3.11'
-
-gem "mysql2", "~> 0.5", '< 0.6.0'
 
 gem 'bcrypt'
 gem 'devise'
