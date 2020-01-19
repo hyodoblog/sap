@@ -15,6 +15,8 @@ services:
     build:
       context: .
     command: bash -c "rm -f tmp/pids/server.pid && cron && bundle exec puma -C config/puma.rb"
+    env_file:
+      - ./.env
     volumes:
       - .:/app
       - ./public:/app/public
