@@ -30,6 +30,7 @@
 
 # env file
 .env*
+docker/mysql/data*
 
 # gcloud
 cloudbuild.yaml
