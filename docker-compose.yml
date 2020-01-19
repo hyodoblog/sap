@@ -1,30 +1,16 @@
 version: '3'
 services:
-  web:
-    build:
-      context: ./docker/nginx
-    volumes:
-      - ./public:/app/public
-      - ./tmp:/app/tmp
-    ports:
-      - 80:80
-    depends_on:
-      - app
-
   app:
     build:
       context: .
-    command: bash -c "rm -f tmp/pids/server.pid && cron && bundle exec puma -C config/puma.rb"
+    #command: bash -c "rm -f tmp/pids/server.pid && cron && bundle exec puma -C config/puma.rb"
     env_file:
       - ./.env
     volumes:
       - .:/app
-      - ./public:/app/public
-      - ./tmp:/app/tmp
-      - ./log:/app/log
       - bundle:/app/vendor/bundle
     ports:
-      - '3000:3000'
+      - 3000:3000
     depends_on:
       - db
 
@@ -34,13 +20,12 @@ services:
       - ./docker/postgres/init:/docker-entrypoint-initdb.d
       - ./docker/postgres/data:/var/lib/postgresql/data/
     environment:
-      POSTGRES_USER: root
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+      POSTGRES_DATABASE: sap
       TZ: Asia/Tokyo
     ports:
       - 5432:5432
-    stdin_open: true
 
 volumes:
   bundle:

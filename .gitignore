@@ -32,6 +32,7 @@
 .env*
 /docker/postgres/*
 !/docker/postgres/.keep
+env.yaml
 
 # sitemap
 public/sitemap*
