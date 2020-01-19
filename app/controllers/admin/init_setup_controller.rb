@@ -10,11 +10,19 @@ class Admin::InitSetupController < Admin::ApplicationController
   end
 
   def first_setup
-    if config_params[:end_datetime] >= config_params[:view_end_datetime]
+    if config_params[:start_datetime] >= config_params[:end_datetime]
+      flash[:error_messages] = ['希望終了日を希望開始日より後に設定して下さい！']
+      redirect_back(fallback_location: root_path) and return
+    elsif config_params[:end_datetime] >= config_params[:view_end_datetime]
       flash[:error_messages] = ['閲覧期間を希望提出期間より遅く設定して下さい！']
       redirect_back(fallback_location: root_path) and return
     end
-    config = Config.new(config_params)
+
+    begin
+      config = Config.find(current_user.config.id)
+    rescue NoMethodError => exception
+      config = Config.new(config_params)
+    end
     if config.save
       flash[:notice] = "ステップ1完了　入力した設定を保存しました"
       redirect_to(admin_init_setup_second_path)

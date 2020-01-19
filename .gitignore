@@ -12,6 +12,8 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+!/tmp/pids/.keep
+!/tmp/sockets/.keep
 
 # Ignore uploaded files in development
 /storage/*
@@ -30,4 +32,7 @@
 .env*
 
 # gcloud
-app.yaml
+cloudbuild.yaml
+
+# sitemap
+public/sitemap*

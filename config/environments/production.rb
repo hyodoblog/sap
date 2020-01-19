@@ -107,5 +107,5 @@ Rails.application.configure do
   }
 
   # Google Analytics
-  GA.tracker = ENV['GOOGLE_ANALYTICS_TRACHING_ID']
+  GA.tracker = ENV['GOOGLE_ANALYTICS_TRACKING_ID']
 end

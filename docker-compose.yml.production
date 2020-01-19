@@ -6,24 +6,9 @@ services:
       - .:/app
       - bundle:/usr/local/bundle
     ports:
-      - 8080:8080
-    depends_on:
-      - mysql
+      - 8080:8080      
     tty: true
     stdin_open: true
 
-  mysql:
-    image: mysql:5.7
-    volumes:
-      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - mysql-data:/var/lib/mysql
-    environment:
-      MYSQL_USER: root
-      MYSQL_ROOT_PASSWORD: password
-      TZ: Asia/Tokyo
-    ports:
-      - 3306:3306
-
 volumes:
   bundle:
-  mysql-data:

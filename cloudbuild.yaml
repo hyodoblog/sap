@@ -7,6 +7,20 @@ steps:
   args: ['push', 'gcr.io/student-assignment-program/sap-image']
 # Deploy container image to Cloud Run
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'run', 'deploy', 'student-assignment-program', '--image', 'gcr.io/student-assignment-program/sap-image', '--region', 'asia-northeast1', '--platform', 'managed', '--allow-unauthenticated']
+  args: ['beta', 'run', 'deploy', '[SERVICE_NAME]', '--image', 'gcr.io/student-assignment-program/sap-image', '--region', 'asia-northeast-1', '--platform', 'managed', '--memory', '2G', '--allow-unauthenticated']
+  env:
+    - 'SECRET_KEY_BASE=602c0a611167bd22c973d93094aa36f484082e57059e3541be942df7d68d2c33b0035711678db86300a7757fc2ef966ae61799fb20b078f6b63e7d2cfb4d247d'
+    - 'APP_NAME=Student-Assignment-Program'
+    - 'HOST=sap.hyodoblog.com'
+    - 'RAILS_ENV=production'
+    - 'SENDGRID_USER_NAME=sgw4yxgv@kke.com'
+    - 'SNEDGRID_PASSWORD=9G66fcurFC4z8Hb8'
+    - 'MYSQL_USER=root'
+    - 'MYSQL_PASSWORD=password'
+    - 'MYSQL_DATABASE=sap'
+    - 'MYSQL_SOCKET=/cloudsql/student-assignment-program:asia-northeast1:sap-db'
+    - 'GOOGLE_ANALYTICS_TRACHING_ID=UA-131749165-4'
 images:
-       - gcr.io/student-assignment-program/sap-image
+       - gcr.io/[PROJECT_ID]/[IMAGE]
+
+# gcloud builds submit

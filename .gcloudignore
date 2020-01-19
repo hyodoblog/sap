@@ -7,7 +7,7 @@
 !/tmp/.keep
 !/tmp/pids/.keep
 docker/*
-docker-compose.yml.developmnet
-docker-compose.yml.production
+docker-compose.yml*
 Dockerfile.developmnet
 Dockerfile.production
+.env*
