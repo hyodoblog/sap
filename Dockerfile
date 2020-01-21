@@ -24,8 +24,4 @@ RUN bundle install
 
 ADD . $APP_ROOT
 
-COPY start.sh /usr/bin/
-RUN chmod +x /usr/bin/start.sh
-ENTRYPOINT ["start.sh"]
-
-CMD ["bin/start"]
+CMD rm -f tmp/pids/server.pid && cron && bundle exec rails s -b 0.0.0.0 -p 3000

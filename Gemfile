@@ -12,7 +12,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'dotenv-rails'
 gem 'puma', '~> 3.11'
 
-gem 'pg', '~> 1.2', '>= 1.2.2'
+gem 'pg'
 
 gem 'bcrypt'
 gem 'devise'
