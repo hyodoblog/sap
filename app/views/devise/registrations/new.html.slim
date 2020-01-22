@@ -24,3 +24,6 @@
             .float-right
               = link_to "ログイン", new_user_session_path, class: "btn btn-outline-secondary mr-2"
               = f.submit value: "登録", class: "btn btn-success", data: { disable_with: "送信中..." }
+    nav
+      .text-center.small.mt-3
+        = render "devise/shared/links"

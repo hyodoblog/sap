@@ -91,17 +91,17 @@ class Admin::InitSetupController < Admin::ApplicationController
   def config_params
     params.require(:config).permit(:user_id, :sap_key, :university_name, :faculty_name, :department_name,
                                    :contact_email, :max_choice_student, :max_choice_laboratory,
-                                   :start_datetime, :end_datetime, :view_end_datetime)
+                                   :max_confirm_student, :start_datetime, :end_datetime, :view_end_datetime)
   end
 
   def config_params_setup
     now_datetime = DateTime.now
     {
-        :user_id => current_user.id, :sap_key => Config.generate_sap_key, :university_name => '〇〇大学',
-        :faculty_name => '', :department_name => '', :contact_email => '',
-        :max_choice_student => 0, :max_choice_laboratory => 0, start_datetime: now_datetime,
-        :end_datetime => now_datetime + 1.days, :view_end_datetime => now_datetime + 2.days, :release_flag => false,
-        :init_setup_flag => false
+        user_id:current_user.id, sap_key: Config.generate_sap_key, university_name: '〇〇大学',
+        faculty_name: '', department_name: '', contact_email: '',
+        max_choice_student: 0, max_choice_laboratory: 0, max_confirm_student: '',
+        start_datetime: now_datetime, end_datetime: now_datetime + 1.days, view_end_datetime: now_datetime + 2.days, release_flag: false,
+        init_setup_flag: false
     }
   end
 

@@ -9,6 +9,7 @@ class CreateConfigs < ActiveRecord::Migration[5.2]
       t.string   :contact_email,         null: false
       t.integer  :max_choice_student,    null: false
       t.integer  :max_choice_laboratory, null: false
+      t.integer  :max_confirm_student
       t.datetime :start_datetime,        null: false
       t.datetime :end_datetime,          null: false
       t.datetime :view_end_datetime,     null: false
