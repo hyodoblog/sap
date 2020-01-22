@@ -1,11 +1,8 @@
 namespace :algorithm do
   desc "研究室配属アルゴリズムの実装"
   task :sap => :environment do
-    
-    users = User.all()
-    
-    users.each do |user|
-      
+    User.all.each do |user|
+
       # SAPが稼働しているかチェック
       unless !user.config.nil? && user.config.release_flag
         next
@@ -41,20 +38,20 @@ namespace :algorithm do
                                             student_choice_list,
                                             laboratory_choice_list,
                                             max_laboratory_num_list)
-      
+
       # Step 3
       # マッチングが高い学生は配属を確定させる
       confirm_student_array = algorithm_step3(current_assign_list,
                                               student_choice_list,
                                               laboratory_choice_list,
                                               max_laboratory_num_list)
-      
+
       # Step 3
       # 配属されていない学生をランダムで配属
       current_assign_list = algorithm_step4(current_assign_list,
                                             max_laboratory_num_list,
                                             students)
-      
+
       # --- アルゴリズム終了 ----
       # -----------------------
 
@@ -76,10 +73,10 @@ namespace :algorithm do
   # 学生が希望した研究室の希望リストを整理
   def student_choice_list_make(user_id)
     students = Student.where(user_id: user_id)
-                      .joins(:student_choice)
-                      .includes(:student_choice)
-                      .order('student_choices.student_id')
-                      .order('student_choices.rank')
+                   .joins(:student_choice)
+                   .includes(:student_choice)
+                   .order('student_choices.student_id')
+                   .order('student_choices.rank')
     student_choice_list = {}
     students.each do |student|
       laboratory_array = []
@@ -94,10 +91,10 @@ namespace :algorithm do
   # 研究室が希望した学生の希望リストを整理
   def laboratory_choice_list_make(user_id)
     laboratories = Laboratory.where(user_id: user_id)
-                             .joins(:laboratory_choice)
-                             .includes(:laboratory_choice)
-                             .order('laboratory_choices.laboratory_id')
-                             .order('laboratory_choices.rank')
+                       .joins(:laboratory_choice)
+                       .includes(:laboratory_choice)
+                       .order('laboratory_choices.laboratory_id')
+                       .order('laboratory_choices.rank')
     laboratory_choice_list = {}
     laboratories.each do |laboratory|
       student_array = []
@@ -139,7 +136,7 @@ namespace :algorithm do
         if check_laboratory_limit?(current_assign_list, laboratory_id, max_laboratory_num)
           current_assign_list[laboratory_id].push(student_id)
           break
-        # 研究室が希望する学生の優先順位をチェック
+          # 研究室が希望する学生の優先順位をチェック
         else
           student_choice_array = laboratory_choice_list[laboratory_id]
           current_assign_student_array = current_assign_list[laboratory_id]
@@ -149,7 +146,7 @@ namespace :algorithm do
             current_assign_list[laboratory_id].delete(swap_student_id)
             current_assign_list[laboratory_id].push(student_id)
             student_choice_list[swap_student_id].delete(laboratory_id)
-            student_choice_list = { swap_student_id => student_choice_list[swap_student_id] }
+            student_choice_list = {swap_student_id => student_choice_list[swap_student_id]}
             current_assign_list = algorithm_step2(current_assign_list, student_choice_list,
                                                   laboratory_choice_list, max_laboratory_num_list)
             break

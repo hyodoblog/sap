@@ -57,24 +57,24 @@ class Admin::InitSetupController < Admin::ApplicationController
     user_id = current_user.id
     # laboratory
     if params[:csv_file_laboratory]
-      csv_import_flag, error_messages = Laboratory.csv_import(csv_file_laboratory_params, user_id)
-      if csv_import_flag
-        flash_notice_messages.push('研究室のcsvファイルのインポート成功')
-      else
-        flash[:error_messages] = ['研究室データをもう一度確認下さい'] | error_messages
+      begin
+        Laboratory.csv_import(csv_file_laboratory_params, user_id)
+      rescue => e
+        flash[:error_messages] = ['研究室データをもう一度確認下さい', e.message]
         redirect_back(fallback_location: root_path) and return
       end
+      flash_notice_messages.push('研究室のcsvファイルのインポート成功')
     end
     # student
     if params[:csv_file_student]
-      csv_import_flag, error_messages = Student.csv_import(csv_file_student_params, user_id)
-      if csv_import_flag
-        flash_notice_messages.push('学生のcsvファイルのインポート成功')
-      else
+      begin
+        Student.csv_import(csv_file_student_params, user_id)
+      rescue => e
         flash[:notices] = flash_notice_messages
-        flash[:error_messages] = ['学生データをもう一度確認下さい'] | error_messages
-        redirect_back(fallback_location: root_path)and return
+        flash[:error_messages] = ['学生データをもう一度確認下さい', e.message]
+        redirect_back(fallback_location: root_path) and return
       end
+      flash_notice_messages.push('学生のcsvファイルのインポート成功')
     end
     redirect_to(admin_init_setup_second_skip_path)
   end
@@ -96,12 +96,13 @@ class Admin::InitSetupController < Admin::ApplicationController
 
   def config_params_setup
     now_datetime = DateTime.now
-    params = { 'user_id' => current_user.id, 'sap_key' => Config.generate_sap_key, 'university_name' => '〇〇大学',
-               'faculty_name' => '', 'department_name' => '', 'contact_email' => '',
-               'max_choice_student' => 0, 'max_choice_laboratory' => 0, 'start_datetime' => now_datetime,
-               'end_datetime' => now_datetime + 1.days, 'view_end_datetime' => now_datetime + 2.days, 'release_flag' => false,
-               'init_setup_flag' => false }
-    return params
+    {
+        :user_id => current_user.id, :sap_key => Config.generate_sap_key, :university_name => '〇〇大学',
+        :faculty_name => '', :department_name => '', :contact_email => '',
+        :max_choice_student => 0, :max_choice_laboratory => 0, start_datetime: now_datetime,
+        :end_datetime => now_datetime + 1.days, :view_end_datetime => now_datetime + 2.days, :release_flag => false,
+        :init_setup_flag => false
+    }
   end
 
   def csv_file_laboratory_params
