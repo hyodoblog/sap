@@ -8,6 +8,7 @@ RUN apt-get update -qq && \
     libpq-dev \
     nodejs \
     cron \
+    yarn \
     vim
 
 # 環境変数の設定
@@ -24,4 +25,6 @@ RUN bundle install
 
 ADD . $APP_ROOT
 
-CMD rm -f tmp/pids/server.pid && cron && bundle exec rails s -b 0.0.0.0 -p 3000
+RUN bundle exec whenever --update-crontab
+
+CMD rm -f tmp/pids/server.pid && cron && bundle exec puma -C config/puma.rb

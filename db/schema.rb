@@ -12,10 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_01_03_191925) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "assign_lists", force: :cascade do |t|
+  create_table "assign_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "laboratory_id"
     t.bigint "student_id"
@@ -27,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.index ["user_id"], name: "index_assign_lists_on_user_id"
   end
 
-  create_table "configs", force: :cascade do |t|
+  create_table "configs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.string "sap_key", null: false
     t.string "university_name", null: false
@@ -46,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.index ["user_id"], name: "index_configs_on_user_id"
   end
 
-  create_table "laboratories", force: :cascade do |t|
+  create_table "laboratories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.string "loginid", null: false
     t.string "password_digest", null: false
@@ -58,7 +55,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.index ["user_id"], name: "index_laboratories_on_user_id"
   end
 
-  create_table "laboratory_choices", force: :cascade do |t|
+  create_table "laboratory_choices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "laboratory_id"
     t.bigint "student_id"
     t.integer "rank", null: false
@@ -68,7 +65,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.index ["student_id"], name: "index_laboratory_choices_on_student_id"
   end
 
-  create_table "student_choices", force: :cascade do |t|
+  create_table "student_choices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "student_id"
     t.bigint "laboratory_id"
     t.integer "rank", null: false
@@ -78,7 +75,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.index ["student_id"], name: "index_student_choices_on_student_id"
   end
 
-  create_table "students", force: :cascade do |t|
+  create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.string "loginid", null: false
     t.string "password_digest", null: false
@@ -89,7 +86,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.index ["user_id"], name: "index_students_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

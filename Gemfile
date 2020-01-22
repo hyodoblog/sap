@@ -12,13 +12,14 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'dotenv-rails'
 gem 'puma', '~> 3.11'
 
-gem 'pg'
+gem "mysql2", "~> 0.5", '< 0.6.0'
 
 gem 'bcrypt'
 gem 'devise'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
 gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
+gem 'activerecord-nulldb-adapter'
 
 # Cron
 gem 'whenever', :require => false
