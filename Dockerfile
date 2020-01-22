@@ -27,4 +27,4 @@ ADD . $APP_ROOT
 
 RUN bundle exec whenever --update-crontab
 
-CMD rm -f tmp/pids/server.pid && cron && bundle exec puma -C config/puma.rb
+CMD rm -f tmp/pids/server.pid && cron && bundle exec rails s -b 0.0.0.0 -p 3000

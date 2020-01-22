@@ -30,8 +30,8 @@
 
 # env file
 .env*
-/docker/mysql/data
-env.yaml
+/docker/postgres/*
+!/docker/postgres/.keep
 
 # sitemap
 public/sitemap*
