@@ -16,44 +16,51 @@ namespace :algorithm do
 
       user_id = user.id
 
-      # データの整理
+      # データの初期化
       student_choice_list = student_choice_list_make(user_id)
       laboratory_choice_list = laboratory_choice_list_make(user_id)
-      max_laboratory_num_list = max_laboratory_num_list_make(user_id)
+      laboratories = Laboratory.where(user_id: user_id)
+      students = Student.where(user_id: user_id)
 
       # -----------------------
       # --- アルゴリズムの実装 ---
 
-      laboratories = Laboratory.where(user_id: user_id)
-      students = Student.where(user_id: user_id)
-      AssignList.where(user_id: user_id).delete_all
-
       # Step 1
-      # 全ての学生を未配属にする
-      current_assign_list = algorithm_step1(laboratories)
+      # 最大研究室配属人数を整理
+      max_laboratory_num_list = algorithm_step1(user_id,
+                                                studnets,
+                                                laboratories,
+                                                student_choice_list)
 
       # Step 2
+      # 全ての学生を未配属にする
+      current_assign_list = algorithm_step2(laboratories)
+
+      # Step 3
       # 配属希望を記入した学生の配属処理
-      current_assign_list = algorithm_step2(current_assign_list,
+      current_assign_list = algorithm_step3(current_assign_list,
                                             student_choice_list,
                                             laboratory_choice_list,
                                             max_laboratory_num_list)
 
-      # Step 3
+      # Step 4
       # マッチングが高い学生は配属を確定させる
-      confirm_student_array = algorithm_step3(current_assign_list,
+      confirm_student_array = algorithm_step4(current_assign_list,
                                               student_choice_list,
                                               laboratory_choice_list,
                                               max_laboratory_num_list)
 
-      # Step 3
+      # Step 5
       # 配属されていない学生をランダムで配属
-      current_assign_list = algorithm_step4(current_assign_list,
+      current_assign_list = algorithm_step5(current_assign_list,
                                             max_laboratory_num_list,
                                             students)
 
       # --- アルゴリズム終了 ----
       # -----------------------
+      
+      # 過去の配属データをリセット
+      AssignList.where(user_id: user_id).delete_all
 
       # データベースへの反映
       current_assign_list.each do |laboratory_id, student_array|
@@ -106,23 +113,34 @@ namespace :algorithm do
     return laboratory_choice_list
   end
 
-  # 研究室配属最大人数の整理
-  def max_laboratory_num_list_make(user_id)
-    laboratories = Laboratory.where(user_id: user_id)
+  def algorithm_step1(user_id, students, laboratories)
+    # Step 1
+    num_students = students.length
+    num_laboratories = laboratories.length
+    avarage = num_students.to_i / num_laboratories.to_i
+    # Step 2, 3, 4
     max_laboratory_num_list = {}
+    num_tmp_assignment = 0
     laboratories.each do |laboratory|
-      max_laboratory_num_list[laboratory.id] = laboratory.max_num
+      if laboratory.max_num <= avarage
+        max_laboratory_num_list[laboratory.id] = laboratory.max_num
+        num_tmp_assignment += laboratory.max_num
+      else
+        max_laboratory_num_list[laboratory.id] = avarage
+      end
     end
+    num_remain_students = num_students - num_tmp_assignment
+    # Step 5
     return max_laboratory_num_list
   end
 
-  def algorithm_step1(laboratories)
+  def algorithm_step2(laboratories)
     return laboratories.ids.to_h do |x|
       [x, []]
     end
   end
 
-  def algorithm_step2(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list)
+  def algorithm_step3(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list)
     student_choice_list.each do |student_id, laboratory_choice_array|
       # 仮配属されている学生はスキップ
       if check_assign?(current_assign_list, student_id)
@@ -157,7 +175,7 @@ namespace :algorithm do
     return current_assign_list
   end
 
-  def algorithm_step3(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list)
+  def algorithm_step4(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list)
     confirm_student_array = []
     student_choice_list.each do |student_id, laboratory_choice_array|
       laboratory_choice_array.each_with_index do |laboratory_id, index|
@@ -177,7 +195,7 @@ namespace :algorithm do
     return confirm_student_array
   end
 
-  def algorithm_step4(current_assign_list, max_laboratory_num_list, students)
+  def algorithm_step5(current_assign_list, max_laboratory_num_list, students)
     students.each do |student|
       unless check_student_exist?(current_assign_list, student.id)
         current_assign_list.each do |laboratory_id, assign_student_array|

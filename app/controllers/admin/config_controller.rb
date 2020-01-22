@@ -30,6 +30,7 @@ class Admin::ConfigController < Admin::ApplicationController
   def config_params
     params.require(:config).permit(:user_id, :university_name, :faculty_name, :department_name,
                                    :contact_email, :max_choice_student, :max_choice_laboratory,
-                                   :start_datetime, :end_datetime, :view_end_datetime)
+                                   :max_confirm_student, :start_datetime, :end_datetime,
+                                   :view_end_datetime)
   end
 end

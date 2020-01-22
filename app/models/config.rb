@@ -30,6 +30,12 @@ class Config < ApplicationRecord
       only_integer: true,
       greater_than_or_equal_to: 0
     }
+  validates :max_confirm_student,
+    allow_blank: true,
+    numericality: {
+      only_integer: true,
+      greater_than_or_equal_to: 0
+    }
   validates :start_datetime,
     presence: true
   validates :end_datetime,

@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.string "contact_email", null: false
     t.integer "max_choice_student", null: false
     t.integer "max_choice_laboratory", null: false
+    t.integer "max_confirm_student"
     t.datetime "start_datetime", null: false
     t.datetime "end_datetime", null: false
     t.datetime "view_end_datetime", null: false
