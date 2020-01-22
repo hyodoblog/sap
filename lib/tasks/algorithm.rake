@@ -131,6 +131,7 @@ namespace :algorithm do
     end
     num_remain_students = num_students - num_tmp_assignment
     # Step 5
+    
     return max_laboratory_num_list
   end
 
