@@ -26,11 +26,4 @@ test:
   database: app_test
 
 production:
-  adapter: postgresql
-  encoding: utf8
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV['POSTGRES_USER'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
-  database: <%= ENV['POSTGRES_DATABASE'] %>
-  host: <%= ENV['POSTGRES_HOST'] %>
   url: <%= ENV['DATABASE_URL'] %>
