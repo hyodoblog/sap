@@ -39,7 +39,5 @@ module App
     # whenever config
     config.autoload_paths += %W(#{config.root}/lib)
     config.enable_dependency_loading = true
-
-    config.assets.initialize_on_precompile = false
   end
 end

@@ -14,11 +14,12 @@
 
 @import 'bootstrap';
 @import 'font-awesome';
-@import 'tempusdominus-bootstrap-4.css';
-@import 'animate.min.css';
+@import 'tempusdominus-bootstrap-4';
+@import 'animate.min';
+
 
 body {
-  font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 $xl: 1200px;
@@ -31,16 +32,19 @@ $sm: 576px;
     @content;
   }
 }
+
 @mixin lg {
   @media (min-width: ($lg)) {
     @content;
   }
 }
+
 @mixin md {
   @media (min-width: ($md)) {
     @content;
   }
 }
+
 @mixin sm {
   @media (min-width: ($sm)) {
     @content;
@@ -86,22 +90,26 @@ $sm: 576px;
   img {
     width: 100%;
   }
+
   h1 {
     color: #777;
     font-family: ten-mincho, serif;
   }
+
   h2 {
     color: #555;
     font-family: ヒラギノ角ゴ ProN, W3;
   }
+
   h4 {
     color: #444;
     font-family: ten-mincho, serif;
   }
+
   p {
     width: 90%;
     color: #777;
-    font-family: 	YuMincho, 'Yu Mincho', serif;
+    font-family: YuMincho, 'Yu Mincho', serif;
     font-size: 16px;
     @include sm {
       font-size: 17px;
@@ -125,16 +133,20 @@ $sm: 576px;
   @include md {
     height: 100vh;
   }
+
   * {
     position: absolute;
   }
+
   .overlap {
     z-index: 10000;
   }
+
   img {
     height: 100%;
     object-fit: cover;
   }
+
   h1 {
     width: 100%;
     text-align: center;
@@ -168,13 +180,14 @@ $sm: 576px;
       position: relative;
     }
   }
+
   img {
     width: 100%;
     max-height: 330px;
     @include md {
       position: absolute;
       top: 50%;
-      left:50%;
+      left: 50%;
       transform: translate(-50%, -50%);
     }
   }
@@ -182,6 +195,7 @@ $sm: 576px;
 
 #service {
   background-color: #FAFAFA;
+
   img {
     width: 150px;
     height: 150px;
