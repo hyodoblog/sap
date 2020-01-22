@@ -1,6 +1,6 @@
 div#top.mt-n5
   .overlap.bg-white.w-100.h-100.animated.fadeOut
-  = image_tag('home-image-1.jpg')
+  = image_tag(asset_path('home-image-1.jpg'))
   h1 研究室マッチングシステム
 
 div#about.py-5
@@ -8,7 +8,7 @@ div#about.py-5
     h2.text-center.mb-5.pb-5 --- About ---
     .row
       .col-md-6.about-img-wrap
-        = image_tag('home-image-2.jpg')
+        = image_tag(asset_path('home-image-2.jpg'))
       .col-md-6
         h4.text-center.mb-4 学生と教授の満足度を高める
         p.mx-auto
@@ -27,15 +27,15 @@ div#service.py-5
     h2.text-center.mb-5.pb-5 --- Service ---
     .row
       .col-lg-4
-        .text-center.mb-5 = image_tag('home-image-3.png')
+        .text-center.mb-5 = image_tag(asset_path('home-image-3.png'))
         h4.text-center 会員登録は１人で使用可能
         p.mx-auto.my-4 会員登録したユーザーが管理者となります。たったの2ステップで初期設定は完了します。
       .col-lg-4
-        .text-center.mb-5 = image_tag('home-image-4.png')
+        .text-center.mb-5 = image_tag(asset_path('home-image-4.png'))
         h4.text-center いつでも希望を変更可能
-        p.mx-auto.my-4 システムの稼働期間内であればいつでも何回でも希望の研究室を変更することができる。
+        p.mx-auto.my-4 学生は、システムの稼働期間内であればいつでも何回でも希望の研究室を変更することができます。
       .col-lg-4
-        .text-center.mb-5 = image_tag('home-image-5.png')
+        .text-center.mb-5 = image_tag(asset_path('home-image-5.png'))
         h4.text-center 独自の配属アルゴリズム
         p.mx-auto.my-4 安定結婚問題を解くアルゴリズムを応用した研究室配属アルゴリズムを用いて配属処理をしております。
 

@@ -21,7 +21,10 @@
       p.lead 学生と研究室の管理を行って下さい！
       hr.my-3
       p.lead システムを稼働すると編集ができなくなります。
-      p.lead 稼働開始は設定画面から行えます。
+      p.lead
+        '稼働開始は
+        = link_to 'SAP設定画面', admin_config_edit_path
+        'から行えます。
 
 - if @config && @config.init_setup_flag
   .d-flex.align-items-center.justify-content-between.mt-3

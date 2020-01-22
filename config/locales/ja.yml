@@ -9,6 +9,7 @@ ja:
         contact_email: 連絡先メール
         max_choice_student: 最大学生希望人数
         max_choice_laboratory: 最大研究室希望数
+        max_confirm_student: 最大配属確定学生数
         start_datetime: 希望提出開始日
         end_datetime: 希望提出終了日
         view_end_datetime: 閲覧終了日
