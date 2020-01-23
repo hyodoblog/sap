@@ -16,13 +16,14 @@ ja:
         release_flag: リリースフラグ
         init_setup_flag: 初期設定フラグ
       student:
-        loginid: ログインID
+        email: Eメール
         password: パスワード
         name: 名前
         student_num: 学籍番号
       laboratory:
-        loginid: ログインID
+        email: Eメール
         password: パスワード
         name: 名前
         laboratory_name: 研究室名
         max_num: 最大配属人数
+        rate: レート

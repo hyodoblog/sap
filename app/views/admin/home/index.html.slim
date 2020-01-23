@@ -27,10 +27,10 @@
         'から行えます。
 
 - if @config && @config.init_setup_flag
-  .d-flex.align-items-center.justify-content-between.mt-3
-    h2 ユーザー一覧
+  .row.mt-3
+    h2.col-sm-6 ユーザー一覧
     - unless @config.release_flag
-      div
+      div.col-sm-6.text-right
         = link_to 'csvインポート', admin_csv_import_new_path, class: 'btn btn-success btn-sm mr-2'
         = link_to '全削除', '#', class: 'btn btn-danger btn-sm delete-btn', 'data-toggle' => 'modal',
                   'data-url' => admin_init_all_path, 'data-text' => '全学生・研究室を削除します。',
@@ -38,13 +38,13 @@
   
   hr.my-4 style='border-width:4px'
 
-  .d-flex.align-items-center.justify-content-between.mt-5.mb-3
-    h3 
+  .row.mt-5.mb-3
+    h3.col-sm-6
       |
         研究室一覧
       small.ml-2 = "登録人数：#{@laboratories.length}名"
     - unless @config.release_flag
-      div
+      div.col-sm-6.text-right
         = link_to '研究室を追加', new_admin_laboratory_path, class: 'btn btn-success mr-2 btn-sm'
         = link_to '全研究室削除', '#', class: 'btn btn-danger delete-btn btn-sm', 'data-toggle' => 'modal',
                   'data-url' => admin_init_laboratory_path, 'data-text' => '全研究室を削除します。',
@@ -56,6 +56,7 @@
         th 研究室名
         th 名前
         th 最大配属人数
+        th Eメール
         th ログインID
         - unless @config.release_flag
           th
@@ -66,6 +67,7 @@
           td = laboratory.laboratory_name
           td = laboratory.name
           td = laboratory.max_num
+          td = laboratory.email
           td = laboratory.loginid
           - unless @config.release_flag
             td = link_to '編集', '/admin/laboratory/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark'
@@ -75,23 +77,24 @@
 
   hr class='my-5' style='border-width:4px'
 
-  .d-flex.align-items-center.justify-content-between.mt-5.mb-3
-    h3
+  .row.mt-5.mb-3
+    h3.col-sm-6
       |
         学生一覧
       small.ml-2 = "登録人数：#{@students.length}名"
     - unless @config.release_flag
-      div
+      div.col-sm-6.text-right
         = link_to '学生を追加', new_admin_student_path, class: 'btn btn-success mr-2 btn-sm'
         = link_to '全学生削除', '#', class: 'btn btn-danger delete-btn btn-sm', 'data-toggle' => 'modal',
                   'data-url' => admin_init_student_path, 'data-text' => '全学生を削除します。',
                   'data-target' => '#delete-user-modal'
 
-  table.table.table-hover
+  table.table.table-hover.mb-5
     thead.thead-dark
       tr
         th 学籍番号
         th 名前
+        th Eメール
         th ログインID
         - unless @config.release_flag
           th
@@ -102,6 +105,7 @@
         tr
           td = student.student_num
           td = student.name
+          td = student.email
           td = student.loginid
           - unless @config.release_flag
             td = link_to '編集', '/admin/student/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark'

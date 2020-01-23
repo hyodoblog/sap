@@ -19,7 +19,7 @@
           .col-lg-9.offset-lg-3
             .float-right
               = f.submit value: "ログイン", class: "btn btn-primary", data: { disable_with: "送信中..." }
-    - unless @config.contact_email.empty?
+    - unless @config.contact_loginid.empty?
       .text-center.my-3
         = link_to 'ログインIDまたはパスワードを忘れた場合', '#', 'data-toggle' => 'modal', 'data-target' => '#password-forget-modal'
       
@@ -32,5 +32,5 @@
               button.close type="button" data-dismiss="modal" aria-label="Close"
                 span aria-hidden="true" &times;
             .modal-body
-              p 下記のメールアドレスへお問い合わせ下さい！
-              p.small = @config.contact_email
+              p 下記のログインIDへお問い合わせ下さい！
+              p.small = @config.contact_loginid

@@ -7,8 +7,12 @@ class CreateLaboratories < ActiveRecord::Migration[5.2]
       t.string     :name,            null: false
       t.string     :laboratory_name, null: false
       t.integer    :max_num
+      t.integer    :rate
+      t.string     :email
 
       t.timestamps
     end
+
+    add_index :laboratories, [:loginid, :email], unique: true
   end
 end

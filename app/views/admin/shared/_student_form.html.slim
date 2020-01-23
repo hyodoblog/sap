@@ -21,10 +21,10 @@
         - if action_name == 'new'
           .form-group.row
             .col-lg-4.control-label
-              = f.label :loginid, 'ログインID'
+              = f.label :email, 'Eメール'
               .badge.text-danger *
             .col-lg-8
-              = f.text_field :loginid, class: 'form-control', autofocus: true, autocomplete: 'loginid'
+              = f.text_field :email, class: 'form-control', autofocus: true, autocomplete: 'email'
           .form-group.row
             .col-lg-4.control-label
               = f.label :password, 'パスワード'

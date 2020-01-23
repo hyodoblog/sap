@@ -16,7 +16,7 @@ class Config < ApplicationRecord
     allow_blank: true,
     format: {
       with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
-      message: 'はメールアドレスのフォーマットで入力してください'
+      message: 'はEメールのフォーマットで入力してください'
     }
   validates :max_choice_student,
     presence: true,

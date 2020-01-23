@@ -54,8 +54,11 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.string "name", null: false
     t.string "laboratory_name", null: false
     t.integer "max_num"
+    t.integer "rate"
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["loginid", "email"], name: "index_laboratories_on_loginid_and_email", unique: true
     t.index ["user_id"], name: "index_laboratories_on_user_id"
   end
 
@@ -85,8 +88,10 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.string "password_digest", null: false
     t.string "name", null: false
     t.string "student_num", null: false
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["loginid", "email"], name: "index_students_on_loginid_and_email", unique: true
     t.index ["user_id"], name: "index_students_on_user_id"
   end
 

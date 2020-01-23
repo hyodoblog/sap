@@ -11,6 +11,7 @@ gem 'rails', '5.2.4'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'dotenv-rails'
 gem 'puma', '~> 3.11'
+gem 'pg', '~> 1.2', '>= 1.2.2'
 
 gem 'bcrypt'
 gem 'devise'
@@ -47,7 +48,6 @@ group :development, :test do
   gem 'html2slim'
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
-  gem "mysql2", "~> 0.5", '< 0.6.0'
 end
 
 group :development do
@@ -55,8 +55,4 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
-end
-
-group :production do
-  gem 'pg', '~> 1.2', '>= 1.2.2'
 end

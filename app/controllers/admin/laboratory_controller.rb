@@ -38,7 +38,7 @@ class Admin::LaboratoryController < Admin::ApplicationController
   private
 
   def laboratory_params
-    params.require(:laboratory).permit(:loginid, :password, :password_confirmation,
+    params.require(:laboratory).permit(:email, :password, :password_confirmation,
                                        :name, :laboratory_name, :max_num, :user_id)
   end
 
