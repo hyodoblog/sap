@@ -30,7 +30,8 @@ namespace :algorithm do
       max_laboratory_num_list = algorithm_step1(user_id,
                                                 students,
                                                 laboratories,
-                                                student_choice_list)
+                                                student_choice_list,
+                                                laboratory_choice_list)
 
       # Step 2
       # 全ての学生を未配属にする
@@ -113,7 +114,7 @@ namespace :algorithm do
     return laboratory_choice_list
   end
 
-  def algorithm_step1(user_id, students, laboratories)
+  def algorithm_step1(user_id, students, laboratories, student_choice_list, laboratory_choice_list)
     # Step 1
     num_students = students.length
     num_laboratories = laboratories.length

@@ -15,7 +15,8 @@
       h1.display-5 ユーザー一覧画面
       p.lead SAP稼働中は編集が行なえません。
       = link_to '学生と研究室のログインページ', "/sap/signin?sap_key=#{@config.sap_key}", class: 'btn btn-link', target: :_blank
-      = link_to 'SAP稼働を止める', '#', class: 'btn btn-danger pull-right', 'data-toggle' => 'modal', 'data-target' => '#release-modal'
+      = link_to 'アルゴリズム手動実行', '#', class: 'btn btn-warning ml-2', 'data-toggle' => 'modal', 'data-target' => '#algorithm-modal'
+      = link_to 'SAP稼働を一時停止', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#release-modal'
     - else
       h1.display-5 ユーザー管理画面
       p.lead 学生と研究室の管理を行って下さい！
@@ -140,14 +141,27 @@
             span aria-hidden="true" &times;
         .modal-body
           p 注意点
-          p ・学生と研究室が希望提出をできなくなる
-          p ・下記の閲覧期限まで配属一覧を閲覧できる
+          p ・学生と研究室が希望提出をできなくなります
+          p ・ただし、下記の閲覧期限まで配属一覧は閲覧できます
           p.small = "期限：#{@config.view_end_datetime.to_s(:datetime_jp)}"
           p  →後から変更できます。
-          h5 class="text-danger" 本当に稼働を止めますか？
+          h5 class="text-danger" 本当に稼働を一時停止させますか？
         .modal-footer
           button.btn.btn-secondary type="button" data-dismiss="modal" Close
           = link_to '稼働を止める', admin_release_off_path, class: 'btn btn-danger', method: :put
+  .modal.fade#algorithm-modal tabindex="-1" role="dialog" aria-hidden="true"
+    .modal-dialog role="document"
+      .modal-content
+        .modal-header
+          h5.modal-title#exampleModalLabel アルゴリズム手動実行
+          button.close type="button" data-dismiss="modal" aria-label="Close"
+            span aria-hidden="true" &times;
+        .modal-body
+          p アルゴリズムが実行されます。
+          h5 class="text-danger" 本当に実行しますか？
+        .modal-footer
+          button.btn.btn-secondary type="button" data-dismiss="modal" Close
+          = link_to '実行', admin_algorithm_manual_path, class: 'btn btn-warning', method: :post
 
 // 削除ボダンのモーダル
 // 時々二重定数の定義というエラーがでるため、varで定数を定義

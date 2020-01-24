@@ -6,10 +6,10 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 	.collapse.navbar-collapse#navbarSupportedContent
 		ul.navbar-nav.ml-auto
 			- if user_signed_in?
-				- if (@config && @config.init_setup_flag)
+				- if controller.controller_name == 'registrations' || (@config && @config.init_setup_flag)
 					li.nav-item
 						= header_link_item('管理者画面', admin_root_path, '')
-					- if @config.release_flag
+					- if @config && @config.release_flag
 						li.nav-item
 							= header_link_item('配属一覧', sap_assign_list_path, "?sap_key="+@config.sap_key)
 					- else

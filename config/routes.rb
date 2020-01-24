@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     patch  'release/on'
     put    'release/off'
     patch  'release/off'
+    post   'algorithm/manual'
     resources :laboratory, only: [:new, :create, :edit, :update, :destroy]
     resources :student,    only: [:new, :create, :edit, :update, :destroy]
   end
