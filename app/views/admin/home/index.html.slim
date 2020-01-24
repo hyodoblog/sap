@@ -23,7 +23,7 @@
       p.lead システムを稼働すると編集ができなくなります。
       p.lead
         '稼働開始は
-        = link_to 'SAP設定画面', admin_config_edit_path
+        = link_to 'SAP設定画面', admin_config_show_path
         'から行えます。
 
 - if @config && @config.init_setup_flag

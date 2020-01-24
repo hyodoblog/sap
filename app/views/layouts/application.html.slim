@@ -9,7 +9,8 @@ html.h-100
     = javascript_include_tag 'application'
     = favicon_link_tag 'favicon.ico'
     = analytics_init if Rails.env.production?
-    script data-ad-client="ca-pub-3030083922438341" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+    - if Rails.env.production?
+      script(data-ad-client="ca-pub-3030083922438341" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
   body.d-flex.flex-column.h-100
     main.flex-shrink-0
       = render 'common/header_notifications'

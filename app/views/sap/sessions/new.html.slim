@@ -19,18 +19,19 @@
           .col-lg-9.offset-lg-3
             .float-right
               = f.submit value: "ログイン", class: "btn btn-primary", data: { disable_with: "送信中..." }
-    - unless @config.contact_loginid.empty?
-      .text-center.my-3
-        = link_to 'ログインIDまたはパスワードを忘れた場合', '#', 'data-toggle' => 'modal', 'data-target' => '#password-forget-modal'
+    .small.text-center.my-3 = link_to 'ログインIDまたはパスワードを忘れた場合', '#', 'data-toggle' => 'modal', 'data-target' => '#password-forget-modal'
       
-      / Modal
-      .modal.fade#password-forget-modal tabindex="-1" role="dialog" aria-hidden="true"
-        .modal-dialog role="document"
-          .modal-content
-            .modal-header
-              h5.modal-title#exampleModalLabel 管理者へお問い合わせ
-              button.close type="button" data-dismiss="modal" aria-label="Close"
-                span aria-hidden="true" &times;
-            .modal-body
-              p 下記のログインIDへお問い合わせ下さい！
-              p.small = @config.contact_loginid
+    / Modal
+    .modal.fade#password-forget-modal tabindex="-1" role="dialog" aria-hidden="true"
+      .modal-dialog role="document"
+        .modal-content
+          .modal-header
+            h5.modal-title#exampleModalLabel 管理者へお問い合わせ
+            button.close type="button" data-dismiss="modal" aria-label="Close"
+              span aria-hidden="true" &times;
+          .modal-body
+            p 下記のEメールへお問い合わせ下さい！
+            - if @config.contact_email.empty?
+              p = @config.user.email
+            - else
+              p = @config.contact_loginid

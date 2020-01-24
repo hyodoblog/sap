@@ -28,7 +28,7 @@ namespace :algorithm do
       # Step 1
       # 最大研究室配属人数を整理
       max_laboratory_num_list = algorithm_step1(user_id,
-                                                studnets,
+                                                students,
                                                 laboratories,
                                                 student_choice_list)
 

@@ -35,7 +35,7 @@ module ApplicationHelper
       title: '研究室マッチングシステム',          # :full_title とすると、サイトに表示される <title> と全く同じものを表示できる
       description: '多くの大学では、大学3年次の末に研究室への配属が行われます。この研究室配属において、学生と研究室の満足度を高める目的で開発されたシステムが当サービス、「研究室マッチングシステム」です。',
       url: 'https://sap.hyodoblog.com',
-      image: 'https://sap.hyodoblog.com/ogp.jpg'
+      image: image_tag(asset_path('ogp.jpg'))
     }
   end
 

@@ -1,6 +1,9 @@
 class Admin::ConfigController < Admin::ApplicationController
   before_action :set_config
 
+  def show
+  end
+
   def edit
   end
 
@@ -14,7 +17,7 @@ class Admin::ConfigController < Admin::ApplicationController
     end
     if @config.update(config_params)
       flash[:notice] = '設定を編集しました'
-      redirect_to(admin_config_edit_path)
+      redirect_to(admin_config_show_path)
     else
       flash[:error_messages] = @config.errors.full_messages
       redirect_back(fallback_location: root_path)

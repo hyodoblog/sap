@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     delete 'init/all'
     delete 'init/laboratory'
     delete 'init/student'
+    get    'config/show'
     get    'config/edit'
     put    'config', to: 'config#update'
     patch  'config', to: 'config#update'

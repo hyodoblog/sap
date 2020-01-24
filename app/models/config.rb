@@ -22,13 +22,13 @@ class Config < ApplicationRecord
     presence: true,
     numericality: {
       only_integer: true,
-      greater_than_or_equal_to: 0
+      greater_than_or_equal_to: 1
     }
   validates :max_choice_laboratory,
     presence: true,
     numericality: {
       only_integer: true,
-      greater_than_or_equal_to: 0
+      greater_than_or_equal_to: 1
     }
   validates :max_confirm_student,
     allow_blank: true,
