@@ -25,5 +25,6 @@ ENV['RAILS_ENV'] ||= 'development'
 set :environment, ENV['RAILS_ENV']
 
 every 1.minute do
-  rake "algorithm:sap"
+  rake "algorithm:assign"
+  rake 'algorithm:rate'
 end

@@ -1,6 +1,6 @@
 namespace :algorithm do
   desc "研究室配属アルゴリズムの実装"
-  task :sap => :environment do
+  task :assign => :environment do
     User.all.each do |user|
 
       # SAPが稼働しているかチェック
@@ -19,8 +19,10 @@ namespace :algorithm do
       # データの初期化
       student_choice_list = student_choice_list_make(user_id)
       laboratory_choice_list = laboratory_choice_list_make(user_id)
-      laboratories = Laboratory.where(user_id: user_id)
-      students = Student.where(user_id: user_id)
+      students = Student.where(user_id: user_id).order(rate: 'DESC')
+      laboratories = Laboratory.where(user_id: user_id).order(rate: 'DESC')
+      num_students = students.length
+      num_laboratories = laboratories.length
 
       # -----------------------
       # --- アルゴリズムの実装 ---
@@ -30,8 +32,9 @@ namespace :algorithm do
       max_laboratory_num_list = algorithm_step1(user_id,
                                                 students,
                                                 laboratories,
-                                                student_choice_list,
-                                                laboratory_choice_list)
+                                                laboratory_rate_array,
+                                                num_students,
+                                                num_laboratories)
 
       # Step 2
       # 全ての学生を未配属にする
@@ -76,6 +79,43 @@ namespace :algorithm do
     end
   end
 
+  desc '学生と研究室のレートを更新'
+  task :rate => :environment do
+    User.all.each do |user|
+
+      # SAPが稼働しているかチェック
+      unless !user.config.nil? && user.config.release_flag
+        next
+      end
+
+      # 日付チェック
+      now_datetime = Time.zone.now
+      unless user.config.start_datetime <= now_datetime && user.config.end_datetime >= now_datetime
+        next
+      end
+
+      user_id = user.id
+
+      # データの初期化
+      student_choice_list = student_choice_list_make(user_id)
+      laboratory_choice_list = laboratory_choice_list_make(user_id)
+      students = Student.where(user_id: user_id)
+      laboratories = Laboratory.where(user_id: user_id)
+      config = Config.find_by(user_id: user_id)
+      max_student_rate = config.max_choice_student
+      max_laboratory_rate = config.max_choice_laboratory
+
+      # ---------------------
+      # --- レート更新開始 ----
+
+      students_rate_update(student_choice_list, students, max_student_rate)
+      laboratoties_rate_update(laboratory_choice_list, laboratories, max_laboratory_rate)
+
+      # --- レート更新終了 ----
+      # ---------------------
+    end
+  end
+
   private
 
   # 学生が希望した研究室の希望リストを整理
@@ -114,10 +154,8 @@ namespace :algorithm do
     return laboratory_choice_list
   end
 
-  def algorithm_step1(user_id, students, laboratories, student_choice_list, laboratory_choice_list)
+  def algorithm_step1(laboratories, num_students, num_laboratories)
     # Step 1
-    num_students = students.length
-    num_laboratories = laboratories.length
     avarage = num_students.to_i / num_laboratories.to_i
     # Step 2, 3, 4
     max_laboratory_num_list = {}
@@ -132,7 +170,15 @@ namespace :algorithm do
     end
     num_remain_students = num_students - num_tmp_assignment
     # Step 5
-    
+    while (num_remain_students > 0)
+      laboratories.each do |laboratory|
+        max_laboratory_num_list[laboratory.id] += 1
+        num_remain_students -= 1
+        if (num_remain_students == 0)
+          break
+        end
+      end
+    end
     return max_laboratory_num_list
   end
 
@@ -296,4 +342,43 @@ namespace :algorithm do
     end
     return false
   end
+
+  def students_rate_update(laboratory_choice_list, students, max_student_rate)
+    student_rate_list = {}
+    laboratory_choice_list.each do |laboratory_id, student_choice_array|
+      rank = 0
+      student_choice_array.each do |student_id|
+        student_rate_list[student_id] = (max_student_rate - rank)
+        rank += 1
+      end
+    end
+    student_rate_list.each do |student_id, rate|
+      students.each do |student|
+        if student.id == student_id
+          student.update_attributes(rate: rate)
+          break
+        end
+      end
+    end
+  end
+
+  def laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate)
+    laboratory_rate_list = {}
+    student_choice_list.each do |student_id, laboratory_choice_array|
+      rank = 0
+      laboratory_choice_array.each do |laboratory_id|
+        laboratory_rate_list[laboratory_id] = (max_laboratory_rate - rank)
+        rank += 1
+      end
+    end
+    laboratory_rate_list.each do |laboratory_id, rate|
+      laboratories.each do |laboratory|
+        if laboratory.id == laboratory_id
+          laboratory.update_attributes(rate: rate)
+          break
+        end
+      end
+    end
+  end
+
 end

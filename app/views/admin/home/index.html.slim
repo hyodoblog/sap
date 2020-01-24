@@ -60,6 +60,7 @@
         th Eメール
         th ログインID
         - unless @config.release_flag
+          th レート
           th
           th
     tbody
@@ -71,6 +72,7 @@
           td = laboratory.email
           td = laboratory.loginid
           - unless @config.release_flag
+            td = laboratory.rate
             td = link_to '編集', '/admin/laboratory/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark'
             td = link_to '削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
                          'data-url' => '/admin/laboratory/'+laboratory.id.to_s, 'data-text' => '「'+laboratory.laboratory_name+'」を削除します。',

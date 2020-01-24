@@ -41,7 +41,9 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.datetime "end_datetime", null: false
     t.datetime "view_end_datetime", null: false
     t.boolean "release_flag", default: false
+    t.boolean "finish_flag", default: false
     t.boolean "init_setup_flag", default: false
+    t.boolean "login_info_email_flag", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_configs_on_user_id"
@@ -88,6 +90,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.string "password_digest", null: false
     t.string "name", null: false
     t.string "student_num", null: false
+    t.string "rate"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
