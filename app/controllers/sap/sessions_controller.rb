@@ -11,7 +11,7 @@ class Sap::SessionsController < Sap::ApplicationController
     end
     admin_id = Config.find_by(sap_key: params[:sap_key]).user_id
     # 研究室
-    laboratory = Laboratory.where(user_id: admin_id).where(email: login_params[:email])
+    laboratory = Laboratory.where(user_id: admin_id).where(loginid: login_params[:loginid])
     laboratory = laboratory[0]
     if laboratory && laboratory.authenticate(login_params[:password])
       session[:laboratory_id] = laboratory.id
@@ -21,7 +21,7 @@ class Sap::SessionsController < Sap::ApplicationController
     end
 
     # 学生
-    student = Student.where(user_id: admin_id).where(email: login_params[:email])
+    student = Student.where(user_id: admin_id).where(loginid: login_params[:loginid])
     student = student[0]
     if student && student.authenticate(login_params[:password])
       session[:student_id] = student.id
@@ -44,6 +44,6 @@ class Sap::SessionsController < Sap::ApplicationController
   private
 
   def login_params
-    params.require(:sap_session).permit(:email, :password)
+    params.require(:sap_session).permit(:loginid, :password)
   end
 end

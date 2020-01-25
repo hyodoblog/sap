@@ -38,7 +38,8 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 					li.nav-item
 						= link_to 'ログアウト', sap_signout_path+"?sap_key="+session[:sap_key], method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' }
 				- else
-					li.nav-item
-						= header_link_item('ログイン', new_user_session_path, "")
-					li.nav-item
-						= header_link_item('新規登録', new_user_registration_path, "")
+					- unless params[:sap_key]
+						li.nav-item
+							= header_link_item('ログイン', new_user_session_path, "")
+						li.nav-item
+							= header_link_item('新規登録', new_user_registration_path, "")

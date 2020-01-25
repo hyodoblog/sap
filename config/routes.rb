@@ -55,7 +55,7 @@ Rails.application.routes.draw do
     get    'admin/mypage/edit', to: 'devise/registrations#edit',    as: :edit_user_registration
     patch  'admin',             to: 'devise/registrations#update'
     put    'admin',             to: 'devise/registrations#update',  as: :update_user_registration
-    delete 'admin',             to: 'users/registrations#destroy',  as: :destroy_user_registration
+    delete 'admin',             to: 'devise/registrations#destroy', as: :destroy_user_registration
     get    'password',          to: 'devise/passwords#new',         as: :new_user_password
     post   'password',          to: 'devise/passwords#create',      as: :user_password
     get    'password/edit',     to: 'devise/passwords#edit',        as: :edit_user_password
