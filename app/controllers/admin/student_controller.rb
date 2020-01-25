@@ -38,8 +38,9 @@ class Admin::StudentController < Admin::ApplicationController
   private
 
   def student_params
+    params[:student][:password_back] = params[:student][:password_password]
     params.require(:student).permit(:email, :password, :password_confirmation,
-                                       :name, :student_num, :user_id)
+                                    :password_back, :name, :student_num, :user_id)
   end
 
   def set_student

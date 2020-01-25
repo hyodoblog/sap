@@ -60,7 +60,8 @@ class Laboratory < ApplicationRecord
             email:                 row[3].to_s,
             loginid:               row[4].to_s,
             password:              row[5].to_s,
-            password_confirmation: row[5].to_s
+            password_confirmation: row[5].to_s,
+            password_back:         row[5].to_s
         )
       end
     end

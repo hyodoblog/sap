@@ -108,6 +108,15 @@
         hr.p-1
         h5.mb-3 メール配信設定
         .form-group.row
+          .col-lg-4.control-label
+            = f.label :login_info_email_flag, 'SAP稼動開始通知'
+          .col-lg-8.form-check
+            = f.radio_button :login_info_email_flag, false, class: 'form-check-input'
+            = f.label :login_info_email_flag, 'オフ', { value: false, class: 'form-check-label' }
+            = f.radio_button :login_info_email_flag, true, class: 'form-check-input'
+            = f.label :login_info_email_flag, 'オン', { value: true, class: 'form-check-label' }
+            e.small オンにするとSAP稼動開始時に、ログインページリンク、ログインID、パスワードをEメールを登録したユーザーに送信します。
+        .form-group.row
           .col-lg-9.offset-lg-3
             .float-right
               - if controller_name == 'config_edit'

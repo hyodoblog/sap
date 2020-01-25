@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.bigint "user_id"
     t.string "loginid", null: false
     t.string "password_digest", null: false
+    t.string "password_back", null: false
     t.string "name", null: false
     t.string "laboratory_name", null: false
     t.integer "max_num"
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.bigint "user_id"
     t.string "loginid", null: false
     t.string "password_digest", null: false
+    t.string "password_back", null: false
     t.string "name", null: false
     t.string "student_num", null: false
     t.string "rate"

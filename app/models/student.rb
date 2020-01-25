@@ -47,7 +47,8 @@ class Student < ApplicationRecord
             email:                 row[2].to_s,
             loginid:               row[3].to_s,
             password:              row[4].to_s,
-            password_confirmation: row[4].to_s
+            password_confirmation: row[4].to_s,
+            password_back:         row[4].to_s
         )
       end
     end
