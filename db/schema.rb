@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.string "password_back", null: false
     t.string "name", null: false
     t.string "student_num", null: false
-    t.string "rate"
+    t.integer "rate"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

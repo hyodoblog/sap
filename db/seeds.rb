@@ -29,7 +29,7 @@ Config.create(user_id:               user_id,
               contact_email:         '',
               max_choice_student:    4,
               max_choice_laboratory: 3,
-              max_confirm_student:   2,
+              max_confirm_student:   '',
               start_datetime:        now_time,
               end_datetime:          now_time + 1.day,
               view_end_datetime:     now_time + 2.day)
@@ -73,6 +73,21 @@ laboratories_choice_params = [
   { "laboratory_id" => 3, "student_id" => 4, "rank" => 4 }
 ]
 
+# laboratories_choice_params = [
+#   { "laboratory_id" => 1, "student_id" => 7, "rank" => 1 },
+#   { "laboratory_id" => 1, "student_id" => 2, "rank" => 2 },
+#   { "laboratory_id" => 1, "student_id" => 5, "rank" => 3 },
+#   { "laboratory_id" => 1, "student_id" => 4, "rank" => 4 },
+#   { "laboratory_id" => 2, "student_id" => 6, "rank" => 1 },
+#   { "laboratory_id" => 2, "student_id" => 2, "rank" => 2 },
+#   { "laboratory_id" => 2, "student_id" => 7, "rank" => 3 },
+#   { "laboratory_id" => 2, "student_id" => 1, "rank" => 4 },
+#   { "laboratory_id" => 3, "student_id" => 2, "rank" => 1 },
+#   { "laboratory_id" => 3, "student_id" => 5, "rank" => 2 },
+#   { "laboratory_id" => 3, "student_id" => 6, "rank" => 3 },
+#   { "laboratory_id" => 3, "student_id" => 4, "rank" => 4 }
+# ]
+
 laboratories_choice_params.each do |param|
   LaboratoryChoice.create(param)
 end
@@ -81,22 +96,43 @@ students_choice_params = [
   { "student_id" => 1, "laboratory_id" => 1, "rank" => 1 },
   { "student_id" => 1, "laboratory_id" => 2, "rank" => 2 },
   { "student_id" => 1, "laboratory_id" => 3, "rank" => 3 },
-  { "student_id" => 2, "laboratory_id" => 3, "rank" => 1 },
-  { "student_id" => 2, "laboratory_id" => 1, "rank" => 2 },
-  { "student_id" => 2, "laboratory_id" => 2, "rank" => 3 },
-  { "student_id" => 4, "laboratory_id" => 2, "rank" => 1 },
-  { "student_id" => 4, "laboratory_id" => 3, "rank" => 2 },
-  { "student_id" => 4, "laboratory_id" => 1, "rank" => 3 },
+  { "student_id" => 2, "laboratory_id" => 1, "rank" => 1 },
+  { "student_id" => 2, "laboratory_id" => 2, "rank" => 2 },
+  { "student_id" => 2, "laboratory_id" => 3, "rank" => 3 },
+  { "student_id" => 4, "laboratory_id" => 1, "rank" => 1 },
+  { "student_id" => 4, "laboratory_id" => 2, "rank" => 2 },
+  { "student_id" => 4, "laboratory_id" => 3, "rank" => 3 },
   { "student_id" => 5, "laboratory_id" => 1, "rank" => 1 },
-  { "student_id" => 5, "laboratory_id" => 3, "rank" => 2 },
-  { "student_id" => 5, "laboratory_id" => 2, "rank" => 3 },
+  { "student_id" => 5, "laboratory_id" => 2, "rank" => 2 },
+  { "student_id" => 5, "laboratory_id" => 3, "rank" => 3 },
   { "student_id" => 6, "laboratory_id" => 1, "rank" => 1 },
   { "student_id" => 6, "laboratory_id" => 2, "rank" => 2 },
   { "student_id" => 6, "laboratory_id" => 3, "rank" => 3 },
   { "student_id" => 7, "laboratory_id" => 1, "rank" => 1 },
-  { "student_id" => 7, "laboratory_id" => 3, "rank" => 2 },
-  { "student_id" => 7, "laboratory_id" => 2, "rank" => 3 }
+  { "student_id" => 7, "laboratory_id" => 2, "rank" => 2 },
+  { "student_id" => 7, "laboratory_id" => 3, "rank" => 3 }
 ]
+
+# students_choice_params = [
+#   { "student_id" => 1, "laboratory_id" => 1, "rank" => 1 },
+#   { "student_id" => 1, "laboratory_id" => 2, "rank" => 2 },
+#   { "student_id" => 1, "laboratory_id" => 3, "rank" => 3 },
+#   { "student_id" => 2, "laboratory_id" => 3, "rank" => 1 },
+#   { "student_id" => 2, "laboratory_id" => 1, "rank" => 2 },
+#   { "student_id" => 2, "laboratory_id" => 2, "rank" => 3 },
+#   { "student_id" => 4, "laboratory_id" => 2, "rank" => 1 },
+#   { "student_id" => 4, "laboratory_id" => 3, "rank" => 2 },
+#   { "student_id" => 4, "laboratory_id" => 1, "rank" => 3 },
+#   { "student_id" => 5, "laboratory_id" => 1, "rank" => 1 },
+#   { "student_id" => 5, "laboratory_id" => 3, "rank" => 2 },
+#   { "student_id" => 5, "laboratory_id" => 2, "rank" => 3 },
+#   { "student_id" => 6, "laboratory_id" => 1, "rank" => 1 },
+#   { "student_id" => 6, "laboratory_id" => 2, "rank" => 2 },
+#   { "student_id" => 6, "laboratory_id" => 3, "rank" => 3 },
+#   { "student_id" => 7, "laboratory_id" => 1, "rank" => 1 },
+#   { "student_id" => 7, "laboratory_id" => 3, "rank" => 2 },
+#   { "student_id" => 7, "laboratory_id" => 2, "rank" => 3 }
+# ]
 
 students_choice_params.each do |param|
   StudentChoice.create(param)

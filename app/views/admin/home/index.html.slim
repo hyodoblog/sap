@@ -59,8 +59,9 @@
         th 最大配属人数
         th Eメール
         th ログインID
-        - unless @config.release_flag
+        - if @config.release_flag
           th レート
+        - else
           th
           th
     tbody
@@ -71,8 +72,9 @@
           td = laboratory.max_num
           td = laboratory.email
           td = laboratory.loginid
-          - unless @config.release_flag
+          - if @config.release_flag
             td = laboratory.rate
+          - else
             td = link_to '編集', '/admin/laboratory/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark'
             td = link_to '削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
                          'data-url' => '/admin/laboratory/'+laboratory.id.to_s, 'data-text' => '「'+laboratory.laboratory_name+'」を削除します。',
@@ -99,7 +101,9 @@
         th 名前
         th Eメール
         th ログインID
-        - unless @config.release_flag
+        - if @config.release_flag
+          th レート
+        - else
           th
           th
 
@@ -110,7 +114,9 @@
           td = student.name
           td = student.email
           td = student.loginid
-          - unless @config.release_flag
+          - if @config.release_flag
+            td = student.rate
+          - else
             td = link_to '編集', '/admin/student/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark'
             td = link_to '削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
                         'data-url' => '/admin/student/'+student.id.to_s, 'data-text' => '「'+student.name+'」を削除します。',
@@ -150,7 +156,7 @@
           h5 class="text-danger" 本当に稼働を一時停止させますか？
         .modal-footer
           button.btn.btn-secondary type="button" data-dismiss="modal" Close
-          = link_to '稼働を止める', admin_release_off_path, class: 'btn btn-danger', method: :put
+          = link_to '稼働を一時停止する', admin_release_off_path, class: 'btn btn-danger', method: :put
   .modal.fade#algorithm-modal tabindex="-1" role="dialog" aria-hidden="true"
     .modal-dialog role="document"
       .modal-content

@@ -20,7 +20,7 @@ class Admin::ReleaseController < Admin::ApplicationController
 
   def off
     @config.update_attributes(release_flag: false)
-    flash[:notice] = 'SAPの稼働を止めました'
+    flash[:notice] = 'SAPの稼働を一時停止しました'
     redirect_to(admin_root_path)
   end
 

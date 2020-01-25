@@ -14,9 +14,9 @@ namespace :algorithm do
         next
       end
 
-      user_id = user.id
-
       # データの初期化
+      user_id = user.id
+      max_confirm_student = user.config.max_confirm_student
       student_choice_list = student_choice_list_make(user_id)
       laboratory_choice_list = laboratory_choice_list_make(user_id)
       students = Student.where(user_id: user_id).order(rate: 'DESC')
@@ -29,13 +29,10 @@ namespace :algorithm do
 
       # Step 1
       # 最大研究室配属人数を整理
-      max_laboratory_num_list = algorithm_step1(user_id,
-                                                students,
-                                                laboratories,
-                                                laboratory_rate_array,
+      max_laboratory_num_list = algorithm_step1(laboratories,
                                                 num_students,
                                                 num_laboratories)
-
+      
       # Step 2
       # 全ての学生を未配属にする
       current_assign_list = algorithm_step2(laboratories)
@@ -46,13 +43,14 @@ namespace :algorithm do
                                             student_choice_list,
                                             laboratory_choice_list,
                                             max_laboratory_num_list)
-
+      puts(current_assign_list)
       # Step 4
       # マッチングが高い学生は配属を確定させる
       confirm_student_array = algorithm_step4(current_assign_list,
                                               student_choice_list,
                                               laboratory_choice_list,
-                                              max_laboratory_num_list)
+                                              max_laboratory_num_list,
+                                              max_confirm_student)
 
       # Step 5
       # 配属されていない学生をランダムで配属
@@ -108,8 +106,8 @@ namespace :algorithm do
       # ---------------------
       # --- レート更新開始 ----
 
-      students_rate_update(student_choice_list, students, max_student_rate)
-      laboratoties_rate_update(laboratory_choice_list, laboratories, max_laboratory_rate)
+      students_rate_update(laboratory_choice_list, students, max_student_rate)
+      laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate)
 
       # --- レート更新終了 ----
       # ---------------------
@@ -149,6 +147,7 @@ namespace :algorithm do
       laboratory.laboratory_choice.each do |choice|
         student_array.push(choice.student_id)
       end
+
       laboratory_choice_list[laboratory.id] = student_array
     end
     return laboratory_choice_list
@@ -161,11 +160,12 @@ namespace :algorithm do
     max_laboratory_num_list = {}
     num_tmp_assignment = 0
     laboratories.each do |laboratory|
-      if laboratory.max_num <= avarage
+      if !laboratory.max_num.nil? && laboratory.max_num <= avarage
         max_laboratory_num_list[laboratory.id] = laboratory.max_num
         num_tmp_assignment += laboratory.max_num
       else
         max_laboratory_num_list[laboratory.id] = avarage
+        num_tmp_assignment += avarage
       end
     end
     num_remain_students = num_students - num_tmp_assignment
@@ -212,8 +212,7 @@ namespace :algorithm do
             current_assign_list[laboratory_id].delete(swap_student_id)
             current_assign_list[laboratory_id].push(student_id)
             student_choice_list[swap_student_id].delete(laboratory_id)
-            student_choice_list = {swap_student_id => student_choice_list[swap_student_id]}
-            current_assign_list = algorithm_step2(current_assign_list, student_choice_list,
+            current_assign_list = algorithm_step3(current_assign_list, student_choice_list,
                                                   laboratory_choice_list, max_laboratory_num_list)
             break
           end
@@ -223,7 +222,7 @@ namespace :algorithm do
     return current_assign_list
   end
 
-  def algorithm_step4(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list)
+  def algorithm_step4(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list, max_confirm_student)
     confirm_student_array = []
     student_choice_list.each do |student_id, laboratory_choice_array|
       laboratory_choice_array.each_with_index do |laboratory_id, index|
@@ -234,7 +233,7 @@ namespace :algorithm do
         if student_choice_array.nil? # 研究室が希望リストを提出していない場合スキップ
           next
         end
-        max_laboratory_num = max_laboratory_num_list[laboratory_id]
+        max_laboratory_num = max_confirm_student.nil? ? max_laboratory_num_list[laboratory_id] : max_confirm_student
         if check_matching?(student_choice_array, max_laboratory_num, student_id)
           confirm_student_array.push(student_id)
         end
@@ -304,6 +303,11 @@ namespace :algorithm do
     flag = false
     student_choice_array.each do |student_choice_id|
       if student_choice_id == student_id
+        current_assign_student_array.each do |current_assign_student_id|
+          unless student_choice_array.include?(current_assign_student_id)
+            return true, current_assign_student_id
+          end
+        end
         flag = true
         next
       end
@@ -346,15 +350,22 @@ namespace :algorithm do
   def students_rate_update(laboratory_choice_list, students, max_student_rate)
     student_rate_list = {}
     laboratory_choice_list.each do |laboratory_id, student_choice_array|
-      rank = 0
+      minus_point = 0
       student_choice_array.each do |student_id|
-        student_rate_list[student_id] = (max_student_rate - rank)
-        rank += 1
+        if student_rate_list[student_id].nil?
+          student_rate_list[student_id] = (max_student_rate - minus_point)
+        else
+          student_rate_list[student_id] += (max_student_rate - minus_point)
+        end
+        minus_point += 1
       end
     end
     student_rate_list.each do |student_id, rate|
       students.each do |student|
         if student.id == student_id
+          unless rate.nil? && student.rate.nil?
+            rate += student.rate
+          end
           student.update_attributes(rate: rate)
           break
         end
@@ -365,15 +376,22 @@ namespace :algorithm do
   def laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate)
     laboratory_rate_list = {}
     student_choice_list.each do |student_id, laboratory_choice_array|
-      rank = 0
+      minus_point = 0
       laboratory_choice_array.each do |laboratory_id|
-        laboratory_rate_list[laboratory_id] = (max_laboratory_rate - rank)
-        rank += 1
+        if laboratory_rate_list[laboratory_id].nil?
+          laboratory_rate_list[laboratory_id] = (max_laboratory_rate - minus_point)
+        else
+          laboratory_rate_list[laboratory_id] += (max_laboratory_rate - minus_point)
+        end
+        minus_point += 1
       end
     end
     laboratory_rate_list.each do |laboratory_id, rate|
       laboratories.each do |laboratory|
         if laboratory.id == laboratory_id
+          unless rate.nil? && laboratory.rate.nil?
+            rate += laboratory.rate
+          end
           laboratory.update_attributes(rate: rate)
           break
         end

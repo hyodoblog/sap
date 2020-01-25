@@ -4,6 +4,8 @@ class Laboratory < ApplicationRecord
   has_many   :student_choice,    dependent: :destroy
   has_many   :laboratory_choice, dependent: :destroy
   has_many   :assign_list,       dependent: :destroy
+  accepts_nested_attributes_for :student_choice,    allow_destroy: true
+  accepts_nested_attributes_for :laboratory_choice, allow_destroy: true
 
   validates :loginid,
             presence: true,

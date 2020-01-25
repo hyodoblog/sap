@@ -5,9 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :timeoutable, :trackable
 
-  has_one :config,      dependent: :destroy
-  has_one :assign_list, dependent: :destroy
-  has_one :student,     dependent: :destroy
-  has_one :laboratory,  dependent: :destroy
-  accepts_nested_attributes_for :config, :student, :laboratory
+  has_one  :config,      dependent: :destroy
+  has_many :assign_list, dependent: :destroy
+  has_many :student,     dependent: :destroy
+  has_many :laboratory,  dependent: :destroy
 end
