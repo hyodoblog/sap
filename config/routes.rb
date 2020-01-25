@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  root   'home#index'
+  get    'privacy', to: 'static#privacy'
 
   namespace :admin do
     root   'home#index'
@@ -64,5 +65,5 @@ Rails.application.routes.draw do
     get    'confirmation',      to: 'devise/confirmations#show',    as: :user_confirmation
     post   'confirmation',      to: 'devise/confirmations#create'
   end
-  resources :users  
+  resources :users
 end
