@@ -1,2 +1,0 @@
-module Admin::AlgorithmHelper
-end
