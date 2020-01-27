@@ -33,4 +33,5 @@
 !/docker/postgres/.keep
 
 # sitemap
-public/sitemap*
+#public/sitemap*
+#public/assets
