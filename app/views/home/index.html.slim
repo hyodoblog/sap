@@ -47,10 +47,9 @@ div#guid.py-5 style="background-color: #F2FDFF"
       = link_to '新規登録', new_user_registration_path, class: 'btn btn-warning btn-lg mr-5'
       = link_to 'ログイン', new_user_session_path, class: 'ml-5 btn btn-primary btn-lg'
 
-    / script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
-    / ins.adsbygoogle style="display:block" data-ad-client="ca-pub-3030083922438341" data-ad-slot="1699494596" data-ad-format="auto" data-full-width-responsive="true"
-    / javascript:
-    /   (adsbygoogle = window.adsbygoogle || []).push({});
+    - if Rails.env.production?
+      .py-5
+        = render('common/adsence')
 
 javascript:
   $(document).ready(function() {

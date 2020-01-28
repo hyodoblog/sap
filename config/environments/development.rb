@@ -67,7 +67,7 @@ Rails.application.configure do
       enable_starttls_auto: true,
       address: 'smtp.sendgrid.net',
       port: 587,
-      domain: ENV['HOST'] ||= 'localhost',
+      domain: 'localhost',
       user_name: ENV['SENDGRID_USER_NAME'],
       password: ENV['SNEDGRID_PASSWORD'],
       authentication: :plain

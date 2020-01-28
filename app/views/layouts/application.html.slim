@@ -13,12 +13,12 @@ html.h-100
       script(data-ad-client="ca-pub-3030083922438341" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
   body.d-flex.flex-column.h-100
     main.flex-shrink-0
-      = render 'common/header_notifications'
-      = render 'common/header'
+      = render('common/header_notifications')
+      = render('common/header')
       - if current_page?(root_path)
         div#home
           = yield
       - else
         div class="container" style="padding:0"
           = yield
-    = render 'common/footer'
+    = render('common/footer')

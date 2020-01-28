@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_03_191925) do
+ActiveRecord::Schema.define(version: 2020_01_03_024124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,28 +25,6 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
     t.index ["laboratory_id"], name: "index_assign_lists_on_laboratory_id"
     t.index ["student_id"], name: "index_assign_lists_on_student_id"
     t.index ["user_id"], name: "index_assign_lists_on_user_id"
-  end
-
-  create_table "configs", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "sap_key", null: false
-    t.string "university_name", null: false
-    t.string "faculty_name", null: false
-    t.string "department_name", null: false
-    t.string "contact_email", null: false
-    t.integer "max_choice_student", null: false
-    t.integer "max_choice_laboratory", null: false
-    t.integer "max_confirm_student"
-    t.datetime "start_datetime", null: false
-    t.datetime "end_datetime", null: false
-    t.datetime "view_end_datetime", null: false
-    t.boolean "release_flag", default: false
-    t.boolean "finish_flag", default: false
-    t.boolean "init_setup_flag", default: false
-    t.boolean "login_info_email_flag", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_configs_on_user_id"
   end
 
   create_table "laboratories", force: :cascade do |t|
@@ -103,6 +81,25 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "sap_key"
+    t.string "university_name"
+    t.string "faculty_name"
+    t.string "department_name"
+    t.string "contact_email"
+    t.integer "max_choice_student"
+    t.integer "max_choice_laboratory"
+    t.integer "max_confirmed_student"
+    t.datetime "start_datetime"
+    t.datetime "end_datetime"
+    t.datetime "view_end_datetime"
+    t.boolean "init_setup_flag", default: false
+    t.boolean "release_flag", default: false
+    t.boolean "start_flag", default: false
+    t.boolean "end_flag", default: false
+    t.boolean "login_info_email_flag", default: false
+    t.boolean "confirmation_notice_flag", default: false
+    t.boolean "end_notice_flag", default: false
+    t.boolean "view_end_notice_flag", default: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -125,7 +122,6 @@ ActiveRecord::Schema.define(version: 2020_01_03_191925) do
   add_foreign_key "assign_lists", "laboratories"
   add_foreign_key "assign_lists", "students"
   add_foreign_key "assign_lists", "users"
-  add_foreign_key "configs", "users"
   add_foreign_key "laboratories", "users"
   add_foreign_key "laboratory_choices", "laboratories"
   add_foreign_key "laboratory_choices", "students"

@@ -1,6 +1,6 @@
-= render partial: 'admin/shared/config_form',
-         locals: { title: '初期設定',
-                   card_title: "ステップ 1：システム設定\n（後で変更ができます）",
-                   model: @config,
-                   url: admin_init_setup_first_path,
-                   controller_name: 'init_setup'}
+= render( partial: 'admin/shared/config_form',
+          locals: { title: '初期設定',
+                    card_title: "ステップ 1：システム設定\n（後で変更ができます）",
+                    model: current_user,
+                    url: admin_init_setup_first_path,
+                    controller_name: 'init_setup' } )

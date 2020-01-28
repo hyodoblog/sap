@@ -1,7 +1,7 @@
 .row.sign-in-up-form
   .col-lg-6.offset-lg-3
     = form_with model: resource, url: new_user_session_path, class: 'card', local: true do |f|
-      .card-header 管理者ログイン
+      .card-header ログイン
       main.card-body
         .form-group.row
           = f.label :email, "Eメール", class: "col-lg-4 control-label"

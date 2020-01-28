@@ -5,13 +5,8 @@ class Admin::ApplicationController < ApplicationController
   private
 
   def check_release_flag!
-    begin
-      @config = Config.find_by(user_id: current_user.id)
-      if @config.release_flag
-        redirect_to(admin_root_path)
-      end
-    rescue
-      @config = nil
+    if current_user.release_flag
+      redirect_to(admin_root_path)
     end
   end
 end

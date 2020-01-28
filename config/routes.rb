@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root   'home#index'
-  get    'privacy', to: 'static#privacy'
+  get    'privacy', to: 'home#privacy'
 
   namespace :admin do
     root   'home#index'

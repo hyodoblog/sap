@@ -6,12 +6,12 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 	.collapse.navbar-collapse#navbarSupportedContent
 		ul.navbar-nav.ml-auto
 			- if user_signed_in?
-				- if controller.controller_name == 'registrations' || (@config && @config.init_setup_flag)
-					li.nav-item
-						= header_link_item('管理者画面', admin_root_path, '')
-					- if @config && @config.release_flag
+				li.nav-item
+					= header_link_item('管理者画面', admin_root_path, '')
+				- if current_user.init_setup_flag
+					- if current_user.release_flag
 						li.nav-item
-							= header_link_item('配属一覧', sap_assign_list_path, '?sap_key='+@config.sap_key)
+							= header_link_item('配属一覧', sap_assign_list_path, '?sap_key='+current_user.sap_key)
 					- else
 						li.nav-item.dropdown
 							= header_link_dropdown('メンバー追加', [new_admin_laboratory_path, new_admin_student_path, admin_csv_import_new_path])
@@ -46,6 +46,9 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 							= link_to('概要', '#service', class: 'nav-link', id: 'service-btn')
 						li.nav-item
 							= link_to('お問い合わせ', 'https://hyodoblog.com/contact', class: 'nav-link', target: '_blank')
+					- else
+						li.nav-item
+							= link_to('トップ', '/', class: 'nav-link')
 					li.nav-item
 						= header_link_item('新規登録', new_user_registration_path, '')
 					li.nav-item

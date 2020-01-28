@@ -1,20 +1,10 @@
 .jumbotron.mt-5
   // 初回ログイン時のみ
-  - if  !@config || !@config.init_setup_flag
-    h1.display-5 はじめまして
-    p.lead システムを使用するには以下の2ステップが必要です。
-    hr.my-3
-    ul
-      li.mt-1 Step 1：大学名や稼働期間などの初期設定
-      li.mt-1 Step 2：学生と研究室のデータを追加
-    hr.my-3
-    p.lead 早速ですが初期設定をしましょう！。
-    = link_to '初期設定開始', admin_init_setup_first_path, class: 'btn btn-primary', role: 'button'
-  - else
-    - if @config.release_flag
+  - if current_user.init_setup_flag
+    - if current_user.release_flag
       h1.display-5 ユーザー一覧画面
       p.lead SAP稼働中は編集が行なえません。
-      = link_to '学生と研究室のログインページ', "/sap/signin?sap_key=#{@config.sap_key}", class: 'btn btn-link', target: :_blank
+      = link_to '学生と研究室のログインページ', "/sap/signin?sap_key=#{current_user.sap_key}", class: 'btn btn-link', target: :_blank
       = link_to 'アルゴリズム手動実行', '#', class: 'btn btn-warning ml-2', 'data-toggle' => 'modal', 'data-target' => '#algorithm-modal'
       = link_to 'SAP稼働を一時停止', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#release-modal'
     - else
@@ -26,11 +16,21 @@
         '稼働開始は
         = link_to 'SAP設定画面', admin_config_show_path
         'から行えます。
+  - else
+    h1.display-5 はじめまして
+    p.lead システムを使用するには以下の2ステップが必要です。
+    hr.my-3
+    ul
+      li.mt-1 Step 1：大学名や稼働期間などの初期設定
+      li.mt-1 Step 2：学生と研究室のデータを追加
+    hr.my-3
+    p.lead 早速ですが初期設定をしましょう！。
+    = link_to '初期設定開始', admin_init_setup_first_path, class: 'btn btn-primary', role: 'button'
 
-- if @config && @config.init_setup_flag
+- if current_user.init_setup_flag
   .row.mt-3
     h2.col-sm-6 ユーザー一覧
-    - unless @config.release_flag
+    - unless current_user.release_flag
       div.col-sm-6.text-right
         = link_to 'csvインポート', admin_csv_import_new_path, class: 'btn btn-success btn-sm mr-2'
         = link_to '全削除', '#', class: 'btn btn-danger btn-sm delete-btn', 'data-toggle' => 'modal',
@@ -44,7 +44,7 @@
       |
         研究室一覧
       small.ml-2 = "登録人数：#{@laboratories.length}名"
-    - unless @config.release_flag
+    - unless current_user.release_flag
       div.col-sm-6.text-right
         = link_to '研究室を追加', new_admin_laboratory_path, class: 'btn btn-success mr-2 btn-sm'
         = link_to '全研究室削除', '#', class: 'btn btn-danger delete-btn btn-sm', 'data-toggle' => 'modal',
@@ -59,7 +59,7 @@
         th 最大配属人数
         th Eメール
         th ログインID
-        - if @config.release_flag
+        - if current_user.release_flag
           th レート
         - else
           th
@@ -72,7 +72,7 @@
           td = laboratory.max_num
           td = laboratory.email
           td = laboratory.loginid
-          - if @config.release_flag
+          - if current_user.release_flag
             td = laboratory.rate
           - else
             td = link_to '編集', '/admin/laboratory/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark'
@@ -87,7 +87,7 @@
       |
         学生一覧
       small.ml-2 = "登録人数：#{@students.length}名"
-    - unless @config.release_flag
+    - unless current_user.release_flag
       div.col-sm-6.text-right
         = link_to '学生を追加', new_admin_student_path, class: 'btn btn-success mr-2 btn-sm'
         = link_to '全学生削除', '#', class: 'btn btn-danger delete-btn btn-sm', 'data-toggle' => 'modal',
@@ -101,7 +101,7 @@
         th 名前
         th Eメール
         th ログインID
-        - if @config.release_flag
+        - if current_user.release_flag
           th レート
         - else
           th
@@ -114,7 +114,7 @@
           td = student.name
           td = student.email
           td = student.loginid
-          - if @config.release_flag
+          - if current_user.release_flag
             td = student.rate
           - else
             td = link_to '編集', '/admin/student/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark'
@@ -122,54 +122,53 @@
                         'data-url' => '/admin/student/'+student.id.to_s, 'data-text' => '「'+student.name+'」を削除します。',
                         'data-target' => '#delete-user-modal'
 
-- if @config && !@config.release_flag
-  / Modal
-  .modal.fade#delete-user-modal tabindex='-1' role='dialog' aria-hidden='true'
-    .modal-dialog role='document'
-      .modal-content
-        .modal-header
-          h5.modal-title#exampleModalLabel ユーザー削除確認
-          button.close type='button' data-dismiss='modal' aria-label='Close'
-            span aria-hidden='true' &times;
-        .modal-body
-          p#delete-user-modal-body-text
-          h5.text-danger 本当に削除しますか？
-        .modal-footer
-          button.btn.btn-secondary data-dismiss='modal' Close
-          = link_to '削除', '#', class: 'btn btn-danger', id: 'delete-user-modal-btn', method: :delete
-
 / Modal
-- if @config
-  .modal.fade#release-modal tabindex="-1" role="dialog" aria-hidden="true"
-    .modal-dialog role="document"
-      .modal-content
-        .modal-header
-          h5.modal-title#exampleModalLabel SAPの稼働を止めます
-          button.close type="button" data-dismiss="modal" aria-label="Close"
-            span aria-hidden="true" &times;
-        .modal-body
-          p 注意点
-          p ・学生と研究室が希望提出をできなくなります
-          p ・ただし、下記の閲覧期限まで配属一覧は閲覧できます
-          p.small = "期限：#{@config.view_end_datetime.to_s(:datetime_jp)}"
-          p  →後から変更できます。
-          h5 class="text-danger" 本当に稼働を一時停止させますか？
-        .modal-footer
-          button.btn.btn-secondary type="button" data-dismiss="modal" Close
-          = link_to '稼働を一時停止する', admin_release_off_path, class: 'btn btn-danger', method: :put
-  .modal.fade#algorithm-modal tabindex="-1" role="dialog" aria-hidden="true"
-    .modal-dialog role="document"
-      .modal-content
-        .modal-header
-          h5.modal-title#exampleModalLabel アルゴリズム手動実行
-          button.close type="button" data-dismiss="modal" aria-label="Close"
-            span aria-hidden="true" &times;
-        .modal-body
-          p アルゴリズムが実行されます。
-          h5 class="text-danger" 本当に実行しますか？
-        .modal-footer
-          button.btn.btn-secondary type="button" data-dismiss="modal" Close
-          = link_to '実行', admin_algorithm_manual_path, class: 'btn btn-warning', method: :post
+- if current_user.init_setup_flag
+  - if current_user.release_flag
+    .modal.fade#delete-user-modal tabindex='-1' role='dialog' aria-hidden='true'
+      .modal-dialog role='document'
+        .modal-content
+          .modal-header
+            h5.modal-title#exampleModalLabel ユーザー削除確認
+            button.close type='button' data-dismiss='modal' aria-label='Close'
+              span aria-hidden='true' &times;
+          .modal-body
+            p#delete-user-modal-body-text
+            h5.text-danger 本当に削除しますか？
+          .modal-footer
+            button.btn.btn-secondary data-dismiss='modal' Close
+            = link_to '削除', '#', class: 'btn btn-danger', id: 'delete-user-modal-btn', method: :delete
+  - else
+    .modal.fade#release-modal tabindex="-1" role="dialog" aria-hidden="true"
+      .modal-dialog role="document"
+        .modal-content
+          .modal-header
+            h5.modal-title#exampleModalLabel SAPの稼働を止めます
+            button.close type="button" data-dismiss="modal" aria-label="Close"
+              span aria-hidden="true" &times;
+          .modal-body
+            p 注意点
+            p ・学生と研究室が希望提出をできなくなります
+            p ・ただし、下記の閲覧期限まで配属一覧は閲覧できます
+            p.small = "期限：#{current_user.view_end_datetime.to_s(:datetime_jp)}"
+            p  →後から変更できます。
+            h5 class="text-danger" 本当に稼働を一時停止させますか？
+          .modal-footer
+            button.btn.btn-secondary type="button" data-dismiss="modal" Close
+            = link_to '稼働を一時停止する', admin_release_off_path, class: 'btn btn-danger', method: :put
+    .modal.fade#algorithm-modal tabindex="-1" role="dialog" aria-hidden="true"
+      .modal-dialog role="document"
+        .modal-content
+          .modal-header
+            h5.modal-title#exampleModalLabel アルゴリズム手動実行
+            button.close type="button" data-dismiss="modal" aria-label="Close"
+              span aria-hidden="true" &times;
+          .modal-body
+            p アルゴリズムが実行されます。
+            h5 class="text-danger" 本当に実行しますか？
+          .modal-footer
+            button.btn.btn-secondary type="button" data-dismiss="modal" Close
+            = link_to '実行', admin_algorithm_manual_path, class: 'btn btn-warning', method: :post
 
 // 削除ボダンのモーダル
 // 時々二重定数の定義というエラーがでるため、varで定数を定義

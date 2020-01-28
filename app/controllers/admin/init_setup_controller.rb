@@ -2,41 +2,33 @@ class Admin::InitSetupController < Admin::ApplicationController
   before_action :check_init_setup_flag
 
   def first
-    begin
-      @config = Config.find(current_user.config.id)
-    rescue NoMethodError => exception
-      @config = Config.new(flash[:config])
-    end
+    current_user = flash[:current_user] if !flash[:current_user].nil?
   end
 
   def first_setup
-    if config_params[:start_datetime] >= config_params[:end_datetime]
+    if user_params[:start_datetime] >= user_params[:end_datetime]
       flash[:error_messages] = ['希望終了日を希望開始日より後に設定して下さい！']
       redirect_back(fallback_location: root_path) and return
-    elsif config_params[:end_datetime] >= config_params[:view_end_datetime]
+    elsif user_params[:end_datetime] >= user_params[:view_end_datetime]
       flash[:error_messages] = ['閲覧期間を希望提出期間より遅く設定して下さい！']
       redirect_back(fallback_location: root_path) and return
     end
 
-    begin
-      config = Config.find(current_user.config.id)
-      config.update(config_params)
-    rescue NoMethodError => exception
-      config = Config.new(config_params)
-    end
-    if config.save
+    current_user.attributes = user_params
+    if current_user.save
       flash[:notice] = "ステップ1完了　入力した設定を保存しました"
       redirect_to(admin_init_setup_second_path)
     else
-      flash[:config] = config
-      flash[:error_messages] = config.errors.full_messages
+      flash[:current_user] = user_params
+      flash[:error_messages] = current_user.errors.full_messages
       redirect_back(fallback_location: root_path)
     end
   end
 
   def first_skip
-    unless Config.find_by(user_id: current_user.id)
-      Config.create(config_params_setup)
+    if current_user.university_name.nil?
+      current_user.attributes = user_params_setup
+      current_user.save(context: :init_setup)
     end
     redirect_to(admin_init_setup_second_path)
   end
@@ -80,28 +72,27 @@ class Admin::InitSetupController < Admin::ApplicationController
   end
 
   def second_skip
-    config = Config.find_by(user_id: current_user.id)
-    config.update_attributes(init_setup_flag: true)
+    current_user.update_attributes(init_setup_flag: true)
     flash[:notice] = "初期設定完了"
     redirect_to(admin_root_path)
   end
 
   private
 
-  def config_params
-    params.require(:config).permit(:user_id, :sap_key, :university_name, :faculty_name, :department_name,
-                                   :contact_email, :max_choice_student, :max_choice_laboratory,
-                                   :max_confirm_student, :start_datetime, :end_datetime, :view_end_datetime)
+  def user_params
+    params[:user][:sap_key] = User.generate_sap_key
+    params.require(:user).permit(:sap_key, :university_name, :faculty_name, :department_name,
+                                 :contact_email, :max_choice_student, :max_choice_laboratory,
+                                 :max_confirmed_student, :start_datetime, :end_datetime, :view_end_datetime)
   end
 
-  def config_params_setup
+  def user_params_setup
     now_datetime = DateTime.now
     {
-        user_id:current_user.id, sap_key: Config.generate_sap_key, university_name: '〇〇大学',
+        sap_key: User.generate_sap_key, university_name: '〇〇大学',
         faculty_name: '', department_name: '', contact_email: '',
-        max_choice_student: 1, max_choice_laboratory: 1, max_confirm_student: '',
-        start_datetime: now_datetime, end_datetime: now_datetime + 1.days, view_end_datetime: now_datetime + 2.days, release_flag: false,
-        init_setup_flag: false
+        max_choice_student: 1, max_choice_laboratory: 1, max_confirmed_student: '',
+        start_datetime: now_datetime, end_datetime: now_datetime + 1.days, view_end_datetime: now_datetime + 2.days
     }
   end
 

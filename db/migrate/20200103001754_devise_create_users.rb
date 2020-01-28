@@ -7,6 +7,27 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
+      ## Info
+      t.string    :sap_key
+      t.string    :university_name
+      t.string    :faculty_name
+      t.string    :department_name
+      t.string    :contact_email
+      t.integer   :max_choice_student
+      t.integer   :max_choice_laboratory
+      t.integer   :max_confirmed_student
+      t.datetime  :start_datetime
+      t.datetime  :end_datetime
+      t.datetime  :view_end_datetime
+      t.boolean   :init_setup_flag,          default: false
+      t.boolean   :release_flag,             default: false
+      t.boolean   :start_flag,               default: false
+      t.boolean   :end_flag,                 default: false
+      t.boolean   :login_info_email_flag,    default: false
+      t.boolean   :confirmation_notice_flag, default: false
+      t.boolean   :end_notice_flag,          default: false
+      t.boolean   :view_end_notice_flag,     default: false
+
       ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at
