@@ -34,36 +34,63 @@ Rails.application.routes.draw do
 
   # sap
   namespace :sap do
-    get    'signin',      to: 'sessions#new'
-    post   'signin',      to: 'sessions#create'
-    delete 'signout',     to: 'sessions#destroy'
-    get    'laboratory',  to: 'laboratory#index'
-    post   'laboratory',  to: 'laboratory#choice'
-    get    'student',     to: 'student#index'
-    post   'student',     to: 'student#choice'
+    namespace :students do
+      root   'home#index'
+      post   '/',             to: 'home#choice'
+      get    'signin',        to: 'sessions#new'
+      post   'signin',        to: 'sessions#create'
+      delete 'signout',       to: 'sessions#destroy'
+      get    'password/new',  to: 'password#new'
+      post   'password',      to: 'password#create'
+      get    'password/edit', to: 'password#edit'
+      put    'password'  ,    to: 'password#update'
+      patch  'password',      to: 'password#update'
+    end
+    namespace :laboratories do
+      root   'home#index'
+      post   '/',             to: 'home#choice'
+      get    'signin',        to: 'sessions#new'
+      post   'signin',        to: 'sessions#create'
+      delete 'signout',       to: 'sessions#destroy'
+      get    'password/new',  to: 'password#new'
+      post   'password',      to: 'password#create'
+      get    'password/edit', to: 'password#edit'
+      put    'password'  ,    to: 'password#update'
+      patch  'password',      to: 'password#update'
+    end
     get    'assign_list', to: 'assign_list#index'
   end
 
-  devise_for :users, skip: :all
-  devise_scope :user do
-    get    'signin',            to: 'devise/sessions#new',          as: :new_user_session
-    post   'signin',            to: 'devise/sessions#create',       as: :user_session
-    delete 'signout',           to: 'devise/sessions#destroy',      as: :destroy_user_session
-    get    'signup',            to: 'devise/registrations#new',     as: :new_user_registration
-    post   'signup',            to: 'devise/registrations#create',  as: :user_registration
-    get    'signup/cancel',     to: 'devise/registrations#cancel',  as: :cancel_user_registration
-    get    'admin/mypage/edit', to: 'devise/registrations#edit',    as: :edit_user_registration
-    patch  'admin',             to: 'devise/registrations#update'
-    put    'admin',             to: 'devise/registrations#update',  as: :update_user_registration
-    delete 'admin',             to: 'devise/registrations#destroy', as: :destroy_user_registration
-    get    'password',          to: 'devise/passwords#new',         as: :new_user_password
-    post   'password',          to: 'devise/passwords#create',      as: :user_password
-    get    'password/edit',     to: 'devise/passwords#edit',        as: :edit_user_password
-    patch  'password',          to: 'devise/passwords#update'
-    put    'password',          to: 'devise/passwords#update',      as: :update_user_password
-    get    'confirmation/new',  to: 'devise/confirmations#new',     as: :new_user_confirmation
-    get    'confirmation',      to: 'devise/confirmations#show',    as: :user_confirmation
-    post   'confirmation',      to: 'devise/confirmations#create'
+  # devise
+  devise_for :admins, skip: :sessions
+  devise_scope :admin do
+    get    'signin',            to: 'admin/devise/sessions#new'
+    post   'signin',            to: 'admin/devise/sessions#create'
+    delete 'signout',           to: 'admin/devise/sessions#destroy'
+    get    'signup',            to: 'admin/devise/registrations#new'
+    post   'signup',            to: 'admin/devise/registrations#create'
+    get    'signup/cancel',     to: 'admin/devise/registrations#cancel'
+    get    'admin/mypage/edit', to: 'admin/devise/registrations#edit'
+    patch  'admin',             to: 'admin/devise/registrations#update'
+    put    'admin',             to: 'admin/devise/registrations#update'
+    delete 'admin',             to: 'admin/devise/registrations#destroy'
+    get    'password',          to: 'admin/devise/passwords#new'
+    post   'password',          to: 'admin/devise/passwords#create'
+    get    'password/edit',     to: 'admin/devise/passwords#edit'
+    patch  'password',          to: 'admin/devise/passwords#update'
+    put    'password',          to: 'admin/devise/passwords#update'
+    get    'confirmation/new',  to: 'admin/devise/confirmations#new'
+    get    'confirmation',      to: 'admin/devise/confirmations#show'
+    post   'confirmation',      to: 'admin/devise/confirmations#create'
   end
-  resources :users
+  devise_for :students, controllers: {
+    sessions:      'students/devise/sessions',
+    passwords:     'students/devise/passwords',
+    registrations: 'students/devise/registrations'
+  }
+  devise_for :laboratories, controllers: {
+    sessions:      'laboratories/devise/sessions',
+    passwords:     'laboratories/devise/passwords',
+    registrations: 'laboratories/devise/registrations'
+  }
 end

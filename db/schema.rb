@@ -10,77 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_03_024124) do
+ActiveRecord::Schema.define(version: 2020_01_03_025946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "assign_lists", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "laboratory_id"
-    t.bigint "student_id"
-    t.boolean "confirm", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["laboratory_id"], name: "index_assign_lists_on_laboratory_id"
-    t.index ["student_id"], name: "index_assign_lists_on_student_id"
-    t.index ["user_id"], name: "index_assign_lists_on_user_id"
-  end
-
-  create_table "laboratories", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "loginid", null: false
-    t.string "password_digest", null: false
-    t.string "password_back", null: false
-    t.string "name", null: false
-    t.string "laboratory_name", null: false
-    t.integer "max_num"
-    t.integer "rate"
-    t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["loginid", "email"], name: "index_laboratories_on_loginid_and_email", unique: true
-    t.index ["user_id"], name: "index_laboratories_on_user_id"
-  end
-
-  create_table "laboratory_choices", force: :cascade do |t|
-    t.bigint "laboratory_id"
-    t.bigint "student_id"
-    t.integer "rank", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["laboratory_id"], name: "index_laboratory_choices_on_laboratory_id"
-    t.index ["student_id"], name: "index_laboratory_choices_on_student_id"
-  end
-
-  create_table "student_choices", force: :cascade do |t|
-    t.bigint "student_id"
-    t.bigint "laboratory_id"
-    t.integer "rank", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["laboratory_id"], name: "index_student_choices_on_laboratory_id"
-    t.index ["student_id"], name: "index_student_choices_on_student_id"
-  end
-
-  create_table "students", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "loginid", null: false
-    t.string "password_digest", null: false
-    t.string "password_back", null: false
-    t.string "name", null: false
-    t.string "student_num", null: false
-    t.integer "rate"
-    t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["loginid", "email"], name: "index_students_on_loginid_and_email", unique: true
-    t.index ["user_id"], name: "index_students_on_user_id"
-  end
-
-  create_table "users", force: :cascade do |t|
+  create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.integer "role", default: 1, null: false
     t.string "sap_key"
     t.string "university_name"
     t.string "faculty_name"
@@ -114,18 +52,117 @@ ActiveRecord::Schema.define(version: 2020_01_03_024124) do
     t.string "unconfirmed_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["confirmation_token"], name: "index_admins_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "assign_lists", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.bigint "laboratory_id"
+    t.bigint "student_id"
+    t.boolean "confirm", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_assign_lists_on_admin_id"
+    t.index ["laboratory_id"], name: "index_assign_lists_on_laboratory_id"
+    t.index ["student_id"], name: "index_assign_lists_on_student_id"
+  end
+
+  create_table "laboratories", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.bigint "admin_id"
+    t.integer "role", default: 3, null: false
+    t.string "name", null: false
+    t.string "professor_name", null: false
+    t.integer "max_num"
+    t.integer "rate"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer "invitation_limit"
+    t.string "invited_by_type"
+    t.bigint "invited_by_id"
+    t.integer "invitations_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_laboratories_on_admin_id"
+    t.index ["email"], name: "index_laboratories_on_email", unique: true
+    t.index ["invitation_token"], name: "index_laboratories_on_invitation_token", unique: true
+    t.index ["invitations_count"], name: "index_laboratories_on_invitations_count"
+    t.index ["invited_by_id"], name: "index_laboratories_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_laboratories_on_invited_by_type_and_invited_by_id"
+    t.index ["reset_password_token"], name: "index_laboratories_on_reset_password_token", unique: true
+  end
+
+  create_table "laboratory_choices", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.bigint "laboratory_id"
+    t.bigint "student_id"
+    t.integer "rank", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_laboratory_choices_on_admin_id"
+    t.index ["laboratory_id"], name: "index_laboratory_choices_on_laboratory_id"
+    t.index ["student_id"], name: "index_laboratory_choices_on_student_id"
+  end
+
+  create_table "student_choices", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.bigint "student_id"
+    t.bigint "laboratory_id"
+    t.integer "rank", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_student_choices_on_admin_id"
+    t.index ["laboratory_id"], name: "index_student_choices_on_laboratory_id"
+    t.index ["student_id"], name: "index_student_choices_on_student_id"
+  end
+
+  create_table "students", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.bigint "admin_id"
+    t.integer "role", default: 2, null: false
+    t.string "name", null: false
+    t.string "student_num", null: false
+    t.integer "rate"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer "invitation_limit"
+    t.string "invited_by_type"
+    t.bigint "invited_by_id"
+    t.integer "invitations_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_students_on_admin_id"
+    t.index ["email"], name: "index_students_on_email", unique: true
+    t.index ["invitation_token"], name: "index_students_on_invitation_token", unique: true
+    t.index ["invitations_count"], name: "index_students_on_invitations_count"
+    t.index ["invited_by_id"], name: "index_students_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_students_on_invited_by_type_and_invited_by_id"
+    t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "assign_lists", "admins"
   add_foreign_key "assign_lists", "laboratories"
   add_foreign_key "assign_lists", "students"
-  add_foreign_key "assign_lists", "users"
-  add_foreign_key "laboratories", "users"
+  add_foreign_key "laboratories", "admins"
+  add_foreign_key "laboratory_choices", "admins"
   add_foreign_key "laboratory_choices", "laboratories"
   add_foreign_key "laboratory_choices", "students"
+  add_foreign_key "student_choices", "admins"
   add_foreign_key "student_choices", "laboratories"
   add_foreign_key "student_choices", "students"
-  add_foreign_key "students", "users"
+  add_foreign_key "students", "admins"
 end

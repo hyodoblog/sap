@@ -1,17 +1,17 @@
-p = "#{@config.university_name} #{@config.faculty_name} #{@config.department_name}"
-p = "#{user.name}様"
-- if @config.start_datetime <= Time.zone.now
+p = "#{@admin.university_name} #{@admin.faculty_name} #{@admin.department_name}"
+p = "#{@user.name}様"
+- if @admin.start_datetime <= Time.zone.now
   p SAPログインページが発行され、希望提出ができるようになりました。
 - else
-  p = "SAPログインページが発行され、#{@config.start_datetime.to_s(:datetime_jp)}より希望提出ができます。"
+  p = "SAPログインページが発行され、#{@admin.start_datetime.to_s(:datetime_jp)}より希望提出ができます。"
 
-p ログインページリンク、ログインID、パスワードを以下に示します。
+p ログインする前に各自で以下のリンクよりパスワードの設定を行って下さい。
+p = link_to('パスワード設定', @password_init_url+'sap_key='+@admin.sap_key)
 
-p = link_to "ログインページ", sap_signin_path+'?sap_key='+@config.sap_key
-p = "ログインID：#{@user.loginid}"
-p = "パスワード：#{@user.password_back}"
+p = パスワードの設定が完了しましたら、以下のログインページよりログインしてください。
+p = link_to("ログインページ", @login_url+'?sap_key='+@admin.sap_key)
 
-p = "希望提出締め切りは#{@config.end_datetime.to_s(:datetime_jp)}}"
-p = "配属一覧閲覧期限は#{@config.view_end_datetime.to_s(:datetime_jp)}"
+p = "希望提出締め切りは#{@admin.end_datetime.to_s(:datetime_jp)}}"
+p = "配属一覧閲覧期限は#{@admin.view_end_datetime.to_s(:datetime_jp)}"
 
 それでは、良い配属になることを祈っております！

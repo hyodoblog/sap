@@ -4,19 +4,19 @@ namespace :algorithm do
     User.all.each do |user|
 
       # SAPが稼働しているかチェック
-      unless !user.config.nil? && user.config.release_flag
+      unless user.release_flag
         next
       end
 
       # 日付チェック
       now_datetime = Time.zone.now
-      unless user.config.start_datetime <= now_datetime && user.config.end_datetime >= now_datetime
+      unless user.start_datetime <= now_datetime && user.end_datetime >= now_datetime
         next
       end
 
       # データの初期化
       user_id = user.id
-      max_confirm_student = user.config.max_confirm_student
+      max_confirm_student = user.max_confirm_student
       student_choice_list = student_choice_list_make(user_id)
       laboratory_choice_list = laboratory_choice_list_make(user_id)
       students = Student.where(user_id: user_id).order(rate: 'DESC')
@@ -82,13 +82,13 @@ namespace :algorithm do
     User.all.each do |user|
 
       # SAPが稼働しているかチェック
-      unless !user.config.nil? && user.config.release_flag
+      unless user.release_flag
         next
       end
 
       # 日付チェック
       now_datetime = Time.zone.now
-      unless user.config.start_datetime <= now_datetime && user.config.end_datetime >= now_datetime
+      unless user.start_datetime <= now_datetime && user.end_datetime >= now_datetime
         next
       end
 
@@ -99,9 +99,8 @@ namespace :algorithm do
       laboratory_choice_list = laboratory_choice_list_make(user_id)
       students = Student.where(user_id: user_id)
       laboratories = Laboratory.where(user_id: user_id)
-      config = Config.find_by(user_id: user_id)
-      max_student_rate = config.max_choice_student
-      max_laboratory_rate = config.max_choice_laboratory
+      max_student_rate = user.max_choice_student
+      max_laboratory_rate = user.max_choice_laboratory
 
       # ---------------------
       # --- レート更新開始 ----

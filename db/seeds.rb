@@ -15,7 +15,7 @@
 test_email = ENV['DEVELOPMENT_EMAIL'] ||= 'example@example.com'
 now_time = Time.now
 
-User.create(email:        test_email,
+Admin.create(email:        test_email,
             password:     'password',
             confirmed_at: now_time)
 

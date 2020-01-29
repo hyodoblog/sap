@@ -58,7 +58,6 @@
         th 名前
         th 最大配属人数
         th Eメール
-        th ログインID
         - if current_user.release_flag
           th レート
         - else
@@ -71,7 +70,6 @@
           td = laboratory.name
           td = laboratory.max_num
           td = laboratory.email
-          td = laboratory.loginid
           - if current_user.release_flag
             td = laboratory.rate
           - else
@@ -100,7 +98,6 @@
         th 学籍番号
         th 名前
         th Eメール
-        th ログインID
         - if current_user.release_flag
           th レート
         - else
@@ -113,7 +110,6 @@
           td = student.student_num
           td = student.name
           td = student.email
-          td = student.loginid
           - if current_user.release_flag
             td = student.rate
           - else
@@ -124,7 +120,7 @@
 
 / Modal
 - if current_user.init_setup_flag
-  - if current_user.release_flag
+  - if !current_user.release_flag
     .modal.fade#delete-user-modal tabindex='-1' role='dialog' aria-hidden='true'
       .modal-dialog role='document'
         .modal-content
@@ -138,7 +134,7 @@
           .modal-footer
             button.btn.btn-secondary data-dismiss='modal' Close
             = link_to '削除', '#', class: 'btn btn-danger', id: 'delete-user-modal-btn', method: :delete
-  - else
+            
     .modal.fade#release-modal tabindex="-1" role="dialog" aria-hidden="true"
       .modal-dialog role="document"
         .modal-content

@@ -14,9 +14,11 @@
         div.mb-2.ml-2.row
           = button_to '研究室', admin_download_laboratory_path, method: :get, class: 'btn btn-link'
           = button_to '学生', admin_download_student_path, method: :get, class: 'btn btn-link'
-        p
+        p.m-0
           '・文字化けする場合は
           = link_to 'こちら', 'https://docs.google.com/spreadsheets/d/15bBbbsVXuyT3r3igJNfKhqnKzaUHrxVQ_USkKJImrfY/edit?usp=sharing', target: :_blank
+        p.mb-0.ml-2.small →上記のスプレッドシートをコピーして各自で学生と研究室の情報を入力してください。
+        p.ml-2.small →ツールバーに「パスワード生成」ボタンがあり、自動で初期パスワードを生成できます。
         hr.my-4
         p.small どちらか一方でも可
         = form_with url: url, method: 'post', local: true do |f|

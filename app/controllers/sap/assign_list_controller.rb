@@ -1,5 +1,6 @@
 class Sap::AssignListController < Sap::ApplicationController
-  skip_before_action :check_sap_key, if: -> { user_signed_in? }
+  skip_before_action :check_admin
+  #skip_before_action :check_sap_key, if: -> { user_signed_in? }
 
   def index
     laboratories = Laboratory.where(user_id: @admin.id)
