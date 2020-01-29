@@ -2,12 +2,12 @@ class Sap::AssignListController < Sap::ApplicationController
   skip_before_action :check_sap_key, if: -> { user_signed_in? }
 
   def index
-    laboratories = Laboratory.where(user_id: @config.user_id)
+    laboratories = Laboratory.where(user_id: @admin.id)
 
     # 更新時間の表示
     begin
       @last_update_time = AssignList.find_by(laboratory_id: laboratories[0].id).updated_at
-    rescue => exception
+    rescue
       @last_update_time = nil
     end
 

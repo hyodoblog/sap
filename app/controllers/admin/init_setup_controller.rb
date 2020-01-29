@@ -104,14 +104,9 @@ class Admin::InitSetupController < Admin::ApplicationController
     params.require(:csv_file_student)
   end
 
-  # 初期設定が完了している管理者はアクセス拒否
   def check_init_setup_flag
-    begin
-      if current_user.config.init_setup_flag
-        redirect_to(admin_root_path)
-      end
-    rescue NoMethodError => exception
-      # 何もしない
+    if current_user.init_setup_flag
+      redirect_to(admin_root_path)
     end
   end
 end

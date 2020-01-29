@@ -5,7 +5,7 @@ class Sap::StudentController < Sap::ApplicationController
     @student = Student.find(session[:student_id])
     @choice_laboratories = StudentChoice.where(student_id: session[:student_id])
     choice_laboratories_id_array = @choice_laboratories.map{|choice| choice.laboratory.id}
-    @laboratories = Laboratory.where(user_id: @config.user_id).where.not(id: choice_laboratories_id_array)
+    @laboratories = Laboratory.where(user_id: admin.id).where.not(id: choice_laboratories_id_array)
     begin
       assign = AssignList.find_by(student_id: session[:student_id])
       @student_assign_confirm = assign.confirm
@@ -33,7 +33,7 @@ class Sap::StudentController < Sap::ApplicationController
 
     choice_laboratories_data.each_with_index do |item, index|
       rank = index + 1
-      if rank > @config.max_choice_laboratory.to_i
+      if rank > @admin.max_choice_laboratory.to_i
         break
       end
 

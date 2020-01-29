@@ -1,13 +1,13 @@
 class Sap::ApplicationController < ApplicationController
-  before_action :check_sap_key, :set_config, :check_view_end_datetime
+  before_action :check_sap_key, :set_admin, :check_release_flag, :check_view_end_datetime
 
   private
 
   def check_sap_key
     if params[:sap_key]
       begin
-        admin_id = Config.find_by(sap_key: params[:sap_key]).user_id
-      rescue => exception
+        admin_id = User.find_by(sap_key: params[:sap_key]).id
+      rescue
         redirect_to(root_path)
       end
       if session[:sap_key]
@@ -25,27 +25,23 @@ class Sap::ApplicationController < ApplicationController
     end
   end
 
-  def set_config
-    begin
-      @config = Config.find_by(sap_key: params[:sap_key])
-    rescue => exception
-      redirect_to(root_path)
-    end
+  def set_admin
+    @admin = User.find_by(sap_key: params[:sap_key])
   end
 
   def check_release_flag
     begin
-      unless Config.find_by(sap_key: params[:sap_key]).release_flag
+      unless User.find_by(sap_key: params[:sap_key]).release_flag
         flash[:alert] = 'SAPが稼働していないためアクセスできません'
         redirect_to(sap_signin_path+'?sap_key='+params[:sap_key])
       end
-    rescue => exception
+    rescue
       redirect_to(root_path)
     end
   end
 
   def check_view_end_datetime
-    view_end_datetime = Config.find_by(sap_key: params[:sap_key]).view_end_datetime
+    view_end_datetime = User.find_by(sap_key: params[:sap_key]).view_end_datetime
     now_datetime = Time.zone.now
     if now_datetime >= view_end_datetime
       flash[:alert] = '閲覧期限が過ぎています'

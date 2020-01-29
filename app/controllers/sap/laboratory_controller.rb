@@ -5,7 +5,7 @@ class Sap::LaboratoryController < Sap::ApplicationController
     @laboratory = Laboratory.find(session[:laboratory_id])
     @choice_students = LaboratoryChoice.where(laboratory_id: session[:laboratory_id])
     choice_students_id_array = @choice_students.map{|choice| choice.student.id}
-    @students = Student.where(user_id: @config.user_id).where.not(id: choice_students_id_array)
+    @students = Student.where(user_id: @admin.id).where.not(id: choice_students_id_array)
 
     @laboratory_assign_confirm = false
     begin
@@ -22,7 +22,6 @@ class Sap::LaboratoryController < Sap::ApplicationController
   end
 
   def choice
-    # エラーチェック
     begin
       choice_students_data = choice_student_params[:items] 
     rescue
@@ -39,7 +38,7 @@ class Sap::LaboratoryController < Sap::ApplicationController
 
     choice_students_data.each_with_index do |item, index|
       rank = index + 1
-      if rank > @config.max_choice_student.to_i
+      if rank > @admin.max_choice_student.to_i
         break
       end
 

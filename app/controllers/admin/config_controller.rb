@@ -13,7 +13,7 @@ class Admin::ConfigController < Admin::ApplicationController
       flash[:error_messages] = ['閲覧期間を希望終了日より後に設定して下さい！']
       redirect_back(fallback_location: root_path) and return
     end
-    current_user.attributes(config_params)
+    current_user.attributes(current_user_params)
     if current_user.save(context: :init_setup)
       flash[:notice] = '設定を編集しました'
       redirect_to(admin_config_show_path)
