@@ -1,0 +1,22 @@
+.row.sign-in-up-form.mb-5
+  .col-lg-6.offset-lg-3
+    = form_with model: resource, url: new_admin_session_path, class: 'card', local: true do |f|
+      .card-header ログイン
+      main.card-body
+        .form-group.row
+          = f.label :email, "Eメール", class: "col-lg-4 control-label"
+          .col-lg-8
+            = f.email_field :email, class: "form-control"
+        .form-group.row
+          = f.label :password, "パスワード", class: "col-lg-4 control-label"
+          .col-lg-8
+            = f.password_field :password, class: "form-control"
+        .form-group.row
+          .col-lg-9.offset-lg-3
+            .float-right
+              = link_to "新規登録", new_admin_registration_path, class: "btn btn-outline-secondary mr-2"
+              = f.submit value: "ログイン", class: "btn btn-primary", data: { disable_with: "送信中..." }
+    
+    nav
+      .text-center.small.mt-3
+        = render "admins/devise/shared/links"

@@ -1,25 +1,25 @@
-class Admin::ReleaseController < Admin::ApplicationController
+class Admins::ReleaseController < Admins::ApplicationController
   skip_before_action :check_release_flag!
 
   def on
-    if current_user.login_info_email_flag
-      laboratories = Laboratory.where(user_id: current_user.id)
-      students = Student.where(user_id: current_user.id)
+    if current_admin.login_info_email_flag
+      laboratories = Laboratory.where(admin_id: current_admin.id)
+      students = Student.where(admin_id: current_admin.id)
       laboratories.each do |laboratory|
-        NotificationMailer.send_login_info(laboratory, current_user, sap_signin_path).deliver unless laboratory.email.empty?
+        NotificationMailer.send_login_info(laboratory, current_admin, sap_signin_path).deliver unless laboratory.email.empty?
       end
       students.each do |student|
-        NotificationMailer.send_login_info(studnet, current_user, sap_signin_path).deliver unless student.email.empty?
+        NotificationMailer.send_login_info(studnet, current_admin, sap_signin_path).deliver unless student.email.empty?
       end
     end
-    current_user.update_attributes(release_flag: true)
+    current_admin.update_attributes(release_flag: true)
     flash[:notice] = 'SAPのログインページを発行しました'
-    redirect_to(admin_root_path)
+    redirect_to(admins_root_path)
   end
 
   def off
-    current_user.update_attributes(release_flag: false)
+    current_admin.update_attributes(release_flag: false)
     flash[:notice] = 'SAPの稼働を一時停止しました'
-    redirect_to(admin_root_path)
+    redirect_to(admins_root_path)
   end
 end

@@ -1,12 +1,12 @@
-class Admin::ApplicationController < ApplicationController
-  before_action :authenticate_user!
+class Admins::ApplicationController < ApplicationController
+  before_action :authenticate_admin!
   before_action :check_release_flag!
 
   private
 
   def check_release_flag!
-    if current_user.release_flag
-      redirect_to(admin_root_path)
+    if current_admin.release_flag
+      redirect_to(admins_root_path)
     end
   end
 end

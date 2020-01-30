@@ -8,7 +8,6 @@ class DeviseCreateAdmins < ActiveRecord::Migration[5.2]
       t.string :encrypted_password, null: false, default: ""
 
       ## Info
-      t.integer   :role, null: false, default: ADMIN_ROLE
       t.string    :sap_key
       t.string    :university_name
       t.string    :faculty_name
@@ -50,9 +49,9 @@ class DeviseCreateAdmins < ActiveRecord::Migration[5.2]
       t.string   :unconfirmed_email # Only if using reconfirmable
 
       ## Lockable
-      # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
-      # t.string   :unlock_token # Only if unlock strategy is :email or :both
-      # t.datetime :locked_at
+      t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
+      t.string   :unlock_token # Only if unlock strategy is :email or :both
+      t.datetime :locked_at
 
       t.timestamps null: false
     end

@@ -5,26 +5,26 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 
 	.collapse.navbar-collapse#navbarSupportedContent
 		ul.navbar-nav.ml-auto
-			- if user_signed_in?
+			- if admin_signed_in?
 				li.nav-item
-					= header_link_item('管理者画面', admin_root_path, '')
-				- if current_user.init_setup_flag
-					- if current_user.release_flag
+					= header_link_item('管理者画面', admins_root_path, '')
+				- if current_admin.init_setup_flag
+					- if current_admin.release_flag
 						li.nav-item
-							= header_link_item('配属一覧', sap_assign_list_path, '?sap_key='+current_user.sap_key)
+							= header_link_item('配属一覧', sap_assign_list_path, '?sap_key='+current_admin.sap_key)
 					- else
 						li.nav-item.dropdown
-							= header_link_dropdown('メンバー追加', [new_admin_laboratory_path, new_admin_student_path, admin_csv_import_new_path])
+							= header_link_dropdown('メンバー追加', [new_admins_laboratory_path, new_admins_student_path, admins_csv_import_new_path])
 							.dropdown-menu aria-labelledby='navbarDropdown'
-								= link_to('研究室追加', new_admin_laboratory_path, class: 'dropdown-item')
-								= link_to('学生追加', new_admin_student_path, class: 'dropdown-item')
-								= link_to('csvインポート', admin_csv_import_new_path, class: 'dropdown-item')
+								= link_to('研究室追加', new_admins_laboratory_path, class: 'dropdown-item')
+								= link_to('学生追加', new_admins_student_path, class: 'dropdown-item')
+								= link_to('csvインポート', admins_csv_import_new_path, class: 'dropdown-item')
 						li.nav-item
-							= header_link_item('SAP設定', admin_config_show_path, '')
+							= header_link_item('SAP設定', admins_config_show_path, '')
 						li.nav-item
-							= header_link_item('マイページ', admin_mypage_show_path, '')
+							= header_link_item('マイページ', admins_mypage_show_path, '')
 				li.nav-item
-					= link_to('ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' })
+					= link_to('ログアウト', destroy_admin_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' })
 			- elsif session[:sap_key]
 				- if session[:laboratory_id]
 					li.nav-item
@@ -50,6 +50,6 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 						li.nav-item
 							= link_to('トップ', '/', class: 'nav-link')
 					li.nav-item
-						= header_link_item('新規登録', new_user_registration_path, '')
+						= header_link_item('新規登録', new_admin_registration_path, '')
 					li.nav-item
-						= header_link_item('ログイン', new_user_session_path, '')
+						= header_link_item('ログイン', new_admin_session_path, '')

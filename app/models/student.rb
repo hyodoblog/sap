@@ -1,8 +1,8 @@
 class Student < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, invite_for: 24.hours
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
 
   belongs_to :admin,             optional: true
   has_many   :student_choice,    dependent: :destroy
@@ -23,8 +23,14 @@ class Student < ApplicationRecord
               only_integer: true,
               greater_than_or_equal_to: 0
             }
+  validate :password_complexity
+  
+  def password_complexity
+    return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,70}$/
+    errors.add :password, "の強度が不足しています。パスワードの長さは8〜70文字とし、大文字、小文字、数字をそれぞれ1文字以上含める必要があります。"
+  end
 
-  def self.csv_import(csv_file, user_id)
+  def self.csv_import(csv_file, admin_id)
     Student.transaction do
       CSV.foreach(csv_file.path, headers: true) do |row|
         unless row.length == 4
@@ -32,7 +38,7 @@ class Student < ApplicationRecord
         end
 
         Student.create!(
-          user_id:               user_id,
+          admin_id:              admin_id,
           student_num:           row[0].to_s,
           name:                  row[1].to_s,
           email:                 row[2].to_s,

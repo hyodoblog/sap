@@ -8,7 +8,7 @@ class Sap::ApplicationController < ApplicationController
   private
 
   def check_admin
-    if user_signed_in?
+    if admin_signed_in?
       flash[:alert] = '管理者アカウントを一度ログアウトしてください！'
       redirect_back(fallback_location: root_path) and return
     end

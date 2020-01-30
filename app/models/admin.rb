@@ -63,6 +63,12 @@ class Admin < ApplicationRecord
   validates :view_end_datetime,
             presence: true,
             on: :init_setup
+  validate :password_complexity
+  
+  def password_complexity
+    return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,70}$/
+    errors.add :password, "の強度が不足しています。パスワードの長さは8〜70文字とし、大文字、小文字、数字をそれぞれ1文字以上含める必要があります。"
+  end
 
   def self.generate_sap_key
     begin

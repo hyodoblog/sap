@@ -1,0 +1,62 @@
+.row.mb-5
+  .col-lg-8.offset-lg-2
+    h3.mt-5.mb-4 = title
+    = render('common/form_notifications')
+    .card
+      .card-header = card_title
+      main.card-body
+        p.mb-2
+          '・csvテンプレートファイルは以下よりダウンロードができます
+          br
+          '・ファイル名は任意
+          br
+          '・形式はcsvのみ
+        div.mb-2.ml-2.row
+          = button_to '研究室', admins_download_laboratory_path, method: :get, class: 'btn btn-link'
+          = button_to '学生', admins_download_student_path, method: :get, class: 'btn btn-link'
+        p.m-0
+          '・文字化けする場合は
+          = link_to 'こちら', 'https://docs.google.com/spreadsheets/d/15bBbbsVXuyT3r3igJNfKhqnKzaUHrxVQ_USkKJImrfY/edit?usp=sharing', target: :_blank
+        p.mb-0.ml-2.small →上記のスプレッドシートをコピーして各自で学生と研究室の情報を入力してください。
+        p.ml-2.small →ツールバーに「パスワード生成」ボタンがあり、自動で初期パスワードを生成できます。
+        hr.my-4
+        p.small どちらか一方でも可
+        = form_with url: url, method: 'post', local: true do |f|
+          .form-group.row
+            .col-lg-5.control-label
+              = f.label :csv_file_laboratory, '研究室のCSVデータ'
+              .badge.text-danger *
+            .col-lg-7
+              .input-group
+                label.input-group-btn
+                  span.btn.btn-primary
+                    'ファイルを選択
+                    = f.file_field :csv_file_laboratory, accept: 'text/csv', class: 'd-none', autocomplete: 'csv_file_laboratory'
+                input.form-control type='text' readonly=''
+          .form-group.row
+            .col-lg-5.control-label
+              = f.label :csv_file_student, '学生のCSVデータ'
+              .badge.text-danger *
+            .col-lg-7
+              .input-group
+                label.input-group-btn
+                  span.btn.btn-primary
+                    'ファイルを選択
+                    = f.file_field :csv_file_student, accept: 'text/csv', class: 'd-none', autocomplete: 'csv_file_student'
+                input.form-control type='text' readonly=''
+
+          .form-group.row
+            .col-lg-9.offset-lg-3
+              .float-right
+                = link_to '戻る', admins_init_setup_first_path, class: 'btn btn-outline-secondary mr-2'
+                = link_to 'スキップ', admins_init_setup_second_skip_path, class: 'btn btn-outline-secondary mr-2'
+                = f.submit value: 'インポート', class: 'btn btn-success', data: { disable_with: 'インポート中...' }
+
+javascript:
+  $(document).on('change', ':file', function() {
+    var input = $(this),
+    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+    fileName = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    console.log(fileName)
+    input.parent().parent().next(':text').val(fileName);
+  });

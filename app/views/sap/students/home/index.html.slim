@@ -30,7 +30,7 @@ h2.my-3 研究室希望提出
       ul#choice_laboratory_left.list-group.overflow-auto.m-2 style="height:30rem"
         - @laboratories.each do |laboratory|
           li.list-group-item.choice-list-item style="white-space:nowrap"
-            = "#{laboratory.laboratory_name} - 最大人数：#{laboratory.max_num.to_s}"
+            = "#{laboratory.name} - 最大人数：#{laboratory.max_num.to_s}"
             = f.hidden_field 'items[][laboratory_id]', value: laboratory.id
   .col-6
     h4 希望提出フォーム
@@ -44,7 +44,7 @@ h2.my-3 研究室希望提出
         ul#choice_laboratory_right.list-group.overflow-auto style="min-height:2rem"
           - @choice_laboratories.each do |choice_laboratory|
             li.list-group-item.choice-list-item style="white-space:nowrap"
-              = "#{choice_laboratory.laboratory.laboratory_name} - 最大人数：#{choice_laboratory.laboratory.max_num.to_s}"
+              = "#{choice_laboratory.laboratory.name} - 最大人数：#{choice_laboratory.laboratory.max_num.to_s}"
               = f.hidden_field 'items[][laboratory_id]', value: choice_laboratory.laboratory.id
       = f.submit '希望提出', class: 'btn btn-lg btn-primary btn-block mt-4', id: 'resubmit-btn'
 

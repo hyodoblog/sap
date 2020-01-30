@@ -17,7 +17,6 @@ gem 'bcrypt'
 gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
-gem 'devise_invitable', '~> 2.0', '>= 2.0.1'
 gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
 gem 'activerecord-nulldb-adapter'
 

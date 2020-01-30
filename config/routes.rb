@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root   'home#index'
   get    'privacy', to: 'home#privacy'
 
-  namespace :admin do
+  namespace :admins do
     root   'home#index'
     get    'init_setup/first'
     put    'init_setup/first', to: 'init_setup#first_setup'
@@ -28,48 +28,49 @@ Rails.application.routes.draw do
     put    'release/off'
     patch  'release/off'
     post   'algorithm/manual'
-    resources :laboratory, only: [:new, :create, :edit, :update, :destroy]
-    resources :student,    only: [:new, :create, :edit, :update, :destroy]
+    resources :laboratories, only: [:new, :create, :edit, :update, :destroy]
+    resources :students,    only: [:new, :create, :edit, :update, :destroy]
   end
 
   # sap
   namespace :students do
     root 'home#index'
+    post '/', to: 'home#choice'
   end
   namespace :laboratories do
     root 'home#index'
+    post '/', to: 'home#choice'
   end
+  get 'assign_list', to: 'assign_lists#index'
 
   # devise
   devise_for :admins, skip: [:session, :registration, :password],
              controllers: {
-               confirmation: 'students/devise/confirmations'
+               confirmations: 'admins/devise/confirmations'
              }
   devise_scope :admin do
-    get    'sign_in',           to: 'admins/devise/sessions#new'
-    post   'sign_in',           to: 'admins/devise/sessions#create'
-    delete 'sign_out',          to: 'admins/devise/sessions#destroy'
-    get    'sign_up',           to: 'admins/devise/registrations#new'
-    post   'sign_up',           to: 'admins/devise/registrations#create'
-    # get    'sign_up/cancel',    to: 'admins/devise/registrations#cancel'
-    get    'mypage/edit',       to: 'admins/devise/registrations#edit'
-    patch  'mypage',            to: 'admins/devise/registrations#update'
-    put    'mypage',            to: 'admins/devise/registrations#update'
-    delete 'mypage',            to: 'admins/devise/registrations#destroy'
-    get    'password',          to: 'admins/devise/passwords#new'
-    post   'password',          to: 'admins/devise/passwords#create'
-    get    'password/edit',     to: 'admins/devise/passwords#edit'
-    patch  'password',          to: 'admins/devise/passwords#update'
-    put    'password',          to: 'admins/devise/passwords#update'
+    get    'sign_in',            to: 'admins/devise/sessions#new',          as: :new_admin_session
+    post   'sign_in',            to: 'admins/devise/sessions#create',       as: :admin_session
+    delete 'sign_out',           to: 'admins/devise/sessions#destroy',      as: :destroy_admin_session
+    get    'sign_up',            to: 'admins/devise/registrations#new',     as: :new_admin_registration
+    post   'sign_up',            to: 'admins/devise/registrations#create',  as: :admin_registration
+    # get    'sign_up/cancel',    to: 'admins/devise/registrations#cancel',  as: :cancel_admin_registration
+    get    'admins/mypage/edit', to: 'admins/devise/registrations#edit',    as: :edit_admin_registration
+    patch  'admins/mypage',      to: 'admins/devise/registrations#update',  as: :update_admin_registration
+    put    'admins/mypage',      to: 'admins/devise/registrations#update',  as: nil
+    delete 'admins/mypage',      to: 'admins/devise/registrations#destroy', as: :destroy_admin_registration
+    get    'password',           to: 'admins/devise/passwords#new',         as: :new_admin_password
+    post   'password',           to: 'admins/devise/passwords#create',      as: :admin_password
+    get    'password/edit',      to: 'admins/devise/passwords#edit',        as: :edit_admin_password
+    patch  'password',           to: 'admins/devise/passwords#update',      as: :update_admin_password
+    put    'password',           to: 'admins/devise/passwords#update',      as: :nil
   end
   devise_for :students, controllers: {
     sessions:      'students/devise/sessions',
     passwords:     'students/devise/passwords',
-    registrations: 'students/devise/registrations'
   }
   devise_for :laboratories, controllers: {
     sessions:      'laboratories/devise/sessions',
     passwords:     'laboratories/devise/passwords',
-    registrations: 'laboratories/devise/registrations'
   }
 end

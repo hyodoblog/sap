@@ -1,9 +1,9 @@
 class Sap::AssignListController < Sap::ApplicationController
   skip_before_action :check_admin
-  #skip_before_action :check_sap_key, if: -> { user_signed_in? }
+  #skip_before_action :check_sap_key, if: -> { admin_signed_in? }
 
   def index
-    laboratories = Laboratory.where(user_id: @admin.id)
+    laboratories = Laboratory.where(admin_id: @admin.id)
 
     # 更新時間の表示
     begin
@@ -31,7 +31,7 @@ class Sap::AssignListController < Sap::ApplicationController
       if session[:student_id]
         assign = AssignList.find_by(student_id: session[:student_id])
         @student_assign_confirm = assign.confirm
-        @student_assign_laboratory_name = assign.laboratory.laboratory_name
+        @student_assign_laboratory_name = assign.laboratory.name
       end
     rescue
       @student_assign_confirm = nil

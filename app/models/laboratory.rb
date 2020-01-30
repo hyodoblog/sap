@@ -29,8 +29,14 @@ class Laboratory < ApplicationRecord
               only_integer: true,
               greater_than_or_equal_to: 0
             }
+  validate :password_complexity
+  
+  def password_complexity
+    return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,70}$/
+    errors.add :password, "の強度が不足しています。パスワードの長さは8〜70文字とし、大文字、小文字、数字をそれぞれ1文字以上含める必要があります。"
+  end
 
-  def self.csv_import(csv_file, user_id)
+  def self.csv_import(csv_file, admin_id)
     Laboratory.transaction do
       CSV.foreach(csv_file.path, headers: true) do |row|
         unless row.length == 5
@@ -38,9 +44,9 @@ class Laboratory < ApplicationRecord
         end
 
         Laboratory.create!(
-          user_id:               user_id,
-          laboratory_name:       row[0].to_s,
-          name:                  row[1].to_s,
+          admin_id:              admin_id,
+          name:                  row[0].to_s,
+          professor_name:        row[1].to_s,
           max_num:               row[2].nil? ? '' : row[2].to_i,
           email:                 row[3].to_s,
           password:              row[4].to_s,

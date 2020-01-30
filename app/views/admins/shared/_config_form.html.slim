@@ -1,0 +1,157 @@
+.row.mb-5
+  .col-lg-8.offset-lg-2
+    h3.my-4
+      = title
+      - if controller_name == 'config_show'
+        span.pull-right
+          = link_to '編集', admins_config_edit_path, class: 'btn btn-outline-secondary mr-2'
+          = link_to 'SAP稼働開始', '#', class: 'btn btn-warning', 'data-toggle' => 'modal', 'data-target' => '#release-modal'
+    = render('common/form_notifications')
+    = form_with(model: model, url: url, class: 'card', method: :put, local: true) do |f|
+      .card-header = card_title
+      main.card-body
+        = f.hidden_field :admin_id, value: current_admin.id
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :university_name, '大学名'
+            .badge.text-danger *
+          .col-lg-8
+            = f.text_field :university_name, class: 'form-control', readonly: controller_name == 'config_show', autofocus: controller_name == 'config_edit', autocomplete: 'university_name'
+        .form-group.row
+          = f.label :department_name, '学部名', class: 'col-lg-4 control-label'
+          .col-lg-8
+            = f.text_field :department_name, class: 'form-control', readonly: controller_name == 'config_show', autocomplete: 'department_name'
+        .form-group.row
+          = f.label :faculty_name, '学科名', class: 'col-lg-4 control-label'
+          .col-lg-8
+            = f.text_field :faculty_name, class: 'form-control', readonly: controller_name == 'config_show', autocomplete: 'faculty_name'
+        .form-group.row
+          = f.label :contact_email, '連絡先メール', class: 'col-lg-4 control-label'
+          .col-lg-8
+            = f.text_field :contact_email, class: 'form-control', readonly: controller_name == 'config_show', autocomplete: 'contact_email'
+            e.small 学生または研究室がパスワードを忘れた場合に送信できるEメール
+        hr.p-1
+        h5 希望提出人数設定
+        .mb-3
+          - unless controller_name == 'config_show'
+            ul
+              li.mb-1.small SAPは学生と研究室がそれぞれの希望を提出することで成り立ちます
+              li.small 以下では学生と研究室が希望できる最大の人数または数を設定して下さい！
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :max_choice_student, '最大学生希望人数'
+            .badge.text-danger *
+          .col-lg-8
+            = f.number_field :max_choice_student, class: 'form-control', readonly: controller_name == 'config_show', autocomplete: 'max_choice_student'
+            e.small 研究室が希望できる学生の人数
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :max_choice_laboratory, '最大研究室希望数'
+            .badge.text-danger *
+          .col-lg-8
+            = f.number_field :max_choice_laboratory, class: 'form-control', readonly: controller_name == 'config_show', autocomplete: 'max_choice_laboratory'
+            e.small 学生が希望できる研究室の数
+        hr.p-1
+        h5 アルゴリズム設定
+        .mb-3
+          - unless controller_name == 'config_show'
+            ul
+              li.mb-1.small 研究室配属アルゴリズムには、希望した研究室のマッチング度が高い学生に対して「配属確定」という処理があります
+              li.mb-1.small 以下ではその確定できる最大人数を設定できます
+              li.mb-1.small 空欄だと制限なしとなります
+              li.small ⚠空欄または多く設定すると、もし留年などの理由により学生を削除した場合、配属確定した学生がリセットされ別の研究室へ配属される可能性があります
+        .form-group.row
+          .col-lg-4.control-label = f.label :max_confirmed_student, '最大配属確定学生数'
+          .col-lg-8
+            = f.number_field :max_confirmed_student, class: 'form-control', readonly: controller_name == 'config_show', autocomplete: 'max_confirmed_student'
+        hr.p-1
+        .mb-3
+          h5 日付設定
+          - unless controller_name == 'config_show'
+            ul
+              li.mb-1.small 右端のカレンダーボタンを押して日付を設定して下さい
+              li.small 閉じる時はもう一度カレンダーボタンを押すと閉じます
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :start_datetime, '希望提出開始日'
+            .badge.text-danger *
+          .col-lg-8
+            .input-group
+              = f.text_field :start_datetime, id: 'start_datetime', class: 'form-control datepicker', readonly: controller_name == 'config_show', autocomplete: 'start_datetime', data: { target: '#start_datetime' }
+              .input-group-append data-target='#start_datetime' data-toggle='datetimepicker'
+                .input-group-text
+                  i.fa.fa-calendar
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :end_datetime, '希望提出終了日'
+            .badge.text-danger *
+          .col-lg-8
+            .input-group
+              = f.text_field :end_datetime, id: 'end_datetime', class: 'form-control datepicker', readonly: controller_name == 'config_show', autocomplete: 'end_datetime', data: { target: '#end_datetime' }
+              .input-group-append data-target='#end_datetime' data-toggle='datetimepicker'
+                .input-group-text
+                  i.fa.fa-calendar
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :view_end_datetime, '配属閲覧終了日'
+            .badge.text-danger *
+          .col-lg-8
+            .input-group
+              = f.text_field :view_end_datetime, id: 'view_end_datetime', class: 'form-control datepicker', readonly: controller_name == 'config_show', autocomplete: 'view_end_datetime', data: { target: '#view_end_datetime' }
+              .input-group-append data-target='#view_end_datetime' data-toggle='datetimepicker'
+                .input-group-text
+                  i.fa.fa-calendar
+            p.mb-0.small SAP稼働を止めた後でも学生と研究室が配属一覧ページを閲覧できる期限。
+            p.small 希望提出終了日より遅く設定して下さい！
+        hr.p-1
+        h5.mb-3 メール配信設定
+        .form-group.row
+          .col-lg-4.control-label
+            = f.label :login_info_email_flag, 'SAP稼動開始通知'
+          .col-lg-8.form-check
+            .input-group
+              .form-check.form-check-inline
+                = f.radio_button :login_info_email_flag, false, class: 'form-check-input', disabled: controller_name == 'config_show'
+                = f.label :login_info_email_flag, 'オフ', { value: false, class: 'form-check-label' }
+              .form-check.form-check-inline
+                = f.radio_button :login_info_email_flag, true, class: 'form-check-input', disabled: controller_name == 'config_show'
+                = f.label :login_info_email_flag, 'オン', { value: true, class: 'form-check-label' }
+            e.small オンにするとSAP稼動開始時に、ログインページリンク、パスワードを登録したユーザーのEメールに一斉送信します。
+        .form-group.row
+          .col-lg-9.offset-lg-3
+            .float-right
+              - if controller_name == 'config_edit'
+                = f.submit value: '編集', class: 'btn btn-success', data: { disable_with: '編集中...' }
+              - elsif controller_name == 'init_setup'
+                = link_to 'スキップ', admins_init_setup_first_skip_path, class: "btn btn-outline-secondary mr-2"
+                = f.submit value: '登録してステップ2へ', class: 'btn btn-success', data: { disable_with: 'ステップ1送信中...' }
+
+- if controller_name == 'config_show' && model
+  / Modal
+  .modal.fade#release-modal tabindex="-1" role="dialog" aria-hidden="true"
+    .modal-dialog role="document"
+      .modal-content
+        .modal-header
+          h5.modal-title#exampleModalLabel SAPの稼働を開始します
+          button.close type="button" data-dismiss="modal" aria-label="Close"
+            span aria-hidden="true" &times;
+        .modal-body
+          p 稼働期間中の注意点
+          p ・管理者でもメンバーの管理ができなくなります
+          p.pl-3.small →稼動を一度止めれば再度編集が可能
+          p.pl-3.small ただし、止めている間は学生と研究室がログインできない
+          p ・登録した学生と研究室が専用のログインページが発行されます
+          p ・10分ごとにアルゴリズムが実行されます
+          p ・配属一覧ページが解放されます
+          p = "・稼動期限は#{model.end_datetime.to_s(:datetime_jp)}までです。"
+          h5 class="text-danger" 本当に稼働開始しますか？
+        .modal-footer
+          button.btn.btn-secondary type="button" data-dismiss="modal" Close
+          = link_to '稼働開始', admins_release_on_path, class: 'btn btn-warning', method: :put
+
+javascript:
+  $(function () {
+    $('.datepicker').datetimepicker({
+      format: 'YYYY-MM-DD HH:mm:ss'
+    });
+  });
