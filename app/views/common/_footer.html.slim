@@ -1,15 +1,21 @@
 footer.mt-auto.py-4.bg-light
 	.container
 		.row
-			.col-sm-3
-				p.m-1.small = link_to "お問い合わせ", 'https://hyodoblog.com/contact/', class: 'text-dark', target: '_blank'
-				p.m-1.small = link_to "プライバシーポリシー", privacy_path, class: 'text-dark'
-			.col-sm-3
-				p.m-1.text-dark FOLLOW ME!
-				p.m-1.ml-3.small = link_to 'Twitter', 'https://twitter.com/yusei_hyodo', class: 'text-dark', target: '_blank'
-			.col-sm-3
+			.col-sm-6.col-md-3
+				p.m-1.small = link_to('ドキュメント', 'https://hyodoblog.com/category/results/sap/document/', class: 'text-dark', target: '_blank')
+				p.m-1.small = link_to('お問い合わせ', 'https://hyodoblog.com/contact/', class: 'text-dark', target: '_blank')
+				p.m-1.small = link_to('プライバシーポリシー', privacy_path, class: 'text-dark')
+			.col-sm-6.col-md-3
+				p.m-1.text-dark SHARE PLEASE!
+				.ml-2
+					p.mb-1 = link_to('Tweet', '//twitter.com/share', class: 'text-dark twitter-share-button',
+										'data-text' => '独自のアルゴリズム（Student Assignment Program）を用いた研究室マッチングシステム #SAP,#研究室マッチングシステム',
+										'data-url' => 'https://sap.hyodoblog.com', 'data-lang' => 'ja')
+					.mb-1.fb-share-button data-href="https://sap.hyodoblog.com" data-layout="button_count">
+			.col-sm-6.col-md-3
 				p.m-1.small Produced by Yusei Hyodo
-			.col.sm-3
+				p.m-1.small = link_to('Twitter', 'https://twitter.com/yusei_hyodo', class: 'text-dark', target: '_blank')
+			.col.sm-6.col-md-3
 				p.m-1.text-dark バージョン
 				p.m-1.ml-3.small ver 1.0.0 beta
 		.row.mt-4
