@@ -21,10 +21,15 @@ module ApplicationHelper
   def default_meta_tags
     {
       site: '研究室マッチングシステム',
+      description: '多くの大学では、大学3年次の末に研究室への配属が行われます。この研究室配属において、学生と研究室の満足度を高める目的で開発されたシステムが当サービス、「研究室マッチングシステム」です。',
+      keywords: 'SAP,研究室,配属,マッチング,研究室つらい,研究室行きたくない,研究室訪問',
+      icon: asset_path("favicon.ico"),
       reverse: true,
       separator: '|',
+      charset: "UTF-8",
       og: defalut_og,
-      twitter: default_twitter_card
+      twitter: default_twitter_card,
+      fb: default_facebook
     }
   end
 
@@ -34,9 +39,11 @@ module ApplicationHelper
     {
       title: '研究室マッチングシステム',
       description: '多くの大学では、大学3年次の末に研究室への配属が行われます。この研究室配属において、学生と研究室の満足度を高める目的で開発されたシステムが当サービス、「研究室マッチングシステム」です。',
-      keywords: '研究室,配属,マッチング,研究室つらい,研究室行きたくない,研究室訪問',
       url: 'https://sap.hyodoblog.com',
-      image: image_tag(asset_path('ogp.jpg'))
+      type: 'website',
+      image: asset_path('ogp.jpg'),
+      site_name: '研究室マッチングシステム',
+      locale: "ja_JP"
     }
   end
 
@@ -44,6 +51,12 @@ module ApplicationHelper
     {
       card: 'summary_large_image', # または summary
       site: '@yusei_hyodo'            # twitter ID
+    }
+  end
+
+  def default_facebook
+    {
+      app_id: ENV['FACEBOOK_ID']
     }
   end
 end

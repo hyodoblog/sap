@@ -5,10 +5,10 @@ p = "#{@user.name}様"
 - else
   p = "SAPログインページが発行され、#{@admin.start_datetime.to_s(:datetime_jp)}より希望提出ができます。"
 
-p パスワードの設定が完了しましたら、以下のログインページよりログインしてください。
-p = link_to("ログインページ", @login_url+'?sap_key='+@admin.sap_key)
+p 以下のログイン情報を基にパスワードを設定
+p = link_to("ログインページ", @login_url)
 
-p = "希望提出締め切りは#{@admin.end_datetime.to_s(:datetime_jp)}}"
+p = "希望提出締め切りは#{@admin.end_datetime.to_s(:datetime_jp)}"
 p = "配属一覧閲覧期限は#{@admin.view_end_datetime.to_s(:datetime_jp)}"
 
 それでは、良い配属になることを祈っております！

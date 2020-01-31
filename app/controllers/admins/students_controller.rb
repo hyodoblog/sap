@@ -6,7 +6,7 @@ class Admins::StudentsController < Admins::ApplicationController
   end
 
   def create
-    student = current_admin.student.new(student_params)
+    student = current_admin.student.new(student_params_create)
     if student.save(context: :registration)
       flash[:notice] = student.name+'を追加しました'
       redirect_to(admins_root_path)
@@ -21,7 +21,7 @@ class Admins::StudentsController < Admins::ApplicationController
   end
 
   def update
-    if @student.update(student_params)
+    if @student.update(student_params_update)
       flash[:notice] = "#{@student.name}を編集しました"
       redirect_to(admins_root_path)
     else
@@ -39,11 +39,20 @@ class Admins::StudentsController < Admins::ApplicationController
   private
 
   def student_params
+    params[:student][:password_init] = params[:student][:password]
     params.require(:student).permit(:email, :password, :password_confirmation,
-                                    :name, :student_num, :admin_id)
+                                    :password_init, :name, :student_num)
+  end
+
+  def student_params_update
+    params.require(:student).permit(:name, :student_num)
   end
 
   def set_student
     @student = current_admin.student.find(params[:id])
+    if @student.nil?
+      flash[:alert] = '学生情報の取得に失敗しました'
+      redirect_to(admins_root_path) 
+    end
   end
 end

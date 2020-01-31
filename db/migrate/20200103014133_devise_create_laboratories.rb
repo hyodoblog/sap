@@ -6,6 +6,7 @@ class DeviseCreateLaboratories < ActiveRecord::Migration[5.2]
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
+      t.string :password_init,      null: false, default: ""
 
       ## Info
       t.references :admin,          foreign_key: true

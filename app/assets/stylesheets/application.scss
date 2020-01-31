@@ -68,47 +68,28 @@ $sm: 576px;
   }
 }
 
-// init setting page
-.init-setting-form {
-  @include sm {
-    margin-top: 20px;
-  }
-  @include md {
-    margin-top: 35px;
-  }
-  @include lg {
-    margin-top: 50px;
-  }
-  @include xl {
-    margin-top: 70px;
-  }
-}
-
 // home
 
 #home {
+  overflow: hidden;
   img {
     width: 100%;
   }
-
   h1 {
     color: #777;
     font-family: ten-mincho, serif;
   }
-
   h2 {
     color: #555;
     font-family: ヒラギノ角ゴ ProN, W3;
   }
-
   h4 {
     color: #444;
     font-family: ten-mincho, serif;
   }
-
   p {
     width: 90%;
-    color: #777;
+    color: #666;
     font-family: YuMincho, 'Yu Mincho', serif;
     font-size: 16px;
     @include sm {
@@ -124,6 +105,29 @@ $sm: 576px;
       font-size: 20px;
     }
   }
+  .back {
+    position: absolute;
+    width: 200%;
+    height: 180px;
+    top: 50%;
+    left: 50%;
+    @include sm {
+      height: 210px;
+    }
+    @include md {
+      height: 240px;
+    }
+    @include lg {
+      height: 270px;
+    }
+    @include xl {
+      height: 300px;
+    }
+  }
+  .content-wrap {
+    background-color: rgba($color: #fcfcfc, $alpha: 0.75);
+    border-radius: 2rem;
+  }
 }
 
 #top {
@@ -133,33 +137,27 @@ $sm: 576px;
   @include md {
     height: 100vh;
   }
-
   * {
     position: absolute;
   }
-
   .overlap {
     z-index: 10000;
   }
-
   img {
     height: 100%;
     object-fit: cover;
   }
-
   h1 {
     width: 100%;
     text-align: center;
-    top: 520px;
+    top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 24px;
     @include sm {
-      top: 540px;
       font-size: 24px;
     }
     @include md {
-      top: 80%;
       font-size: 32px;
     }
     @include lg {
@@ -173,6 +171,33 @@ $sm: 576px;
 }
 
 #about {
+  position: relative;
+  .back {
+    background-color: #3BB8EB;
+    -webkit-transform: translate(-50%, 0) rotate(-40deg);
+       -moz-transform: translate(-50%, 0) rotate(-40deg);
+            transform: translate(-50%, 0) rotate(-40deg);
+    @include sm {
+      -webkit-transform: translate(-50%, 0) rotate(-35deg);
+         -moz-transform: translate(-50%, 0) rotate(-35deg);
+              transform: translate(-50%, 0) rotate(-35deg);
+    }
+    @include md {
+      -webkit-transform: translate(-50%, 0) rotate(-30deg);
+         -moz-transform: translate(-50%, 0) rotate(-30deg);
+              transform: translate(-50%, 0) rotate(-30deg);
+    }
+    @include lg {
+      -webkit-transform: translate(-50%, 0) rotate(-25deg);
+         -moz-transform: translate(-50%, 0) rotate(-25deg);
+              transform: translate(-50%, 0) rotate(-25deg);
+    }
+    @include xl {
+      -webkit-transform: translate(-50%, 0) rotate(-20deg);
+         -moz-transform: translate(-50%, 0) rotate(-20deg);
+              transform: translate(-50%, 0) rotate(-20deg);
+    }
+  }
   .about-img-wrap {
     margin-bottom: 35px;
     @include md {
@@ -180,7 +205,6 @@ $sm: 576px;
       position: relative;
     }
   }
-
   img {
     width: 100%;
     max-height: 330px;
@@ -192,10 +216,34 @@ $sm: 576px;
     }
   }
 }
-
 #service {
-  background-color: #FAFAFA;
-
+  position: relative;
+  .back {
+    background-color: #AACD02;
+    -webkit-transform: translate(-50%, 0) rotate(40deg);
+       -moz-transform: translate(-50%, 0) rotate(40deg);
+            transform: translate(-50%, 0) rotate(40deg);
+    @include sm {
+      -webkit-transform: translate(-50%, 0) rotate(35deg);
+         -moz-transform: translate(-50%, 0) rotate(35deg);
+              transform: translate(-50%, 0) rotate(35deg);
+    }
+    @include md {
+      -webkit-transform: translate(-50%, 0) rotate(30deg);
+         -moz-transform: translate(-50%, 0) rotate(30deg);
+              transform: translate(-50%, 0) rotate(30deg);
+    }
+    @include lg {
+      -webkit-transform: translate(-50%, 0) rotate(25deg);
+         -moz-transform: translate(-50%, 0) rotate(25deg);
+              transform: translate(-50%, 0) rotate(25deg);
+    }
+    @include xl {
+      -webkit-transform: translate(-50%, 0) rotate(20deg);
+         -moz-transform: translate(-50%, 0) rotate(20deg);
+              transform: translate(-50%, 0) rotate(20deg);
+    }
+  }
   img {
     width: 150px;
     height: 150px;
@@ -212,4 +260,52 @@ $sm: 576px;
       height: 200px;
     }
   }
+}
+#history {
+  position: relative;
+  .back {
+    background-color: #E45F9D;
+    -webkit-transform: translate(-50%, 0) rotate(-40deg);
+       -moz-transform: translate(-50%, 0) rotate(-40deg);
+            transform: translate(-50%, 0) rotate(-40deg);
+    @include sm {
+      -webkit-transform: translate(-50%, 0) rotate(-35deg);
+         -moz-transform: translate(-50%, 0) rotate(-35deg);
+              transform: translate(-50%, 0) rotate(-35deg);
+    }
+    @include md {
+      -webkit-transform: translate(-50%, 0) rotate(-30deg);
+         -moz-transform: translate(-50%, 0) rotate(-30deg);
+              transform: translate(-50%, 0) rotate(-30deg);
+    }
+    @include lg {
+      -webkit-transform: translate(-50%, 0) rotate(-25deg);
+         -moz-transform: translate(-50%, 0) rotate(-25deg);
+              transform: translate(-50%, 0) rotate(-25deg);
+    }
+    @include xl {
+      -webkit-transform: translate(-50%, 0) rotate(-20deg);
+         -moz-transform: translate(-50%, 0) rotate(-20deg);
+              transform: translate(-50%, 0) rotate(-20deg);
+    }
+  }
+  .about-img-wrap {
+    margin-bottom: 35px;
+    @include md {
+      margin-bottom: 0px;
+      position: relative;
+    }
+  }
+  img {
+    width: 100%;
+    max-height: 330px;
+    @include md {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+#guid {
 }

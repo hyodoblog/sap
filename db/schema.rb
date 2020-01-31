@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
   create_table "laboratories", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "password_init", default: "", null: false
     t.bigint "admin_id"
     t.string "name", null: false
     t.string "professor_name", null: false
@@ -119,6 +120,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
   create_table "students", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "password_init", default: "", null: false
     t.bigint "admin_id"
     t.string "name", null: false
     t.string "student_num", null: false
