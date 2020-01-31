@@ -22,6 +22,7 @@ class Admins::StudentsController < Admins::ApplicationController
 
   def update
     if @student.update(student_params)
+      flash[:notice] = "#{@student.name}を編集しました"
       redirect_to(admins_root_path)
     else
       flash[:error_messages] = @student.errors.full_messages

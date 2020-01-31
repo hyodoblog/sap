@@ -2,7 +2,7 @@
   .col-lg-8.offset-lg-2
     h3.mt-5.mb-4
       'マイページ
-      = link_to '編集', edit_user_registration_path, class: 'btn btn-outline-secondary pull-right'
+      = link_to '編集', edit_admin_registration_path, class: 'btn btn-outline-secondary pull-right'
     .card
       .card-header アカウント情報
       main.card-body
@@ -26,4 +26,4 @@
         h5 class="text-danger" 本当に削除しますか？
       .modal-footer
         button.btn.btn-secondary type="button" data-dismiss="modal" Close
-        = link_to '削除', destroy_user_registration_path, class: 'btn btn-danger', method: :delete
+        = link_to '削除', destroy_admin_registration_path, class: 'btn btn-danger', method: :delete

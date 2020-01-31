@@ -5,10 +5,7 @@ p = "#{@user.name}様"
 - else
   p = "SAPログインページが発行され、#{@admin.start_datetime.to_s(:datetime_jp)}より希望提出ができます。"
 
-p ログインする前に各自で以下のリンクよりパスワードの設定を行って下さい。
-p = link_to('パスワード設定', @password_init_url+'sap_key='+@admin.sap_key)
-
-p = パスワードの設定が完了しましたら、以下のログインページよりログインしてください。
+p パスワードの設定が完了しましたら、以下のログインページよりログインしてください。
 p = link_to("ログインページ", @login_url+'?sap_key='+@admin.sap_key)
 
 p = "希望提出締め切りは#{@admin.end_datetime.to_s(:datetime_jp)}}"

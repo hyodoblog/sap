@@ -1,26 +1,26 @@
 namespace :algorithm do
   desc "研究室配属アルゴリズムの実装"
   task :assign => :environment do
-    User.all.each do |user|
+    Admin.all.each do |admin|
 
       # SAPが稼働しているかチェック
-      unless user.release_flag
+      unless admin.release_flag
         next
       end
 
       # 日付チェック
       now_datetime = Time.zone.now
-      unless user.start_datetime <= now_datetime && user.end_datetime >= now_datetime
+      unless admin.start_datetime <= now_datetime && admin.end_datetime >= now_datetime
         next
       end
 
       # データの初期化
-      user_id = user.id
+      admin_id = admin.id
       max_confirm_student = user.max_confirm_student
-      student_choice_list = student_choice_list_make(user_id)
-      laboratory_choice_list = laboratory_choice_list_make(user_id)
-      students = Student.where(user_id: user_id).order(rate: 'DESC')
-      laboratories = Laboratory.where(user_id: user_id).order(rate: 'DESC')
+      student_choice_list = student_choice_list_make(admin_id)
+      laboratory_choice_list = laboratory_choice_list_make(admin_id)
+      students = user.student.order(rate: 'DESC')
+      laboratories = user.laboratory.order(rate: 'DESC')
       num_students = students.length
       num_laboratories = laboratories.length
 
@@ -62,15 +62,15 @@ namespace :algorithm do
       # -----------------------
       
       # 過去の配属データをリセット
-      AssignList.where(user_id: user_id).delete_all
+      admin.assign_list.delete_all
 
       # データベースへの反映
       current_assign_list.each do |laboratory_id, student_array|
         student_array.each do |student_id|
           if confirm_student_array.include?(student_id)
-            AssignList.create(user_id: user_id, laboratory_id: laboratory_id, student_id: student_id, confirm: true)
+            admin.assign_list.create(laboratory_id: laboratory_id, student_id: student_id, confirm: true)
           else
-            AssignList.create(user_id: user_id, laboratory_id: laboratory_id, student_id: student_id)
+            admin.assign_list.create(laboratory_id: laboratory_id, student_id: student_id)
           end
         end
       end
@@ -79,27 +79,26 @@ namespace :algorithm do
 
   desc '学生と研究室のレートを更新'
   task :rate => :environment do
-    User.all.each do |user|
+    Admin.all.each do |admin|
 
       # SAPが稼働しているかチェック
-      unless user.release_flag
+      unless admin.release_flag
         next
       end
 
       # 日付チェック
       now_datetime = Time.zone.now
-      unless user.start_datetime <= now_datetime && user.end_datetime >= now_datetime
+      unless admin.start_datetime <= now_datetime && admin.end_datetime >= now_datetime
         next
       end
 
-      user_id = user.id
-
       # データの初期化
-      student_choice_list = student_choice_list_make(user_id)
-      laboratory_choice_list = laboratory_choice_list_make(user_id)
-      students = Student.where(user_id: user_id)
-      laboratories = Laboratory.where(user_id: user_id)
-      max_student_rate = user.max_choice_student
+      admin_id = admin.id
+      student_choice_list = student_choice_list_make(admin_id)
+      laboratory_choice_list = laboratory_choice_list_make(admin_id)
+      students = admin.student.order(rate: 'DESC')
+      laboratories = admin.laboratory.order(rate: 'DESC')
+      max_student_rate = admin.max_choice_student
       max_laboratory_rate = user.max_choice_laboratory
 
       # ---------------------
