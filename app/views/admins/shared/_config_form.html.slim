@@ -29,13 +29,15 @@
           = f.label :contact_email, '連絡先メール', class: 'col-lg-4 control-label'
           .col-lg-8
             = f.text_field :contact_email, class: 'form-control', readonly: controller_name == 'config_show', autocomplete: 'contact_email'
-            e.small 学生または研究室がパスワードを忘れた場合に送信できるEメール
+            e.small 学生または研究室が困ったときに連絡できるEメール。
+            br
+            e.small 空欄の場合は管理者のEメールが使用されます。
         hr.p-1
         h5 希望提出人数設定
         .mb-3
           - unless controller_name == 'config_show'
             ul
-              li.mb-1.small SAPは学生と研究室がそれぞれの希望を提出することで成り立ちます
+              li.mb-1.small SAPは学生と研究室がそれぞれの希望を提出することで成り立ちます。
               li.small 以下では学生と研究室が希望できる最大の人数または数を設定して下さい！
         .form-group.row
           .col-lg-4.control-label
@@ -43,23 +45,23 @@
             .badge.text-danger *
           .col-lg-8
             = f.number_field :max_choice_student, class: 'form-control', readonly: controller_name == 'config_show', autocomplete: 'max_choice_student'
-            e.small 研究室が希望できる学生の人数
+            e.small 研究室が希望できる学生の人数。
         .form-group.row
           .col-lg-4.control-label
             = f.label :max_choice_laboratory, '最大研究室希望数'
             .badge.text-danger *
           .col-lg-8
             = f.number_field :max_choice_laboratory, class: 'form-control', readonly: controller_name == 'config_show', autocomplete: 'max_choice_laboratory'
-            e.small 学生が希望できる研究室の数
+            e.small 学生が希望できる研究室の数。
         hr.p-1
         h5 アルゴリズム設定
         .mb-3
           - unless controller_name == 'config_show'
             ul
-              li.mb-1.small 研究室配属アルゴリズムには、希望した研究室のマッチング度が高い学生に対して「配属確定」という処理があります
-              li.mb-1.small 以下ではその確定できる最大人数を設定できます
-              li.mb-1.small 空欄だと制限なしとなります
-              li.small ⚠空欄または多く設定すると、もし留年などの理由により学生を削除した場合、配属確定した学生がリセットされ別の研究室へ配属される可能性があります
+              li.mb-1.small 研究室配属アルゴリズムには、希望した研究室のマッチング度が高い学生に対して「配属確定」という処理があります。
+              li.mb-1.small 以下ではその確定できる最大人数を設定できます。
+              li.mb-1.small 空欄だと制限なしとなります。
+              li.small ⚠空欄または多く設定すると、もし留年などの理由により学生を削除した場合、配属確定した学生がリセットされ別の研究室へ配属される可能性があります。
         .form-group.row
           .col-lg-4.control-label = f.label :max_confirmed_student, '最大配属確定学生数'
           .col-lg-8
@@ -69,8 +71,8 @@
           h5 日付設定
           - unless controller_name == 'config_show'
             ul
-              li.mb-1.small 右端のカレンダーボタンを押して日付を設定して下さい
-              li.small 閉じる時はもう一度カレンダーボタンを押すと閉じます
+              li.mb-1.small 右端のカレンダーボタンを押して日付を設定して下さい。
+              li.small 閉じる時はもう一度カレンダーボタンを押すと閉じます。
         .form-group.row
           .col-lg-4.control-label
             = f.label :start_datetime, '希望提出開始日'
@@ -101,8 +103,9 @@
               .input-group-append data-target='#view_end_datetime' data-toggle='datetimepicker'
                 .input-group-text
                   i.fa.fa-calendar
-            p.mb-0.small SAP稼働を止めた後でも学生と研究室が配属一覧ページを閲覧できる期限。
-            p.small 希望提出終了日より遅く設定して下さい！
+            e.small SAP稼働を止めた後でも学生と研究室が配属一覧ページを閲覧できる期限。
+            br
+            e.small 希望提出終了日より遅く設定して下さい！
         hr.p-1
         h5.mb-3 メール配信設定
         .form-group.row
@@ -116,7 +119,10 @@
               .form-check.form-check-inline
                 = f.radio_button :login_info_email_flag, true, class: 'form-check-input', disabled: controller_name == 'config_show'
                 = f.label :login_info_email_flag, 'オン', { value: true, class: 'form-check-label' }
-            e.small オンにするとSAP稼動開始時に、ログインページリンク、パスワードを登録したユーザーのEメールに一斉送信します。
+              e.small オンにするとSAP稼動開始時に、ログインページリンクとパスワードを登録したユーザーのEメールに一斉送信します。
+              br
+              e.small ⚠稼働開始通知を一斉送信できるのは、稼働開始時の一度のみです。
+
         .form-group.row
           .col-lg-9.offset-lg-3
             .float-right

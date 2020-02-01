@@ -1,18 +1,25 @@
 class Student < ApplicationRecord
+  belongs_to :admin,             optional: true
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable
 
-  belongs_to :admin,             optional: true
   has_many   :student_choice,    dependent: :destroy
   has_many   :laboratory_choice, dependent: :destroy
   has_many   :assign_list,       dependent: :destroy
   accepts_nested_attributes_for :student_choice,    allow_destroy: true
   accepts_nested_attributes_for :laboratory_choice, allow_destroy: true
 
+  validates :email,
+            presence: true,
+            format: { with: Devise.email_regexp },
+            uniqueness: { scope: :admin_id }
+  validates :password,
+            presence: true,
+            length: { within: Devise.password_length }
   validates :name,
-            presence: :true,
+            presence: true,
             length: {maximum: 50}
   validates :student_num,
             presence: true,

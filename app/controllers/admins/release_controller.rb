@@ -7,7 +7,7 @@ class Admins::ReleaseController < Admins::ApplicationController
         NotificationMailer.send_login_info(laboratory, current_admin, new_laboratory_session_path).deliver
       end
       current_admin.student.each do |student|
-        NotificationMailer.send_login_info(studnet, current_admin, new_student_session_path).deliver
+        NotificationMailer.send_login_info(student, current_admin, new_student_session_path).deliver
       end
     end
     current_admin.update_attributes(release_flag: true, start_flag: true)

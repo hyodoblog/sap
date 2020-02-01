@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_laboratories_on_admin_id"
-    t.index ["email"], name: "index_laboratories_on_email", unique: true
+    t.index ["email", "admin_id"], name: "index_laboratories_on_email_and_admin_id", unique: true
     t.index ["reset_password_token"], name: "index_laboratories_on_reset_password_token", unique: true
   end
 
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_students_on_admin_id"
-    t.index ["email"], name: "index_students_on_email", unique: true
+    t.index ["email", "admin_id"], name: "index_students_on_email_and_admin_id", unique: true
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
   end
 

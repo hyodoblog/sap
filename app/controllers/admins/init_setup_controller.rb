@@ -47,26 +47,26 @@ class Admins::InitSetupController < Admins::ApplicationController
     # csv import
     flash_notice_messages = []
     admin_id = current_admin.id
-    # laboratory
-    if params[:csv_file_laboratory]
-      begin
-        Laboratory.csv_import(csv_file_laboratory_params, admin_id)
-      rescue => e
-        flash[:error_messages] = ['研究室データをもう一度確認下さい', e.message]
-        redirect_back(fallback_location: root_path) and return
-      end
-      flash_notice_messages.push('研究室のcsvファイルのインポート成功')
-    end
     # student
     if params[:csv_file_student]
       begin
-        Student.csv_import(csv_file_student_params, admin_id)
+        current_admin.student.csv_import(csv_file_student_params, admin_id)
       rescue => e
-        flash[:notices] = flash_notice_messages
         flash[:error_messages] = ['学生データをもう一度確認下さい', e.message]
         redirect_back(fallback_location: root_path) and return
       end
       flash_notice_messages.push('学生のcsvファイルのインポート成功')
+    end
+    # laboratory
+    if params[:csv_file_laboratory]
+      begin
+        current_admin.laboratory.csv_import(csv_file_laboratory_params, admin_id)
+      rescue => e
+        flash[:notices] = flash_notice_messages
+        flash[:error_messages] = ['研究室データをもう一度確認下さい', e.message]
+        redirect_back(fallback_location: root_path) and return
+      end
+      flash_notice_messages.push('研究室のcsvファイルのインポート成功')
     end
     redirect_to(admins_init_setup_second_skip_path)
   end

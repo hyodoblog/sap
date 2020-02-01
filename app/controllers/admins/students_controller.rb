@@ -38,7 +38,7 @@ class Admins::StudentsController < Admins::ApplicationController
 
   private
 
-  def student_params
+  def student_params_create
     params[:student][:password_init] = params[:student][:password]
     params.require(:student).permit(:email, :password, :password_confirmation,
                                     :password_init, :name, :student_num)
