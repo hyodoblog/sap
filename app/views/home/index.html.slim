@@ -70,9 +70,9 @@
       = link_to '新規登録', new_admin_registration_path, class: 'btn btn-warning btn-lg mr-5'
       = link_to 'ログイン', new_admin_session_path, class: 'ml-5 btn btn-primary btn-lg'
 
-    - if Rails.env.production?
-      .py-5
-        = render('common/adsence')
+- if Rails.env.production?
+  .my-4.py-5
+    = render('common/adsence')
 
 javascript:
   $(document).ready(function() {

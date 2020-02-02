@@ -1,27 +1,38 @@
-h3.my-4 配属一覧
-- if @last_update_time.nil?
-  p 未実行です
-- else
-  p = "最新更新時間：#{@last_update_time.to_s(:datetime_jp)}"
-  - if @student_assign_confirm.nil? || !@student_assign_confirm
-    p.alert.alert-dark
-      span.text-danger 赤
-      |
-        で表示されている学生は配属が確定しています
-  - else
-    p.alert.alert-info = "現在「#{@student_assign_laboratory_name}」への配属が確定しています"
-table.table.table-hover
-  thead.thead-dark
-    tr
-      th 研究室名
-      th 学生
-  tbody
-    - @assign_list.each do |laboratory_name, student_array|
-      tr
-        td = laboratory_name
-        td
-          - student_array.each do |student|
-            - if student[1]
-              span.mr-3.text-danger = student[0]
-            - else
-              span.mr-3 = student[0]
+- if Rails.env.production?
+  .my-5.d-sm-none
+    = render('common/adsence')
+.row
+  .col-lg-9
+    h3.my-4 配属一覧
+    - if @last_update_time.nil?
+      p 未実行です
+    - else
+      p = "最新更新時間：#{@last_update_time.to_s(:datetime_jp)}"
+      - if @student_assign_confirm.nil? || !@student_assign_confirm
+        p.alert.alert-dark
+          span.text-danger 赤
+          |
+            で表示されている学生は配属が確定しています
+      - else
+        p.alert.alert-info = "現在「#{@student_assign_laboratory_name}」への配属が確定しています"
+    table.table.table-hover
+      thead.thead-dark
+        tr
+          th 研究室名
+          th 学生
+      tbody
+        - @assign_list.each do |laboratory_name, student_array|
+          tr
+            td = laboratory_name
+            td
+              - student_array.each do |student|
+                - if student[1]
+                  span.mr-3.text-danger = student[0]
+                - else
+                  span.mr-3 = student[0]
+  .col-lg-3
+    - if Rails.env.production?
+      .my-5
+        = render('common/adsence')
+      .my-5
+        = render('common/adsence')
