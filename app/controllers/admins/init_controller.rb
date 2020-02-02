@@ -1,6 +1,4 @@
 class Admins::InitController < Admins::ApplicationController
-  before_action :release_flag_true_check!
-
   def all
     laboratories_destroy
     students_destroy

@@ -1,6 +1,6 @@
 class Admins::AlgorithmController < Admins::ApplicationController
-  before_action :sap_datetime_check!
-  before_action :release_flag_false_check!
+  skip_before_action :release_true_check!
+  before_action :release_false_check!, :datetime_check!
 
   def manual
     max_confirmed_student = current_admin.max_confirmed_student

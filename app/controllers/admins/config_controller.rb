@@ -1,6 +1,4 @@
 class Admins::ConfigController < Admins::ApplicationController
-  before_action :release_flag_true_check!
-
   def show
   end
 

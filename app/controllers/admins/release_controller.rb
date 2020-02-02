@@ -1,4 +1,7 @@
 class Admins::ReleaseController < Admins::ApplicationController
+  before_action :release_true_check!, only: [:on]
+  before_action :release_false_check!, only: [:off]
+
   def on
     if current_admin.login_info_email_flag && !current_admin.start_flag
       current_admin.laboratory.each do |laboratory|

@@ -12,10 +12,9 @@ module SapActions
     end
   end
 
-  def end_flag_check!
-    if @admin.end_flag
-      flash[:alert] = 'SAPの稼動が終了しました'
-      redirect_to(root_path)
+  def sap_end_check!
+    if current_admin.end_flag
+      flash[:notice] = 'SAPの閲覧期限が'
     end
   end
 end

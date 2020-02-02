@@ -1,5 +1,5 @@
 class Admins::InitSetupController < Admins::ApplicationController
-  before_action :check_init_setup_flag
+  before_action :init_setup_check!
 
   def first
     current_admin = flash[:current_admin] if !flash[:current_admin].nil?
