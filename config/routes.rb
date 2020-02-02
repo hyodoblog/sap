@@ -35,15 +35,11 @@ Rails.application.routes.draw do
   end
 
   # sap
-  namespace :students do
-    root 'home#index'
-    post '/', to: 'home#choice'
-  end
-  namespace :laboratories do
-    root 'home#index'
-    post '/', to: 'home#choice'
-  end
-  get 'assign_list', to: 'assign_lists#index'
+  get  ':sap_key/students',     to: 'sap/students/home#index',     as: :students_root
+  post ':sap_key/students',     to: 'sap/students/home#choice'
+  get  ':sap_key/laboratories', to: 'sap/laboratories/home#index', as: :laboratories_root
+  post ':sap_key/laboratories', to: 'sap/laboratories/home#choice'
+  get  ':sap_key/assign_lists', to: 'sap/assign_lists#index',      as: :assign_lists
 
   # devise
   devise_for :admins, skip: [:session, :registration, :password],
@@ -65,14 +61,28 @@ Rails.application.routes.draw do
     post   'password',           to: 'admins/devise/passwords#create',      as: :admin_password
     get    'password/edit',      to: 'admins/devise/passwords#edit',        as: :edit_admin_password
     patch  'password',           to: 'admins/devise/passwords#update',      as: :update_admin_password
-    put    'password',           to: 'admins/devise/passwords#update',      as: :nil
+    put    'password',           to: 'admins/devise/passwords#update',      as: nil
   end
-  devise_for :students, controllers: {
-    sessions:      'students/devise/sessions',
-    passwords:     'students/devise/passwords',
-  }
-  devise_for :laboratories, controllers: {
-    sessions:      'laboratories/devise/sessions',
-    passwords:     'laboratories/devise/passwords',
-  }
+  devise_for :students, skip: [:session, :password]
+  devise_scope :student do
+    get    ':sap_key/students/sign_in',       to: 'sap/students/devise/sessions#new',          as: :new_student_session
+    post   ':sap_key/students/sign_in',       to: 'sap/students/devise/sessions#create',       as: :student_session
+    delete ':sap_key/students/sign_out',      to: 'sap/students/devise/sessions#destroy',      as: :destroy_student_session
+    get    ':sap_key/students/password',      to: 'sap/students/devise/passwords#new',         as: :new_student_password
+    post   ':sap_key/students/password',      to: 'sap/students/devise/passwords#create',      as: :student_password
+    get    ':sap_key/students/password/edit', to: 'sap/students/devise/passwords#edit',        as: :edit_student_password
+    patch  ':sap_key/students/password',      to: 'sap/students/devise/passwords#update',      as: :update_student_password
+    put    ':sap_key/students/password',      to: 'sap/students/devise/passwords#update',      as: nil
+  end
+  devise_for :laboratories, skip: [:session, :password]
+  devise_scope :laboratory do
+    get    ':sap_key/laboratories/sign_in',       to: 'sap/laboratories/devise/sessions#new',          as: :new_laboratory_session
+    post   ':sap_key/laboratories/sign_in',       to: 'sap/laboratories/devise/sessions#create',       as: :laboratory_session
+    delete ':sap_key/laboratories/sign_out',      to: 'sap/laboratories/devise/sessions#destroy',      as: :destroy_laboratory_session
+    get    ':sap_key/laboratories/password',      to: 'sap/laboratories/devise/passwords#new',         as: :new_laboratory_password
+    post   ':sap_key/laboratories/password',      to: 'sap/laboratories/devise/passwords#create',      as: :laboratory_password
+    get    ':sap_key/laboratories/password/edit', to: 'sap/laboratories/devise/passwords#edit',        as: :edit_laboratory_password
+    patch  ':sap_key/laboratories/password',      to: 'sap/laboratories/devise/passwords#update',      as: :update_laboratory_password
+    put    ':sap_key/laboratories/password',      to: 'sap/laboratories/devise/passwords#update',      as: nil
+  end
 end

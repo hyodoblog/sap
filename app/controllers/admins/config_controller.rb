@@ -1,4 +1,6 @@
 class Admins::ConfigController < Admins::ApplicationController
+  before_action :release_flag_true_check!
+
   def show
   end
 
@@ -6,7 +8,7 @@ class Admins::ConfigController < Admins::ApplicationController
   end
 
   def update
-    if current_admin_params[:start_datetime] >= current_admin_params[:end_datetime]
+    if !current_admin.start_flag && current_admin_params[:start_datetime] >= current_admin_params[:end_datetime]
       flash[:error_messages] = ['希望終了日を希望開始日より後に設定して下さい！']
       redirect_back(fallback_location: root_path) and return
     elsif current_admin_params[:end_datetime] >= current_admin_params[:view_end_datetime]

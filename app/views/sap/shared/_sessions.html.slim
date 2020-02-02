@@ -1,0 +1,26 @@
+.row.py-5
+  .col-lg-6.offset-lg-3
+    .text-center.mb-5
+      h3= admin.university_name
+      h3 = admin.department_name
+      h3 = admin.faculty_name
+    = form_with model: model, url: url, class: 'card', local: true do |f|
+      .card-header = title
+      main.card-body
+        p.small.text-danger このページに移動できるボタンは存在しないため、ログイン通知が届いてない方はURLをメモするなどしてください！
+        .form-group.row
+          = f.label :email, "Eメール", class: "col-lg-4 control-label"
+          .col-lg-8
+            = f.email_field :email, class: "form-control"
+        .form-group.row
+          = f.label :password, "パスワード", class: "col-lg-4 control-label"
+          .col-lg-8
+            = f.password_field :password, class: "form-control"
+        .form-group.row
+          .col-lg-9.offset-lg-3
+            .float-right
+              = f.submit value: "ログイン", class: "btn btn-primary", data: { disable_with: "送信中..." }
+    
+    nav
+      .text-center.small.mt-3
+        = render "admins/devise/shared/links"

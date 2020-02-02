@@ -1,22 +1,25 @@
 # frozen_string_literal: true
 
 class Sap::Laboratories::Devise::PasswordsController < Devise::PasswordsController
+  include SapActions
+  before_action :sap_key_check!
+  
   # GET /resource/password/new
   # def new
   #   super
   # end
 
-  # POST /resource/password
+  # POST /:sap_key/resource/password
   # def create
   #   super
   # end
 
-  # GET /resource/password/edit?reset_password_token=abcdef
+  # GET /:sap_key/resource/password/edit?reset_password_token=abcdef
   # def edit
   #   super
   # end
 
-  # PUT /resource/password
+  # PUT /:sap_key/resource/password
   # def update
   #   super
   # end

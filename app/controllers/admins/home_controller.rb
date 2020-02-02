@@ -1,6 +1,4 @@
-class Admins::HomeController < Admins::ApplicationController
-  skip_before_action :check_release_flag!
-  
+class Admins::HomeController < Admins::ApplicationController  
   def index
   end
 end

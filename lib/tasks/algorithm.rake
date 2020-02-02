@@ -15,12 +15,11 @@ namespace :algorithm do
       end
 
       # データの初期化
-      admin_id = admin.id
-      max_confirm_student = user.max_confirm_student
-      student_choice_list = student_choice_list_make(admin_id)
-      laboratory_choice_list = laboratory_choice_list_make(admin_id)
-      students = user.student.order(rate: 'DESC')
-      laboratories = user.laboratory.order(rate: 'DESC')
+      max_confirmed_student = admin.max_confirmed_student
+      student_choice_list = student_choice_list_make(admin)
+      laboratory_choice_list = laboratory_choice_list_make(admin)
+      students = admin.student.order(rate: 'DESC')
+      laboratories = admin.laboratory.order(rate: 'DESC')
       num_students = students.length
       num_laboratories = laboratories.length
 
@@ -43,21 +42,21 @@ namespace :algorithm do
                                             student_choice_list,
                                             laboratory_choice_list,
                                             max_laboratory_num_list)
-      puts(current_assign_list)
+
       # Step 4
       # マッチングが高い学生は配属を確定させる
       confirm_student_array = algorithm_step4(current_assign_list,
                                               student_choice_list,
                                               laboratory_choice_list,
                                               max_laboratory_num_list,
-                                              max_confirm_student)
+                                              max_confirmed_student)
 
       # Step 5
       # 配属されていない学生をランダムで配属
       current_assign_list = algorithm_step5(current_assign_list,
                                             max_laboratory_num_list,
                                             students)
-
+      puts(current_assign_list)
       # --- アルゴリズム終了 ----
       # -----------------------
       
@@ -93,13 +92,12 @@ namespace :algorithm do
       end
 
       # データの初期化
-      admin_id = admin.id
-      student_choice_list = student_choice_list_make(admin_id)
-      laboratory_choice_list = laboratory_choice_list_make(admin_id)
+      student_choice_list = student_choice_list_make(admin)
+      laboratory_choice_list = laboratory_choice_list_make(admin)
       students = admin.student.order(rate: 'DESC')
       laboratories = admin.laboratory.order(rate: 'DESC')
       max_student_rate = admin.max_choice_student
-      max_laboratory_rate = user.max_choice_laboratory
+      max_laboratory_rate = admin.max_choice_laboratory
 
       # ---------------------
       # --- レート更新開始 ----
@@ -115,12 +113,11 @@ namespace :algorithm do
   private
 
   # 学生が希望した研究室の希望リストを整理
-  def student_choice_list_make(user_id)
-    students = Student.where(user_id: user_id)
-                   .joins(:student_choice)
-                   .includes(:student_choice)
-                   .order('student_choices.student_id')
-                   .order('student_choices.rank')
+  def student_choice_list_make(admin)
+    students = admin.student.joins(:student_choice)
+                            .includes(:student_choice)
+                            .order('student_choices.student_id')
+                            .order('student_choices.rank')
     student_choice_list = {}
     students.each do |student|
       laboratory_array = []
@@ -133,19 +130,17 @@ namespace :algorithm do
   end
 
   # 研究室が希望した学生の希望リストを整理
-  def laboratory_choice_list_make(user_id)
-    laboratories = Laboratory.where(user_id: user_id)
-                       .joins(:laboratory_choice)
-                       .includes(:laboratory_choice)
-                       .order('laboratory_choices.laboratory_id')
-                       .order('laboratory_choices.rank')
+  def laboratory_choice_list_make(admin)
+    laboratories = admin.laboratory.joins(:laboratory_choice)
+                                   .includes(:laboratory_choice)
+                                   .order('laboratory_choices.laboratory_id')
+                                   .order('laboratory_choices.rank')
     laboratory_choice_list = {}
     laboratories.each do |laboratory|
       student_array = []
       laboratory.laboratory_choice.each do |choice|
         student_array.push(choice.student_id)
       end
-
       laboratory_choice_list[laboratory.id] = student_array
     end
     return laboratory_choice_list
@@ -169,12 +164,16 @@ namespace :algorithm do
     num_remain_students = num_students - num_tmp_assignment
     # Step 5
     while (num_remain_students > 0)
+      index = 0
       laboratories.each do |laboratory|
-        max_laboratory_num_list[laboratory.id] += 1
-        num_remain_students -= 1
-        if (num_remain_students == 0)
-          break
+        if laboratory.max_num.nil? || laboratory.max_num > avarage + index
+          max_laboratory_num_list[laboratory.id] += 1
+          num_remain_students -= 1
+          if (num_remain_students == 0)
+            break
+          end
         end
+        index += 1
       end
     end
     return max_laboratory_num_list
@@ -220,7 +219,7 @@ namespace :algorithm do
     return current_assign_list
   end
 
-  def algorithm_step4(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list, max_confirm_student)
+  def algorithm_step4(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list, max_confirmed_student)
     confirm_student_array = []
     student_choice_list.each do |student_id, laboratory_choice_array|
       laboratory_choice_array.each_with_index do |laboratory_id, index|
@@ -231,7 +230,7 @@ namespace :algorithm do
         if student_choice_array.nil? # 研究室が希望リストを提出していない場合スキップ
           next
         end
-        max_laboratory_num = max_confirm_student.nil? ? max_laboratory_num_list[laboratory_id] : max_confirm_student
+        max_laboratory_num = max_confirmed_student.nil? ? max_laboratory_num_list[laboratory_id] : max_confirmed_student
         if check_matching?(student_choice_array, max_laboratory_num, student_id)
           confirm_student_array.push(student_id)
         end
@@ -361,7 +360,7 @@ namespace :algorithm do
     student_rate_list.each do |student_id, rate|
       students.each do |student|
         if student.id == student_id
-          unless rate.nil? && student.rate.nil?
+          if rate.present? && student.rate.present?
             rate += student.rate
           end
           student.update_attributes(rate: rate)
@@ -387,7 +386,7 @@ namespace :algorithm do
     laboratory_rate_list.each do |laboratory_id, rate|
       laboratories.each do |laboratory|
         if laboratory.id == laboratory_id
-          unless rate.nil? && laboratory.rate.nil?
+          if rate.present? && laboratory.rate.present?
             rate += laboratory.rate
           end
           laboratory.update_attributes(rate: rate)

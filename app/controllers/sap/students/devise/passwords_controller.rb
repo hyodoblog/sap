@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Sap::Students::Devise::PasswordsController < Devise::PasswordsController
+  include SapActions
+  before_action :sap_key_check!
+  
   # GET /resource/password/new
   # def new
   #   super

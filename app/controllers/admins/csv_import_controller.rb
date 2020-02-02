@@ -1,4 +1,6 @@
 class Admins::CsvImportController < Admins::ApplicationController
+  before_action :release_flag_true_check!
+
   def new
   end
 

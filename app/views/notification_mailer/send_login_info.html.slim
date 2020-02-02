@@ -5,11 +5,10 @@ p = "#{@user.name}様"
 - else
   p = "SAPログインページが発行され、#{@admin.start_datetime.to_s(:datetime_jp)}より希望提出ができます。"
 
-p 以下のログイン情報を基にログインしてください
-= @login_url
-p = link_to("ログインページ", @login_url)
+p 以下のログイン情報を基にログインしてください！
+= link_to("ログインページ", controller: @controller_path, action: 'new', sap_key: @admin.sap_key)
 p = "Eメール：#{@user.email}"
-p = "パスワード：#{@user.password_init}"
+p = "初期パスワード：#{@user.password_init}"
 
 p ログイン完了後、マイページよりパスワード変更することを推奨します。
 

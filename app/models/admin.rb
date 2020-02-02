@@ -3,7 +3,8 @@ class Admin < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :timeoutable, :trackable
+         :confirmable, :lockable, :timeoutable,
+         :trackable
 
   has_many :student,           dependent: :destroy
   has_many :laboratory,        dependent: :destroy

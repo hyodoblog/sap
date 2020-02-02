@@ -2,7 +2,7 @@ class Laboratory < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable
+         :recoverable, :rememberable, :lockable
 
   belongs_to :admin,             optional: true
   has_many   :student_choice,    dependent: :destroy
@@ -25,12 +25,6 @@ class Laboratory < ApplicationRecord
             presence: true,
             length: { maximum: 50 }
   validates :max_num,
-            allow_blank: true,
-            numericality: {
-              only_integer: true,
-              greater_than_or_equal_to: 0
-            }
-  validates :rate,
             allow_blank: true,
             numericality: {
               only_integer: true,

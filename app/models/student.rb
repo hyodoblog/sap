@@ -1,10 +1,10 @@
 class Student < ApplicationRecord
-  belongs_to :admin,             optional: true
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable
+         :recoverable, :rememberable, :lockable
 
+  belongs_to :admin,             optional: true
   has_many   :student_choice,    dependent: :destroy
   has_many   :laboratory_choice, dependent: :destroy
   has_many   :assign_list,       dependent: :destroy
@@ -24,12 +24,6 @@ class Student < ApplicationRecord
   validates :student_num,
             presence: true,
             length: {maximum: 30}
-  validates :rate,
-            allow_blank: true,
-            numericality: {
-              only_integer: true,
-              greater_than_or_equal_to: 0
-            }
   validate :password_complexity
   
   def password_complexity
