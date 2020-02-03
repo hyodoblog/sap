@@ -14,7 +14,7 @@ class Admins::ConfigController < Admins::ApplicationController
       redirect_back(fallback_location: root_path) and return
     end
     current_admin.attributes = current_admin_params
-    if current_admin.save(context: :init_setup)
+    if current_admin.save(context: :info)
       flash[:notice] = '設定を編集しました'
       redirect_to(admins_config_show_path)
     else

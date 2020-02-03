@@ -2,7 +2,7 @@
   .col-lg-8.offset-lg-2
     h3.my-4 = title
     = render('common/form_notifications')
-    = form_with model: model, url: url, class: 'card mb-5', local: true do |f|
+    = form_with(model: model, url: url, class: 'card mb-5', local: true) do |f|
       .card-header 以下の情報を入力して下さい
       main.card-body
         .form-group.row

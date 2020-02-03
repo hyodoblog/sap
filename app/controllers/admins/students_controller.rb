@@ -7,8 +7,8 @@ class Admins::StudentsController < Admins::ApplicationController
 
   def create
     student = current_admin.student.new(student_params_create)
-    if student.save(context: :registration)
-      flash[:notice] = student.name+'を追加しました'
+    if student.save(context: :create)
+      flash[:notice] = "「#{student.name}」を追加しました"
       redirect_to(admins_root_path)
     else
       flash[:student] = student
@@ -21,8 +21,9 @@ class Admins::StudentsController < Admins::ApplicationController
   end
 
   def update
-    if @student.update(student_params_update)
-      flash[:notice] = "#{@student.name}を編集しました"
+    @student.attributes = student_params_update
+    if @student.save()
+      flash[:notice] = "「#{@student.name}」を編集しました"
       redirect_to(admins_root_path)
     else
       flash[:error_messages] = @student.errors.full_messages

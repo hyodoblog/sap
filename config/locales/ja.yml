@@ -26,8 +26,8 @@ ja:
         loginid: ログインID
         password: パスワード
         password_confirmation: パスワード（確認用）
-        name: 名前
-        laboratory_name: 研究室名
+        name: 研究室名
+        professor_name: 教授名
         max_num: 最大配属人数
         rate: レート
         email: Eメール

@@ -28,7 +28,7 @@ class Admins::InitSetupController < Admins::ApplicationController
   def first_skip
     if current_admin.university_name.nil?
       current_admin.attributes = user_params_setup
-      current_admin.save(context: :init_setup)
+      current_admin.save(context: :info)
     end
     redirect_to(admins_init_setup_second_path)
   end

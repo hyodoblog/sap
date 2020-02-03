@@ -14,7 +14,7 @@ module SapActions
 
   def sap_end_check!
     if current_admin.end_flag
-      flash[:notice] = 'SAPの閲覧期限が'
+      flash[:notice] = "越間期間が過ぎ、SAPの終了しました。\nご利用ありがとうございました。\n配属された研究室で頑張って下さい！"
     end
   end
 end

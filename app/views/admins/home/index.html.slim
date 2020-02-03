@@ -4,14 +4,26 @@
     - if current_admin.release_flag
       h1.display-5 ユーザー一覧画面
       .row
-        .col-md-6
-          p.lead SAP稼働中は編集が行なえません。
-          p 以下のリンクが専用のログインページです。
-          = link_to('学生専用', new_student_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
-          = link_to('研究室専用', new_laboratory_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
-        .col-md-6.text-right
-          = link_to('アルゴリズム手動実行', '#', class: 'btn btn-warning ml-2', 'data-toggle' => 'modal', 'data-target' => '#algorithm-modal')
-          = link_to('SAP稼働を一時停止', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#release-stop-modal')
+        - if current_admin.end_flag
+          .col-md-6
+            p.lead 閲覧期間が過ぎたため
+            p 以下のリンクが専用のログインページです。
+            = link_to('学生専用', new_student_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
+            = link_to('研究室専用', new_laboratory_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
+          .col-md-6.text-right
+            = link_to('アルゴリズム手動実行', '#', class: 'btn btn-warning ml-2', 'data-toggle' => 'modal', 'data-target' => '#algorithm-modal')
+            = link_to('SAP一時停止', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#release-stop-modal')
+            = link_to('SAP強制終了', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#force-termination-modal')
+        - else
+          .col-md-6
+            p.lead SAP稼働中は編集が行なえません。
+            p 以下のリンクが専用のログインページです。
+            = link_to('学生専用', new_student_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
+            = link_to('研究室専用', new_laboratory_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
+          .col-md-6.text-right
+            = link_to('アルゴリズム手動実行', '#', class: 'btn btn-warning ml-2', 'data-toggle' => 'modal', 'data-target' => '#algorithm-modal')
+            = link_to('SAP一時停止', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#release-stop-modal')
+            = link_to('SAP強制終了', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#force-termination-modal')
     - else
       h1.display-5 ユーザー管理画面
       - if current_admin.start_flag
@@ -153,19 +165,35 @@
       .modal-dialog role="document"
         .modal-content
           .modal-header
-            h5.modal-title#exampleModalLabel SAPの稼働を止めます
+            h5.modal-title#exampleModalLabel SAPの稼働を一時停止させます
             button.close type="button" data-dismiss="modal" aria-label="Close"
               span aria-hidden="true" &times;
           .modal-body
             p 注意点
             p ・学生と研究室が希望提出をできなくなります
-            p ・ただし、下記の閲覧期限まで配属一覧は閲覧できます
+            p.ml-2 ログインはでき、下記の閲覧期限まで配属一覧は閲覧できます 
             p.small = "期限：#{current_admin.view_end_datetime.to_s(:datetime_jp)}"
             p  →後から変更できます。
             h5 class="text-danger" 本当に稼働を一時停止させますか？
           .modal-footer
             button.btn.btn-secondary type="button" data-dismiss="modal" Close
             = link_to('稼働を一時停止する', admins_release_off_path, class: 'btn btn-danger', method: :put)
+    .modal.fade#force-termination-modal tabindex="-1" role="dialog" aria-hidden="true"
+      .modal-dialog role="document"
+        .modal-content
+          .modal-header
+            h5.modal-title#exampleModalLabel SAPを強制終了させます
+            button.close type="button" data-dismiss="modal" aria-label="Close"
+              span aria-hidden="true" &times;
+          .modal-body
+            p 注意点
+            p ・学生と研究室はログインができなくなります
+            p ・希望情報と配属状況がリセットされます
+            p ・学生と研究室の情報は残ります
+            h5 class="text-danger" 本当に強制終了させますか？
+          .modal-footer
+            button.btn.btn-secondary type="button" data-dismiss="modal" Close
+            = link_to('強制終了', admins_release_force_termination_path, class: 'btn btn-danger', method: :put)
     .modal.fade#algorithm-modal tabindex="-1" role="dialog" aria-hidden="true"
       .modal-dialog role="document"
         .modal-content

@@ -14,56 +14,56 @@ class Admin < ApplicationRecord
 
   validates :sap_key,
             presence: true,
-            on: :init_setup
+            on: :info
   validates :university_name,
             presence: true,
             length: { maximum: 30 },
-            on: :init_setup
+            on: :info
   validates :faculty_name,
             allow_blank: true,
             length: { maximum: 30 },
-            on: :init_setup
+            on: :info
   validates :department_name,
             allow_blank: true,
             length: { maximum: 30 },
-            on: :init_setup
+            on: :info
   validates :contact_email,
             allow_blank: true,
             format: {
               with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
               message: 'はEメールのフォーマットで入力してください'
             },
-            on: :init_setup
+            on: :info
   validates :max_choice_student,
             presence: true,
             numericality: {
               only_integer: true,
               greater_than_or_equal_to: 1
             },
-            on: :init_setup
+            on: :info
   validates :max_choice_laboratory,
             presence: true,
             numericality: {
               only_integer: true,
               greater_than_or_equal_to: 1
             },
-            on: :init_setup
+            on: :info
   validates :max_confirmed_student,
             allow_blank: true,
             numericality: {
               only_integer: true,
               greater_than_or_equal_to: 0
             },
-            on: :init_setup
+            on: :info
   validates :start_datetime,
             presence: true,
-            on: :init_setup
+            on: :info
   validates :end_datetime,
             presence: true,
-            on: :init_setup
+            on: :info
   validates :view_end_datetime,
             presence: true,
-            on: :init_setup
+            on: :info
   validate :password_complexity
   
   def password_complexity

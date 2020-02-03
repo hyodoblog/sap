@@ -14,10 +14,12 @@ class Student < ApplicationRecord
   validates :email,
             presence: true,
             format: { with: Devise.email_regexp },
-            uniqueness: { scope: :admin_id }
+            uniqueness: { scope: :admin_id },
+            on: :create
   validates :password,
             presence: true,
-            length: { within: Devise.password_length }
+            confirmation: true,
+            on: :create
   validates :name,
             presence: true,
             length: {maximum: 50}
@@ -27,8 +29,8 @@ class Student < ApplicationRecord
   validate :password_complexity
   
   def password_complexity
-    return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,70}$/
-    errors.add :password, "の強度が不足しています。パスワードの長さは8〜70文字とし、大文字、小文字、数字をそれぞれ1文字以上含める必要があります。"
+    return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,50}$/
+    errors.add :password, "の強度が不足しています。パスワードの長さは8〜50文字とし、大文字、小文字、数字をそれぞれ1文字以上含める必要があります。"
   end
 
   def self.csv_import(csv_file, admin_id)
