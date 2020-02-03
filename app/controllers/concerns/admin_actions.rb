@@ -4,7 +4,7 @@ module AdminActions
 
   def init_setup_check!
     if current_admin.init_setup_flag
-      flash[:notice] = '初期設定済みなためアクセスできません'
+      flash[:alert] = '初期設定済みなためアクセスできません'
       redirect_to(admins_root_path)
     end
   end

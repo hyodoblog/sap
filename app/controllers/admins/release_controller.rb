@@ -11,16 +11,16 @@ class Admins::ReleaseController < Admins::ApplicationController
     end
     # 研究室の最大配属人数のチェック
     if laboratory_total_max_num_check?
-      flash[:alert] = "研究室の最大配属人数の合計が学生数より少ないです。誰か一人でも無制限にするか、最大配属人数の調整をしてください"
+      flash[:alert] = "研究室の最大配属人数の合計が学生数より少ないです。誰か一人無制限にするか、最大配属人数の調整をしてください"
       redirect_to(admins_root_path) and return
     end
 
     if current_admin.login_info_email_flag && !current_admin.start_flag
       current_admin.laboratory.each do |laboratory|
-        NotificationMailer.send_login_info(laboratory, current_admin, new_laboratory_session_path+'?sap_key='+current_admin.sap_key).deliver
+        NotificationMailer.send_login_info(laboratory, current_admin, 'sap/laboratories/devise/sessions').deliver
       end
       current_admin.student.each do |student|
-        NotificationMailer.send_login_info(student, current_admin, new_student_session_path+'?sap_key='+current_admin.sap_key).deliver
+        NotificationMailer.send_login_info(student, current_admin, 'sap/students/devise/sessions').deliver
       end
     end
     current_admin.update_attributes(release_flag: true, start_flag: true)
@@ -35,6 +35,9 @@ class Admins::ReleaseController < Admins::ApplicationController
   end
 
   def force_termination
+    current_admin.assign_list.destroy_all
+    current_admin.student_choice.destroy_all
+    current_admin.laboratory_choice.destroy_all
     current_admin.update_attributes(release_flag: false, start_flag: false)
     flash[:notice] = "SAPを強制終了させました。またの稼動をお待ちしております！"
     redirect_to(admins_root_path)

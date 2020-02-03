@@ -1,6 +1,6 @@
 class Sap::Students::HomeController < Sap::ApplicationController
-  include UserAuthChecks
-  before_action :student_check!, :authenticate_student!
+  before_action :student_check!
+  before_action :authenticate_student!
   
   def index
     @choice_laboratories = current_student.student_choice

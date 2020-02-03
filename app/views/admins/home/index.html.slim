@@ -155,8 +155,11 @@
                           'data-target' => '#login-info-notice-modal')
 
 - if Rails.env.production?
-  .my-4.py-5
-    = render('common/adsence')
+  .row.my-4.py-5
+    .col-sm-6
+      = render('common/adsence')
+    .col-sm-6
+      = render('common/adsence')
 
 / Modal
 - if current_admin.init_setup_flag

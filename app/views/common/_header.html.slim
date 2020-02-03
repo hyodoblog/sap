@@ -26,7 +26,7 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 								= header_link_item('マイページ', admins_mypage_show_path, '')
 				li.nav-item
 					= link_to('ログアウト', destroy_admin_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' })
-			- elsif student_signed_in?
+			- elsif student_signed_in? && !current_student.admin.end_flag
 				- sap_key = current_student.admin.sap_key
 				li.nav-item
 					= header_link_item('希望提出', students_root_path(sap_key), '')
@@ -34,7 +34,7 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 					= header_link_item('配属一覧', assign_lists_path(sap_key), '')
 				li.nav-item
 					= link_to('ログアウト', destroy_student_session_path(sap_key), method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' })
-			- elsif laboratory_signed_in?
+			- elsif laboratory_signed_in? && !current_laboratory.admin.end_flag
 				- sap_key = current_laboratory.admin.sap_key
 				li.nav-item
 					= header_link_item('希望提出', laboratories_root_path(sap_key), '')

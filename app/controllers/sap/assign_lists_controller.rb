@@ -1,4 +1,6 @@
 class Sap::AssignListsController < Sap::ApplicationController
+  skip_before_action :access_check!
+  before_action :assign_list_access_check!
   before_action :admin_set
 
   def index

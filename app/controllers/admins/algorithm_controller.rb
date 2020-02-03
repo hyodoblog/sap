@@ -1,6 +1,7 @@
 class Admins::AlgorithmController < Admins::ApplicationController
   skip_before_action :release_true_check!
-  before_action :release_false_check!, :datetime_check!
+  before_action :release_false_check!
+  before_action :datetime_check!
 
   def manual
     max_confirmed_student = current_admin.max_confirmed_student

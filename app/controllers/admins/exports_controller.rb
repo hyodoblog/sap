@@ -1,2 +1,2 @@
-class Admins::ExportsController < ApplicationController
+class Admins::ExportsController < Admin::ApplicationController
 end

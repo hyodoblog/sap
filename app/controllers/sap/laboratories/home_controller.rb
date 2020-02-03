@@ -1,6 +1,6 @@
 class Sap::Laboratories::HomeController < Sap::ApplicationController
-  include UserAuthChecks
-  before_action :laboratory_check!, :authenticate_laboratory!
+  before_action :laboratory_check!
+  before_action :authenticate_laboratory!
 
   def index
     @laboratory_assign_confirm = false

@@ -66,7 +66,7 @@ Rails.application.routes.draw do
     patch  'password',           to: 'admins/devise/passwords#update',      as: :update_admin_password
     put    'password',           to: 'admins/devise/passwords#update',      as: nil
   end
-  devise_for :students, skip: [:session, :password]
+  devise_for :students, skip: [:session, :password, :registration]
   devise_scope :student do
     get    ':sap_key/students/sign_in',       to: 'sap/students/devise/sessions#new',          as: :new_student_session
     post   ':sap_key/students/sign_in',       to: 'sap/students/devise/sessions#create',       as: :student_session
@@ -77,7 +77,7 @@ Rails.application.routes.draw do
     patch  ':sap_key/students/password',      to: 'sap/students/devise/passwords#update',      as: :update_student_password
     put    ':sap_key/students/password',      to: 'sap/students/devise/passwords#update',      as: nil
   end
-  devise_for :laboratories, skip: [:session, :password]
+  devise_for :laboratories, skip: [:session, :password, :registration]
   devise_scope :laboratory do
     get    ':sap_key/laboratories/sign_in',       to: 'sap/laboratories/devise/sessions#new',          as: :new_laboratory_session
     post   ':sap_key/laboratories/sign_in',       to: 'sap/laboratories/devise/sessions#create',       as: :laboratory_session

@@ -35,7 +35,7 @@ class Admins::CsvImportController < Admins::ApplicationController
       flash_notice_messages.push('学生のcsvファイルのインポート成功')
     end
     flash[:notices] = flash_notice_messages
-    redirect_to(admins_init_setup_second_skip_path)
+    redirect_to(admins_root_path)
   end
 
   private
