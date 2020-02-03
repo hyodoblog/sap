@@ -4,16 +4,9 @@
     - if current_admin.release_flag
       h1.display-5 ユーザー一覧画面
       .row
-        - if current_admin.end_flag
+        - if current_admin.end_datetime <= Time.now()
           .col-md-6
-            p.lead 閲覧期間が過ぎたため
-            p 以下のリンクが専用のログインページです。
-            = link_to('学生専用', new_student_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
-            = link_to('研究室専用', new_laboratory_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
-          .col-md-6.text-right
-            = link_to('アルゴリズム手動実行', '#', class: 'btn btn-warning ml-2', 'data-toggle' => 'modal', 'data-target' => '#algorithm-modal')
-            = link_to('SAP一時停止', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#release-stop-modal')
-            = link_to('SAP強制終了', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#force-termination-modal')
+            p.lead SAPの稼動期間がすぎました。
         - else
           .col-md-6
             p.lead SAP稼働中は編集が行なえません。

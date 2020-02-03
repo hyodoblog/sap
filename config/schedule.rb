@@ -27,4 +27,5 @@ set :environment, ENV['RAILS_ENV']
 every 1.minute do
   rake "algorithm:assign"
   rake 'algorithm:rate'
+  rake 'date_check:end_flag'
 end
