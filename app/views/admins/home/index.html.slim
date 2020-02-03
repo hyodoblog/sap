@@ -3,11 +3,39 @@
   - if current_admin.init_setup_flag
     - if current_admin.release_flag
       h1.display-5 ユーザー一覧画面
-      .row
-        - if current_admin.end_datetime <= Time.now()
-          .col-md-6
+      - if current_admin.end_flag
+        .row
+          .col-md-9
             p.lead SAPの稼動期間がすぎました。
-        - else
+            p.lead 最終結果やその他の情報を任意で出力してから初期化を行って下さい！
+            p.small.text-danger
+              'セキュリティ上の都合で、SAP終了2週間後には自動でアカウント自体削除されます。
+              br
+              '初期化すれば自動削除されません。
+              br
+              '再度使用した場合は手動で初期化する、もしくは再度新規登録を行って下さい❗
+          .col-md-3
+            = link_to('初期化', '#', class: 'btn btn-danger pull-right', 'data-toggler' => 'modal', 'data-target' => '#sap-init-modal')
+        hr
+        .row
+          .col-md-6
+            h5 エクセルで出力
+            .d-flex.flex-wrap
+              = button_to('すべて', admins_excel_exports_all_path(format: :xlsx), method: :get, class: 'btn btn-primary m-2')
+              = button_to('配属結果のみ', admins_excel_exports_assign_path(format: :xlsx), method: :get, class: 'btn btn-success m-2')
+              = button_to('希望提出情報のみ', admins_excel_exports_choice_path(format: :xlsx), method: :get, class: 'btn btn-success m-2')
+              = button_to('レートのみ', admins_excel_exports_rate_path(format: :xlsx), method: :get, class: 'btn btn-success m-2')
+              = button_to('登録情報のみ', admins_excel_exports_info_path(format: :xlsx), method: :get, class: 'btn btn-success m-2')
+          .col-md-6
+            h5 CSVで出力
+            .d-flex.flex-wrap
+              = button_to('すべて', admins_csv_exports_all_path(format: :xlsx), method: :get, class: 'btn btn-primary m-2')
+              = button_to('配属結果のみ', admins_csv_exports_assign_path(format: :xlsx), method: :get, class: 'btn btn-success m-2')
+              = button_to('希望提出情報のみ', admins_csv_exports_choice_path(format: :xlsx), method: :get, class: 'btn btn-success m-2')
+              = button_to('レートのみ', admins_csv_exports_rate_path(format: :xlsx), method: :get, class: 'btn btn-success m-2')
+              = button_to('登録情報のみ', admins_csv_exports_info_path(format: :xlsx), method: :get, class: 'btn btn-success m-2')
+      - else
+        .row
           .col-md-6
             p.lead SAP稼働中は編集が行なえません。
             p 以下のリンクが専用のログインページです。
