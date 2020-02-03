@@ -1,20 +1,23 @@
 - if Rails.env.production?
   .my-5.d-sm-none
     = render('common/adsence')
-.row
+.row.mb-5
   .col-lg-9
     h3.my-4 配属一覧
     - if @last_update_time.nil?
       p 未実行です
     - else
-      p = "最新更新時間：#{@last_update_time.to_s(:datetime_jp)}"
-      - if @student_assign_confirm.nil? || !@student_assign_confirm
-        p.alert.alert-dark
-          span.text-danger 赤
-          |
-            で表示されている学生は配属が確定しています
+      - if @admin.end_datetime >= Time.now()
+        p = "最新更新時間：#{@last_update_time.to_s(:datetime_jp)}"
+        - if @student_assign_confirm.nil? || !@student_assign_confirm
+          p.alert.alert-dark
+            span.text-danger 赤
+            |
+              で表示されている学生は配属が確定しています
+        - else
+          p.alert.alert-info = "現在「#{@student_assign_laboratory_name}」への配属が確定しています"
       - else
-        p.alert.alert-info = "現在「#{@student_assign_laboratory_name}」への配属が確定しています"
+        p.text-danger 配属が確定しました！
     table.table.table-hover
       thead.thead-dark
         tr
@@ -26,7 +29,7 @@
             td = laboratory_name
             td
               - student_array.each do |student|
-                - if student[1]
+                - if student[1] && @admin.end_datetime >= Time.now()
                   span.mr-3.text-danger = student[0]
                 - else
                   span.mr-3 = student[0]

@@ -14,7 +14,6 @@ class Student < ApplicationRecord
   validates :email,
             presence: true,
             format: { with: Devise.email_regexp },
-            uniqueness: { scope: :admin_id },
             on: :create
   validates :password,
             presence: true,

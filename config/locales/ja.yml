@@ -18,14 +18,14 @@ ja:
       student:
         loginid: ログインID
         password: パスワード
-        password_confirmation: パスワード（確認用）
+        password_confirmation: パスワード（再）
         name: 名前
         student_num: 学籍番号
         email: Eメール
       laboratory:
         loginid: ログインID
         password: パスワード
-        password_confirmation: パスワード（確認用）
+        password_confirmation: パスワード（再）
         name: 研究室名
         professor_name: 教授名
         max_num: 最大配属人数

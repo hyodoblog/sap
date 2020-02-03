@@ -51,6 +51,12 @@ class Admins::InitSetupController < Admins::ApplicationController
     if params[:csv_file_student]
       begin
         current_admin.student.csv_import(csv_file_student_params, admin_id)
+      rescue ActiveRecord::RecordNotUnique
+        flash[:error_messages] = ['研究室データをもう一度確認して下さい',
+                                  'すでに登録されているEメールが存在します',
+                                  '別のアカウントで登録されているEメールの可能性があります',
+                                  'その場合は別のEメールを使用するか、当サービスの運営者までお問い合わせください！']
+        redirect_back(fallback_location: root_path) and return
       rescue => e
         flash[:error_messages] = ['学生データをもう一度確認下さい', e.message]
         redirect_back(fallback_location: root_path) and return
@@ -61,6 +67,12 @@ class Admins::InitSetupController < Admins::ApplicationController
     if params[:csv_file_laboratory]
       begin
         current_admin.laboratory.csv_import(csv_file_laboratory_params, admin_id)
+      rescue ActiveRecord::RecordNotUnique
+        flash[:error_messages] = ['研究室データをもう一度確認して下さい',
+                                  'すでに登録されているEメールが存在します',
+                                  '別のアカウントで登録されているEメールの可能性があります',
+                                  'その場合は別のEメールを使用するか、当サービスの運営者までお問い合わせください！']
+        redirect_back(fallback_location: root_path) and return
       rescue => e
         flash[:notices] = flash_notice_messages
         flash[:error_messages] = ['研究室データをもう一度確認下さい', e.message]

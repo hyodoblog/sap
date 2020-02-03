@@ -29,7 +29,7 @@ class DeviseCreateStudents < ActiveRecord::Migration[5.2]
       t.timestamps null: false
     end
 
-    add_index :students, [:email, :admin_id],   unique: true
+    add_index :students, [:email],              unique: true
     add_index :students, :reset_password_token, unique: true
   end
 end

@@ -71,7 +71,7 @@ module SapActions
   def sap_end_choice_check!(current_user)
     if end_choice_check?(current_user)
       flash[:alert] = '希望提出期間が過ぎたためアクセスできません。自身の配属結果をご覧ください！'
-      redirect_to(assin_lists_path(@sap_key))
+      redirect_to(assign_lists_path(@sap_key))
     end
   end
 

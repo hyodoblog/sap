@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
     t.string "name", null: false
     t.string "professor_name", null: false
     t.integer "max_num"
-    t.integer "rate"
+    t.integer "rate", default: 0, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_laboratories_on_admin_id"
-    t.index ["email", "admin_id"], name: "index_laboratories_on_email_and_admin_id", unique: true
+    t.index ["email"], name: "index_laboratories_on_email", unique: true
     t.index ["reset_password_token"], name: "index_laboratories_on_reset_password_token", unique: true
   end
 
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
     t.bigint "admin_id"
     t.string "name", null: false
     t.string "student_num", null: false
-    t.integer "rate"
+    t.integer "rate", default: 0, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_students_on_admin_id"
-    t.index ["email", "admin_id"], name: "index_students_on_email_and_admin_id", unique: true
+    t.index ["email"], name: "index_students_on_email", unique: true
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
   end
 

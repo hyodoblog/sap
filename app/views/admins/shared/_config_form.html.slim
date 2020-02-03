@@ -111,21 +111,24 @@
             br
             e.small 希望提出終了日より遅く設定して下さい！
         hr.p-1
-        h5.mb-3 メール配信設定
-        .form-group.row
-          .col-lg-4.control-label
-            = f.label :login_info_email_flag, 'SAP稼動開始通知'
-          .col-lg-8.form-check
-            .input-group
-              .form-check.form-check-inline
-                = f.radio_button :login_info_email_flag, false, class: 'form-check-input', disabled: controller_name == 'config_show'
-                = f.label :login_info_email_flag, 'オフ', { value: false, class: 'form-check-label' }
-              .form-check.form-check-inline
-                = f.radio_button :login_info_email_flag, true, class: 'form-check-input', disabled: controller_name == 'config_show'
-                = f.label :login_info_email_flag, 'オン', { value: true, class: 'form-check-label' }
-              e.small オンにするとSAP稼動開始時に、ログインページリンクとパスワードを登録したユーザーのEメールに一斉送信します。
-              br
-              e.small ⚠稼働開始通知を一斉送信できるのは、稼働開始時の一度のみです。
+        - if current_admin.start_flag
+          p.small.text-danger メール通知設定の変更はできません。
+        - else
+          h5.mb-3 メール配信設定
+          .form-group.row
+            .col-lg-4.control-label
+              = f.label :login_info_email_flag, 'SAP稼動開始通知'
+            .col-lg-8.form-check
+              .input-group
+                .form-check.form-check-inline
+                  = f.radio_button :login_info_email_flag, false, class: 'form-check-input', disabled: controller_name == 'config_show'
+                  = f.label :login_info_email_flag, 'オフ', { value: false, class: 'form-check-label' }
+                .form-check.form-check-inline
+                  = f.radio_button :login_info_email_flag, true, class: 'form-check-input', disabled: controller_name == 'config_show'
+                  = f.label :login_info_email_flag, 'オン', { value: true, class: 'form-check-label' }
+                e.small オンにするとSAP稼動開始時に、ログインページリンクとパスワードを登録したユーザーのEメールに一斉送信します。
+                br
+                e.small ⚠稼働開始通知を一斉送信できるのは、稼働開始時の一度のみです。
 
         .form-group.row
           .col-lg-9.offset-lg-3

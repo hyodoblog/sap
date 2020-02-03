@@ -15,7 +15,7 @@
             - if @minimum_password_length
               em.small = "最低 #{@minimum_password_length} 文字以上"
         .form-group.row
-          = f.label :password_confirmation, "パスワード再入力", class: "col-lg-4 control-label"
+          = f.label :password_confirmation, "パスワード（再）", class: "col-lg-4 control-label"
           .col-lg-8
             = f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password"
 

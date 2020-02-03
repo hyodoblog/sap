@@ -6,13 +6,13 @@
   p = "SAPログインページが発行され、#{@admin.start_datetime.to_s(:datetime_jp)}より希望提出ができます。"
 
 p 以下のログイン情報を基にログインしてください！
-= link_to("ログインページ", controller: @controller_path, action: 'new', sap_key: @admin.sap_key)
-= "Eメール：#{@user.email}"
-= "初期パスワード：#{@user.password_init}"
+p = link_to("ログインページ", controller: @controller_path, action: 'new', sap_key: @admin.sap_key)
+p = "Eメール：#{@user.email}"
+p = "初期パスワード：#{@user.password_init}"
 
 p ログイン完了後、マイページよりパスワード変更することを推奨します。
 
 = "希望提出締め切り：#{@admin.end_datetime.to_s(:datetime_jp)}"
 = "配属一覧閲覧期限：#{@admin.view_end_datetime.to_s(:datetime_jp)}"
 
-それでは、良い配属になることを祈っております！
+p それでは、良い配属になることを祈っております！
