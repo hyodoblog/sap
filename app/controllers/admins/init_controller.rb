@@ -1,46 +1,35 @@
 class Admins::InitController < Admins::ApplicationController
   skip_before_action :release_true_check!, only: [:sap]
+  skip_before_action :end_check!, only: [:sap]
 
   def all
-    laboratories_destroy
-    students_destroy
+    current_admin.student.destroy_all
+    current_admin.laboratory.destroy_all
     flash[:notice] = '全学生・研究室を削除しました'
     redirect_to(admins_root_path)
   end
 
   def laboratory
-    laboratories_destroy
+    current_admin.laboratory.destroy_all
     flash[:notice] = '全研究室を削除しました'
     redirect_to(admins_root_path)
   end
 
   def student
-    students_destroy
+    current_admin.student.destroy_all
     flash[:notice] = '全学生を削除しました'
     redirect_to(admins_root_path)
   end
 
   def sap
-    laboratories_destroy
-    students_destroy
+    current_admin.student.destroy_all
+    current_admin.laboratory.destroy_all
     current_admin.update_attributes(admin_init_params)
     flash[:notice] = '初期化が完了しました'
     redirect_to(admins_root_path)
   end
 
   private
-
-  def laboratories_destroy
-    current_admin.laboratory.each do |laboratory|
-      laboratory.destroy
-    end
-  end
-
-  def students_destroy
-    current_admin.student.each do |student|
-      student.destroy
-    end
-  end
 
   def admin_init_params
     now_datetime = DateTime.now

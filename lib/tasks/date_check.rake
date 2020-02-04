@@ -22,7 +22,22 @@ namespace :date_check do
         puts("Initialize account: #{admin.university_name admin.faculty_name admin.department_name}")
         admin.student.destroy_all
         admin.laboratory.destroy_all
+        admin.update_attributes(admin_init_params)
       end
     end
+  end
+
+  private
+
+  def admin_init_params
+    now_datetime = DateTime.now
+    {
+        sap_key: Admin.generate_sap_key, university_name: '〇〇大学',
+        faculty_name: '', department_name: '', contact_email: '',
+        max_choice_student: 1, max_choice_laboratory: 1, max_confirmed_student: '',
+        start_datetime: now_datetime, end_datetime: now_datetime + 1.days, view_end_datetime: now_datetime + 2.days,
+        init_setup_flag: false, release_flag: false, start_flag: false, end_flag: false, login_info_email_flag: false,
+        confirmation_notice_flag: false, end_notice_flag: false, view_end_notice_flag: false
+    }
   end
 end

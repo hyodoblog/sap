@@ -10,7 +10,7 @@
             p.lead 最終結果やその他の情報を任意で出力してから初期化を行って下さい！
             p.small.text-danger セキュリティ上の都合で、SAP終了2週間後には自動で初期化されます。
           .col-md-3
-            = link_to('初期化', '#', class: 'btn btn-danger pull-right', 'data-toggler' => 'modal', 'data-target' => '#sap-init-modal')
+            = link_to('初期化', '#', class: 'btn btn-danger pull-right', 'data-toggle' => 'modal', 'data-target' => '#sap-init-modal')
         hr
         = button_to('最終結果を出力', admins_exports_index_path(format: :xlsx), method: :get, class: 'btn btn-success m-2')
       - else
@@ -162,7 +162,7 @@
       = render('common/adsence')
 
 / Modal
-- if current_admin.init_setup_flag
+- if current_admin.init_setup_flag && !current_admin.end_flag
   - if current_admin.release_flag
     .modal.fade#release-stop-modal tabindex="-1" role="dialog" aria-hidden="true"
       .modal-dialog role="document"
@@ -245,9 +245,24 @@
               span aria-hidden='true' &times;
           .modal-body
             p#login-info-notice-modal-body-text
+            p 上記のEメールにログイン通知を送信します。
           .modal-footer
             button.btn.btn-secondary data-dismiss='modal' Close
             = link_to('通知', '#', class: 'btn btn-info', id: 'login-info-notice-modal-btn', method: :post)
+- else
+  .modal.fade#sap-init-modal tabindex='-1' role='dialog' aria-hidden='true'
+    .modal-dialog role='document'
+      .modal-content
+        .modal-header
+          h5.modal-title#exampleModalLabel 初期化
+          button.close type='button' data-dismiss='modal' aria-label='Close'
+            span aria-hidden='true' &times;
+        .modal-body
+          p 管理者の登録情報以外すべて削除されます。
+          p またのご使用をお待ちしております！
+        .modal-footer
+          button.btn.btn-secondary data-dismiss='modal' Close
+          = link_to('初期化', admins_init_sap_path, class: 'btn btn-danger', method: :delete)
 
 // 削除ボダンのモーダル
 // 時々二重定数の定義というエラーがでるため、varで定数を定義

@@ -5,7 +5,7 @@ class Admins::ReleaseController < Admins::ApplicationController
   def on
     # エラーチェック
     # 学生または研究室を登録しているかチェック
-    if current_admin.student.length == 0 && current_admin.laboratory == 0
+    if current_admin.student.length == 0 || current_admin.laboratory.length == 0
       flash[:alert] = '学生または研究室を追加してください'
       redirect_to(admins_root_path) and return
     end
