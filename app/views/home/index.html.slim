@@ -71,11 +71,12 @@
       = link_to 'ログイン', new_admin_session_path, class: 'ml-5 btn btn-primary btn-lg'
 
 - if Rails.env.production?
-  .row.my-4.py-5.container
-    .col-sm-6
-      = render('common/adsence')
-    .col-sm-6
-      = render('common/adsence')
+  .container
+    .row.my-4.py-5.container
+      .col-sm-6
+        = render('common/adsence')
+      .col-sm-6
+        = render('common/adsence')
 
 javascript:
   $(document).ready(function() {
