@@ -28,7 +28,7 @@ class Sap::AssignListsController < Sap::ApplicationController
       @assign_list[laboratory.name] = assign_array
     end
     
-    if current_student
+    if current_student.present?
       assign = @admin.assign_list.find_by(student_id: current_student.id)
       if assign.present?
         @student_assign_confirm = assign.confirm
