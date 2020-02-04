@@ -6,11 +6,11 @@ class Sap::Students::HomeController < Sap::ApplicationController
     @choice_laboratories = current_student.student_choice
     choice_laboratories_id_array = @choice_laboratories.map{|choice| choice.laboratory.id}
     @laboratories = @admin.laboratory.where.not(id: choice_laboratories_id_array)
-    begin
-      assign = current_student.assign_list.first()
+    assign = @admin.assign_list.find_by(student_id: current_student.id)
+    if assign.present?
       @student_assign_confirm = assign.confirm
-      @student_assign_laboratory_name = assign.laboratory.laboratory_name
-    rescue
+      @student_assign_laboratory_name = assign.laboratory.name
+    else
       @student_assign_confirm = nil
     end
   end
@@ -43,18 +43,6 @@ class Sap::Students::HomeController < Sap::ApplicationController
         flash[:error_messages] = choice_laboratory_data.errors.full_messages
         redirect_back(fallback_location: root_path) and return
       end
-    end
-
-    if current_student.present?
-      assign = @admin.assign_list.find_by(student_id: current_student.id)
-      if assign.present?
-        @student_assign_confirm = assign.confirm
-        @student_assign_laboratory_name = assign.laboratory.name
-      else
-        @student_assign_confirm = nil
-      end
-    else
-      @student_assign_confirm = nil
     end
 
     flash[:notice] = '提出が完了しました'
