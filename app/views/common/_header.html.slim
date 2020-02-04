@@ -14,11 +14,11 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 							= header_link_item('配属一覧', assign_lists_path(current_admin.sap_key), '')
 					- else
 						li.nav-item.dropdown
-							= header_link_dropdown('メンバー追加', [new_admins_laboratory_path, new_admins_student_path, admins_csv_import_new_path])
+							= header_link_dropdown('メンバー追加', [new_admins_laboratory_path, new_admins_student_path, admins_import_path])
 							.dropdown-menu aria-labelledby='navbarDropdown'
 								= link_to('研究室追加', new_admins_laboratory_path, class: 'dropdown-item')
 								= link_to('学生追加', new_admins_student_path, class: 'dropdown-item')
-								= link_to('csvインポート', admins_csv_import_new_path, class: 'dropdown-item')
+								= link_to('一括追加', admins_import_path, class: 'dropdown-item')
 						li.nav-item
 							= header_link_item('SAP設定', admins_config_show_path, '')
 						- unless current_admin.start_flag

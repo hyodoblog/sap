@@ -1,8 +1,8 @@
-class Admins::CsvImportController < Admins::ApplicationController
+class Admins::ImportsController < Admins::ApplicationController
   def new
   end
 
-  def create
+  def csv
     # csv file ckeck
     unless params[:csv_file_laboratory] || params[:csv_file_student]
       error_messages = ['最低でもどちらか一方のcsvファイルを選択してください']
@@ -48,6 +48,10 @@ class Admins::CsvImportController < Admins::ApplicationController
     end
     flash[:notices] = flash_notice_messages
     redirect_to(admins_root_path)
+  end
+
+  def excel
+    
   end
 
   private

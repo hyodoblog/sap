@@ -21,7 +21,7 @@
         p.ml-2.small →ツールバーに「パスワード生成」ボタンがあり、自動で初期パスワードを生成できます。
         hr.my-4
         p.small どちらか一方でも可
-        = form_with(url: url, method: 'post', local: true) do |f|
+        = form_with(url: csv_url, method: 'post', local: true) do |f|
           .form-group.row
             .col-lg-5.control-label
               = f.label :csv_file_student, '学生のCSVデータ'

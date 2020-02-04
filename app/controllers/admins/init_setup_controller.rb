@@ -36,7 +36,7 @@ class Admins::InitSetupController < Admins::ApplicationController
   def second
   end
 
-  def second_setup
+  def second_setup_csv
     # csv file ckeck
     unless params[:csv_file_laboratory] || params[:csv_file_student]
       error_messages = ['最低でもどちらか一方のcsvファイルを選択してください']
@@ -81,6 +81,10 @@ class Admins::InitSetupController < Admins::ApplicationController
       flash_notice_messages.push('研究室のcsvファイルのインポート成功')
     end
     redirect_to(admins_init_setup_second_skip_path)
+  end
+
+  def second_setup_excel
+    
   end
 
   def second_skip

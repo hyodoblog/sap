@@ -54,7 +54,7 @@
     h2.col-sm-6 ユーザー一覧
     - unless current_admin.release_flag
       div.col-sm-6.text-right
-        = link_to('csvインポート', admins_csv_import_new_path, class: 'btn btn-success btn-sm mr-2')
+        = link_to('csvインポート', admins_import_path, class: 'btn btn-success btn-sm mr-2')
         - unless current_admin.start_flag
           = link_to('全削除', '#', class: 'btn btn-danger btn-sm delete-btn', 'data-toggle' => 'modal',
                     'data-url' => admins_init_all_path, 'data-text' => '全学生・研究室を削除します。',
