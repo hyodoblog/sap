@@ -56,7 +56,7 @@ namespace :algorithm do
       current_assign_list = algorithm_step5(current_assign_list,
                                             max_laboratory_num_list,
                                             students)
-      puts(current_assign_list)
+      
       # --- アルゴリズム終了 ----
       # -----------------------
       

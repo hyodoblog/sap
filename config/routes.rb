@@ -33,16 +33,7 @@ Rails.application.routes.draw do
     post   'notices/:id/student',    to: 'notices#student'
     post   'notices/:id/laboratory', to: 'notices#laboratory'
     post   'algorithm/manual'
-    get    'excel_exports/all'
-    get    'excel_exports/assign'
-    get    'excel_exports/choice'
-    get    'excel_exports/rate'
-    get    'excel_exports/info'
-    get    'csv_exports/all'
-    get    'csv_exports/assign'
-    get    'csv_exports/choice'
-    get    'csv_exports/rate'
-    get    'csv_exports/info'
+    get    'exports/index'
     resources :laboratories, only: [:new, :create, :edit, :update, :destroy]
     resources :students,    only: [:new, :create, :edit, :update, :destroy]
   end

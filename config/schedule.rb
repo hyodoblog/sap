@@ -28,4 +28,5 @@ every 1.minute do
   rake "algorithm:assign"
   rake 'algorithm:rate'
   rake 'date_check:end_flag'
+  rake 'date_check:account_init'
 end
