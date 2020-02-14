@@ -5,7 +5,7 @@ namespace :date_check do
       next if admin.end_flag
 
       if admin.view_end_datetime <= Time.now()
-        puts("Update end_flag: #{admin.university_name admin.faculty_name admin.department_name}")
+        puts("Update end_flag: #{admin.university_name} #{admin.faculty_name} #{admin.department_name}")
         admin.update_attributes(end_flag: true)
       end
     end
@@ -19,7 +19,7 @@ namespace :date_check do
       now_time = Time.now()
       delete_datetime = admin.view_end_datetime + 14.days
       if delete_datetime <= now_time
-        puts("Initialize account: #{admin.university_name admin.faculty_name admin.department_name}")
+        puts("Initialize account: #{admin.university_name} #{admin.faculty_name} #{admin.department_name}")
         admin.student.destroy_all
         admin.laboratory.destroy_all
         admin.update_attributes(admin_init_params)
