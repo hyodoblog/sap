@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_03_025946) do
+ActiveRecord::Schema.define(version: 2020_02_16_075512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
     t.string "name", null: false
     t.string "professor_name", null: false
     t.integer "max_num"
-    t.integer "rate", default: 0, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -105,6 +104,16 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
     t.index ["student_id"], name: "index_laboratory_choices_on_student_id"
   end
 
+  create_table "laboratory_rates", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.bigint "laboratory_id"
+    t.integer "rate", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_laboratory_rates_on_admin_id"
+    t.index ["laboratory_id"], name: "index_laboratory_rates_on_laboratory_id"
+  end
+
   create_table "student_choices", force: :cascade do |t|
     t.bigint "admin_id"
     t.bigint "student_id"
@@ -117,6 +126,16 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
     t.index ["student_id"], name: "index_student_choices_on_student_id"
   end
 
+  create_table "student_rates", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.bigint "student_id"
+    t.integer "rate", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_student_rates_on_admin_id"
+    t.index ["student_id"], name: "index_student_rates_on_student_id"
+  end
+
   create_table "students", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -124,7 +143,6 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
     t.bigint "admin_id"
     t.string "name", null: false
     t.string "student_num", null: false
-    t.integer "rate", default: 0, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -145,8 +163,12 @@ ActiveRecord::Schema.define(version: 2020_01_03_025946) do
   add_foreign_key "laboratory_choices", "admins"
   add_foreign_key "laboratory_choices", "laboratories"
   add_foreign_key "laboratory_choices", "students"
+  add_foreign_key "laboratory_rates", "admins"
+  add_foreign_key "laboratory_rates", "laboratories"
   add_foreign_key "student_choices", "admins"
   add_foreign_key "student_choices", "laboratories"
   add_foreign_key "student_choices", "students"
+  add_foreign_key "student_rates", "admins"
+  add_foreign_key "student_rates", "students"
   add_foreign_key "students", "admins"
 end

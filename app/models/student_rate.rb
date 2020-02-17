@@ -1,0 +1,2 @@
+class StudentRate < ApplicationRecord
+end

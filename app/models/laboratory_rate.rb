@@ -1,0 +1,2 @@
+class LaboratoryRate < ApplicationRecord
+end
