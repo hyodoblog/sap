@@ -10,7 +10,7 @@ class Admins::DownloadController < Admins::ApplicationController
   end
 
   def excel
-    download_file_path = 'public/template_file/sap_excel_template.elsx'
+    download_file_path = 'public/template_file/sap_excel_template.xlsx'
     send_file(download_file_path)
   end
 end
