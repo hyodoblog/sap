@@ -365,7 +365,7 @@ namespace :algorithm do
             rate += student.rate
           end
           student.update_attributes(total_rate: rate)
-          student.create(rate: rate)
+          student.student_rate.create(rate: rate)
           break
         end
       end
@@ -393,7 +393,7 @@ namespace :algorithm do
             rate += laboratory.rate
           end
           laboratory.update_attributes(total_rate: rate)
-          laboratory.create(rate: rate)
+          laboratory.laboratory_rate.create(rate: rate)
           break
         end
       end
