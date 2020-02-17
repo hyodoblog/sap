@@ -25,7 +25,6 @@ module AdminActions
 
   def datetime_check!
     now_datetime = Time.zone.now
-    logger.debug(now_datetime)
     unless current_admin.start_datetime <= now_datetime && current_admin.end_datetime >= now_datetime
       flash[:alert] = '稼動期間外なためアクセスできません'
       redirect_to(admins_root_path)

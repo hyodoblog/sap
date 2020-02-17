@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     post   'notices/:id/laboratory', to: 'notices#laboratory'
     post   'algorithm/manual'
     get    'exports/index'
+    get    'rates/index'
     resources :laboratories, only: [:new, :create, :edit, :update, :destroy]
     resources :students,    only: [:new, :create, :edit, :update, :destroy]
   end

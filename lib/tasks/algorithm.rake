@@ -31,7 +31,7 @@ namespace :algorithm do
       max_laboratory_num_list = algorithm_step1(laboratories,
                                                 num_students,
                                                 num_laboratories)
-      
+
       # Step 2
       # 全ての学生を未配属にする
       current_assign_list = algorithm_step2(laboratories)
@@ -163,18 +163,18 @@ namespace :algorithm do
     end
     num_remain_students = num_students - num_tmp_assignment
     # Step 5
+    index = 1
     while (num_remain_students > 0)
-      index = 0
       laboratories.each do |laboratory|
-        if laboratory.max_num.nil? || laboratory.max_num > avarage + index
+        if laboratory.max_num.nil? || laboratory.max_num >= (avarage + index)
           max_laboratory_num_list[laboratory.id] += 1
           num_remain_students -= 1
           if (num_remain_students == 0)
             break
           end
         end
-        index += 1
       end
+      index += 1
     end
     return max_laboratory_num_list
   end

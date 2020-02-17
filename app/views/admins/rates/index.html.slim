@@ -1,0 +1,16 @@
+.row.mt-3
+  h2.col-sm-6 レート一覧
+
+.row.mt-5.mb-3
+  h3.col-sm-6 研究室
+
+table.table.table-hover
+  thead.thead-dark
+    tr
+      th 研究室名
+      th 日間
+  tbody
+    - current_admin.laboratory_rate.each do |laboratory_rate|
+      tr
+        td = laboratory_rate.laboratory.name
+        td = laboratory_rate.rate

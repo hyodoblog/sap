@@ -121,14 +121,18 @@ class Admins::AlgorithmController < Admins::ApplicationController
     end
     num_remain_students = num_students - num_tmp_assignment
     # Step 5
+    index = 1
     while (num_remain_students > 0)
       laboratories.each do |laboratory|
-        max_laboratory_num_list[laboratory.id] += 1
-        num_remain_students -= 1
-        if (num_remain_students == 0)
-          break
+        if laboratory.max_num.nil? || laboratory.max_num >= (avarage + index)
+          max_laboratory_num_list[laboratory.id] += 1
+          num_remain_students -= 1
+          if (num_remain_students == 0)
+            break
+          end
         end
       end
+      index += 1
     end
     return max_laboratory_num_list
   end

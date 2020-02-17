@@ -7,11 +7,12 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 		ul.navbar-nav.ml-auto
 			- if admin_signed_in?
 				li.nav-item
-					= header_link_item('管理者画面', admins_root_path, '')
+					= header_link_item('管理者画面', admins_root_path)
 				- if current_admin.init_setup_flag && !current_admin.end_flag
 					- if current_admin.release_flag
 						li.nav-item
-							= header_link_item('配属一覧', assign_lists_path(current_admin.sap_key), '')
+							= header_link_item('レート一覧', admins_rates_index_path)
+							= header_link_item('配属一覧', assign_lists_path(current_admin.sap_key))
 					- else
 						li.nav-item.dropdown
 							= header_link_dropdown('メンバー追加', [new_admins_laboratory_path, new_admins_student_path, admins_import_path])
@@ -20,28 +21,28 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 								= link_to('学生追加', new_admins_student_path, class: 'dropdown-item')
 								= link_to('一括追加', admins_import_path, class: 'dropdown-item')
 						li.nav-item
-							= header_link_item('SAP設定', admins_config_show_path, '')
+							= header_link_item('SAP設定', admins_config_show_path)
 						- unless current_admin.start_flag
 							li.nav-item
-								= header_link_item('マイページ', admins_mypage_show_path, '')
+								= header_link_item('マイページ', admins_mypage_show_path)
 				li.nav-item
 					= link_to('ログアウト', destroy_admin_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' })
 			- elsif student_signed_in? && !current_student.admin.end_flag
 				- sap_key = current_student.admin.sap_key
 				- if @admin.end_datetime >= Time.now()
 					li.nav-item
-						= header_link_item('希望提出', students_root_path(sap_key), '')
+						= header_link_item('希望提出', students_root_path(sap_key))
 				li.nav-item
-					= header_link_item('配属一覧', assign_lists_path(sap_key), '')
+					= header_link_item('配属一覧', assign_lists_path(sap_key))
 				li.nav-item
 					= link_to('ログアウト', destroy_student_session_path(sap_key), method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' })
 			- elsif laboratory_signed_in? && !current_laboratory.admin.end_flag
 				- sap_key = current_laboratory.admin.sap_key
 				- if @admin.end_datetime >= Time.now()
 					li.nav-item
-						= header_link_item('希望提出', laboratories_root_path(sap_key), '')
+						= header_link_item('希望提出', laboratories_root_path(sap_key))
 				li.nav-item
-					= header_link_item('配属一覧', assign_lists_path(sap_key), '')
+					= header_link_item('配属一覧', assign_lists_path(sap_key))
 				li.nav-item
 					= link_to('ログアウト', destroy_laboratory_session_path(sap_key), method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' })
 			- else
@@ -60,6 +61,6 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 						li.nav-item
 							= link_to('トップ', '/', class: 'nav-link')
 					li.nav-item
-						= header_link_item('新規登録', new_admin_registration_path, '')
+						= header_link_item('新規登録', new_admin_registration_path)
 					li.nav-item
-						= header_link_item('ログイン', new_admin_session_path, '')
+						= header_link_item('ログイン', new_admin_session_path)
