@@ -362,7 +362,7 @@ namespace :algorithm do
       students.each do |student|
         if student.id == student_id
           if rate.present? && student.rate.present?
-            rate += student.rate
+            rate += student.total_rate
           end
           student.update_attributes(total_rate: rate)
           student.student_rate.create(rate: rate)
