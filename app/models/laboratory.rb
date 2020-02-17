@@ -60,4 +60,23 @@ class Laboratory < ApplicationRecord
       end
     end
   end
+
+  def self.xlsx_import(sheet, admin_id)
+    index = 0
+    Laboratory.transaction do
+      sheet.each do |row|
+        index += 1
+        next if index == 1
+        Laboratory.create(
+          admin_id:              admin_id,
+          name:                  row[0].to_s,
+          professor_name:        row[1].to_s,
+          max_num:               row[2].nil? ? '' : row[2].to_i,
+          email:                 row[3].to_s,
+          password:              row[4].to_s,
+          password_confirmation: row[4].to_s
+        )
+      end
+    end
+  end
 end

@@ -1,11 +1,16 @@
 class Admins::DownloadController < Admins::ApplicationController
   def laboratory
-    download_file_path = 'public/csv_template/laboratories.csv'
+    download_file_path = 'public/template_file/laboratories.csv'
     send_file(download_file_path)
   end
 
   def student
-    download_file_path = 'public/csv_template/students.csv'
+    download_file_path = 'public/template_file/students.csv'
+    send_file(download_file_path)
+  end
+
+  def excel
+    download_file_path = 'public/template_file/sap_excel_template.elsx'
     send_file(download_file_path)
   end
 end

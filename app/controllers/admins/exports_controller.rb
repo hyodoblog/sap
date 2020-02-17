@@ -47,7 +47,7 @@ class Admins::ExportsController < Admins::ApplicationController
         end
       end
       p.workbook.add_worksheet(name: '学生情報') do |sheet|
-        sheet.add_row %w(学籍番号 名前 Eメール レート 希望研究室リスト)
+        sheet.add_row %w(学籍番号 名前 Eメール トータルレート 希望研究室リスト)
         current_admin.student.each do |student|
           sheet.add_row do |row|
             row.add_cell(student.student_num)
@@ -64,7 +64,7 @@ class Admins::ExportsController < Admins::ApplicationController
         end
       end
       p.workbook.add_worksheet(name: '研究室情報') do |sheet|
-        sheet.add_row %w(研究室名 名前 最大配属人数 Eメール レート 希望学生リスト)
+        sheet.add_row %w(研究室名 名前 最大配属人数 Eメール トータルレート 希望学生リスト)
         current_admin.laboratory.each do |laboratory|
           sheet.add_row do |row|
             row.add_cell(laboratory.name)
