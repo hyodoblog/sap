@@ -89,6 +89,7 @@ class Admins::ImportsController < Admins::ApplicationController
         end
       end
     end
+    flash[:notice] = 'エクセルデータのインポートに成功しました'
     redirect_to(admins_root_path)
   end
 

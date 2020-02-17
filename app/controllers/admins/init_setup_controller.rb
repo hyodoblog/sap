@@ -122,6 +122,8 @@ class Admins::InitSetupController < Admins::ApplicationController
         end
       end
     end
+    current_admin.update_attributes(init_setup_flag: true)
+    flash[:notice] = 'エクセルデータのインポートに成功しました'
     redirect_to(admins_root_path)
   end
 
