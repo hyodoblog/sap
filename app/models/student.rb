@@ -41,7 +41,7 @@ class Student < ApplicationRecord
 
         Student.create!(
           admin_id:              admin_id,
-          student_num:           row[0].to_s,
+          student_num:           row[0].floor.to_s,
           name:                  row[1].to_s,
           email:                 row[2].to_s,
           password:              row[3].to_s,
@@ -59,7 +59,7 @@ class Student < ApplicationRecord
         next if index == 1
         Student.create(
           admin_id:              admin_id,
-          student_num:           row[0].to_s,
+          student_num:           row[0].floor.to_s,
           name:                  row[1].to_s,
           email:                 row[2].to_s,
           password:              row[3].to_s,

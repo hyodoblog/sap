@@ -19,6 +19,7 @@ gem 'devise-i18n'
 gem 'devise-i18n-views'
 gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
 gem 'activerecord-nulldb-adapter'
+gem "rubyzip", ">= 1.3.0"
 
 # excel import
 gem 'roo'
