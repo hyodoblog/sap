@@ -97,7 +97,7 @@
           td = laboratory.max_num
           td = laboratory.email
           - if current_admin.release_flag
-            td = laboratory.rate
+            td = laboratory.total_rate
           - else
             td = link_to('編集', '/admins/laboratories/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
@@ -143,7 +143,7 @@
           td = student.name
           td = student.email
           - if current_admin.release_flag
-            td = student.rate
+            td = student.total_rate
           - else
             td = link_to('編集', '/admins/students/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',

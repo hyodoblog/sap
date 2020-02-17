@@ -18,8 +18,8 @@ namespace :algorithm do
       max_confirmed_student = admin.max_confirmed_student
       student_choice_list = student_choice_list_make(admin)
       laboratory_choice_list = laboratory_choice_list_make(admin)
-      students = admin.student.order(rate: 'DESC')
-      laboratories = admin.laboratory.order(rate: 'DESC')
+      students = admin.student.order(total_rate: 'DESC')
+      laboratories = admin.laboratory.order(total_rate: 'DESC')
       num_students = students.length
       num_laboratories = laboratories.length
 
@@ -94,8 +94,8 @@ namespace :algorithm do
       # データの初期化
       student_choice_list = student_choice_list_make(admin)
       laboratory_choice_list = laboratory_choice_list_make(admin)
-      students = admin.student.order(rate: 'DESC')
-      laboratories = admin.laboratory.order(rate: 'DESC')
+      students = admin.student.order(total_rate: 'DESC')
+      laboratories = admin.laboratory.order(total_rate: 'DESC')
       max_student_rate = admin.max_choice_student
       max_laboratory_rate = admin.max_choice_laboratory
 
@@ -357,13 +357,15 @@ namespace :algorithm do
         minus_point += 1
       end
     end
+    # データベースに反映
     student_rate_list.each do |student_id, rate|
       students.each do |student|
         if student.id == student_id
           if rate.present? && student.rate.present?
             rate += student.rate
           end
-          student.update_attributes(rate: rate)
+          student.update_attributes(total_rate: rate)
+          student.create(rate: rate)
           break
         end
       end
@@ -383,13 +385,15 @@ namespace :algorithm do
         minus_point += 1
       end
     end
+    # データベースに反映
     laboratory_rate_list.each do |laboratory_id, rate|
       laboratories.each do |laboratory|
         if laboratory.id == laboratory_id
           if rate.present? && laboratory.rate.present?
             rate += laboratory.rate
           end
-          laboratory.update_attributes(rate: rate)
+          laboratory.update_attributes(total_rate: rate)
+          laboratory.create(rate: rate)
           break
         end
       end
