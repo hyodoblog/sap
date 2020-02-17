@@ -1,3 +1,8 @@
+- unless @admin.release_flag
+  .alert.alert-warning.mt-4
+    '現在管理者がメンテナンス中なため希望提出ができません。
+    br
+    '今しばらくお待ち下さい(_ _)
 .jumbotron.mt-5
   .row
     .col-sm-9
@@ -47,7 +52,15 @@
             li.list-group-item.choice-list-item style="white-space:nowrap"
               = "#{choice_student.student.student_num} - #{choice_student.student.name}"
               = f.hidden_field 'items[][student_id]', value: choice_student.student.id
-      = f.submit '希望提出', class: 'btn btn-lg btn-primary btn-block mt-4', id: 'resubmit-btn'
+      - if @admin.release_flag
+        = f.submit '希望提出', class: 'btn btn-lg btn-primary btn-block mt-4', id: 'resubmit-btn'
+
+- if Rails.env.production?
+  .row.py-5
+    .col-sm-6
+      = render('common/adsence')
+    .col-sm-6.d-none.d-sm-block
+      = render('common/adsence')
 
 .modal.fade#sample-modal tabindex='-1' role='dialog' aria-hidden='true'
   .modal-dialog role='document'

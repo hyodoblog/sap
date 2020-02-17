@@ -63,8 +63,11 @@
         = f.submit '希望提出', class: 'btn btn-lg btn-primary btn-block mt-4', id: 'resubmit-btn'
 
 - if Rails.env.production?
-  .my-4.py-5
-    = render('common/adsence')
+  .row.py-5
+    .col-sm-6
+      = render('common/adsence')
+    .col-sm-6.d-none.d-sm-block
+      = render('common/adsence')
 
 .modal.fade#sample-modal tabindex='-1' role='dialog' aria-hidden='true'
   .modal-dialog role='document'
