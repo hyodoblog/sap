@@ -361,7 +361,7 @@ namespace :algorithm do
     student_rate_list.each do |student_id, rate|
       students.each do |student|
         if student.id == student_id
-          if rate.present? && student.rate.present?
+          if rate.present? && student.total_rate.present?
             rate += student.total_rate
           end
           student.update_attributes(total_rate: rate)
@@ -389,8 +389,8 @@ namespace :algorithm do
     laboratory_rate_list.each do |laboratory_id, rate|
       laboratories.each do |laboratory|
         if laboratory.id == laboratory_id
-          if rate.present? && laboratory.rate.present?
-            rate += laboratory.rate
+          if rate.present? && laboratory.total_rate.present?
+            rate += laboratory.total_rate
           end
           laboratory.update_attributes(total_rate: rate)
           laboratory.laboratory_rate.create(rate: rate)
