@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     post   'import/excel', to: 'imports#excel'
     get    'download/laboratory'
     get    'download/student'
+    get    'download/excel'
     delete 'init/all'
     delete 'init/laboratory'
     delete 'init/student'

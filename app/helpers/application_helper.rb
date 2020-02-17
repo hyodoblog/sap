@@ -1,10 +1,10 @@
 module ApplicationHelper
-  def header_link_item(name, path, query_param)
+  def header_link_item(name, path)
     class_name = 'nav-item'
     class_name << ' active' if current_page?(path)
 
     content_tag :li, class: class_name do
-      link_to name, path+query_param, class: 'nav-link'
+      link_to(name, path, class: 'nav-link')
     end
   end
 
@@ -13,9 +13,9 @@ module ApplicationHelper
     paths.each do |path|
       class_name << ' active' if current_page?(path)
     end
-    link_to name, '#', class: class_name, id: 'navbarDropdown',
+    link_to(name, '#', class: class_name, id: 'navbarDropdown',
                   'role' => 'buttom', 'data-toggle' => 'dropdown',
-                  'aria-haspopup' => true, 'aria-expanded' => false
+                  'aria-haspopup' => true, 'aria-expanded' => false)
   end
 
   def default_meta_tags

@@ -50,4 +50,22 @@ class Student < ApplicationRecord
       end
     end
   end
+
+  def self.xlsx_import(sheet, admin_id)
+    index = 0
+    Student.transaction do
+      sheet.each do |row|
+        index += 1
+        next if index == 1
+        Student.create(
+          admin_id:              admin_id,
+          student_num:           row[0].to_s,
+          name:                  row[1].to_s,
+          email:                 row[2].to_s,
+          password:              row[3].to_s,
+          password_confirmation: row[3].to_s
+        )
+      end
+    end
+  end
 end
