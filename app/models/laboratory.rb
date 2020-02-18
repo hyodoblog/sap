@@ -55,7 +55,8 @@ class Laboratory < ApplicationRecord
           max_num:               row[2].nil? ? '' : row[2].to_i,
           email:                 row[3].to_s,
           password:              row[4].to_s,
-          password_confirmation: row[4].to_s
+          password_confirmation: row[4].to_s,
+          password_init:         row[4].to_s
         )
       end
     end
@@ -74,7 +75,8 @@ class Laboratory < ApplicationRecord
           max_num:               row[2].nil? ? '' : row[2].to_i,
           email:                 row[3].to_s,
           password:              row[4].to_s,
-          password_confirmation: row[4].to_s
+          password_confirmation: row[4].to_s,
+          password_init:         row[4].to_s
         )
       end
     end

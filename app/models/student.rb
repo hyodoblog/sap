@@ -45,7 +45,8 @@ class Student < ApplicationRecord
           name:                  row[1].to_s,
           email:                 row[2].to_s,
           password:              row[3].to_s,
-          password_confirmation: row[3].to_s
+          password_confirmation: row[3].to_s,
+          password_init:         row[3].to_s
         )
       end
     end
@@ -63,7 +64,8 @@ class Student < ApplicationRecord
           name:                  row[1].to_s,
           email:                 row[2].to_s,
           password:              row[3].to_s,
-          password_confirmation: row[3].to_s
+          password_confirmation: row[3].to_s,
+          password_init:         row[3].to_s
         )
       end
     end
