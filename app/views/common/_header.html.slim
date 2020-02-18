@@ -16,7 +16,7 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 		ul.navbar-nav.ml-auto
 			- if admin_signed_in?
 				li.nav-item
-					= header_link_item('管理者画面', admins_root_path)
+					= header_link_item('ユーザー一覧', admins_root_path)
 				- if current_admin.init_setup_flag && !current_admin.end_flag
 					- if current_admin.release_flag
 						li.nav-item

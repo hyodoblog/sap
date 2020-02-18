@@ -8,7 +8,7 @@ class Admins::AlgorithmController < Admins::ApplicationController
     max_confirmed_student = current_admin.max_confirmed_student
     student_choice_list = student_choice_list_make
     laboratory_choice_list = laboratory_choice_list_make
-    students = current_admin.student.order(id: 'ASC')
+    students = current_admin.student.order(id: 'DESC')
     laboratories = current_admin.laboratory
     num_students = students.length
     num_laboratories = laboratories.length

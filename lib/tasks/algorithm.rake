@@ -14,24 +14,34 @@ namespace :algorithm do
         next
       end
 
-      # データの初期化
+      # 変数の初期化
       max_confirmed_student = admin.max_confirmed_student
       student_choice_list = student_choice_list_make(admin)
       laboratory_choice_list = laboratory_choice_list_make(admin)
-      students = admin.student.order(latest_rate: 'DESC')
-      laboratories = admin.laboratory.order(latest_rate: 'DESC')
+      students = admin.student.order(id: 'DESC')
+      laboratories = admin.laboratory
       num_students = students.length
       num_laboratories = laboratories.length
+      max_student_rate = admin.max_choice_student
+      max_laboratory_rate = admin.max_choice_laboratory
 
       # -----------------------
       # --- アルゴリズムの実装 ---
+
+      # Step 0
+      # レートの更新
+      students_rate_update(laboratory_choice_list, students, max_student_rate)
+      laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate)
+
+      # 研究室をレート順にソート
+      laboratories = admin.laboratory.order(latest_rate: 'DESC')
 
       # Step 1
       # 最大研究室配属人数を整理
       max_laboratory_num_list = algorithm_step1(laboratories,
                                                 num_students,
                                                 num_laboratories)
-
+      
       # Step 2
       # 全ての学生を未配属にする
       current_assign_list = algorithm_step2(laboratories)
@@ -56,10 +66,10 @@ namespace :algorithm do
       current_assign_list = algorithm_step5(current_assign_list,
                                             max_laboratory_num_list,
                                             students)
-      
+
       # --- アルゴリズム終了 ----
       # -----------------------
-      
+
       # 過去の配属データをリセット
       admin.assign_list.delete_all
 
@@ -76,48 +86,66 @@ namespace :algorithm do
     end
   end
 
-  desc '学生と研究室のレートを更新'
-  task :rate => :environment do
-    Admin.all.each do |admin|
+  private
 
-      # SAPが稼働しているかチェック
-      unless admin.release_flag
-        next
+  # レートの更新
+  def students_rate_update(laboratory_choice_list, students, max_student_rate)
+    student_rate_list = {}
+    laboratory_choice_list.each do |laboratory_id, student_choice_array|
+      minus_point = 0
+      student_choice_array.each do |student_id|
+        if student_rate_list[student_id].nil?
+          student_rate_list[student_id] = (max_student_rate - minus_point)
+        else
+          student_rate_list[student_id] += (max_student_rate - minus_point)
+        end
+        minus_point += 1
       end
-
-      # 日付チェック
-      now_datetime = Time.zone.now
-      unless admin.start_datetime <= now_datetime && admin.end_datetime >= now_datetime
-        next
+    end
+    # データベースに反映
+    student_rate_list.each do |student_id, rate|
+      students.each do |student|
+        if student.id == student_id
+          rate = 0 if rate.nil?
+          student.update_attributes(latest_rate: rate)
+          student.student_rate.create(rate: rate)
+          break
+        end
       end
-
-      # データの初期化
-      student_choice_list = student_choice_list_make(admin)
-      laboratory_choice_list = laboratory_choice_list_make(admin)
-      students = admin.student.order(latest_rate: 'DESC')
-      laboratories = admin.laboratory.order(latest_rate: 'DESC')
-      max_student_rate = admin.max_choice_student
-      max_laboratory_rate = admin.max_choice_laboratory
-
-      # ---------------------
-      # --- レート更新開始 ----
-
-      students_rate_update(laboratory_choice_list, students, max_student_rate)
-      laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate)
-
-      # --- レート更新終了 ----
-      # ---------------------
     end
   end
-
-  private
+  def laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate)
+    laboratory_rate_list = {}
+    student_choice_list.each do |student_id, laboratory_choice_array|
+      minus_point = 0
+      laboratory_choice_array.each do |laboratory_id|
+        if laboratory_rate_list[laboratory_id].nil?
+          laboratory_rate_list[laboratory_id] = (max_laboratory_rate - minus_point)
+        else
+          laboratory_rate_list[laboratory_id] += (max_laboratory_rate - minus_point)
+        end
+        minus_point += 1
+      end
+    end
+    # データベースに反映
+    laboratory_rate_list.each do |laboratory_id, rate|
+      laboratories.each do |laboratory|
+        if laboratory.id == laboratory_id
+          rate = 0 if rate.nil?
+          laboratory.update_attributes(latest_rate: rate)
+          laboratory.laboratory_rate.create(rate: rate)
+          break
+        end
+      end
+    end
+  end
 
   # 学生が希望した研究室の希望リストを整理
   def student_choice_list_make(admin)
     students = admin.student.joins(:student_choice)
-                            .includes(:student_choice)
-                            .order('student_choices.student_id')
-                            .order('student_choices.rank')
+                                    .includes(:student_choice)
+                                    .order('student_choices.student_id')
+                                    .order('student_choices.rank')
     student_choice_list = {}
     students.each do |student|
       laboratory_array = []
@@ -132,15 +160,16 @@ namespace :algorithm do
   # 研究室が希望した学生の希望リストを整理
   def laboratory_choice_list_make(admin)
     laboratories = admin.laboratory.joins(:laboratory_choice)
-                                   .includes(:laboratory_choice)
-                                   .order('laboratory_choices.laboratory_id')
-                                   .order('laboratory_choices.rank')
+                                           .includes(:laboratory_choice)
+                                           .order('laboratory_choices.laboratory_id')
+                                           .order('laboratory_choices.rank')
     laboratory_choice_list = {}
     laboratories.each do |laboratory|
       student_array = []
       laboratory.laboratory_choice.each do |choice|
         student_array.push(choice.student_id)
       end
+
       laboratory_choice_list[laboratory.id] = student_array
     end
     return laboratory_choice_list
@@ -298,6 +327,9 @@ namespace :algorithm do
   # 入れ替えない場合           false
   def check_student_priority(current_assign_student_array, student_choice_array, student_id)
     flag = false
+    if student_choice_array.nil?
+      return false, nil
+    end
     student_choice_array.each do |student_choice_id|
       if student_choice_id == student_id
         current_assign_student_array.each do |current_assign_student_id|
@@ -342,58 +374,6 @@ namespace :algorithm do
       end
     end
     return false
-  end
-
-  def students_rate_update(laboratory_choice_list, students, max_student_rate)
-    student_rate_list = {}
-    laboratory_choice_list.each do |laboratory_id, student_choice_array|
-      minus_point = 0
-      student_choice_array.each do |student_id|
-        if student_rate_list[student_id].nil?
-          student_rate_list[student_id] = (max_student_rate - minus_point)
-        else
-          student_rate_list[student_id] += (max_student_rate - minus_point)
-        end
-        minus_point += 1
-      end
-    end
-    # データベースに反映
-    student_rate_list.each do |student_id, rate|
-      students.each do |student|
-        if student.id == student_id
-          rate = 0 if rate.nil?
-          student.update_attributes(latest_rate: rate)
-          student.student_rate.create(rate: rate)
-          break
-        end
-      end
-    end
-  end
-
-  def laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate)
-    laboratory_rate_list = {}
-    student_choice_list.each do |student_id, laboratory_choice_array|
-      minus_point = 0
-      laboratory_choice_array.each do |laboratory_id|
-        if laboratory_rate_list[laboratory_id].nil?
-          laboratory_rate_list[laboratory_id] = (max_laboratory_rate - minus_point)
-        else
-          laboratory_rate_list[laboratory_id] += (max_laboratory_rate - minus_point)
-        end
-        minus_point += 1
-      end
-    end
-    # データベースに反映
-    laboratory_rate_list.each do |laboratory_id, rate|
-      laboratories.each do |laboratory|
-        if laboratory.id == laboratory_id
-          rate = 0 if rate.nil?
-          laboratory.update_attributes(latest_rate: rate)
-          laboratory.laboratory_rate.create(rate: rate)
-          break
-        end
-      end
-    end
   end
 
 end

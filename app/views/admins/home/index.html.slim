@@ -75,7 +75,7 @@
                     'data-url' => admins_init_laboratory_path, 'data-text' => '全研究室を削除します。',
                     'data-target' => '#delete-user-modal')
 
-  table.table.table-hover
+  table.table.table-hover.table-responsive	
     thead.thead-dark
       tr
         th 研究室名
@@ -103,7 +103,7 @@
               td 未提出
             - else
               td
-                - laboratory.laboratory_choice.each do |laboratory_choice|
+                - laboratory.laboratory_choice.order(rank: 'ASC').each do |laboratory_choice|
                   span.mr-3 = laboratory_choice.student.student_num
           - else
             td = link_to('編集', '/admins/laboratories/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark')
@@ -130,7 +130,7 @@
                     'data-url' => admins_init_student_path, 'data-text' => '全学生を削除します。',
                     'data-target' => '#delete-user-modal')
 
-  table.table.table-hover.mb-5
+  table.table.table-hover.mb-5.table-responsive	
     thead.thead-dark
       tr
         th 学籍番号
@@ -156,7 +156,7 @@
               td 未提出
             - else
               td
-                - student.student_choice.each do |student_choice|
+                - student.student_choice.order(rank: 'ASC').each do |student_choice|
                   span.mr-3 = student_choice.laboratory.name
           - else
             td = link_to('編集', '/admins/students/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark')

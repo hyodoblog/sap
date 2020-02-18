@@ -7,15 +7,13 @@
 #   Character.create("name" => 'Luke', movie: movies.first)
 
 # テスト用のデータ
-# 必ずデータベースをリセットしてから実行して下さい
-# 直接idを指定しているため
-# ---- コマンド ----
-# docker-compose exec app bundle exec rails db:migrate:reset && docker-compose exec app bundle exec rails db:seed
 
 # 変数の初期化
 test_email = ENV['TEST_EMAIL'] ||= 'example@example.com'
 number_of_student       = ENV['TEST_STUDENT_NUM'].nil? ? 7 : ENV['TEST_STUDENT_NUM'].to_i
+max_student_choice      = ENV['TEST_MAX_STUDENT_CHOICE'].nil? ? 7 : ENV['TEST_MAX_STUDENT_CHOICE'].to_i
 number_of_laboratory    = ENV['TEST_LABORATORY_NUM'].nil? ? 3 : ENV['TEST_LABORATORY_NUM'].to_i
+max_laboratory_choice   = ENV['TEST_MAX_LABORATORY_CHOICE'].nil? ? 3 : ENV['TEST_MAX_LABORATORY_CHOICE'].to_i
 max_conf_student        = ENV['TEST_CONF_STUDENT'].nil? ? 2 : ENV['TEST_CONF_STUDENT'].to_i
 seed_num                = ENV['TEST_SEED_NUM'].nil? ? 10 : ENV['TEST_SEED_NUM'].to_i
 
@@ -36,8 +34,8 @@ if admin.nil?
                 faculty_name:          '情報工学部',
                 department_name:       '電子情報工学科',
                 contact_email:         '',
-                max_choice_student:    number_of_student,
-                max_choice_laboratory: number_of_laboratory,
+                max_choice_student:    max_student_choice,
+                max_choice_laboratory: max_laboratory_choice,
                 max_confirmed_student: max_conf_student,
                 start_datetime:        now_time,
                 end_datetime:          now_time + 1.day,
@@ -85,16 +83,20 @@ laboratories = admin.laboratory
 
 # 学生の希望提出
 students.each do |student|
-  choice_laboratories = laboratories.sample(number_of_laboratory)
+  choice_laboratories = laboratories.sample(max_laboratory_choice)
+  rank = 1
   choice_laboratories.each do |choice_laboratory|
-    student.student_choice.new(laboratory_id: choice_laboratory.id).save()
+    student.student_choice.new(laboratory_id: choice_laboratory.id, rank: rank).save()
+    rank += 1
   end
 end
 
 # 研究室の希望提出
 laboratories.each do |laboratory|
-  choice_students = students.sample(number_of_student)
+  choice_students = students.sample(max_student_choice)
+  rank = 1
   choice_students.each do |choice_student|
-    laboratory.laboratory_choice.new(student_id: choice_student.id).save()
+    laboratory.laboratory_choice.new(student_id: choice_student.id, rank: rank).save()
+    rank += 1
   end
 end
