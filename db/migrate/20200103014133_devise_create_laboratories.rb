@@ -13,7 +13,7 @@ class DeviseCreateLaboratories < ActiveRecord::Migration[5.2]
       t.string     :name,           null: false
       t.string     :professor_name, null: false
       t.integer    :max_num
-      t.integer    :total_rate, null: false, default: 0
+      t.integer    :latest_rate, null: false, default: 0
 
       ## Recoverable
       t.string   :reset_password_token

@@ -12,7 +12,7 @@ class DeviseCreateStudents < ActiveRecord::Migration[5.2]
       t.references :admin,       foreign_key: true
       t.string     :name,        null: false
       t.string     :student_num, null: false
-      t.integer    :total_rate, null: false, default: 0
+      t.integer    :latest_rate, null: false, default: 0
 
       ## Recoverable
       t.string   :reset_password_token
