@@ -19,6 +19,8 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 					= header_link_item('ユーザー一覧', admins_root_path)
 				- if current_admin.init_setup_flag && !current_admin.end_flag
 					- if current_admin.release_flag
+						li.nav_item
+							= header_link_item('希望提出一覧', admins_choice_list_path)
 						li.nav-item
 							= header_link_item('配属一覧', assign_lists_path(current_admin.sap_key))
 					- else

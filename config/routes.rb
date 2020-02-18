@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   namespace :admins do
     root   'home#index'
+    get    'choice_list', to: 'home#choice_list'
     get    'init_setup/first'
     put    'init_setup/first', to: 'init_setup#first_setup'
     patch  'init_setup/first', to: 'init_setup#first_setup'
