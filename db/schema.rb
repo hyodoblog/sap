@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2020_02_16_075512) do
     t.string "name", null: false
     t.string "professor_name", null: false
     t.integer "max_num"
-    t.integer "total_rate", default: 0, null: false
+    t.integer "latest_rate", default: 0, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 2020_02_16_075512) do
     t.bigint "admin_id"
     t.string "name", null: false
     t.string "student_num", null: false
-    t.integer "total_rate", default: 0, null: false
+    t.integer "latest_rate", default: 0, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

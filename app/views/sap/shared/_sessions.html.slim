@@ -2,8 +2,8 @@
   .col-lg-6.offset-lg-3
     .text-center.mb-5
       h3= admin.university_name
-      h3 = admin.department_name
       h3 = admin.faculty_name
+      h3 = admin.department_name
     = form_with model: model, url: url, class: 'card', local: true do |f|
       .card-header = title
       main.card-body
