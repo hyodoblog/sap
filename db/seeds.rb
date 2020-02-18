@@ -28,21 +28,21 @@ random = Random.new(seed_num)
 # 管理者の初期設定
 admin = Admin.find_by(email: test_email)
 if admin.nil?
-  Admin.create(email:        test_email,
-               password:     password,
-               confirmed_at: now_time,
-               sap_key: 'aaaa',
-               university_name:       '九州工業大学',
-               faculty_name:          '情報工学部',
-               department_name:       '電子情報工学科',
-               contact_email:         '',
-               max_choice_student:    number_of_student,
-               max_choice_laboratory: number_of_laboratory,
-               max_confirmed_student: max_conf_student,
-               start_datetime:        now_time,
-               end_datetime:          now_time + 1.day,
-               view_end_datetime:     now_time + 2.day,
-               init_setup_flag:       true)
+  Admin.create!(email:                 test_email,
+                password:              password,
+                confirmed_at:          now_time,
+                sap_key:               'aaaa',
+                university_name:       '九州工業大学',
+                faculty_name:          '情報工学部',
+                department_name:       '電子情報工学科',
+                contact_email:         '',
+                max_choice_student:    number_of_student,
+                max_choice_laboratory: number_of_laboratory,
+                max_confirmed_student: max_conf_student,
+                start_datetime:        now_time,
+                end_datetime:          now_time + 1.day,
+                view_end_datetime:     now_time + 2.day,
+                init_setup_flag:       true)
   admin = Admin.find_by(email: test_email)
 else
   Student.where(admin_id: admin.id).destroy_all

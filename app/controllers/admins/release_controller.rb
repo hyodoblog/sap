@@ -23,7 +23,7 @@ class Admins::ReleaseController < Admins::ApplicationController
         NotificationMailer.send_login_info(student, current_admin, 'sap/students/devise/sessions').deliver
       end
     end
-    current_admin.update_attributes(release_flag: true, start_flag: true)
+    current_admin.update_attributes!(release_flag: true, start_flag: true)
     flash[:notice] = 'SAPのログインページを発行しました'
     redirect_to(admins_root_path)
   end

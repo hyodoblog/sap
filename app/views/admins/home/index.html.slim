@@ -84,6 +84,7 @@
         th Eメール
         - if current_admin.release_flag
           th レート
+          th 希望状況
         - else
           th
           th
@@ -98,6 +99,12 @@
           td = laboratory.email
           - if current_admin.release_flag
             td = laboratory.latest_rate
+            - if laboratory.laboratory_choice.length == 0
+              td 未提出
+            - else
+              td
+                - laboratory.laboratory_choice.each do |laboratory_choice|
+                  span.mr-3 = laboratory_choice.student.student_num
           - else
             td = link_to('編集', '/admins/laboratories/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
@@ -131,6 +138,7 @@
         th Eメール
         - if current_admin.release_flag
           th レート
+          th 希望状況
         - else
           th
           th
@@ -144,6 +152,12 @@
           td = student.email
           - if current_admin.release_flag
             td = student.latest_rate
+            - if student.student_choice.length == 0
+              td 未提出
+            - else
+              td
+                - student.student_choice.each do |student_choice|
+                  span.mr-3 = student_choice.laboratory.name
           - else
             td = link_to('編集', '/admins/students/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
