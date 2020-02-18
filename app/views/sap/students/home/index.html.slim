@@ -30,7 +30,7 @@
       input.btn.btn-danger.pull-right type="button" value="再提出を希望する" onclick="resubmit()"
   .alert.alert-info#resubmit-notice １時間ごとにアルゴリズムを実行しているため、提出した後は反映までしばらくお待ち下さい！
 
-.row
+.row.mb-4
   .col-6
     h4 研究室一覧
     = form_with scope: :choice_laboratory, local: true do |f|
@@ -38,7 +38,7 @@
         - @laboratories.each do |laboratory|
           li.list-group-item.choice-list-item style="white-space:nowrap"
             - if laboratory.max_num.present?
-              = "#{laboratory.name} - 最大人数：#{laboratory.max_num.to_s}"
+              = laboratory.name
             - else
               = laboratory.name
             = f.hidden_field 'items[][laboratory_id]', value: laboratory.id
@@ -55,7 +55,7 @@
           - @choice_laboratories.each do |choice_laboratory|
             li.list-group-item.choice-list-item style="white-space:nowrap"
               - if choice_laboratory.laboratory.max_num.present?
-                = "#{choice_laboratory.laboratory.name} - 最大人数：#{choice_laboratory.laboratory.max_num.to_s}"
+                = choice_laboratory.laboratory.name
               - else
                 = choice_laboratory.laboratory.name
               = f.hidden_field 'items[][laboratory_id]', value: choice_laboratory.laboratory.id
