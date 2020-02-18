@@ -14,10 +14,10 @@
 
 # 変数の初期化
 test_email = ENV['TEST_EMAIL'] ||= 'example@example.com'
-number_of_student = ENV['TEST_STUDENT_NUM'].nil? ? 7 : ENV['TEST_STUDENT_NUM'].to_i
-number_of_labo    = ENV['TEST_LABO_NUM'].nil? ? 3 : ENV['TEST_LABO_NUM'].to_i
-max_conf_student  = ENV['TEST_CONF_STUDENT'].nil? ? 2 : ENV['TEST_CONF_STUDENT'].to_i
-seed_num          = ENV['TEST_SEED_NUM'].nil? ? 10 : ENV['TEST_SEED_NUM'].to_i
+number_of_student       = ENV['TEST_STUDENT_NUM'].nil? ? 7 : ENV['TEST_STUDENT_NUM'].to_i
+number_of_laboratory    = ENV['TEST_LABORATORY_NUM'].nil? ? 3 : ENV['TEST_LABORATORY_NUM'].to_i
+max_conf_student        = ENV['TEST_CONF_STUDENT'].nil? ? 2 : ENV['TEST_CONF_STUDENT'].to_i
+seed_num                = ENV['TEST_SEED_NUM'].nil? ? 10 : ENV['TEST_SEED_NUM'].to_i
 
 password = 'Pass1234'
 now_time = Time.now
@@ -37,7 +37,7 @@ if admin.nil?
                department_name:       '電子情報工学科',
                contact_email:         '',
                max_choice_student:    number_of_student,
-               max_choice_laboratory: number_of_labo,
+               max_choice_laboratory: number_of_laboratory,
                max_confirmed_student: max_conf_student,
                start_datetime:        now_time,
                end_datetime:          now_time + 1.day,
@@ -63,19 +63,38 @@ end
 
 # 研究室の追加
 laboratories_params = []
-for num in 1..number_of_labo do
+for num in 1..number_of_laboratory do
   begin
     professor_name = ('a'..'z').to_a[random.rand(26)] + ('a'..'z').to_a[random.rand(26)] + random.rand(1..9).to_s + random.rand(1..9).to_s
   end while Laboratory.exists?(professor_name: professor_name)
   name = professor_name + '研究室'
   email = professor_name + '@example.com'
-  if num === 1 || random.rand(1..2) === 1
+  if num == 1 || random.rand(2) == 1
     max_num = ''
   else
-    avarage = number_of_student / number_of_labo
+    avarage = number_of_student / number_of_laboratory
     standard_num = avarage + 1
-    max_num = (1..standard_num)
+    max_num = random.rand(1..standard_num)
   end
   laboratory_param = { "password" => password, "password_confirmation" => password, "password_init" => password, "name" => name, "professor_name" => professor_name, "email" => email, "max_num" => max_num }
   admin.laboratory.new(laboratory_param).save()
+end
+
+students = admin.student
+laboratories = admin.laboratory
+
+# 学生の希望提出
+students.each do |student|
+  choice_laboratories = laboratories.sample(number_of_laboratory)
+  choice_laboratories.each do |choice_laboratory|
+    student.student_choice.new(laboratory_id: choice_laboratory.id).save()
+  end
+end
+
+# 研究室の希望提出
+laboratories.each do |laboratory|
+  choice_students = students.sample(number_of_student)
+  choice_students.each do |choice_student|
+    laboratory.laboratory_choice.new(student_id: choice_student.id).save()
+  end
 end

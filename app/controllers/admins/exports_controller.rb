@@ -53,7 +53,7 @@ class Admins::ExportsController < Admins::ApplicationController
             row.add_cell(student.student_num)
             row.add_cell(student.name)
             row.add_cell(student.email)
-            row.add_cell(student.total_rate)
+            row.add_cell(student.latest_rate)
             student_choice_laboratory_cell = ''
             student.student_choice.each do |choice_laboratory|
               student_choice_laboratory_cell += ', ' unless student_choice_laboratory_cell.empty?
@@ -71,7 +71,7 @@ class Admins::ExportsController < Admins::ApplicationController
             row.add_cell(laboratory.professor_name)
             row.add_cell(laboratory.max_num)
             row.add_cell(laboratory.email)
-            row.add_cell(laboratory.total_rate)
+            row.add_cell(laboratory.latest_rate)
             laboratory_choice_student_cell = ''
             laboratory.laboratory_choice.each do |choice_student|
               laboratory_choice_student_cell += ', ' unless !laboratory_choice_student_cell.empty?
