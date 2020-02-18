@@ -34,7 +34,7 @@
     h5 学生一覧
     = form_with scope: :choice_student, local: true do |f|
       ul#choice_student_left.list-group.overflow-auto.m-2 style="height:30rem"
-        - @admin.student.each do |student|
+        - @admin.student.where(current_laboratory.choice_laboratory.). do |student|
           li.list-group-item.choice-list-item style="white-space:nowrap"
             = "#{student.student_num} - #{student.name}"
             = f.hidden_field 'items[][student_id]', value: student.id

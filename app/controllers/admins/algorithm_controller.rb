@@ -256,6 +256,9 @@ class Admins::AlgorithmController < Admins::ApplicationController
   # 入れ替えない場合           false
   def check_student_priority(current_assign_student_array, student_choice_array, student_id)
     flag = false
+    if student_choice_array.nil?
+      return false, nil
+    end
     student_choice_array.each do |student_choice_id|
       if student_choice_id == student_id
         current_assign_student_array.each do |current_assign_student_id|
