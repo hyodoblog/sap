@@ -101,7 +101,7 @@
           - if current_admin.release_flag
             td = laboratory.latest_rate
             td = laboratory.sign_in_count
-            td = laboratory.last_sign_in_at
+            td = laboratory.last_sign_in_at.to_s(:datetime_jp)
           - else
             td = link_to('編集', '/admins/laboratories/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
@@ -151,7 +151,7 @@
           - if current_admin.release_flag
             td = student.latest_rate
             td = student.sign_in_count
-            td = student.last_sign_in_at
+            td = student.last_sign_in_at.to_s(:datetime_jp)
           - else
             td = link_to('編集', '/admins/students/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
