@@ -96,9 +96,19 @@ namespace :algorithm do
       minus_point = 0
       student_choice_array.each do |student_id|
         if student_rate_list[student_id].nil?
-          student_rate_list[student_id] = (max_student_rate - minus_point)
+          if minus_point == 0
+            point = max_student_rate * 10
+          else
+            point = (max_student_rate - minus_point)
+          end
+          student_rate_list[student_id] = point
         else
-          student_rate_list[student_id] += (max_student_rate - minus_point)
+          if minus_point == 0
+            point = max_student_rate * 10
+          else
+            point = (max_student_rate - minus_point)
+          end
+          student_rate_list[student_id] += point
         end
         minus_point += 1
       end
@@ -121,9 +131,19 @@ namespace :algorithm do
       minus_point = 0
       laboratory_choice_array.each do |laboratory_id|
         if laboratory_rate_list[laboratory_id].nil?
-          laboratory_rate_list[laboratory_id] = (max_laboratory_rate - minus_point)
+          if minus_point == 0
+            point = max_laboratory_rate * 10
+          else
+            point = (max_laboratory_rate - minus_point)
+          end
+          laboratory_rate_list[laboratory_id] = point
         else
-          laboratory_rate_list[laboratory_id] += (max_laboratory_rate - minus_point)
+          if minus_point == 0
+            point = max_laboratory_rate * 10
+          else
+            point = (max_laboratory_rate - minus_point)
+          end
+          laboratory_rate_list[laboratory_id] += point
         end
         minus_point += 1
       end
