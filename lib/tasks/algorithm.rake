@@ -30,8 +30,8 @@ namespace :algorithm do
 
       # Step 0
       # レートの更新
-      students_rate_update(laboratory_choice_list, students, max_student_rate)
-      laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate)
+      students_rate_update(laboratory_choice_list, students, max_student_rate, admin.id)
+      laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate, admin.id)
 
       # 研究室をレート順にソート
       laboratories = admin.laboratory.order(latest_rate: 'DESC')
@@ -90,7 +90,7 @@ namespace :algorithm do
   private
 
   # レートの更新
-  def students_rate_update(laboratory_choice_list, students, max_student_rate)
+  def students_rate_update(laboratory_choice_list, students, max_student_rate, admin_id)
     student_rate_list = {}
     laboratory_choice_list.each do |laboratory_id, student_choice_array|
       minus_point = 0
@@ -114,18 +114,26 @@ namespace :algorithm do
       end
     end
     # データベースに反映
-    student_rate_list.each do |student_id, rate|
-      students.each do |student|
+    students.each do |student|
+      student_rate_exit = false
+      student_rate_list.each do |student_id, rate|
         if student.id == student_id
-          rate = 0 if rate.nil?
+          student_rate_exit = true
           student.update_attributes(latest_rate: rate)
-          student.student_rate.create(rate: rate)
+          student.student_rate.create(admin_id: admin_id, rate: rate)
+          student_rate_list.delete(student_id)
           break
         end
       end
+      # 希望されていない場合 0
+      unless student_rate_exit
+        rate = 0
+        student.update_attributes(latest_rate: rate)
+        student.student_rate.create(admin_id: admin_id, rate: rate)
+      end
     end
   end
-  def laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate)
+  def laboratories_rate_update(student_choice_list, laboratories, max_laboratory_rate, admin_id)
     laboratory_rate_list = {}
     student_choice_list.each do |student_id, laboratory_choice_array|
       minus_point = 0
@@ -149,14 +157,22 @@ namespace :algorithm do
       end
     end
     # データベースに反映
-    laboratory_rate_list.each do |laboratory_id, rate|
-      laboratories.each do |laboratory|
+    laboratories.each do |laboratory|
+      laboratory_rate_exit = false
+      laboratory_rate_list.each do |laboratory_id, rate|
         if laboratory.id == laboratory_id
-          rate = 0 if rate.nil?
+          laboratory_rate_exit = true
           laboratory.update_attributes(latest_rate: rate)
-          laboratory.laboratory_rate.create(rate: rate)
+          laboratory.laboratory_rate.create(admin_id: admin_id, rate: rate)
+          laboratory_rate_list.delete(laboratory_id)
           break
         end
+      end
+      # 希望されていない場合 0
+      unless laboratory_rate_exit
+        rate = 0
+        laboratory.update_attributes(latest_rate: rate)
+        laboratory.laboratory_rate.create(admin_id: admin_id, rate: rate)
       end
     end
   end

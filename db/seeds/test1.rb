@@ -8,16 +8,18 @@
 
 # テスト用のデータ
 
-# 変数の初期化
-test_email = ENV['TEST_EMAIL'] ||= 'example@example.com'
-number_of_student       = ENV['TEST_STUDENT_NUM'].nil? ? 7 : ENV['TEST_STUDENT_NUM'].to_i
-max_student_choice      = ENV['TEST_MAX_STUDENT_CHOICE'].nil? ? 7 : ENV['TEST_MAX_STUDENT_CHOICE'].to_i
-number_of_laboratory    = ENV['TEST_LABORATORY_NUM'].nil? ? 3 : ENV['TEST_LABORATORY_NUM'].to_i
-max_laboratory_choice   = ENV['TEST_MAX_LABORATORY_CHOICE'].nil? ? 3 : ENV['TEST_MAX_LABORATORY_CHOICE'].to_i
-max_conf_student        = ENV['TEST_CONF_STUDENT'].nil? ? 2 : ENV['TEST_CONF_STUDENT'].to_i
-seed_num                = ENV['TEST_SEED_NUM'].nil? ? 10 : ENV['TEST_SEED_NUM'].to_i
+# 環境変数の初期化
+test_email                    = ENV['TEST_EMAIL'].nil? ? 'example@example.com' : ENV['TEST_EMAIL'].to_s
+password                      = ENV['TEST_PASSWORD'].nil? ? 'Pass1234' : ENV['TEST_PASSWORD'].to_s
+number_of_student             = ENV['TEST_STUDENT_NUM'].nil? ? 7 : ENV['TEST_STUDENT_NUM'].to_i
+number_of_laboratory          = ENV['TEST_LABORATORY_NUM'].nil? ? 3 : ENV['TEST_LABORATORY_NUM'].to_i
+max_student_choice            = ENV['TEST_MAX_STUDENT_CHOICE'].nil? ? 7 : ENV['TEST_MAX_STUDENT_CHOICE'].to_i
+max_laboratory_choice         = ENV['TEST_MAX_LABORATORY_CHOICE'].nil? ? 3 : ENV['TEST_MAX_LABORATORY_CHOICE'].to_i
+student_choice_probability    = ENV['TEST_STUDNET_CHOICE_PROBABILITY'].nil? ? 3 : ENV['TEST_STUDNET_CHOICE_PROBABILITY'].to_i
+laboratory_choice_probability = ENV['TEST_LABORATORY_CHOICE_PROBABILITY'].nil? ? 3 : ENV['TEST_LABORATORY_CHOICE_PROBABILITY'].to_i
+max_conf_student              = ENV['TEST_CONF_STUDENT'].nil? ? 2 : ENV['TEST_CONF_STUDENT'].to_i
+seed_num                      = ENV['TEST_SEED_NUM'].nil? ? 10 : ENV['TEST_SEED_NUM'].to_i
 
-password = 'Pass1234'
 now_time = Time.now
 
 # 乱数の設定
@@ -53,7 +55,7 @@ Laboratory.where(admin_id: admin.id).destroy_all
 students_params = []
 for num in 1..number_of_student do
   begin
-    name = ('a'..'z').to_a[random.rand(26)] + ('a'..'z').to_a[random.rand(26)] + random.rand(1..9).to_s + random.rand(1..9).to_s
+    name = 's_' + num.to_s
   end while Student.exists?(name: name)
   student_num = name
   email = name + '@example.com'
@@ -65,7 +67,7 @@ end
 laboratories_params = []
 for num in 1..number_of_laboratory do
   begin
-    professor_name = ('a'..'z').to_a[random.rand(26)] + ('a'..'z').to_a[random.rand(26)] + random.rand(1..9).to_s + random.rand(1..9).to_s
+    professor_name = 'l_' + num.to_s
   end while Laboratory.exists?(professor_name: professor_name)
   name = professor_name + '研究室'
   email = professor_name + '@example.com'
@@ -85,6 +87,7 @@ laboratories = admin.laboratory
 
 # 学生の希望提出
 students.each do |student|
+  next if random.rand(1..student_choice_probability) == 1
   choice_laboratories = laboratories[0..max_laboratory_choice]
   rank = 1
   choice_laboratories.each do |choice_laboratory|
@@ -95,6 +98,7 @@ end
 
 # 研究室の希望提出
 laboratories.each do |laboratory|
+  next if random.rand(1..laboratory_choice_probability) == 1
   choice_students = students[0..max_student_choice]
   rank = 1
   choice_students.each do |choice_student|

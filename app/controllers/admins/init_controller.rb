@@ -22,8 +22,8 @@ class Admins::InitController < Admins::ApplicationController
   end
 
   def sap
-    current_admin.student.destroy_all
-    current_admin.laboratory.destroy_all
+    current_admin.student.destroy_all    if current_admin.student.present?
+    current_admin.laboratory.destroy_all if current_admin.laboratory.present?
     current_admin.update_attributes(admin_init_params)
     flash[:notice] = '初期化が完了しました'
     redirect_to(admins_root_path)

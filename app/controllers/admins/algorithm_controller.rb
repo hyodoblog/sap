@@ -106,14 +106,22 @@ class Admins::AlgorithmController < Admins::ApplicationController
       end
     end
     # データベースに反映
-    student_rate_list.each do |student_id, rate|
-      students.each do |student|
+    students.each do |student|
+      student_rate_exit = false
+      student_rate_list.each do |student_id, rate|
         if student.id == student_id
-          rate = 0 if rate.nil?
+          student_rate_exit = true
           student.update_attributes(latest_rate: rate)
-          student.student_rate.create(rate: rate)
+          student.student_rate.create(admin_id: current_admin.id, rate: rate)
+          student_rate_list.delete(student_id)
           break
         end
+      end
+      # 希望されていない場合 0
+      unless student_rate_exit
+        rate = 0
+        student.update_attributes(latest_rate: rate)
+        student.student_rate.create(admin_id: current_admin.id, rate: rate)
       end
     end
   end
@@ -141,14 +149,22 @@ class Admins::AlgorithmController < Admins::ApplicationController
       end
     end
     # データベースに反映
-    laboratory_rate_list.each do |laboratory_id, rate|
-      laboratories.each do |laboratory|
+    laboratories.each do |laboratory|
+      laboratory_rate_exit = false
+      laboratory_rate_list.each do |laboratory_id, rate|
         if laboratory.id == laboratory_id
-          rate = 0 if rate.nil?
+          laboratory_rate_exit = true
           laboratory.update_attributes(latest_rate: rate)
-          laboratory.laboratory_rate.create(rate: rate)
+          laboratory.laboratory_rate.create(admin_id: current_admin.id, rate: rate)
+          laboratory_rate_list.delete(laboratory_id)
           break
         end
+      end
+      # 希望されていない場合 0
+      unless laboratory_rate_exit
+        rate = 0
+        laboratory.update_attributes(latest_rate: rate)
+        laboratory.laboratory_rate.create(admin_id: current_admin.id, rate: rate)
       end
     end
   end
