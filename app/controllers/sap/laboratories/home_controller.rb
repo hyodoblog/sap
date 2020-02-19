@@ -39,8 +39,8 @@ class Sap::Laboratories::HomeController < Sap::ApplicationController
         break
       end
 
-      choice_student_data = current_laboratory.laboratory_choice.new(student_id: item[:student_id], rank: rank)
-      unless choice_student_data.save
+      choice_student_data = current_laboratory.laboratory_choice.new(admin_id: current_laboratory.admin.id, student_id: item[:student_id], rank: rank)
+      unless choice_student_data.save()
         flash[:alert] = '提出した希望リストに不具合があります'
         flash[:error_messages] = choice_student_data.errors.full_messages
         redirect_back(fallback_location: root_path) and return

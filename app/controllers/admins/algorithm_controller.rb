@@ -42,6 +42,7 @@ class Admins::AlgorithmController < Admins::ApplicationController
                                           student_choice_list,
                                           laboratory_choice_list,
                                           max_laboratory_num_list)
+    student_choice_list = student_choice_list_make # 参照渡しになり値が変更されるため初期化
 
     # Step 4
     # マッチングが高い学生は配属を確定させる

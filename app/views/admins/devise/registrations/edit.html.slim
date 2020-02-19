@@ -37,5 +37,5 @@
 
         .form-group
           .pull-right
-            = link_to '戻る', admins_mypage_show_path, class: "btn btn-outline-secondary mr-2"
+            = link_to('戻る', admins_mypage_show_path, class: "btn btn-outline-secondary mr-2")
             = f.submit value: '編集', class: 'btn btn-success pull-right', data: { disable_with: '編集中...' }
