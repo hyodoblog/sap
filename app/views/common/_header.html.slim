@@ -32,9 +32,8 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 								= link_to('一括追加', admins_import_path, class: 'dropdown-item')
 						li.nav-item
 							= header_link_item('SAP設定', admins_config_show_path)
-						- unless current_admin.start_flag
-							li.nav-item
-								= header_link_item('マイページ', admins_mypage_show_path)
+					li.nav-item
+						= header_link_item('マイページ', admins_mypage_show_path)
 				li.nav-item
 					= link_to('ログアウト', destroy_admin_session_path, method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' })
 			- elsif student_signed_in? && !current_student.admin.end_flag
