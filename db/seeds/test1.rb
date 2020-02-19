@@ -25,27 +25,29 @@ random = Random.new(seed_num)
 
 # 管理者の初期設定
 admin = Admin.find_by(email: test_email)
-if admin.nil?
-  Admin.create!(email:                 test_email,
-                password:              password,
-                confirmed_at:          now_time,
-                sap_key:               'aaaa',
-                university_name:       '九州工業大学',
-                faculty_name:          '情報工学部',
-                department_name:       '電子情報工学科',
-                contact_email:         '',
-                max_choice_student:    max_student_choice,
-                max_choice_laboratory: max_laboratory_choice,
-                max_confirmed_student: max_conf_student,
-                start_datetime:        now_time,
-                end_datetime:          now_time + 1.day,
-                view_end_datetime:     now_time + 2.day,
-                init_setup_flag:       true)
-  admin = Admin.find_by(email: test_email)
-else
-  Student.where(admin_id: admin.id).destroy_all
-  Laboratory.where(admin_id: admin.id).destroy_all
+if admin.present?
+  admin.destroy
 end
+Admin.create!(email:                 test_email,
+              password:              password,
+              confirmed_at:          now_time,
+              sap_key:               'aaaa',
+              university_name:       '九州工業大学',
+              faculty_name:          '情報工学部',
+              department_name:       '電子情報工学科',
+              contact_email:         '',
+              max_choice_student:    max_student_choice,
+              max_choice_laboratory: max_laboratory_choice,
+              max_confirmed_student: max_conf_student,
+              start_datetime:        now_time,
+              end_datetime:          now_time + 1.day,
+              view_end_datetime:     now_time + 2.day,
+              init_setup_flag:       true,
+              release_flag:          true,
+              start_flag:            true)
+admin = Admin.find_by(email: test_email)
+Student.where(admin_id: admin.id).destroy_all
+Laboratory.where(admin_id: admin.id).destroy_all
 
 # 学生の追加
 students_params = []
@@ -56,7 +58,7 @@ for num in 1..number_of_student do
   student_num = name
   email = name + '@example.com'
   student_param = { "password" => password, "password_confirmation" => password, "password_init" => password, "name" => name, "student_num" => student_num, "email" => email }
-  admin.student.new(student_param).save()
+  admin.student.create!(student_param)
 end
 
 # 研究室の追加
@@ -75,7 +77,7 @@ for num in 1..number_of_laboratory do
     max_num = random.rand(1..standard_num)
   end
   laboratory_param = { "password" => password, "password_confirmation" => password, "password_init" => password, "name" => name, "professor_name" => professor_name, "email" => email, "max_num" => max_num }
-  admin.laboratory.new(laboratory_param).save()
+  admin.laboratory.create!(laboratory_param)
 end
 
 students = admin.student
@@ -83,20 +85,20 @@ laboratories = admin.laboratory
 
 # 学生の希望提出
 students.each do |student|
-  choice_laboratories = laboratories[1..max_laboratory_choice]
+  choice_laboratories = laboratories[0..max_laboratory_choice]
   rank = 1
   choice_laboratories.each do |choice_laboratory|
-    student.student_choice.new(laboratory_id: choice_laboratory.id, rank: rank).save()
+    student.student_choice.create!(admin_id: admin.id, laboratory_id: choice_laboratory.id, rank: rank)
     rank += 1
   end
 end
 
 # 研究室の希望提出
 laboratories.each do |laboratory|
-  choice_students = students[1..max_student_choice]
+  choice_students = students[0..max_student_choice]
   rank = 1
   choice_students.each do |choice_student|
-    laboratory.laboratory_choice.new(student_id: choice_student.id, rank: rank).save()
+    laboratory.laboratory_choice.create!(admin_id: admin.id, student_id: choice_student.id, rank: rank)
     rank += 1
   end
 end
