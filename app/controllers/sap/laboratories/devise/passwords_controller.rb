@@ -2,11 +2,7 @@
 
 class Sap::Laboratories::Devise::PasswordsController < Devise::PasswordsController
   include SapActions
-  include UserAuthChecks
-  before_action :sap_key_check!
-  before_action :access_check!
-  before_action :laboratory_check!, except: [:new]
-  
+  before_action :sap_key_check!  
   
   # GET /resource/password/new
   # def new
