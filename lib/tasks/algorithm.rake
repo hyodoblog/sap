@@ -52,6 +52,7 @@ namespace :algorithm do
                                             student_choice_list,
                                             laboratory_choice_list,
                                             max_laboratory_num_list)
+      student_choice_list = student_choice_list_make(admin) # 参照渡しになり値が変更されるため初期化
 
       # Step 4
       # マッチングが高い学生は配属を確定させる
@@ -149,7 +150,7 @@ namespace :algorithm do
     student_choice_list = {}
     students.each do |student|
       laboratory_array = []
-      student.student_choice.each do |choice|
+      student.student_choice.order(rank: 'ASC').each do |choice|
         laboratory_array.push(choice.laboratory_id)
       end
       student_choice_list[student.id] = laboratory_array
@@ -251,18 +252,14 @@ namespace :algorithm do
   def algorithm_step4(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list, max_confirmed_student)
     confirm_student_array = []
     student_choice_list.each do |student_id, laboratory_choice_array|
-      laboratory_choice_array.each_with_index do |laboratory_id, index|
-        if index != 0 # 第１希望以外はスキップ
-          break
-        end
-        student_choice_array = laboratory_choice_list[laboratory_id]
-        if student_choice_array.nil? # 研究室が希望リストを提出していない場合スキップ
-          next
-        end
-        max_laboratory_num = max_confirmed_student.nil? ? max_laboratory_num_list[laboratory_id] : max_confirmed_student
-        if check_matching?(student_choice_array, max_laboratory_num, student_id)
-          confirm_student_array.push(student_id)
-        end
+      laboratory_id = laboratory_choice_array[0]
+      student_choice_array = laboratory_choice_list[laboratory_id]
+      if student_choice_array.nil? # 研究室が希望リストを提出していない場合スキップ
+        break
+      end
+      max_laboratory_num = max_confirmed_student.nil? ? max_laboratory_num_list[laboratory_id] : max_confirmed_student
+      if check_matching?(student_choice_array, max_laboratory_num, student_id)
+        confirm_student_array.push(student_id)
       end
     end
     return confirm_student_array

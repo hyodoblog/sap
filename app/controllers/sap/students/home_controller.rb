@@ -27,9 +27,6 @@ class Sap::Students::HomeController < Sap::ApplicationController
 
     # 過去の提出データをすべて削除
     choice_laboratories = current_student.student_choice.destroy_all
-    choice_laboratories.each do |choice_laboratory|
-      choice_laboratory.destroy
-    end
 
     choice_laboratories_data.each_with_index do |item, index|
       rank = index + 1
@@ -37,8 +34,8 @@ class Sap::Students::HomeController < Sap::ApplicationController
         break
       end
 
-      choice_laboratory_data = current_student.student_choice.new(laboratory_id: item[:laboratory_id], rank: rank)
-      unless choice_laboratory_data.save
+      choice_laboratory_data = current_student.student_choice.new(admin_id: current_student.admin.id, laboratory_id: item[:laboratory_id], rank: rank)
+      unless choice_laboratory_data.save()
         flash[:alert] = '提出した希望リストに不具合があります'
         flash[:error_messages] = choice_laboratory_data.errors.full_messages
         redirect_back(fallback_location: root_path) and return
