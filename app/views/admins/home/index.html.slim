@@ -112,7 +112,7 @@
                          'data-target' => '#delete-user-modal')
             - if current_admin.login_info_email_flag
               td = link_to('通知', '#', class: 'btn btn-info login-info-notice-btn', 'data-toggle' => 'modal',
-                          'data-url' => '/admins/notices/'+laboratory.id.to_s+'/laboratory', 'data-text' => '「'+laboratory.name+'」にログイン情報を通知します。',
+                          'data-url' => '/admins/mail_notices/'+laboratory.id.to_s+'/laboratory', 'data-text' => '「'+laboratory.name+'」にログイン情報を通知します。',
                           'data-target' => '#login-info-notice-modal')
 
   hr class='my-5' style='border-width:4px'
@@ -165,7 +165,7 @@
                          'data-target' => '#delete-user-modal')
             - if current_admin.login_info_email_flag
               td = link_to('通知', '#', class: 'btn btn-info login-info-notice-btn', 'data-toggle' => 'modal',
-                          'data-url' => '/admins/notices/'+student.id.to_s+'/student', 'data-text' => '「'+student.name+'」にログイン情報を通知します。',
+                          'data-url' => '/admins/mail_notices/'+student.id.to_s+'/student', 'data-text' => '「'+student.name+'」にログイン情報を通知します。',
                           'data-target' => '#login-info-notice-modal')
 
 - if Rails.env.production?

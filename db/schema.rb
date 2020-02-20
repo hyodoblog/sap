@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_16_075512) do
+ActiveRecord::Schema.define(version: 2020_02_20_095941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,14 @@ ActiveRecord::Schema.define(version: 2020_02_16_075512) do
     t.index ["laboratory_id"], name: "index_laboratory_rates_on_laboratory_id"
   end
 
+  create_table "notices", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.string "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_notices_on_admin_id"
+  end
+
   create_table "student_choices", force: :cascade do |t|
     t.bigint "admin_id"
     t.bigint "student_id"
@@ -177,6 +185,7 @@ ActiveRecord::Schema.define(version: 2020_02_16_075512) do
   add_foreign_key "laboratory_choices", "students"
   add_foreign_key "laboratory_rates", "admins"
   add_foreign_key "laboratory_rates", "laboratories"
+  add_foreign_key "notices", "admins"
   add_foreign_key "student_choices", "admins"
   add_foreign_key "student_choices", "laboratories"
   add_foreign_key "student_choices", "students"
