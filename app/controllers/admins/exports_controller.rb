@@ -79,22 +79,22 @@ class Admins::ExportsController < Admins::ApplicationController
           end
         end
       end
-      if current_admin.student_rate.present?
-        p.workbook.add_worksheet(name: '学生レート情報') do |sheet|
-          student_rate_list_make.each do |row|
-            sheet.add_row row
-          end
-        end
-      end
-      if current_admin.laboratory_rate.present?
-        # p.workbook.add_worksheet(name: '研究室レート情報') do |sheet|
-        #   list = 
-        #   sheet.add_row laboratory_rate_row_name
-        #   current_admin.laboratory.each do |laboratory|
-        #     sheet.add_row laboratory_rate_row(laboratory)
-        #   end
-        # end
-      end
+      # if current_admin.student_rate.present?
+      #   p.workbook.add_worksheet(name: '学生レート情報') do |sheet|
+      #     student_rate_list_make.each do |row|
+      #       sheet.add_row row
+      #     end
+      #   end
+      # end
+      # if current_admin.laboratory_rate.present?
+      #   p.workbook.add_worksheet(name: '研究室レート情報') do |sheet|
+      #     list = 
+      #     sheet.add_row laboratory_rate_row_name
+      #     current_admin.laboratory.each do |laboratory|
+      #       sheet.add_row laboratory_rate_row(laboratory)
+      #     end
+      #   end
+      # end
       send_data(p.to_stream.read,
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 filename: "sap.xlsx")
@@ -116,19 +116,18 @@ class Admins::ExportsController < Admins::ApplicationController
     return assign_list
   end
 
-  def student_rate_list_make
-    students = current_admin.student
-    student_rate_array = Array.new(students.length, ['名前'])
-    student_rate_group = current_admin.student_rate.group(:created_at)
-    logger.debug(student_rate_group)
-    student_rate_group.each do |student_rate_datetime|
-      student_rate_array[0].push(student_rate_datetime.strftime("%Y/%m/%d %H:%M:%S"))
-      current_admin.student.each_with_index do |student, row|
-        data = student.student_rate.find_by(created_at: student_rate_datetime)
-        # student_rate_array[row+1].push(student.name) if col == 0
-        student_rate_array[row+1].push(data.rate)
-      end
-    end
-    return student_rate_array
-  end
+  # def student_rate_list_make
+  #   students = current_admin.student
+  #   student_rate_array = Array.new(students.length, ['名前'])
+  #   student_rate_group = current_admin.student_rate.group(:created_at)
+  #   student_rate_group.each do |student_rate_datetime|
+  #     student_rate_array[0].push(student_rate_datetime.strftime("%Y/%m/%d %H:%M:%S"))
+  #     current_admin.student.each_with_index do |student, row|
+  #       data = student.student_rate.find_by(created_at: student_rate_datetime)
+  #       # student_rate_array[row+1].push(student.name) if col == 0
+  #       student_rate_array[row+1].push(data.rate)
+  #     end
+  #   end
+  #   return student_rate_array
+  # end
 end
