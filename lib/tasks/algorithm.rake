@@ -14,6 +14,11 @@ namespace :algorithm do
         next
       end
 
+      # 学生と研究室が1つ以上あるかチェック
+      if admin.student.length == 0 || admin.laboratory.length == 0
+        next
+      end
+
       # 変数の初期化
       max_confirmed_student = admin.max_confirmed_student
       student_choice_list = student_choice_list_make(admin)
