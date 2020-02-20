@@ -36,6 +36,8 @@ Rails.application.routes.draw do
     patch  'release/force_termination'
     post   'mail_notices/:id/student',    to: 'mail_notices#student'
     post   'mail_notices/:id/laboratory', to: 'mail_notices#laboratory'
+    get    'notices', to: 'notices#index'
+    post   'notices', to: 'notices#create'
     post   'algorithm/manual'
     get    'exports/index'
     resources :laboratories, only: [:new, :create, :edit, :update, :destroy]

@@ -154,13 +154,15 @@
           p.pl-3.small →稼動を一度止めれば再度編集が可能
           p.pl-3.small ただし、止めている間は学生と研究室がログインできない
           p ・登録した学生と研究室が専用のログインページが発行されます
-          p ・1時間ごとにアルゴリズムが実行されます
+          p ・1日ごとにアルゴリズム自動が実行される
           p ・配属一覧ページが解放されます
-          p = "・稼動期限は#{model.end_datetime.to_s(:datetime_jp)}までです。"
+          p.small = "稼動期限は#{model.end_datetime.to_s(:datetime_jp)}までです。"
+          - if current_admin.login_info_email_flag
+            p.small.text-danger 全登録ユーザーにメールを一斉通知するため開始に数分かかることがあります！
           h5 class="text-danger" 本当に稼働開始しますか？
         .modal-footer
           button.btn.btn-secondary type="button" data-dismiss="modal" Close
-          = link_to '稼働開始', admins_release_on_path, class: 'btn btn-warning', method: :put
+          = link_to('稼働開始', admins_release_on_path, class: 'btn btn-warning', method: :put, data: { disable_with: "開始中..." })
 
 javascript:
   $(function () {

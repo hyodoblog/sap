@@ -12,11 +12,12 @@
           .col-md-3
             = link_to('初期化', '#', class: 'btn btn-danger pull-right', 'data-toggle' => 'modal', 'data-target' => '#sap-init-modal')
         hr
-        = button_to('最終結果を出力', admins_exports_index_path(format: :xlsx), method: :get, class: 'btn btn-success m-2')
+        = button_to('最終結果を出力', admins_exports_index_path(format: :xlsx), method: :get, class: 'btn btn-success m-2', data: { disable_with: "出力中..." })
       - else
         .row
           .col-md-6
-            p.lead SAP稼働中は編集が行なえません。
+            p.lead.text-danger SAP稼働中は編集が行なえません。
+            p ユーザーを編集したい場合はSAPを一時停止すると編集できます。
             p 以下のリンクが専用のログインページです。
             = link_to('学生専用', new_student_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
             = link_to('研究室専用', new_laboratory_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
@@ -194,7 +195,7 @@
             h5 class="text-danger" 本当に稼働を一時停止させますか？
           .modal-footer
             button.btn.btn-secondary type="button" data-dismiss="modal" Close
-            = link_to('稼働を一時停止する', admins_release_off_path, class: 'btn btn-danger', method: :put)
+            = link_to('稼働を一時停止する', admins_release_off_path, class: 'btn btn-danger', method: :put, data: { disable_with: "停止中..." })
     .modal.fade#force-termination-modal tabindex="-1" role="dialog" aria-hidden="true"
       .modal-dialog role="document"
         .modal-content
@@ -210,7 +211,7 @@
             h5 class="text-danger" 本当に強制終了させますか？
           .modal-footer
             button.btn.btn-secondary type="button" data-dismiss="modal" Close
-            = link_to('強制終了', admins_release_force_termination_path, class: 'btn btn-danger', method: :put)
+            = link_to('強制終了', admins_release_force_termination_path, class: 'btn btn-danger', method: :put, data: { disable_with: "終了中..." })
     .modal.fade#algorithm-modal tabindex="-1" role="dialog" aria-hidden="true"
       .modal-dialog role="document"
         .modal-content
@@ -223,7 +224,7 @@
             h5 class="text-danger" 本当に実行しますか？
           .modal-footer
             button.btn.btn-secondary type="button" data-dismiss="modal" Close
-            = link_to('実行', admins_algorithm_manual_path, class: 'btn btn-warning', method: :post)
+            = link_to('実行', admins_algorithm_manual_path, class: 'btn btn-warning', method: :post, data: { disable_with: "実行中..." })
   -else
     .modal.fade#delete-user-modal tabindex='-1' role='dialog' aria-hidden='true'
       .modal-dialog role='document'
@@ -237,7 +238,7 @@
             h5.text-danger 本当に削除しますか？
           .modal-footer
             button.btn.btn-secondary data-dismiss='modal' Close
-            = link_to('削除', '#', class: 'btn btn-danger', id: 'delete-user-modal-btn', method: :delete)
+            = link_to('削除', '#', class: 'btn btn-danger', id: 'delete-user-modal-btn', method: :delete, data: { disable_with: "削除中..." })
     - if current_admin.start_flag
       .modal.fade#release-restart-modal tabindex="-1" role="dialog" aria-hidden="true"
         .modal-dialog role="document"
@@ -248,7 +249,7 @@
                 span aria-hidden="true" &times;
             .modal-footer
               button.btn.btn-secondary type="button" data-dismiss="modal" Close
-              = link_to('稼働再開', admins_release_on_path, class: 'btn btn-danger', method: :put)
+              = link_to('稼働再開', admins_release_on_path, class: 'btn btn-danger', method: :put, data: { disable_with: "再開中..." })
   - if current_admin.login_info_email_flag
     .modal.fade#login-info-notice-modal tabindex='-1' role='dialog' aria-hidden='true'
       .modal-dialog role='document'
@@ -262,7 +263,7 @@
             p 上記のEメールにログイン通知を送信します。
           .modal-footer
             button.btn.btn-secondary data-dismiss='modal' Close
-            = link_to('通知', '#', class: 'btn btn-info', id: 'login-info-notice-modal-btn', method: :post)
+            = link_to('通知', '#', class: 'btn btn-info', id: 'login-info-notice-modal-btn', method: :post, data: { disable_with: "通知中..." })
 - else
   .modal.fade#sap-init-modal tabindex='-1' role='dialog' aria-hidden='true'
     .modal-dialog role='document'
@@ -276,7 +277,7 @@
           p またのご使用をお待ちしております！
         .modal-footer
           button.btn.btn-secondary data-dismiss='modal' Close
-          = link_to('初期化', admins_init_sap_path, class: 'btn btn-danger', method: :delete)
+          = link_to('初期化', admins_init_sap_path, class: 'btn btn-danger', method: :delete, data: { disable_with: "初期化中..." })
 
 // 削除ボダンのモーダル
 // 時々二重定数の定義というエラーがでるため、varで定数を定義
