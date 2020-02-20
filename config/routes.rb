@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     post   'mail_notices/:id/laboratory', to: 'mail_notices#laboratory'
     get    'notices', to: 'notices#index'
     post   'notices', to: 'notices#create'
+    delete 'notices/:id', to: 'notices#destroy'
     post   'algorithm/manual'
     get    'exports/index'
     resources :laboratories, only: [:new, :create, :edit, :update, :destroy]

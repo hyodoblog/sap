@@ -22,9 +22,9 @@
             = link_to('学生専用', new_student_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
             = link_to('研究室専用', new_laboratory_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
           .col-md-6.text-right
-            = link_to('アルゴリズム手動実行', '#', class: 'btn btn-warning ml-2', 'data-toggle' => 'modal', 'data-target' => '#algorithm-modal')
-            = link_to('SAP一時停止', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#release-stop-modal')
-            = link_to('SAP強制終了', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#force-termination-modal')
+            = link_to('アルゴリズム手動実行', '#', class: 'btn btn-warning ml-2 mb-2', 'data-toggle' => 'modal', 'data-target' => '#algorithm-modal')
+            = link_to('SAP一時停止', '#', class: 'btn btn-danger ml-2 mb-2', 'data-toggle' => 'modal', 'data-target' => '#release-stop-modal')
+            = link_to('SAP強制終了', '#', class: 'btn btn-danger ml-2 mb-2', 'data-toggle' => 'modal', 'data-target' => '#force-termination-modal')
     - else
       h1.display-5 ユーザー管理画面
       - if current_admin.start_flag
