@@ -1,4 +1,4 @@
-.row.pt-5
+.row.pt-5.pb-4
   .col-lg-6.offset-lg-3
     .text-center.mb-5
       h3= admin.university_name
@@ -25,9 +25,10 @@
       .text-center.small.mt-3
         = link_to('パスワードを忘れた場合', password_link)
 
-.row.my-4
-  .col-lg-8.offset-lg-2
-    h4 お知らせ
-    ul.list-group.list-group-flush
-      - @admin.notice.each do |notice|
-        li.list-group-item = notice.created_at.to_s(:datetime_jp) + " : " + notice.content
+- if @admin.notice.length != 0
+  .row.mb-4
+    .col-lg-8.offset-lg-2
+      h4 お知らせ
+      ul.list-group.list-group-flush
+        - @admin.notice.order(created_at: 'DESC').each do |notice|
+          li.list-group-item = notice.created_at.to_s(:datetime_jp) + " : " + notice.content

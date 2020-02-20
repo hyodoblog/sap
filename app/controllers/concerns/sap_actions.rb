@@ -76,7 +76,7 @@ module SapActions
   end
 
   def error_redirect!
-    flash[:alert] = 'アクセスチェックでエラーが発生しました。当サービスの運営者にお問い合わせ下さい！'
+    flash[:alert] = 'そのページにはアクセスできません。ログインし直して下さい！'
     redirect_to(root_path)
   end
 

@@ -2,8 +2,7 @@ class Laboratory < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :lockable,
-         :trackable, :timeoutable
+         :recoverable, :lockable, :trackable
 
   belongs_to :admin,             optional: true
   has_many   :student_choice,    dependent: :destroy
