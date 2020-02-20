@@ -5,14 +5,20 @@ h3.my-4 配属一覧
   - if @admin.end_datetime >= Time.now()
     p = "最新更新時間：#{@last_update_time.to_s(:datetime_jp)}"
     - if @student_assign_confirm.nil? || !@student_assign_confirm
-      p.alert.alert-dark
-        span.text-danger 赤
-        |
-          で表示されている学生は配属が確定しています
+      div.alert.alert-dark
+        p.m-1
+          '学生と研究室のマッチング度が高い人のみ
+          span.text-danger 赤
+          'で表示されます
+        - if @admin.max_confirmed_student > 0
+          p.m-1
+            = "最大で1研究室上位#{@admin.max_confirmed_student}名まで"
+            span.text-danger 赤
+            'になります
     - else
-      p.alert.alert-info = "現在「#{@student_assign_laboratory_name}」への配属が確定しています"
+      p.alert.alert-info = "あなたは「#{@student_assign_laboratory_name}」とのマッチング度が高いです"
   - else
-    p.text-danger 配属が確定しました！
+    p.text-danger 配属が確定しました
 table.table.table-hover
   thead.thead-dark
     tr
