@@ -14,27 +14,37 @@ class Laboratory < ApplicationRecord
 
   validates :email,
             presence: true,
-            format: { with: Devise.email_regexp },
-            on: :create
+            format: { with: Devise.email_regexp }
   validates :password,
             presence: true,
-            confirmation: true,
-            on: :create
+            confirmation: true
   validates :name,
             presence: true,
             length: { maximum: 50 }
   validates :name,
+            presence: true,
+            length: { maximum: 50 },
+            on: :update
+  validates :professor_name,
             presence: true,
             length: { maximum: 50 }
   validates :professor_name,
             presence: true,
-            length: { maximum: 50 }
+            length: { maximum: 50 },
+            on: :update
   validates :max_num,
             allow_blank: true,
             numericality: {
               only_integer: true,
               greater_than_or_equal_to: 0
             }
+  validates :max_num,
+            allow_blank: true,
+            numericality: {
+              only_integer: true,
+              greater_than_or_equal_to: 0
+            },
+            on: :update
   validate :password_complexity
   
   def password_complexity

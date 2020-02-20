@@ -46,11 +46,13 @@ Rails.application.routes.draw do
   end
 
   # sap
-  get  ':sap_key/students',     to: 'sap/students/home#index',     as: :students_root
-  post ':sap_key/students',     to: 'sap/students/home#choice'
-  get  ':sap_key/laboratories', to: 'sap/laboratories/home#index', as: :laboratories_root
-  post ':sap_key/laboratories', to: 'sap/laboratories/home#choice'
-  get  ':sap_key/assign_lists', to: 'sap/assign_lists#index',      as: :assign_lists
+  get  ':sap_key/students',            to: 'sap/students/home#index',      as: :students_root
+  post ':sap_key/students',            to: 'sap/students/home#choice'
+  get  ':sap_key/students/mypage',     to: 'sap/students/mypage#show',     as: :students_mypage
+  get  ':sap_key/laboratories',        to: 'sap/laboratories/home#index',  as: :laboratories_root
+  post ':sap_key/laboratories',        to: 'sap/laboratories/home#choice'
+  get  ':sap_key/laboratories/mypage', to: 'sap/laboratories/mypage#show', as: :laboratories_mypage
+  get  ':sap_key/assign_lists',        to: 'sap/assign_lists#index',       as: :assign_lists
 
   # devise
   devise_for :admins, skip: [:session, :registration, :password],
@@ -79,6 +81,9 @@ Rails.application.routes.draw do
     get    ':sap_key/students/sign_in',       to: 'sap/students/devise/sessions#new',          as: :new_student_session
     post   ':sap_key/students/sign_in',       to: 'sap/students/devise/sessions#create',       as: :student_session
     delete ':sap_key/students/sign_out',      to: 'sap/students/devise/sessions#destroy',      as: :destroy_student_session
+    get    ':sap_key/students/mypage/edit',   to: 'sap/students/devise/registrations#edit',    as: :edit_student_registration
+    patch  ':sap_key/students/mypage',        to: 'sap/students/devise/registrations#update',  as: :update_student_registration
+    put    ':sap_key/students/mypage',        to: 'sap/students/devise/registrations#update',  as: nil
     get    ':sap_key/students/password',      to: 'sap/students/devise/passwords#new',         as: :new_student_password
     post   ':sap_key/students/password',      to: 'sap/students/devise/passwords#create',      as: :student_password
     get    ':sap_key/students/password/edit', to: 'sap/students/devise/passwords#edit',        as: :edit_student_password
@@ -90,6 +95,9 @@ Rails.application.routes.draw do
     get    ':sap_key/laboratories/sign_in',       to: 'sap/laboratories/devise/sessions#new',          as: :new_laboratory_session
     post   ':sap_key/laboratories/sign_in',       to: 'sap/laboratories/devise/sessions#create',       as: :laboratory_session
     delete ':sap_key/laboratories/sign_out',      to: 'sap/laboratories/devise/sessions#destroy',      as: :destroy_laboratory_session
+    get    ':sap_key/laboratories/mypage/edit',   to: 'sap/laboratories/devise/registrations#edit',    as: :edit_laboratory_registration
+    patch  ':sap_key/laboratories/mypage',        to: 'sap/laboratories/devise/registrations#update',  as: :update_laboratory_registration
+    put    ':sap_key/laboratories/mypage',        to: 'sap/laboratories/devise/registrations#update',  as: nil
     get    ':sap_key/laboratories/password',      to: 'sap/laboratories/devise/passwords#new',         as: :new_laboratory_password
     post   ':sap_key/laboratories/password',      to: 'sap/laboratories/devise/passwords#create',      as: :laboratory_password
     get    ':sap_key/laboratories/password/edit', to: 'sap/laboratories/devise/passwords#edit',        as: :edit_laboratory_password

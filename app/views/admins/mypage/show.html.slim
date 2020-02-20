@@ -10,7 +10,7 @@
           .col-lg-4
             p Eメール
           .col-lg-8
-            p = @user.email
+            p = current_admin.email
     - unless current_admin.start_flag
       .text-center.my-3 = link_to 'アカウントを削除', '#', class: 'text-danger', 'data-toggle' => 'modal', 'data-target' => '#acound-delete-modal'
 

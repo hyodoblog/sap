@@ -7,7 +7,7 @@ class Admins::LaboratoriesController < Admins::ApplicationController
 
   def create
     laboratory = current_admin.laboratory.new(laboratory_params_create)
-    if laboratory.save(context: :create)
+    if laboratory.save()
       flash[:notice] = "「#{laboratory.name}」を追加しました"
       redirect_to(admins_root_path)
     else
@@ -22,7 +22,7 @@ class Admins::LaboratoriesController < Admins::ApplicationController
 
   def update
     @laboratory.attributes = laboratory_params_update
-    if @laboratory.save()
+    if @laboratory.save(context: :update)
       flash[:notice] = "「#{@laboratory.name}」を編集しました"
       redirect_to(admins_root_path)
     else

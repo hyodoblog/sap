@@ -46,6 +46,8 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 				li.nav-item
 					= header_link_item('配属一覧', assign_lists_path(sap_key))
 				li.nav-item
+					= header_link_item('マイページ', students_mypage_path(sap_key))
+				li.nav-item
 					= link_to('ログアウト', destroy_student_session_path(sap_key), method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' })
 			- elsif laboratory_signed_in? && !current_laboratory.admin.end_flag
 				- sap_key = current_laboratory.admin.sap_key
@@ -54,6 +56,8 @@ nav.navbar.navbar-fixed-top.navbar-expand-lg.navbar-light.bg-light
 						= header_link_item('希望提出', laboratories_root_path(sap_key))
 				li.nav-item
 					= header_link_item('配属一覧', assign_lists_path(sap_key))
+				li.nav-item
+					= header_link_item('マイページ', laboratories_mypage_path(sap_key))
 				li.nav-item
 					= link_to('ログアウト', destroy_laboratory_session_path(sap_key), method: :delete, class: 'nav-link', data: { confirm: 'ログアウトしますか？' })
 			- else
