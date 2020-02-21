@@ -36,10 +36,10 @@ class Admins::InitController < Admins::ApplicationController
     {
         sap_key: Admin.generate_sap_key, university_name: '〇〇大学',
         faculty_name: '', department_name: '', contact_email: '',
-        max_choice_student: 1, max_choice_laboratory: 1, max_confirmed_student: '',
+        max_choice_student: 1, max_choice_laboratory: 1,
         start_datetime: now_datetime, end_datetime: now_datetime + 1.days, view_end_datetime: now_datetime + 2.days,
-        init_setup_flag: false, release_flag: false, start_flag: false, end_flag: false, login_info_email_flag: false,
-        confirmation_notice_flag: false, end_notice_flag: false, view_end_notice_flag: false
+        init_setup_flag: false, release_flag: false, start_flag: false, end_flag: false,
+        end_notice_flag: false, view_end_notice_flag: false
     }
   end
 end

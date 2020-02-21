@@ -2,6 +2,19 @@ module UserAuthChecks
  #以下extendは必須
   extend ActiveSupport::Concern
 
+  def login_check
+    if current_admin.present?
+      flash[:alert] = '一度ログアウトしてからアクセスして下さい'
+      redirect_to(admins_root_path)
+    elsif current_student.present?
+      flash[:alert] = '一度ログアウトしてからアクセスして下さい'
+      redirect_to(students_root_path(current_student.admin.sap_key))
+    elsif current_laboratory.present?
+      flash[:alert] = '一度ログアウトしてからアクセスして下さい'
+      redirect_to(laboratories_root_path(current_laboratory.admin.sap_key))
+    end
+  end
+
   # devise sessions only
   def student_check!
     admin_check_user!
@@ -10,15 +23,6 @@ module UserAuthChecks
   def laboratory_check!
     admin_check_user!
     student_check_user!
-  end
-
-  def student_signed_in!
-    authenticate_student!
-    student_check!
-  end
-  def laboratory_signed_in!
-    authenticate_laboartory!
-    laboratory_check!
   end
 
   private

@@ -51,13 +51,6 @@ class Admin < ApplicationRecord
               greater_than_or_equal_to: 1
             },
             on: :info
-  validates :max_confirmed_student,
-            allow_blank: true,
-            numericality: {
-              only_integer: true,
-              greater_than_or_equal_to: 0
-            },
-            on: :info
   validates :start_datetime,
             presence: true,
             on: :info

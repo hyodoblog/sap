@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 2020_02_20_095941) do
     t.string "contact_email"
     t.integer "max_choice_student"
     t.integer "max_choice_laboratory"
-    t.integer "max_confirmed_student"
     t.datetime "start_datetime"
     t.datetime "end_datetime"
     t.datetime "view_end_datetime"
@@ -33,8 +32,6 @@ ActiveRecord::Schema.define(version: 2020_02_20_095941) do
     t.boolean "release_flag", default: false
     t.boolean "start_flag", default: false
     t.boolean "end_flag", default: false
-    t.boolean "login_info_email_flag", default: false
-    t.boolean "confirmation_notice_flag", default: false
     t.boolean "end_notice_flag", default: false
     t.boolean "view_end_notice_flag", default: false
     t.string "reset_password_token"

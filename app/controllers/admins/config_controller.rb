@@ -29,6 +29,6 @@ class Admins::ConfigController < Admins::ApplicationController
     params.require(:admin).permit(:university_name, :faculty_name, :department_name,
                                   :contact_email, :max_choice_student, :max_choice_laboratory,
                                   :max_confirm_student, :start_datetime, :end_datetime,
-                                  :view_end_datetime, :login_info_email_flag)
+                                  :view_end_datetime)
   end
 end

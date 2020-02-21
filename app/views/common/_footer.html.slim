@@ -3,19 +3,20 @@ footer.mt-auto.py-4.bg-light
 		.row
 			.col-sm-6.col-md-3
 				p.m-1.small = link_to('ドキュメント', 'https://hyodoblog.com/category/results/sap/document/', class: 'text-dark', target: '_blank')
-				p.m-1.small = link_to('お問い合わせ', 'https://hyodoblog.com/contact/', class: 'text-dark', target: '_blank')
-				p.m-1.small = link_to('プライバシーポリシー', privacy_path, class: 'text-dark')
+				p.m-1.small = link_to('開発者へお問い合わせ', 'https://hyodoblog.com/contact/', class: 'text-dark', target: '_blank')
+                - unless admin_signed_in? || student_signed_in? || laboratory_signed_in?
+				  p.m-1.small = link_to('プライバシーポリシー', privacy_path, class: 'text-dark')
 			.col-sm-6.col-md-3
 				p.m-1.text-dark SHARE PLEASE!
 				.ml-2
 					p.mb-1 = link_to('Tweet', '//twitter.com/share', class: 'text-dark twitter-share-button',
-										'data-text' => '独自のアルゴリズム（Student Assignment Program）を用いた研究室マッチングシステム #SAP,#研究室マッチングシステム',
+										'data-text' => '【SAP】独自のアルゴリズムを用いた研究室マッチングシステム #SAP,#研究室マッチングシステム',
 										'data-url' => 'https://sap.hyodoblog.com', 'data-lang' => 'ja')
 					.mb-1.fb-share-button data-href="https://sap.hyodoblog.com" data-layout="button_count">
 			.col-sm-6.col-md-3
 				p.m-1.small Produce by Yusei Hyodo
 			.col.sm-6.col-md-3
 				p.m-1.text-dark バージョン
-				p.m-1.ml-3.small ver 1.2.3 beta
+				p.m-1.ml-3.small ver 1.2.4
 		.row.mt-4
 			p.m-0.text-dark.small.text-center.col Copyright © 2020 hyodoblog
