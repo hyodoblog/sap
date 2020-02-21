@@ -81,7 +81,7 @@
     h3.col-sm-6
       |
         研究室一覧
-      small.ml-2 = "登録数：#{current_admin.laboratory.length}数"
+      small.ml-2 = "登録数：#{current_admin.laboratory.length}研究室"
     - unless current_admin.release_flag
       div.col-sm-6.text-right
         = link_to('研究室を追加', new_admins_laboratory_path, class: 'btn btn-success mr-2 btn-sm')

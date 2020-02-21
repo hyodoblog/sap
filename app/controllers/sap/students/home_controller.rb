@@ -19,7 +19,7 @@ class Sap::Students::HomeController < Sap::ApplicationController
     end
 
     # 過去の提出データをすべて削除
-    choice_laboratories = current_student.student_choice.destroy_all
+    current_student.student_choice.delete_all
 
     choice_laboratories_data.each_with_index do |item, index|
       rank = index + 1

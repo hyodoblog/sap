@@ -46,8 +46,6 @@ Admin.create!(email:                 test_email,
               release_flag:          true,
               start_flag:            true)
 admin = Admin.find_by(email: test_email)
-Student.where(admin_id: admin.id).destroy_all
-Laboratory.where(admin_id: admin.id).destroy_all
 
 # 学生の追加
 students_params = []

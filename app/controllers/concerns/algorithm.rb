@@ -32,7 +32,7 @@ module Algorithm
     max_laboratory_num_list = algorithm_step1(laboratories,
                                               num_students,
                                               num_laboratories)
-    
+
     # Step 2
     # 全ての学生を未配属にする
     current_assign_list = algorithm_step2(laboratories)
@@ -118,7 +118,6 @@ module Algorithm
       unless student_rate_exit
         rate = 0
         student.update_attributes(latest_rate: rate)
-        student.student_rate.create(admin_id: admin_id, rate: rate)
       end
     end
   end
@@ -153,7 +152,6 @@ module Algorithm
         if laboratory.id == laboratory_id
           laboratory_rate_exit = true
           laboratory.update_attributes(latest_rate: rate)
-          laboratory.laboratory_rate.create(admin_id: admin_id, rate: rate)
           laboratory_rate_list.delete(laboratory_id)
           break
         end
