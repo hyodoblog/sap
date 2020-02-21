@@ -7,7 +7,7 @@
     = form_with model: model, url: url, class: 'card', local: true do |f|
       .card-header = title
       main.card-body
-        p.small.text-danger このページに移動できるボタンは存在しないため、ログイン通知が届いてない方はURLをメモするなどしてください！
+        p.small.text-danger このページに移動できるボタンは存在しないため、ログイン通知が届いてない方はURLをメモするなどしてください。
         .form-group.row
           = f.label :email, "Eメール", class: "col-lg-4 control-label"
           .col-lg-8

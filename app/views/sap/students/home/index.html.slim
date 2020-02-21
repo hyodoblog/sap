@@ -11,7 +11,7 @@
     .col-sm-3.text-right
       = link_to('操作方法', '#', class: 'btn btn-success', 'data-toggle' => 'modal', 'data-target' => '#sample-modal')
   hr.my-4
-  p.lead 希望する研究室をできるだけ多く選んでください！
+  p.lead 希望する研究室を順番にできるだけ多く選んでください。
 
 = render 'common/form_notifications'
 
@@ -25,7 +25,7 @@
         li それでも再提出を希望する場合は「再提出を希望する」ボタンを押して下さい。
     .col-md-3
       input.btn.btn-danger.pull-right type="button" value="再提出を希望する" onclick="resubmit()"
-  .alert.alert-info#resubmit-notice 毎日24時頃にアルゴリズムが実行されるため、提出した後は反映までしばらくお待ち下さい！
+  .alert.alert-info#resubmit-notice 毎日24時頃にアルゴリズムが実行されるため、提出した後は反映までしばらくお待ち下さい。
 
 .row.mb-4
   .col-6

@@ -3,7 +3,7 @@
     h3.mt-5.mb-4 アカウント編集
     = render 'admins/devise/shared/error_messages', resource: resource
     = form_with model: resource, as: resource_name, url: update_admin_registration_path, method: :put, class: 'card mb-5', local: true do |f|
-      .card-header アカウント情報を編集して下さい！
+      .card-header アカウント情報を編集して下さい。
       main.card-body
         .form-group.row
           .col-lg-5.control-label

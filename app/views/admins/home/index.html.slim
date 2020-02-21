@@ -7,7 +7,7 @@
         .row
           .col-md-9
             p.lead SAPの稼動期間がすぎました。
-            p.lead 最終結果やその他の情報を任意で出力してから初期化を行って下さい！
+            p.lead 最終結果やその他の情報を任意で出力してから初期化を行って下さい。
             p.small.text-danger セキュリティ上の都合で、SAP終了2週間後には自動で初期化されます。
           .col-md-3
             = link_to('初期化', '#', class: 'btn btn-danger pull-right', 'data-toggle' => 'modal', 'data-target' => '#sap-init-modal')
@@ -32,7 +32,7 @@
         p.lead.text-warning 現在SAPを一時停止中です。
         = link_to('SAP稼働を再開', '#', class: 'btn btn-danger ml-2', 'data-toggle' => 'modal', 'data-target' => '#release-restart-modal')
       - else
-        p.lead 学生と研究室の管理を行って下さい！
+        p.lead 学生と研究室の管理を行って下さい。
         hr.my-3
         p.lead システムを稼働すると編集ができなくなります。
         p.lead
@@ -47,7 +47,7 @@
       li.mt-1 Step 1：大学名や稼働期間などの初期設定
       li.mt-1 Step 2：学生と研究室のデータを追加
     hr.my-3
-    p.lead 早速ですが初期設定をしましょう！。
+    p.lead 早速ですが初期設定をしましょう。。
     = link_to('初期設定開始', admins_init_setup_first_path, class: 'btn btn-primary', role: 'button')
 
 - if current_admin.init_setup_flag && !current_admin.end_flag
@@ -274,7 +274,7 @@
             span aria-hidden='true' &times;
         .modal-body
           p 管理者の登録情報以外すべて削除されます。
-          p またのご使用をお待ちしております！
+          p またのご使用をお待ちしております。
         .modal-footer
           button.btn.btn-secondary data-dismiss='modal' Close
           = link_to('初期化', admins_init_sap_path, class: 'btn btn-danger', method: :delete, data: { disable_with: "初期化中..." })
