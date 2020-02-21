@@ -15,14 +15,14 @@ class Admins::ReleaseController < Admins::ApplicationController
       redirect_to(admins_root_path) and return
     end
 
-    if current_admin.login_info_email_flag && !current_admin.start_flag
-      current_admin.laboratory.each do |laboratory|
-        NotificationMailer.send_login_info(laboratory, current_admin, 'sap/laboratories/devise/sessions').deliver
-      end
-      current_admin.student.each do |student|
-        NotificationMailer.send_login_info(student, current_admin, 'sap/students/devise/sessions').deliver
-      end
-    end
+    # if current_admin.login_info_email_flag && !current_admin.start_flag
+    #   current_admin.laboratory.each do |laboratory|
+    #     NotificationMailer.send_login_info(laboratory, current_admin, 'sap/laboratories/devise/sessions').deliver
+    #   end
+    #   current_admin.student.each do |student|
+    #     NotificationMailer.send_login_info(student, current_admin, 'sap/students/devise/sessions').deliver
+    #   end
+    # end
     current_admin.update_attributes!(release_flag: true, start_flag: true)
     flash[:notice] = 'SAPのログインページを発行しました'
     redirect_to(admins_root_path)
