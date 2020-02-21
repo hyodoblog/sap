@@ -81,7 +81,7 @@
     h3.col-sm-6
       |
         研究室一覧
-      small.ml-2 = "登録人数：#{current_admin.laboratory.length}名"
+      small.ml-2 = "登録数：#{current_admin.laboratory.length}数"
     - unless current_admin.release_flag
       div.col-sm-6.text-right
         = link_to('研究室を追加', new_admins_laboratory_path, class: 'btn btn-success mr-2 btn-sm')
@@ -233,7 +233,7 @@
               span aria-hidden="true" &times;
           .modal-body
             p アルゴリズムが実行され、配属一覧が更新されます。
-            p 登録しているユーザー数によって、数十秒かかることがあります
+            p.small 登録しているユーザー数によって、数十秒かかることがあります
             h5 class="text-danger" 本当に更新しますか？
           .modal-footer
             button.btn.btn-secondary type="button" data-dismiss="modal" Close

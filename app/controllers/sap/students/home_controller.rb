@@ -5,7 +5,7 @@ class Sap::Students::HomeController < Sap::ApplicationController
   def index
     @choice_laboratories = current_student.student_choice
     choice_laboratories_id_array = @choice_laboratories.map{|choice| choice.laboratory.id}
-    @laboratories = @admin.laboratory.where.not(id: choice_laboratories_id_array)
+    @laboratories = @admin.laboratory.where.not(id: choice_laboratories_id_array).order(id: 'ASC')
   end
 
   def choice

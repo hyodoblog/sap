@@ -36,7 +36,7 @@
             li.list-group-item.d-none.d-lg-block = '第'+rank.to_s+'希望'
             li.list-group-item.d-block.d-lg-none = rank
       .col-9.p-0
-        ul#choice_laboratory_right.list-group.overflow-auto style="min-height:2rem"
+        ul#choice_laboratory_right.list-group.overflow-auto style="min-height:5rem"
           - @choice_laboratories.each do |choice_laboratory|
             li.list-group-item.choice-list-item style="white-space:nowrap"
               - if choice_laboratory.laboratory.max_num.present?

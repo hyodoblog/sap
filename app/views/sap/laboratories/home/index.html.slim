@@ -33,7 +33,7 @@
             li.list-group-item.d-none.d-lg-block = '第'+rank.to_s+'希望'
             li.list-group-item.d-block.d-lg-none = rank
       .col-9.p-0
-        ul#choice_student_right.list-group.overflow-auto style="min-height:2rem"
+        ul#choice_student_right.list-group.overflow-auto style="min-height:5rem"
           - @choice_students.each do |choice_student|
             li.list-group-item.choice-list-item style="white-space:nowrap"
               = "#{choice_student.student.student_num} - #{choice_student.student.name}"
