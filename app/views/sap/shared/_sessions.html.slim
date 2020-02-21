@@ -31,4 +31,8 @@
       h4 お知らせ
       ul.list-group.list-group-flush
         - @admin.notice.order(created_at: 'DESC').each do |notice|
-          li.list-group-item = notice.created_at.to_s(:datetime_jp) + " : " + notice.content
+          li.list-group-item.d-flex
+            = notice.created_at.to_s(:datetime_jp)
+            span.mx-2
+              ':
+            = simple_format(notice.content)

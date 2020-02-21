@@ -61,4 +61,17 @@ class Sap::Laboratories::Devise::RegistrationsController < Devise::Registrations
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  protected
+  
+  def after_update_path_for(resource)
+    case resource_name
+    when :admin then
+      admins_root_path
+    when :student then
+      students_root_path
+    when :laboratory then
+      laboratories_root_path
+    end
+  end
 end

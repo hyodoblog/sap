@@ -31,7 +31,7 @@ table.table
           .form-group.row
             = f.label :content, "内容", class: "col-lg-4 control-label"
             .col-lg-8
-              = f.text_field :content, class: "form-control", autofocus: true, autocomplete: "content"
+              = f.text_area :content, class: "form-control", row: '4',  autofocus: true, autocomplete: "content"
           .form-group.row
             .col-lg-9.offset-lg-3
               .float-right
