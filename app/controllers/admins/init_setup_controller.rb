@@ -139,8 +139,8 @@ class Admins::InitSetupController < Admins::ApplicationController
     params[:admin][:sap_key] = Admin.generate_sap_key
     params.require(:admin).permit(:sap_key, :university_name, :faculty_name, :department_name,
                                  :contact_email, :max_choice_student, :max_choice_laboratory,
-                                 :max_confirmed_student, :start_datetime, :end_datetime,
-                                 :view_end_datetime, :login_info_email_flag)
+                                 :start_datetime, :end_datetime,
+                                 :view_end_datetime)
   end
 
   def user_params_setup
@@ -148,7 +148,7 @@ class Admins::InitSetupController < Admins::ApplicationController
     {
         sap_key: Admin.generate_sap_key, university_name: '〇〇大学',
         faculty_name: '', department_name: '', contact_email: '',
-        max_choice_student: 1, max_choice_laboratory: 1, max_confirmed_student: '',
+        max_choice_student: 1, max_choice_laboratory: 1,
         start_datetime: now_datetime, end_datetime: now_datetime + 1.days, view_end_datetime: now_datetime + 2.days
     }
   end

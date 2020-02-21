@@ -15,18 +15,6 @@
 
 = render 'common/form_notifications'
 
-- if @student_assign_confirm
-  .row.alert.alert-warning#resubmit-warning
-    .col-md-9
-      ul
-        li 現在「#{@student_assign_laboratory_name}」とのマッチング度が高いです。
-        li ただし、「#{@student_assign_laboratory_name}」が希望を変更した場合、マッチング度がリセットされる可能性があります。
-        li また、あなたが再度希望を提出するとマッチング度が再計算されます。
-        li それでも再提出を希望する場合は「再提出を希望する」ボタンを押して下さい。
-    .col-md-3
-      input.btn.btn-danger.pull-right type="button" value="再提出を希望する" onclick="resubmit()"
-  .alert.alert-info#resubmit-notice 毎日24時頃にアルゴリズムが実行されるため、提出した後は反映までしばらくお待ち下さい。
-
 .row.mb-4
   .col-6
     h4 研究室一覧
@@ -70,27 +58,11 @@
   .modal-dialog role='document'
     .modal-content
       .modal-header
-        h5.modal-title#exampleModalLabel 操作方法
+        h5.modal-title#sampleModalLabel 操作方法
         button.close type='button' data-dismiss='modal' aria-label='Close'
           span aria-hidden='true' &times;
       .modal-body
         = image_tag(asset_path('sample.gif'))
-      .modal-footer
-        button.btn.btn-secondary data-dismiss='modal' Close
-.modal.fade#capture-modal tabindex='-1' role='dialog' aria-hidden='true'
-  .modal-dialog role='document'
-    .modal-content
-      .modal-header
-        h5.modal-title#exampleModalLabel 攻略法
-        button.close type='button' data-dismiss='modal' aria-label='Close'
-          span aria-hidden='true' &times;
-      .modal-body
-        h3.text-danger 研究室に売り込みに行く
-        ul
-          li 第一希望で提出しても、研究室側があなたを定員未満の順位で希望を提出しない限りマッチング度が上がることはありません❗
-          li どうしてもその研究室に行きたいのであれば、売り込みをしてください。
-        p.small.m-0 例年希望提出締め切りギリギリになるまで希望を提出しない研究室があります。
-        p.small できるだけ催促しておりますが、その旨をご理解の程よろしくお願い致します。
       .modal-footer
         button.btn.btn-secondary data-dismiss='modal' Close
 
@@ -102,16 +74,3 @@ javascript:
   new Sortable(choice_laboratory_left, options);
 
   new Sortable(choice_laboratory_right, options);
-
-  window.onload = function() {
-    if (document.getElementById('resubmit-warning') != null) {
-      document.getElementById('resubmit-btn').style.display ="none";
-      document.getElementById('resubmit-notice').style.display ="none";
-    }
-  }
-
-  function resubmit() {
-    document.getElementById('resubmit-btn').style.display ="block";
-    document.getElementById('resubmit-notice').style.display ="block";
-    document.getElementById('resubmit-warning').style.display ="none";
-  }

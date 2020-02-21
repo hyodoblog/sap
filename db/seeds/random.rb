@@ -17,7 +17,6 @@ max_student_choice            = ENV['TEST_MAX_STUDENT_CHOICE'].nil? ? 7 : ENV['T
 max_laboratory_choice         = ENV['TEST_MAX_LABORATORY_CHOICE'].nil? ? 3 : ENV['TEST_MAX_LABORATORY_CHOICE'].to_i
 student_choice_probability    = ENV['TEST_STUDNET_CHOICE_PROBABILITY'].nil? ? 3 : ENV['TEST_STUDNET_CHOICE_PROBABILITY'].to_i
 laboratory_choice_probability = ENV['TEST_LABORATORY_CHOICE_PROBABILITY'].nil? ? 3 : ENV['TEST_LABORATORY_CHOICE_PROBABILITY'].to_i
-max_conf_student              = ENV['TEST_CONF_STUDENT'].nil? ? 2 : ENV['TEST_CONF_STUDENT'].to_i
 seed_num                      = ENV['TEST_SEED_NUM'].nil? ? 10 : ENV['TEST_SEED_NUM'].to_i
 
 now_time = Time.now
@@ -40,7 +39,6 @@ Admin.create!(email:                 test_email,
               contact_email:         '',
               max_choice_student:    max_student_choice,
               max_choice_laboratory: max_laboratory_choice,
-              max_confirmed_student: max_conf_student,
               start_datetime:        now_time,
               end_datetime:          now_time + 1.day,
               view_end_datetime:     now_time + 2.day,

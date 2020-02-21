@@ -7,18 +7,6 @@ class Sap::Laboratories::HomeController < Sap::ApplicationController
     @choice_students = current_laboratory.laboratory_choice
     choice_students_id_array = @choice_students.map{|choice| choice.student.id}
     @students = @admin.student.where.not(id: choice_students_id_array)
-    @laboratory_assign_confirm = false
-    begin
-      assigns = @admin.assign_list.where(laboratory_id: current_laboratory.id)
-      assigns.each do |assign|
-        if assign.confirm
-          @laboratory_assign_confirm = true
-          break
-        end
-      end
-    rescue
-      @laboratory_assign_confirm = false
-    end
   end
 
   def choice

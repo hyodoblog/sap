@@ -6,13 +6,6 @@ class Sap::Students::HomeController < Sap::ApplicationController
     @choice_laboratories = current_student.student_choice
     choice_laboratories_id_array = @choice_laboratories.map{|choice| choice.laboratory.id}
     @laboratories = @admin.laboratory.where.not(id: choice_laboratories_id_array)
-    assign = @admin.assign_list.find_by(student_id: current_student.id)
-    if assign.present?
-      @student_assign_confirm = assign.confirm
-      @student_assign_laboratory_name = assign.laboratory.name
-    else
-      @student_assign_confirm = nil
-    end
   end
 
   def choice

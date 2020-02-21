@@ -40,7 +40,6 @@ class Admins::ExportsController < Admins::ApplicationController
           row.add_cell(current_admin.contact_email)
           row.add_cell(current_admin.max_choice_student)
           row.add_cell(current_admin.max_choice_laboratory)
-          row.add_cell(current_admin.max_confirmed_student)
           row.add_cell(current_admin.start_datetime.to_s(:datetime_jp))
           row.add_cell(current_admin.end_datetime.to_s(:datetime_jp))
           row.add_cell(current_admin.view_end_datetime.to_s(:datetime_jp))

@@ -15,17 +15,6 @@
   
 = render 'common/form_notifications'
 
-- if @laboratory_assign_confirm
-  .row.alert.alert-warning#resubmit-warning
-    .col-md-9
-      ul
-        li 現在あなたの研究室を希望している学生で、マッチング度が高い人がいます。
-        li 再提出するとマッチング度がリセットされることがあります。
-        li それでも再提出を希望する場合は「再提出を希望する」ボタンを押して下さい。
-    .col-md-3
-      input.btn.btn-danger.pull-right type="button" value="再提出を希望する" onclick="resubmit()"
-  .alert.alert-info#resubmit-notice 提出するとアルゴリズムが実行されます。
-
 .row.mb-4
   .col-6
     h5 学生一覧
@@ -63,7 +52,7 @@
   .modal-dialog role='document'
     .modal-content
       .modal-header
-        h5.modal-title#exampleModalLabel 操作方法
+        h5.modal-title#sampleModalLabel 操作方法
         button.close type='button' data-dismiss='modal' aria-label='Close'
           span aria-hidden='true' &times;
       .modal-body
@@ -79,16 +68,3 @@ javascript:
   new Sortable(choice_student_left, options);
 
   new Sortable(choice_student_right, options);
-
-  window.onload = function() {
-    if (document.getElementById('resubmit-warning') != null) {
-      document.getElementById('resubmit-btn').style.display ="none";
-      document.getElementById('resubmit-notice').style.display ="none";
-    }
-  }
-
-  function resubmit() {
-    document.getElementById('resubmit-btn').style.display ="block";
-    document.getElementById('resubmit-notice').style.display ="block";
-    document.getElementById('resubmit-warning').style.display ="none";
-  }

@@ -1,7 +1,6 @@
 module Algorithm
   def algo_update(admin)
     # 変数の初期化
-    max_confirmed_student = admin.max_confirmed_student
     student_choice_list = student_choice_list_make(admin)
     laboratory_choice_list = laboratory_choice_list_make(admin)
     students = admin.student.order(id: 'DESC')
@@ -48,11 +47,9 @@ module Algorithm
 
     # Step 4
     # マッチングが高い学生は配属を確定させる
-    confirm_student_array = algorithm_step4(current_assign_list,
-                                            student_choice_list,
+    confirm_student_array = algorithm_step4(student_choice_list,
                                             laboratory_choice_list,
-                                            max_laboratory_num_list,
-                                            max_confirmed_student)
+                                            max_laboratory_num_list)
 
     # Step 5
     # 配属されていない学生をランダムで配属
@@ -280,7 +277,7 @@ module Algorithm
     return current_assign_list
   end
   # Step 4
-  def algorithm_step4(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list, max_confirmed_student)
+  def algorithm_step4(student_choice_list, laboratory_choice_list, max_laboratory_num_list)
     confirm_student_array = []
     student_choice_list.each do |student_id, laboratory_choice_array|
       laboratory_choice_array.each_with_index do |laboratory_id, index|
