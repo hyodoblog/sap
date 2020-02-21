@@ -1,6 +1,7 @@
 class Sap::Laboratories::HomeController < Sap::ApplicationController
   before_action :laboratory_check!
   before_action :authenticate_laboratory!
+  include Algorithm
 
   def index
     @choice_students = current_laboratory.laboratory_choice
@@ -47,8 +48,11 @@ class Sap::Laboratories::HomeController < Sap::ApplicationController
       end
     end
 
-    flash[:notice] = '提出が完了しました'
-    redirect_to(laboratories_root_path(@sap_key))
+    # アルゴリズムの実行
+    algo_update(current_laboratory.admin)
+
+    flash[:notice] = '希望を提出し、アルゴリズムの実行が完了しました'
+    redirect_to(assign_lists_path(@sap_key))
   end
 
   private

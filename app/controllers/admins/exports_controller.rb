@@ -47,13 +47,12 @@ class Admins::ExportsController < Admins::ApplicationController
         end
       end
       p.workbook.add_worksheet(name: '学生情報') do |sheet|
-        sheet.add_row %w(学籍番号 名前 Eメール トータルレート 希望研究室リスト)
+        sheet.add_row %w(学籍番号 名前 Eメール 希望研究室リスト)
         current_admin.student.each do |student|
           sheet.add_row do |row|
             row.add_cell(student.student_num)
             row.add_cell(student.name)
             row.add_cell(student.email)
-            row.add_cell(student.latest_rate)
             student_choice_laboratory_cell = ''
             student.student_choice.each do |choice_laboratory|
               student_choice_laboratory_cell += ', ' unless student_choice_laboratory_cell.empty?
@@ -64,14 +63,13 @@ class Admins::ExportsController < Admins::ApplicationController
         end
       end
       p.workbook.add_worksheet(name: '研究室情報') do |sheet|
-        sheet.add_row %w(研究室名 名前 最大配属人数 Eメール トータルレート 希望学生リスト)
+        sheet.add_row %w(研究室名 名前 最大配属人数 Eメール 希望学生リスト)
         current_admin.laboratory.each do |laboratory|
           sheet.add_row do |row|
             row.add_cell(laboratory.name)
             row.add_cell(laboratory.professor_name)
             row.add_cell(laboratory.max_num)
             row.add_cell(laboratory.email)
-            row.add_cell(laboratory.latest_rate)
             laboratory_choice_student_cell = ''
             laboratory.laboratory_choice.each do |choice_student|
               laboratory_choice_student_cell += ', ' unless !laboratory_choice_student_cell.empty?
@@ -81,6 +79,22 @@ class Admins::ExportsController < Admins::ApplicationController
           end
         end
       end
+      # if current_admin.student_rate.present?
+      #   p.workbook.add_worksheet(name: '学生レート情報') do |sheet|
+      #     student_rate_list_make.each do |row|
+      #       sheet.add_row row
+      #     end
+      #   end
+      # end
+      # if current_admin.laboratory_rate.present?
+      #   p.workbook.add_worksheet(name: '研究室レート情報') do |sheet|
+      #     list = 
+      #     sheet.add_row laboratory_rate_row_name
+      #     current_admin.laboratory.each do |laboratory|
+      #       sheet.add_row laboratory_rate_row(laboratory)
+      #     end
+      #   end
+      # end
       send_data(p.to_stream.read,
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 filename: "sap.xlsx")
@@ -101,4 +115,19 @@ class Admins::ExportsController < Admins::ApplicationController
     end
     return assign_list
   end
+
+  # def student_rate_list_make
+  #   students = current_admin.student
+  #   student_rate_array = Array.new(students.length, ['名前'])
+  #   student_rate_group = current_admin.student_rate.group(:created_at)
+  #   student_rate_group.each do |student_rate_datetime|
+  #     student_rate_array[0].push(student_rate_datetime.strftime("%Y/%m/%d %H:%M:%S"))
+  #     current_admin.student.each_with_index do |student, row|
+  #       data = student.student_rate.find_by(created_at: student_rate_datetime)
+  #       # student_rate_array[row+1].push(student.name) if col == 0
+  #       student_rate_array[row+1].push(data.rate)
+  #     end
+  #   end
+  #   return student_rate_array
+  # end
 end

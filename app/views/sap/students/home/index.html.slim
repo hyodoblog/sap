@@ -5,16 +5,13 @@
     '今しばらくお待ち下さい(_ _)
 .jumbotron.mt-4
   .row
+    h2.mb-4 = "#{@admin.university_name} #{@admin.faculty_name} #{@admin.department_name}"
     .col-sm-9
       h3.display-5 = "#{current_student.name}さんの提出フォーム"
     .col-sm-3.text-right
       = link_to('操作方法', '#', class: 'btn btn-success', 'data-toggle' => 'modal', 'data-target' => '#sample-modal')
   hr.my-4
-  p ・1番上の研究室が第1希望となり、下にいくにつれ順位が下がります。
-  p ・希望のはみ出た分は提出の際に自動で削除されますのでそのままで問題ありません。
-  p ・応募期間中は何回でも提出が可能です。
-  p ・配属一覧の更新は1時間おきに実行されます。
-  p.text-danger ⚠希望が空欄の場合ランダムで配属されますので、できるだけ希望しましょう！
+  p.lead 希望する研究室をできるだけ多く選んでください！
 
 = render 'common/form_notifications'
 
@@ -22,13 +19,13 @@
   .row.alert.alert-warning#resubmit-warning
     .col-md-9
       ul
-        li 現在「#{@student_assign_laboratory_name}」への配属が確定しています。
-        li ただし、「#{@student_assign_laboratory_name}」が希望を変更した場合、確定が解除される可能性があります。
-        li また、再度提出すると配属確定がリセットされます。
-        li 再提出を希望する場合は「再提出を希望する」ボタンを押して下さい。
+        li 現在「#{@student_assign_laboratory_name}」とのマッチング度が高いです。
+        li ただし、「#{@student_assign_laboratory_name}」が希望を変更した場合、マッチング度がリセットされる可能性があります。
+        li また、あなたが再度希望を提出するとマッチング度が再計算されます。
+        li それでも再提出を希望する場合は「再提出を希望する」ボタンを押して下さい。
     .col-md-3
       input.btn.btn-danger.pull-right type="button" value="再提出を希望する" onclick="resubmit()"
-  .alert.alert-info#resubmit-notice １時間ごとにアルゴリズムを実行しているため、提出した後は反映までしばらくお待ち下さい！
+  .alert.alert-info#resubmit-notice 毎日24時頃にアルゴリズムが実行されるため、提出した後は反映までしばらくお待ち下さい！
 
 .row.mb-4
   .col-6
@@ -78,6 +75,22 @@
           span aria-hidden='true' &times;
       .modal-body
         = image_tag(asset_path('sample.gif'))
+      .modal-footer
+        button.btn.btn-secondary data-dismiss='modal' Close
+.modal.fade#capture-modal tabindex='-1' role='dialog' aria-hidden='true'
+  .modal-dialog role='document'
+    .modal-content
+      .modal-header
+        h5.modal-title#exampleModalLabel 攻略法
+        button.close type='button' data-dismiss='modal' aria-label='Close'
+          span aria-hidden='true' &times;
+      .modal-body
+        h3.text-danger 研究室に売り込みに行く
+        ul
+          li 第一希望で提出しても、研究室側があなたを定員未満の順位で希望を提出しない限りマッチング度が上がることはありません❗
+          li どうしてもその研究室に行きたいのであれば、売り込みをしてください。
+        p.small.m-0 例年希望提出締め切りギリギリになるまで希望を提出しない研究室があります。
+        p.small できるだけ催促しておりますが、その旨をご理解の程よろしくお願い致します。
       .modal-footer
         button.btn.btn-secondary data-dismiss='modal' Close
 

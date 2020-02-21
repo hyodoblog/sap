@@ -11,6 +11,9 @@ class Admin < ApplicationRecord
   has_many :assign_list,       dependent: :destroy
   has_many :student_choice,    dependent: :destroy
   has_many :laboratory_choice, dependent: :destroy
+  has_many :student_rate,      dependent: :destroy
+  has_many :laboratory_rate,   dependent: :destroy
+  has_many :notice,            dependent: :destroy
 
   validates :sap_key,
             presence: true,

@@ -2,8 +2,7 @@ class Student < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :lockable,
-         :trackable, :timeoutable
+         :recoverable, :lockable, :trackable
 
   belongs_to :admin,             optional: true
   has_many   :student_choice,    dependent: :destroy
@@ -15,18 +14,24 @@ class Student < ApplicationRecord
 
   validates :email,
             presence: true,
-            format: { with: Devise.email_regexp },
-            on: :create
+            format: { with: Devise.email_regexp }
   validates :password,
             presence: true,
-            confirmation: true,
-            on: :create
+            confirmation: true
   validates :name,
             presence: true,
             length: {maximum: 50}
+  validates :name,
+            presence: true,
+            length: {maximum: 50},
+            on: :update
   validates :student_num,
             presence: true,
             length: {maximum: 30}
+  validates :student_num,
+            presence: true,
+            length: {maximum: 30},
+            on: :update
   validate :password_complexity
   
   def password_complexity
@@ -60,7 +65,7 @@ class Student < ApplicationRecord
       sheet.each do |row|
         index += 1
         next if index == 1
-        Student.create(
+        Student.create!(
           admin_id:              admin_id,
           student_num:           row[0].floor.to_s,
           name:                  row[1].to_s,

@@ -1,21 +1,36 @@
 class Admins::NoticesController < Admins::ApplicationController
-  def student
-    student = current_admin.student.find(params[:id])
-    if student.present?
-      NotificationMailer.send_login_info(student, current_admin, 'sap/students/devise/sessions').deliver
-    else
-      flash[:notice] = '学生情報の取得に失敗しました'
-    end
-    redirect_to(admins_root_path)
+  skip_before_action :release_true_check!
+
+  def index
   end
 
-  def laboratory
-    laboratory = current_admin.laboratory.find(params[:id])
-    if laboratory.present?
-      NotificationMailer.send_login_info(laboratory, current_admin, 'sap/laboratories/devise/sessions').deliver
+  def create
+    notice = current_admin.notice.new(notice_param)
+    if notice.save()
+      flash[:notice] = 'お知らせを追加しました'
+      redirect_to(admins_notices_path)
     else
-      flash[:notice] = '研究室情報の取得に失敗しました'
+      flash[:notice_param] = notice
+      flash[:error_messages] = notice.errors.full_messages
+      redirect_back(fallback_location: root_path)
     end
-    redirect_to(admins_root_path)
+  end
+
+  def destroy
+    notice = current_admin.notice.find(params[:id])
+    if notice.nil?
+      flash[:alert] = 'お知らせ情報の取得に失敗しました'
+      redirect_back(fallback_location: root_path)
+    else
+      notice.destroy
+      flash[:notice] = 'お知らせを1つ削除しました'
+      redirect_to(admins_notices_path)
+    end
+  end
+
+  private
+
+  def notice_param
+    params.require(:notice).permit(:content)
   end
 end

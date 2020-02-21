@@ -2,4 +2,5 @@
           locals: { title: '研究室専用ログイン',
                     admin: @admin,
                     model: resource,
-                    url: session_path(resource_name) } )
+                    url: session_path(resource_name),
+                    password_link: new_laboratory_password_path(@sap_key) } )

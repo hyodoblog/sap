@@ -31,3 +31,5 @@ ja:
         max_num: 最大配属人数
         rate: レート
         email: Eメール
+      notice:
+        content: お知らせ内容

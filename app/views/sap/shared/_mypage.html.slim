@@ -1,0 +1,13 @@
+.row
+  .col-lg-8.offset-lg-2
+    h3.mt-5.mb-4
+      'マイページ
+      = link_to('パスワード編集', url, class: 'btn btn-outline-secondary pull-right')
+    .card
+      .card-header アカウント情報
+      main.card-body
+        .row
+          .col-lg-4
+            p Eメール
+          .col-lg-8
+            p = current_user.email

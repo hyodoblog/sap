@@ -1,0 +1,33 @@
+.row
+  .col-lg-6.offset-lg-3
+    h3.mt-5.mb-4 アカウント編集
+    = render 'admins/devise/shared/error_messages', resource: resource
+    = form_with model: resource, as: resource_name, url: update_student_registration_path, method: :put, class: 'card mb-5', local: true do |f|
+      .card-header アカウント情報を編集して下さい！
+      main.card-body
+        = f.hidden_field :email, class: 'form-control', autofocus: true, autocomplete: 'email'
+        .form-group.row
+          .col-lg-5.control-label
+            = f.label :current_password
+            .badge.text-danger *
+            p.small 変更するには現在のパスワードが必要です
+          .col-lg-7
+            = f.password_field :current_password, class: 'form-control', autocomplete: 'current-password'
+        .form-group.row
+          .col-lg-5.control-label
+            = f.label :password, '新パスワード'
+            .badge.text-danger *
+          .col-lg-7
+            = f.password_field :password, class: 'form-control', autocomplete: 'new-password'
+            - if @minimum_password_length
+              em.small = "#{@minimum_password_length}文字以内"
+        .form-group.row
+          .col-lg-5.control-label
+            = f.label :password_confirmation, '新パスワード（再）'
+            .badge.text-danger *
+          .col-lg-7
+            = f.password_field :password_confirmation, class: 'form-control', autocomplete: 'new-password'
+
+        .form-group
+          .pull-right
+            = f.submit value: '編集', class: 'btn btn-success pull-right', data: { disable_with: '編集中...' }

@@ -35,9 +35,17 @@ class Admins::ReleaseController < Admins::ApplicationController
   end
 
   def force_termination
-    current_admin.assign_list.destroy_all
-    current_admin.student_choice.destroy_all
-    current_admin.laboratory_choice.destroy_all
+    current_admin.assign_list.destroy_all       if current_admin.assign_list.present?
+    current_admin.student_choice.destroy_all    if current_admin.student_choice.present?
+    current_admin.laboratory_choice.destroy_all if current_admin.laboratory_choice.present?
+    current_admin.student_rate.destroy_all      if current_admin.student_rate.present?
+    current_admin.laboratory_rate.destroy_all   if current_admin.laboratory_rate.present?
+    current_admin.student.each do |student|
+      student.update_attributes(user_force_init_param)
+    end
+    current_admin.laboratory.each do |laboratory|
+      laboratory.update_attributes(user_force_init_param)
+    end
     current_admin.update_attributes(release_flag: false, start_flag: false)
     flash[:notice] = "SAPを強制終了させました。またの稼動をお待ちしております！"
     redirect_to(admins_root_path)
@@ -54,5 +62,16 @@ class Admins::ReleaseController < Admins::ApplicationController
       return false if total_assign_num >= students_num
     end
     return true
+  end
+
+  def user_force_init_param
+    {
+      latest_rate: 0,
+      sign_in_count: 0,
+      current_sign_in_at: '',
+      last_sign_in_at: '',
+      current_sign_in_ip: '',
+      last_sign_in_ip: ''
+    }
   end
 end
