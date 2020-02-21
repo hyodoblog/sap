@@ -13,11 +13,17 @@ table.table
       th scope="col" 内容
       th scope="col"
   tbody
-    - current_admin.notice.order(created_at: 'DESC').each do |notice|  
+    - if current_admin.notice.present?
+      - current_admin.notice.order(created_at: 'DESC').each do |notice|  
+        tr
+          th scope="row" = notice.created_at.to_s(:datetime_jp)
+          th = notice.content
+          th = link_to('削除', admins_notices_path+"/"+notice.id.to_s, class: 'btn btn-outline-dark', method: :delete)
+    - else
       tr
-        th scope="row" = notice.created_at.to_s(:datetime_jp)
-        th = notice.content
-        th = link_to('削除', admins_notices_path+"/"+notice.id.to_s, class: 'btn btn-outline-dark', method: :delete)
+        th
+        th
+        th
 
 .modal.fade#notice-modal tabindex='-1' role='dialog' aria-hidden='true'
   .modal-dialog.modal-lg role='document'
@@ -27,7 +33,8 @@ table.table
         button.close type='button' data-dismiss='modal' aria-label='Close'
           span aria-hidden='true' &times;
       .modal-body
-        = form_with(model: current_admin.notice.new(flash[:notice_param]), url: admins_notices_path, local: true) do |f|
+        = form_with(model: Notice.new(flash[:notice_param]), url: admins_notices_path, local: true) do |f|
+          = f.hidden_field :admin_id, value: current_admin.id
           .form-group.row
             = f.label :content, "内容", class: "col-lg-4 control-label"
             .col-lg-8

@@ -25,7 +25,7 @@
       .text-center.small.mt-3
         = link_to('パスワードを忘れた場合', password_link)
 
-- if @admin.notice.length != 0
+- if @admin.notice.present? && @admin.notice.length != 0
   .row.mb-4
     .col-lg-8.offset-lg-2
       h4 お知らせ

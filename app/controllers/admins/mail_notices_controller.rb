@@ -20,4 +20,34 @@ class Admins::MailNoticesController < Admins::ApplicationController
     end
     redirect_to(admins_root_path)
   end
+
+  def student_all
+    send_student
+    redirect_to(admins_root_path)
+  end
+
+  def laboratory_all
+    send_laboratory
+    redirect_to(admins_root_path)
+  end
+
+  def all
+    send_student
+    send_laboratory
+    redirect_to(admins_root_path)
+  end
+
+  private
+
+  def send_student
+    current_admin.student.each do |student|
+      NotificationMailer.send_login_info(student, current_admin, 'sap/students/devise/sessions').deliver
+    end
+  end
+
+  def send_laboratory
+    current_admin.laboratory.each do |laboratory|
+      NotificationMailer.send_login_info(laboratory, current_admin, 'sap/laboratories/devise/sessions').deliver
+    end
+  end
 end

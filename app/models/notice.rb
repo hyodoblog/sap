@@ -3,5 +3,5 @@ class Notice < ApplicationRecord
 
   validates :content,
             presence: true,
-            length: { maximum: 100 }
+            length: { maximum: 150 }
 end
