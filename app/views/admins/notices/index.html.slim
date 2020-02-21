@@ -17,13 +17,20 @@ table.table
       - current_admin.notice.order(created_at: 'DESC').each do |notice|  
         tr
           th scope="row" = notice.created_at.to_s(:datetime_jp)
-          th = notice.content
+          th = simple_format(notice.content)
           th = link_to('削除', admins_notices_path+"/"+notice.id.to_s, class: 'btn btn-outline-dark', method: :delete)
     - else
       tr
         th
         th
         th
+
+- if Rails.env.production?
+  .row.py-5
+    .col-sm-6
+      = render('common/adsence')
+    .col-sm-6.d-none.d-sm-block
+      = render('common/adsence')
 
 .modal.fade#notice-modal tabindex='-1' role='dialog' aria-hidden='true'
   .modal-dialog.modal-lg role='document'
@@ -36,9 +43,11 @@ table.table
         = form_with(model: Notice.new(flash[:notice_param]), url: admins_notices_path, local: true) do |f|
           = f.hidden_field :admin_id, value: current_admin.id
           .form-group.row
-            = f.label :content, "内容", class: "col-lg-4 control-label"
+            .col-lg-4
+              = f.label :content, "内容", class: "col-lg-4 control-label"
+              p.ml-3.small 150文字以内
             .col-lg-8
-              = f.text_area :content, class: "form-control", row: '4',  autofocus: true, autocomplete: "content"
+              = f.text_area :content, class: "form-control", rows: '4',  autofocus: true, autocomplete: "content"
           .form-group.row
             .col-lg-9.offset-lg-3
               .float-right

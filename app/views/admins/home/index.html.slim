@@ -19,9 +19,22 @@
             p.lead.text-danger SAP稼働中は編集が行なえません。
             p ユーザーを編集したい場合はSAPを一時停止すると編集できます。
             p 以下のリンクが専用のログインページです。
-            = link_to('学生専用', new_student_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
-            = link_to('研究室専用', new_laboratory_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
-          .col-md-6.text-right
+            div
+              = link_to('学生専用', new_student_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
+              = link_to('研究室専用', new_laboratory_session_path(current_admin.sap_key), class: 'btn btn-link', target: :_blank)
+            hr
+            p.lead ログイン情報をメールで通知
+            div
+              = link_to('全員', '#', class: 'btn btn-info mail-notice-btn', 'data-toggle' => 'modal',
+                        'data-target' => '#mail-notice-modal', 'data-text' => '登録しているユーザー全員に通知します。',
+                        'data-url' => admins_mail_notices_all_path)
+              = link_to('学生のみ', '#', class: 'btn btn-info ml-2 mail-notice-btn', 'data-toggle' => 'modal',
+                        'data-target' => '#mail-notice-modal', 'data-text' => '登録している学生全員に通知します。',
+                        'data-url' => admins_mail_notices_students_path)
+              = link_to('研究室のみ', '#', class: 'btn btn-info ml-2 mail-notice-btn', 'data-toggle' => 'modal',
+                        'data-target' => '#mail-notice-modal', 'data-text' => '登録している研究室すべてに通知します。',
+                        'data-url' => admins_mail_notices_laboratories_path)
+          .col-md-6.text-right.mt-3
             = link_to('配属一覧更新', '#', class: 'btn btn-warning ml-2 mb-2', 'data-toggle' => 'modal', 'data-target' => '#algorithm-modal')
             = link_to('SAP一時停止', '#', class: 'btn btn-danger ml-2 mb-2', 'data-toggle' => 'modal', 'data-target' => '#release-stop-modal')
             = link_to('SAP強制終了', '#', class: 'btn btn-danger ml-2 mb-2', 'data-toggle' => 'modal', 'data-target' => '#force-termination-modal')
@@ -39,6 +52,7 @@
           '稼働開始は
           = link_to('SAP設定画面', admins_config_show_path)
           'から行えます。
+        p.text-info メール通知は稼動開始するとできるようになります。
   - else
     h1.display-5 はじめまして
     p.lead システムを使用するには以下の2ステップが必要です。
@@ -47,7 +61,7 @@
       li.mt-1 Step 1：大学名や稼働期間などの初期設定
       li.mt-1 Step 2：学生と研究室のデータを追加
     hr.my-3
-    p.lead 早速ですが初期設定をしましょう。。
+    p.lead 早速ですが初期設定をしましょう。
     = link_to('初期設定開始', admins_init_setup_first_path, class: 'btn btn-primary', role: 'button')
 
 - if current_admin.init_setup_flag && !current_admin.end_flag
@@ -60,7 +74,7 @@
           = link_to('全削除', '#', class: 'btn btn-danger btn-sm delete-btn', 'data-toggle' => 'modal',
                     'data-url' => admins_init_all_path, 'data-text' => '全学生・研究室を削除します。',
                     'data-target' => '#delete-user-modal')
-  
+
   hr.my-4 style='border-width:4px'
 
   .row.mt-5.mb-3
@@ -87,10 +101,10 @@
           th レート
           th ログイン回数
           th 最終ログイン日
+          th ログイン情報
         - else
           th
           th
-          th ログイン情報
     tbody
       - current_admin.laboratory.order(id: 'ASC').each do |laboratory|
         tr
@@ -105,14 +119,14 @@
               td
             - else
               td = laboratory.current_sign_in_at.to_s(:datetime_jp)
+            td = link_to('通知', '#', class: 'btn btn-info login-info-notice-btn', 'data-toggle' => 'modal',
+                         'data-url' => admins_mail_notices_laboratory_path(laboratory.id), 'data-text' => '「' +laboratory.name + '」にログイン情報を通知します。',
+                         'data-target' => '#login-info-notice-modal')
           - else
             td = link_to('編集', '/admins/laboratories/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
                          'data-url' => '/admins/laboratories/'+laboratory.id.to_s, 'data-text' => '「'+laboratory.name+'」を削除します。',
                          'data-target' => '#delete-user-modal')
-            td = link_to('通知', '#', class: 'btn btn-info login-info-notice-btn', 'data-toggle' => 'modal',
-                         'data-url' => '/admins/mail_notices/'+laboratory.id.to_s+'/laboratory', 'data-text' => '「'+laboratory.name+'」にログイン情報を通知します。',
-                         'data-target' => '#login-info-notice-modal')
 
   hr class='my-5' style='border-width:4px'
 
@@ -139,10 +153,10 @@
           th レート
           th ログイン回数
           th 最終ログイン日
+          th ログイン情報
         - else
           th
           th
-          th ログイン情報
     tbody
       - current_admin.student.order(id: 'ASC').each do |student|
         tr
@@ -156,14 +170,14 @@
               td
             - else
               td = student.current_sign_in_at.to_s(:datetime_jp)
+            td = link_to('通知', '#', class: 'btn btn-info login-info-notice-btn', 'data-toggle' => 'modal',
+                         'data-url' => '/admins/mail_notices/' +student.id.to_s + '/student', 'data-text' => '「' +student.name + '」にログイン情報を通知します。',
+                         'data-target' => '#login-info-notice-modal')
           - else
             td = link_to('編集', '/admins/students/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
-                         'data-url' => '/admins/students/'+student.id.to_s, 'data-text' => '「'+student.name+'」を削除します。',
+                         'data-url' => admins_mail_notices_student_path(student.id), 'data-text' => '「'+student.name+'」を削除します。',
                          'data-target' => '#delete-user-modal')
-            td = link_to('通知', '#', class: 'btn btn-info login-info-notice-btn', 'data-toggle' => 'modal',
-                         'data-url' => '/admins/mail_notices/'+student.id.to_s+'/student', 'data-text' => '「'+student.name+'」にログイン情報を通知します。',
-                         'data-target' => '#login-info-notice-modal')
 
 - if Rails.env.production?
   .row.my-4.py-5
@@ -179,13 +193,13 @@
       .modal-dialog role="document"
         .modal-content
           .modal-header
-            h5.modal-title#exampleModalLabel SAPの稼働を一時停止させます
+            h5.modal-title#releaseStopModalLabel SAPの稼働を一時停止させます
             button.close type="button" data-dismiss="modal" aria-label="Close"
               span aria-hidden="true" &times;
           .modal-body
             p 注意点
-            p ・学生と研究室が希望提出をできなくなります
-            p.ml-2 ログインはでき、下記の閲覧期限まで配属一覧は閲覧できます 
+            p ・学生と研究室が希望提出をできなくなります。
+            p.ml-2 ログインはでき、下記の閲覧期限まで配属一覧は閲覧できます。
             p.small = "期限：#{current_admin.view_end_datetime.to_s(:datetime_jp)}"
             p  →後から変更できます。
             h5 class="text-danger" 本当に稼働を一時停止させますか？
@@ -196,15 +210,17 @@
       .modal-dialog role="document"
         .modal-content
           .modal-header
-            h5.modal-title#exampleModalLabel SAPを強制終了させます
+            h5.modal-title#forceTerminationModalLabel SAPを強制終了させます
             button.close type="button" data-dismiss="modal" aria-label="Close"
               span aria-hidden="true" &times;
           .modal-body
             p 注意点
-            p ・学生と研究室はログインができなくなります
-            p ・希望情報と配属状況がリセットされます
-            p ・学生と研究室の情報は残ります
-            h5 class="text-danger" 本当に強制終了させますか？
+            ul
+              li 学生と研究室はログインができなくなります。
+              li 希望情報と配属状況がリセットされます。
+              li 学生と研究室の情報は残ります。
+            p 登録しているユーザー数によって、数十秒かかることがあります。
+            h5.text-danger 本当に強制終了させますか？
           .modal-footer
             button.btn.btn-secondary type="button" data-dismiss="modal" Close
             = link_to('強制終了', admins_release_force_termination_path, class: 'btn btn-danger', method: :put, data: { disable_with: "終了中..." })
@@ -212,11 +228,12 @@
       .modal-dialog role="document"
         .modal-content
           .modal-header
-            h5.modal-title#exampleModalLabel 配属一覧の更新
+            h5.modal-title#algorithmModalLabel 配属一覧の更新
             button.close type="button" data-dismiss="modal" aria-label="Close"
               span aria-hidden="true" &times;
           .modal-body
             p アルゴリズムが実行され、配属一覧が更新されます。
+            p 登録しているユーザー数によって、数十秒かかることがあります
             h5 class="text-danger" 本当に更新しますか？
           .modal-footer
             button.btn.btn-secondary type="button" data-dismiss="modal" Close
@@ -250,15 +267,27 @@
     .modal-dialog role='document'
       .modal-content
         .modal-header
-          h5.modal-title#loginInfoNoticeModalLabel ログイン情報を通知確認
+          h5.modal-title#loginInfoNoticeModalLabel ログイン情報を通知
           button.close type='button' data-dismiss='modal' aria-label='Close'
             span aria-hidden='true' &times;
         .modal-body
           p#login-info-notice-modal-body-text
-          p 上記のEメールにログイン通知を送信します。
+          p 上記のユーザーのEメールにログイン通知を送信します。
         .modal-footer
           button.btn.btn-secondary data-dismiss='modal' Close
           = link_to('通知', '#', class: 'btn btn-info', id: 'login-info-notice-modal-btn', method: :post, data: { disable_with: "通知中..." })
+  .modal.fade#mail-notice-modal tabindex='-1' role='dialog' aria-hidden='true'
+    .modal-dialog role='document'
+      .modal-content
+        .modal-header
+          h5.modal-title#mailNoticeModalLabel ログイン情報を通知
+          button.close type='button' data-dismiss='modal' aria-label='Close'
+            span aria-hidden='true' &times;
+        .modal-body
+          p#mail-notice-modal-body-text
+        .modal-footer
+          button.btn.btn-secondary data-dismiss='modal' Close
+          = link_to('通知', '#', class: 'btn btn-info', id: 'mail-notice-modal-btn', method: :post, data: {disable_with: "通知中..."})
 - else
   .modal.fade#sap-init-modal tabindex='-1' role='dialog' aria-hidden='true'
     .modal-dialog role='document'
@@ -280,13 +309,14 @@ javascript:
   var URL_ATTR = 'href';
   var MODAL_ATTR = 'data-url';
   var DELETE_BTN_CLASS = 'delete-btn';
-  var DELETE_USER_MODAL_ID = 'delete-user-modal';
   var DELETE_USER_MODAL_BTN_ID = 'delete-user-modal-btn';
   var DELETE_USER_MODAL_BODY_TEXT_ID = 'delete-user-modal-body-text';
   var LOGIN_INFO_NOTICE_BTN_CLASS = 'login-info-notice-btn';
-  var LOGIN_INFO_NOTICE_MODAL_ID = 'login-info-notice-modal';
   var LOGIN_INFO_NOTICE_MODAL_BTN_ID = 'login-info-notice-modal-btn';
   var LOGIN_INFO_NOTICE_MODAL_BODY_TEXT_ID = 'login-info-notice-modal-body-text';
+  var MAIL_NOTICE_MODAL_BTN_CLASS = 'mail-notice-btn';
+  var MAIL_NOTICE_MODAL_BTN_ID = 'mail-notice-modal-btn';
+  var MAIL_NOTICE_MODAL_BODY_TEXT_ID = 'mail-notice-modal-body-text';
 
   var delete_btn_class_els = document.getElementsByClassName(DELETE_BTN_CLASS);
   for(var i = 0;i < delete_btn_class_els.length;i++) {
@@ -304,15 +334,29 @@ javascript:
   }
   var login_info_notice_btn_class_els = document.getElementsByClassName(LOGIN_INFO_NOTICE_BTN_CLASS);
   for(var i = 0;i < login_info_notice_btn_class_els.length;i++) {
-    login_info_notice_btn_class_els[i].onclick = function (event) {
+      login_info_notice_btn_class_els[i].onclick = function (event) {
+          // 属性データ取得
+          var url = event.target.dataset.url;
+          var text = event.target.dataset.text;
+
+          // 属性データセット
+          var login_info_notice_modal_btn_el = document.getElementById(LOGIN_INFO_NOTICE_MODAL_BTN_ID);
+          login_info_notice_modal_btn_el.setAttribute(URL_ATTR, url);
+          var login_info_notice_modal_body_text_el = document.getElementById(LOGIN_INFO_NOTICE_MODAL_BODY_TEXT_ID);
+          login_info_notice_modal_body_text_el.innerHTML = text;
+      }
+  }
+    var mail_notice_btn_class_els = document.getElementsByClassName(MAIL_NOTICE_MODAL_BTN_CLASS);
+    for (var i = 0; i < mail_notice_btn_class_els.length; i++) {
+      mail_notice_btn_class_els[i].onclick = function (event) {
       // 属性データ取得
       var url = event.target.dataset.url;
       var text = event.target.dataset.text;
 
       // 属性データセット
-      var login_info_notice_modal_btn_el = document.getElementById(LOGIN_INFO_NOTICE_MODAL_BTN_ID);
+      var login_info_notice_modal_btn_el = document.getElementById(MAIL_NOTICE_MODAL_BTN_ID);
       login_info_notice_modal_btn_el.setAttribute(URL_ATTR, url);
-      var login_info_notice_modal_body_text_el = document.getElementById(LOGIN_INFO_NOTICE_MODAL_BODY_TEXT_ID);
+      var login_info_notice_modal_body_text_el = document.getElementById(MAIL_NOTICE_MODAL_BODY_TEXT_ID);
       login_info_notice_modal_body_text_el.innerHTML = text;
     }
   }

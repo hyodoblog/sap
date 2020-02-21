@@ -34,8 +34,11 @@ Rails.application.routes.draw do
     patch  'release/off'
     put    'release/force_termination'
     patch  'release/force_termination'
-    post   'mail_notices/:id/student',    to: 'mail_notices#student'
-    post   'mail_notices/:id/laboratory', to: 'mail_notices#laboratory'
+    post   'mail_notices/:id/student',    to: 'mail_notices#student',        as: :mail_notices_student
+    post   'mail_notices/:id/laboratory', to: 'mail_notices#laboratory',     as: :mail_notices_laboratory
+    post   'mail_notices/student',        to: 'mail_notices#student_all',    as: :mail_notices_students
+    post   'mail_notices/laboratory',     to: 'mail_notices#laboratory_all', as: :mail_notices_laboratories
+    post   'mail_notices/all',            to: 'mail_notices#all',            as: :mail_notices_all
     get    'notices', to: 'notices#index'
     post   'notices', to: 'notices#create'
     delete 'notices/:id', to: 'notices#destroy'
