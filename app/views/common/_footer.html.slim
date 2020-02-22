@@ -2,7 +2,7 @@ footer.mt-auto.py-4.bg-light
 	.container
 		.row
 			.col-sm-6.col-md-3
-				p.m-1.small = link_to('ドキュメント', 'https://hyodoblog.com/category/results/sap/document/', class: 'text-dark', target: '_blank')
+				p.m-1.small = link_to('ドキュメント', 'https://hyodoblog.com/category/results/sap/', class: 'text-dark', target: '_blank')
 				p.m-1.small = link_to('開発者へお問い合わせ', 'https://hyodoblog.com/contact/', class: 'text-dark', target: '_blank')
                 - unless admin_signed_in? || student_signed_in? || laboratory_signed_in?
 				  p.m-1.small = link_to('プライバシーポリシー', privacy_path, class: 'text-dark')
