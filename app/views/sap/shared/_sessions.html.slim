@@ -23,6 +23,8 @@
     
     nav
       .text-center.small.mt-3
+        = link_to('あなたの学科の管理者へお問い合わせ', '#', 'data-toggle' => 'modal', 'data-target' => '#contact-modal')
+        br
         = link_to('パスワードを忘れた場合', password_link)
 
 - if @admin.notice.present? && @admin.notice.length != 0
@@ -36,3 +38,19 @@
             span.mx-2
               ':
             = simple_format(notice.content)
+
+.modal.fade#contact-modal tabindex='-1' role='dialog' aria-hidden='true'
+  .modal-dialog role='document'
+    .modal-content
+      .modal-header
+        h5.modal-title#sapInitModalLabel お問い合わせ
+        button.close type='button' data-dismiss='modal' aria-label='Close'
+          span aria-hidden='true' &times;
+      .modal-body
+        p 以下のメールアドレスへご連絡ください！
+        - if @admin.contact_email == ""
+          p = "「#{@admin.email}」"
+        - else
+          p = "「#{@admin.contact_email}」"
+      .modal-footer
+        button.btn.btn-secondary data-dismiss='modal' Close
