@@ -125,7 +125,7 @@
           - else
             td = link_to('編集', '/admins/laboratories/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
-                         'data-url' => '/admins/laboratories/'+laboratory.id.to_s, 'data-text' => '「'+laboratory.name+'」を削除します。',
+                         'data-url' => admins_laboratory_path(laboratory.id), 'data-text' => '「'+laboratory.name+'」を削除します。',
                          'data-target' => '#delete-user-modal')
 
   hr class='my-5' style='border-width:4px'
@@ -171,12 +171,12 @@
             - else
               td = student.current_sign_in_at.to_s(:datetime_jp)
             td = link_to('通知', '#', class: 'btn btn-info login-info-notice-btn', 'data-toggle' => 'modal',
-                         'data-url' => '/admins/mail_notices/' +student.id.to_s + '/student', 'data-text' => '「' +student.name + '」にログイン情報を通知します。',
+                         'data-url' => admins_mail_notices_student_path(student.id), 'data-text' => '「' +student.name + '」にログイン情報を通知します。',
                          'data-target' => '#login-info-notice-modal')
           - else
             td = link_to('編集', '/admins/students/'+student.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
-                         'data-url' => admins_mail_notices_student_path(student.id), 'data-text' => '「'+student.name+'」を削除します。',
+                         'data-url' => admins_student_path(student.id), 'data-text' => '「'+student.name+'」を削除します。',
                          'data-target' => '#delete-user-modal')
 
 - if Rails.env.production?
