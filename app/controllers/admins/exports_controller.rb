@@ -9,6 +9,8 @@ class Admins::ExportsController < Admins::ApplicationController
         generate_xlsx
       end
     end
+    flash[:notice] = '最終結果をエクセルファイルで送信しました'
+    redirect_to(admins_root_path)
   end
 
   private
@@ -31,7 +33,7 @@ class Admins::ExportsController < Admins::ApplicationController
         end
       end
       p.workbook.add_worksheet(name: '管理者情報') do |sheet|
-        sheet.add_row %w(Eメール 大学名 学部 学科 連絡先メール 最大学生希望人数 最大研究室希望数 最大配属確定学生数 希望提出開始日 希望提出終了日 閲覧終了日)
+        sheet.add_row %w(Eメール 大学名 学部 学科 連絡先メール 最大学生希望人数 最大研究室希望数 希望提出開始日 希望提出終了日 閲覧終了日)
         sheet.add_row do |row|
           row.add_cell(current_admin.email)
           row.add_cell(current_admin.university_name)

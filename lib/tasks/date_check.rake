@@ -6,7 +6,7 @@ namespace :date_check do
 
       if admin.view_end_datetime <= Time.now()
         puts("Update end_flag: #{admin.university_name} #{admin.faculty_name} #{admin.department_name}")
-        admin.update_attributes(init_setup_flag: true, start_flag: true, end_flag: true)
+        admin.update_attributes(init_setup_flag: true, release_flag: true, start_flag: true, end_flag: true)
       end
     end
   end
