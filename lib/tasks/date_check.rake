@@ -6,7 +6,7 @@ namespace :date_check do
 
       if admin.view_end_datetime <= Time.now()
         puts("Update end_flag: #{admin.university_name} #{admin.faculty_name} #{admin.department_name}")
-        admin.update_attributes(end_flag: true)
+        admin.update_attributes(init_setup_flag: true, start_flag: true, end_flag: true)
       end
     end
   end
@@ -37,7 +37,7 @@ namespace :date_check do
         max_choice_student: 1, max_choice_laboratory: 1,
         start_datetime: now_datetime, end_datetime: now_datetime + 1.days, view_end_datetime: now_datetime + 2.days,
         init_setup_flag: false, release_flag: false, start_flag: false, end_flag: false,
-        confirmation_notice_flag: false, end_notice_flag: false, view_end_notice_flag: false
+        end_notice_flag: false, view_end_notice_flag: false
     }
   end
 end
