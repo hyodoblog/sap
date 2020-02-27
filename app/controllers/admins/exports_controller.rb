@@ -10,7 +10,6 @@ class Admins::ExportsController < Admins::ApplicationController
       end
     end
     flash[:notice] = '最終結果をエクセルファイルで送信しました'
-    redirect_to(admins_root_path)
   end
 
   private
