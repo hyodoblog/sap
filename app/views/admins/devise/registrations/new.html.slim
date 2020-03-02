@@ -1,4 +1,4 @@
-.row.sign-in-up-form.mb-5
+.row.mb-5
   .col-lg-6.offset-lg-3
     = render "admins/devise/shared/error_messages", locals: { resource: resource }
     = form_with model: resource, url: new_admin_registration_path, class: 'card', local: true do |f|

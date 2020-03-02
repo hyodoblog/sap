@@ -1,4 +1,4 @@
-.row.sign-in-up-form
+.row
   = render("admins/devise/shared/error_messages", resource: resource)
   .col-lg-6.offset-lg-3
     = form_with(model: resource, url: update_student_password_path, method: :put, class: 'card', local: true) do |f|
