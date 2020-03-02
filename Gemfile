@@ -10,7 +10,7 @@ ruby '2.6.5'
 gem 'rails', '5.2.4'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'dotenv-rails'
-gem 'puma', '~> 3.11'
+gem "puma", ">= 3.12.3"
 gem 'pg', '~> 1.2', '>= 1.2.2'
 
 gem 'bcrypt'
