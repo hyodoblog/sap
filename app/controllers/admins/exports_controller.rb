@@ -9,7 +9,6 @@ class Admins::ExportsController < Admins::ApplicationController
         generate_xlsx
       end
     end
-    flash[:notice] = '最終結果をエクセルファイルで送信しました'
   end
 
   private

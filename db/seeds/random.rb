@@ -11,13 +11,13 @@
 # 環境変数の初期化
 test_email                    = ENV['TEST_EMAIL'].nil? ? 'example@example.com' : ENV['TEST_EMAIL'].to_s
 password                      = ENV['TEST_PASSWORD'].nil? ? 'Pass1234' : ENV['TEST_PASSWORD'].to_s
-number_of_student             = ENV['TEST_STUDENT_NUM'].nil? ? 7 : ENV['TEST_STUDENT_NUM'].to_i
-number_of_laboratory          = ENV['TEST_LABORATORY_NUM'].nil? ? 3 : ENV['TEST_LABORATORY_NUM'].to_i
-max_student_choice            = ENV['TEST_MAX_STUDENT_CHOICE'].nil? ? 7 : ENV['TEST_MAX_STUDENT_CHOICE'].to_i
-max_laboratory_choice         = ENV['TEST_MAX_LABORATORY_CHOICE'].nil? ? 3 : ENV['TEST_MAX_LABORATORY_CHOICE'].to_i
+number_of_student             = ENV['TEST_STUDENT_NUM'].nil? ? 100 : ENV['TEST_STUDENT_NUM'].to_i
+number_of_laboratory          = ENV['TEST_LABORATORY_NUM'].nil? ? 10 : ENV['TEST_LABORATORY_NUM'].to_i
+max_student_choice            = ENV['TEST_MAX_STUDENT_CHOICE'].nil? ? 10 : ENV['TEST_MAX_STUDENT_CHOICE'].to_i
+max_laboratory_choice         = ENV['TEST_MAX_LABORATORY_CHOICE'].nil? ? 5 : ENV['TEST_MAX_LABORATORY_CHOICE'].to_i
 student_choice_probability    = ENV['TEST_STUDNET_CHOICE_PROBABILITY'].nil? ? 3 : ENV['TEST_STUDNET_CHOICE_PROBABILITY'].to_i
 laboratory_choice_probability = ENV['TEST_LABORATORY_CHOICE_PROBABILITY'].nil? ? 3 : ENV['TEST_LABORATORY_CHOICE_PROBABILITY'].to_i
-seed_num                      = ENV['TEST_SEED_NUM'].nil? ? 10 : ENV['TEST_SEED_NUM'].to_i
+seed_num                      = ENV['TEST_SEED_NUM'].nil? ? 15 : ENV['TEST_SEED_NUM'].to_i
 
 now_time = Time.now
 

@@ -14,20 +14,20 @@ class Student < ApplicationRecord
 
   validates :email,
             presence: true,
-            format: { with: Devise.email_regexp }
+            format: { with: Devise.email_regexp },
+            on: :create
   validates :password,
             presence: true,
-            confirmation: true
-  validates :name,
-            presence: true,
-            length: {maximum: 50}
+            confirmation: true,
+            on: :create
   validates :name,
             presence: true,
             length: {maximum: 50},
             on: :update
   validates :student_num,
             presence: true,
-            length: {maximum: 30}
+            length: {maximum: 30},
+            on: :update
   validates :student_num,
             presence: true,
             length: {maximum: 30},
