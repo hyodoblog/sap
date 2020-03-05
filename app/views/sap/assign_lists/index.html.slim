@@ -27,7 +27,10 @@ table.table.table-hover
         td = laboratory_name
         td
           - student_array.each do |student|
-            span.mr-3 = student[0]
+            - if current_admin.present? && student[1]
+              .span.text-danger.mr-3 = student[0]
+            - else
+              span.mr-3 = student[0]
 
 - if Rails.env.production?
   .row.py-5
