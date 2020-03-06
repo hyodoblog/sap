@@ -17,7 +17,10 @@ class Sap::AssignListsController < Sap::ApplicationController
     # 表示しやすい形式に変換
     @assign_list = {}
     laboratories.each do |laboratory|
-      assigns = @admin.assign_list.where(laboratory_id: laboratory.id).order(id: 'DESC')
+      assigns = @admin.assign_list.where(laboratory_id: laboratory.id)
+                      .joins(:student)
+                      .includes(:student)
+                      .order('students.student_num')
       assign_array = []
       assigns.each do |assign|
         assign_student_array = []

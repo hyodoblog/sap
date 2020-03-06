@@ -28,7 +28,7 @@ table.table.table-hover
         td
           - student_array.each do |student|
             - if current_admin.present? && student[1]
-              .span.text-danger.mr-3 = student[0]
+              span.text-danger.mr-3 = student[0]
             - else
               span.mr-3 = student[0]
 
