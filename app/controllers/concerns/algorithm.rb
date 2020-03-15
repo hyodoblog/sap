@@ -109,7 +109,6 @@ module Algorithm
         if student.id == student_id
           student_rate_exit = true
           student.update_attributes(latest_rate: rate)
-          student.student_rate.create(admin_id: admin_id, rate: rate)
           student_rate_list.delete(student_id)
           break
         end
@@ -160,7 +159,6 @@ module Algorithm
       unless laboratory_rate_exit
         rate = 0
         laboratory.update_attributes(latest_rate: rate)
-        laboratory.laboratory_rate.create(admin_id: admin_id, rate: rate)
       end
     end
   end

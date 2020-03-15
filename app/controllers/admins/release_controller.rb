@@ -30,8 +30,6 @@ class Admins::ReleaseController < Admins::ApplicationController
     current_admin.assign_list.delete_all       if current_admin.assign_list.present?
     current_admin.student_choice.delete_all    if current_admin.student_choice.present?
     current_admin.laboratory_choice.delete_all if current_admin.laboratory_choice.present?
-    current_admin.student_rate.delete_all      if current_admin.student_rate.present?
-    current_admin.laboratory_rate.delete_all   if current_admin.laboratory_rate.present?
     current_admin.student.each do |student|
       student.update_attributes(user_force_init_param)
     end
