@@ -49,9 +49,9 @@ class Admins::ReleaseController < Admins::ApplicationController
     current_admin.laboratory.each do |laboratory|
       return false if laboratory.max_num.nil?
       total_assign_num += laboratory.max_num
-      return false if total_assign_num >= students_num
+      return true if total_assign_num > students_num
     end
-    return true
+    return false
   end
 
   def user_force_init_param
