@@ -38,7 +38,8 @@
               .form-group.row
                 .col-lg-9.offset-lg-3
                   .float-right
-                    = link_to('戻る', admins_init_setup_first_path, class: 'btn btn-outline-secondary mr-2')
+                    - unless current_admin.init_setup_flag
+                      = link_to('戻る', admins_init_setup_first_path, class: 'btn btn-outline-secondary mr-2')
                     - if title == '初期設定'
                       = link_to('スキップ', admins_init_setup_second_skip_path, class: 'btn btn-outline-secondary mr-2')
                     = f.submit value: 'インポート', class: 'btn btn-success', data: { disable_with: 'インポート中...' }
@@ -86,7 +87,8 @@
               .form-group.row
                 .col-lg-9.offset-lg-3
                   .float-right
-                    = link_to('戻る', admins_init_setup_first_path, class: 'btn btn-outline-secondary mr-2')
+                    - unless current_admin.init_setup_flag
+                      = link_to('戻る', admins_init_setup_first_path, class: 'btn btn-outline-secondary mr-2')
                     - if title == '初期設定'
                       = link_to('スキップ', admins_init_setup_second_skip_path, class: 'btn btn-outline-secondary mr-2')
                     = f.submit value: 'インポート', class: 'btn btn-success', data: {disable_with: 'インポート中...'}

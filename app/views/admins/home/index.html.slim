@@ -179,13 +179,6 @@
                          'data-url' => admins_student_path(student.id), 'data-text' => '「'+student.name+'」を削除します。',
                          'data-target' => '#delete-user-modal')
 
-- if Rails.env.production?
-  .row.my-4.py-5
-    .col-sm-6
-      = render('common/adsence')
-    .col-sm-6
-      = render('common/adsence')
-
 / Modal
 - if current_admin.init_setup_flag && !current_admin.end_flag
   - if current_admin.release_flag

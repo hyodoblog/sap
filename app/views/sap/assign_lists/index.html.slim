@@ -1,3 +1,6 @@
+- if Rails.env.production?
+  .my-4 = render('common/adsence')
+
 h3.my-4 配属一覧
 - if @last_update_time.nil?
   p 未実行です
@@ -31,10 +34,3 @@ table.table.table-hover
               span.text-danger.mr-3 = student[0]
             - else
               span.mr-3 = student[0]
-
-- if Rails.env.production?
-  .row.py-5
-    .col-sm-6
-      = render('common/adsence')
-    .col-sm-6.d-none.d-sm-block
-      = render('common/adsence')

@@ -40,10 +40,3 @@ nav
               td
                 - laboratory.laboratory_choice.order(rank: 'ASC').each do |laboratory_choice|
                   span.mr-3 = laboratory_choice.student.student_num
-
-- if Rails.env.production?
-  .row.my-4.py-5
-    .col-sm-6
-      = render('common/adsence')
-    .col-sm-6
-      = render('common/adsence')

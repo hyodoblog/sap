@@ -1,3 +1,6 @@
+- if Rails.env.production?
+  .my-4 = render('common/adsence')
+
 - unless @admin.release_flag
   .alert.alert-warning.mt-4
     '現在管理者がメンテナンス中なため希望提出ができません。
@@ -46,13 +49,6 @@
               = f.hidden_field 'items[][laboratory_id]', value: choice_laboratory.laboratory.id
       - if @admin.release_flag
         = f.submit '希望提出', class: 'btn btn-lg btn-primary btn-block mt-4', id: 'resubmit-btn'
-
-- if Rails.env.production?
-  .row.py-5
-    .col-sm-6
-      = render('common/adsence')
-    .col-sm-6.d-none.d-sm-block
-      = render('common/adsence')
 
 .modal.fade#sample-modal tabindex='-1' role='dialog' aria-hidden='true'
   .modal-dialog role='document'
