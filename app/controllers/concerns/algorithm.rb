@@ -28,8 +28,8 @@ module Algorithm
     laboratories = admin.laboratory.order(latest_rate: 'DESC')
 
     # Step 1
-    # 最大研究室配属人数を整理
-    max_laboratory_num_list = algorithm_step1(laboratories,
+    # 研究室配属人数を整理
+    assign_laboratory_num_list = algorithm_step1(laboratories,
                                               num_students,
                                               num_laboratories)
 
@@ -42,19 +42,19 @@ module Algorithm
     current_assign_list = algorithm_step3(current_assign_list,
                                           student_choice_list,
                                           laboratory_choice_list,
-                                          max_laboratory_num_list)
+                                          assign_laboratory_num_list)
     student_choice_list = student_choice_list_make(admin) # 参照渡しになり値が変更されるため初期化
 
     # Step 4
     # マッチングが高い学生は配属を確定させる
     confirm_student_array = algorithm_step4(student_choice_list,
                                             laboratory_choice_list,
-                                            max_laboratory_num_list)
+                                            assign_laboratory_num_list)
 
     # Step 5
     # 配属されていない学生をランダムで配属
     current_assign_list = algorithm_step5(current_assign_list,
-                                          max_laboratory_num_list,
+                                          assign_laboratory_num_list,
                                           students)
 
     # --- アルゴリズム終了 ----
@@ -204,33 +204,42 @@ module Algorithm
     # Step 1
     avarage = num_students.to_i / num_laboratories.to_i
     # Step 2, 3, 4
-    max_laboratory_num_list = {}
+    assign_laboratory_num_list = {}
     num_tmp_assignment = 0
+    remain_laboratory_array = []
     laboratories.each do |laboratory|
-      if !laboratory.max_num.nil? && laboratory.max_num <= avarage
-        max_laboratory_num_list[laboratory.id] = laboratory.max_num
+      if !laboratory.max_num.nil?
+        assign_laboratory_num_list[laboratory.id] = laboratory.max_num
         num_tmp_assignment += laboratory.max_num
       else
-        max_laboratory_num_list[laboratory.id] = avarage
-        num_tmp_assignment += avarage
+        assign_laboratory_num_list[laboratory.id] = 0
+        remain_laboratory_array.push(laboratory.id)
       end
     end
     num_remain_students = num_students - num_tmp_assignment
     # Step 5
     index = 1
     while (num_remain_students > 0)
-      laboratories.each do |laboratory|
-        if laboratory.max_num.nil? || laboratory.max_num >= (avarage + index)
-          max_laboratory_num_list[laboratory.id] += 1
-          num_remain_students -= 1
-          if (num_remain_students == 0)
-            break
-          end
-        end
+      remain_laboratory_array.each do |laboratory_id|
+        assign_laboratory_num_list[laboratory_id] += 1
+        num_remain_students -= 1
       end
+      # laboratories.each do |laboratory|
+      #   if !assign_laboratory_num_list[laboratory.id]
+      #     assign_laboratory_num_list[laboratory.id] += 1
+      #     num_remain_students -= 1
+      #   end
+      #   if laboratory.max_num.nil? || laboratory.max_num >= (avarage + index)
+      #     assign_laboratory_num_list[laboratory.id] += 1
+      #     num_remain_students -= 1
+      #     if (num_remain_students == 0)
+      #       break
+      #     end
+      #   end
+      # end
       index += 1
     end
-    return max_laboratory_num_list
+    return assign_laboratory_num_list
   end
   # Step 2
   def algorithm_step2(laboratories)
@@ -239,7 +248,7 @@ module Algorithm
     end
   end
   # Step 3
-  def algorithm_step3(current_assign_list, student_choice_list, laboratory_choice_list, max_laboratory_num_list)
+  def algorithm_step3(current_assign_list, student_choice_list, laboratory_choice_list, assign_laboratory_num_list)
     student_choice_list.each do |student_id, laboratory_choice_array|
       # 仮配属されている学生はスキップ
       if check_assign?(current_assign_list, student_id)
@@ -249,7 +258,7 @@ module Algorithm
       laboratory_choice_array.each do |laboratory_id|
         # 人数制限をチェック
         # 余裕があればとりあえず配属
-        max_laboratory_num = max_laboratory_num_list[laboratory_id]
+        max_laboratory_num = assign_laboratory_num_list[laboratory_id]
         if check_laboratory_limit?(current_assign_list, laboratory_id, max_laboratory_num)
           current_assign_list[laboratory_id].push(student_id)
           break
@@ -264,7 +273,7 @@ module Algorithm
             current_assign_list[laboratory_id].push(student_id)
             student_choice_list[swap_student_id].delete(laboratory_id)
             current_assign_list = algorithm_step3(current_assign_list, student_choice_list,
-                                                  laboratory_choice_list, max_laboratory_num_list)
+                                                  laboratory_choice_list, assign_laboratory_num_list)
             break
           end
         end
@@ -273,7 +282,7 @@ module Algorithm
     return current_assign_list
   end
   # Step 4
-  def algorithm_step4(student_choice_list, laboratory_choice_list, max_laboratory_num_list)
+  def algorithm_step4(student_choice_list, laboratory_choice_list, assign_laboratory_num_list)
     confirm_student_array = []
     student_choice_list.each do |student_id, laboratory_choice_array|
       laboratory_choice_array.each_with_index do |laboratory_id, index|
@@ -284,7 +293,7 @@ module Algorithm
         if student_choice_array.nil? # 研究室が希望リストを提出していない場合スキップ
           next
         end
-        max_laboratory_num = max_laboratory_num_list[laboratory_id]
+        max_laboratory_num = assign_laboratory_num_list[laboratory_id]
         if check_matching?(student_choice_array, max_laboratory_num, student_id)
           confirm_student_array.push(student_id)
         end
@@ -293,11 +302,11 @@ module Algorithm
     return confirm_student_array
   end
   # Step 5
-  def algorithm_step5(current_assign_list, max_laboratory_num_list, students)
+  def algorithm_step5(current_assign_list, assign_laboratory_num_list, students)
     students.each do |student|
       unless check_student_exist?(current_assign_list, student.id)
         current_assign_list.each do |laboratory_id, assign_student_array|
-          if check_laboratory_limit?(current_assign_list, laboratory_id, max_laboratory_num_list[laboratory_id])
+          if check_laboratory_limit?(current_assign_list, laboratory_id, assign_laboratory_num_list[laboratory_id])
             current_assign_list[laboratory_id].push(student.id)
             break
           end
@@ -335,7 +344,7 @@ module Algorithm
     end
     return false
   end
-  # 研究室の最大配属人数をチェック
+  # 研究室の配属確定人数をチェック
   # 超えていなければ true
   # 超えていれば    false
   def check_laboratory_limit?(current_assign_list, laboratory_id, max_laboratory_num)
