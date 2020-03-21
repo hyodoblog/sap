@@ -28,16 +28,17 @@ html.h-100
       = render('common/header_notifications')
       = render('common/header')
       - if current_page?(root_path)
-        div#home
+        #home
           = yield
         - if Rails.env.production?
-          .row.py-5
-            .col-sm-6
-              = render('common/adsence')
-            .col-sm-6.d-none.d-sm-block
-              = render('common/adsence')
+          .container
+            .row.py-5
+              .col-sm-6
+                = render('common/adsence')
+              .col-sm-6.d-none.d-sm-block
+                = render('common/adsence')
       - else
-        div class="container"
+        .container
           = yield
           - if Rails.env.production?
             .row.py-5
