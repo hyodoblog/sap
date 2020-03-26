@@ -63,7 +63,7 @@ namespace :date_check do
       when 3 then
         point += 1
       else
-        point -= 3
+        point -= 1
       end
 
     end
