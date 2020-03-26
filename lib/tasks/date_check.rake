@@ -45,6 +45,10 @@ namespace :date_check do
 
   def eval_cal(admin)
     point = 0
+    first_point = 0
+    second_point = 0
+    third_point = 0
+    other_point = 0
 
     admin.assign_list.each do |assign_list|
       begin
@@ -56,19 +60,28 @@ namespace :date_check do
       case rank
       when 0 then
         point += 0
+        other_point += 1
       when 1 then
         point += 3
+        first_point += 1
       when 2 then
         point += 2
+        second_point += 1
       when 3 then
         point += 1
+        third_point += 1
       else
         point -= 1
+        other_point += 1
       end
 
     end
 
     admin.point = point
+    admin.first_point = first_point
+    admin.second_point = second_point
+    admin.third_point = third_point
+    admin.other_point = other_point
     admin.save()
   end
 end
