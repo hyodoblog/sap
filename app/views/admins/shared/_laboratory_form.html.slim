@@ -18,7 +18,7 @@
           .col-lg-8
             = f.text_field :professor_name, class: 'form-control', autocomplete: 'professor_name'
         .form-group.row
-          = f.label :max_num, '配属確定人数', class: 'col-lg-4 control-label'
+          = f.label :max_num, '固定人数', class: 'col-lg-4 control-label'
           .col-lg-8
             = f.number_field :max_num, class: 'form-control', autocomplete: 'max_num'
         - if action_name == 'new'

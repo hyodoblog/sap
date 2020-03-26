@@ -9,9 +9,9 @@ class Admins::ReleaseController < Admins::ApplicationController
       flash[:alert] = '学生または研究室を追加してください'
       redirect_to(admins_root_path) and return
     end
-    # 研究室の配属確定人数のチェック
+    # 研究室の固定人数のチェック
     if laboratory_total_max_num_check?
-      flash[:alert] = "研究室の配属確定人数の合計が学生数より少ないです。誰か一人無制限にするか、配属確定人数の調整をしてください"
+      flash[:alert] = "研究室の固定人数の合計が学生数より少ないです。研究室の固定人数を調整してください"
       redirect_to(admins_root_path) and return
     end
 

@@ -344,7 +344,7 @@ module Algorithm
     end
     return false
   end
-  # 研究室の配属確定人数をチェック
+  # 研究室の固定人数をチェック
   # 超えていなければ true
   # 超えていれば    false
   def check_laboratory_limit?(current_assign_list, laboratory_id, max_laboratory_num)

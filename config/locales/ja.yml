@@ -27,7 +27,7 @@ ja:
         password_confirmation: パスワード（再）
         name: 研究室名
         professor_name: 教授名
-        max_num: 配属確定人数
+        max_num: 固定人数
         rate: レート
         email: Eメール
       notice:
