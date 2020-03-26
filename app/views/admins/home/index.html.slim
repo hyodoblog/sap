@@ -12,6 +12,8 @@
           .col-md-3
             = link_to('初期化', '#', class: 'btn btn-danger pull-right', 'data-toggle' => 'modal', 'data-target' => '#sap-init-modal')
         hr
+        = "マッチングポイント：#{current_admin.point}"
+        hr
         = button_to('最終結果を出力', admins_exports_index_path(format: :xlsx), method: :get, class: 'btn btn-success m-2', data: { disable_with: "出力中..." })
       - else
         .row

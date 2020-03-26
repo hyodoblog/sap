@@ -7,6 +7,8 @@ namespace :date_check do
       if admin.view_end_datetime <= Time.now()
         puts("Update end_flag: #{admin.university_name} #{admin.faculty_name} #{admin.department_name}")
         admin.update_attributes(init_setup_flag: true, release_flag: true, start_flag: true, end_flag: true)
+
+        eval_cal(admin)
       end
     end
   end
@@ -40,4 +42,35 @@ namespace :date_check do
         end_notice_flag: false, view_end_notice_flag: false
     }
   end
+
+  def eval_cal(admin)
+    point = 0
+
+    admin.assign_list.each do |assign_list|
+      begin
+        rank = admin.student.find_by(id: assign_list.student_id).student_choice.find_by(laboratory_id: assign_list.laboratory_id).rank
+      rescue NoMethodError
+        rank = 0
+      end
+
+      case rank
+      when 0 then
+        point += 0
+      when 1 then
+        point += 3
+      when 2 then
+        point += 2
+      when 3 then
+        point += 1
+      else
+        point -= 3
+      end
+
+    end
+
+    admin.point = point
+    admin.save()
+  end
 end
+
+# 学生の希望順位を取得
