@@ -4,6 +4,6 @@ class AddColumnAdmins < ActiveRecord::Migration[5.2]
   end
 
   def down
-    remove_column :titles, :point, :integer
+    remove_column :admins, :point, :integer
   end
 end
