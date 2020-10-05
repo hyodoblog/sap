@@ -48,36 +48,40 @@ class Admins::MailNoticesController < Admins::ApplicationController
   private
 
   def send_mail(user, admin, type)
-    university_name = admin.university_name
-    faculty_name = admin.faculty_name
-    department_name = admin.department_name
+    # university_name = admin.university_name
+    # faculty_name = admin.faculty_name
+    # department_name = admin.department_name
     name = user.name
     login_link = 'https://sap.hyodoblog.com/' + admin.sap_key + '/' + type + '/sign_in'
     email = user.email
     password_init = user.password_init
-    end_datetime = admin.end_datetime.to_s(:datetime_jp)
-    view_end_datetime = admin.view_end_datetime.to_s(:datetime_jp)
+    # end_datetime = admin.end_datetime.to_s(:datetime_jp)
+    # view_end_datetime = admin.view_end_datetime.to_s(:datetime_jp)
     api_key = ENV['API_KEY']
-    host = 'us-central1-test-pg-yukihira-280008.cloudfunctions.net'
+    url = `https://asia-northeast1-test-pg-yukihira-280008.cloudfunctions.net/sapSendMail?name=#{name}&login_link=#{login_link}&email=#{email}&password_init=#{password_init}&api_key=#{api_key}`
+    host = 'asia-northeast1-test-pg-yukihira-280008.cloudfunctions.net'
     port = nil
-    # path = `/sapSendMail?university_name=#{university_name}&faculty_name=#{faculty_name}&department_name=#{department_name}&name=#{name}&login_link=#{login_link}&email=#{email}&password_init=#{password_init}&api_key=#{api_key}`
-    path = '/helloWorld'
-    params = {
-      university_name: university_name,
-      faculty_name: faculty_name,
-      department_name: department_name,
-      name: name,
-      login_link: login_link,
-      email: email,
-      password_init: password_init,
-      end_datetime: end_datetime,
-      view_end_datetime: view_end_datetime,
-      api_key: api_key
-    }
+    path = `/sapSendMail?name=#{name}&login_link=#{login_link}&email=#{email}&password_init=#{password_init}&api_key=#{api_key}`
+    # path = '/sapSendMail'
+    # params = {
+    #   university_name: university_name,
+    #   faculty_name: faculty_name,
+    #   department_name: department_name,
+    #   name: name,
+    #   login_link: login_link,
+    #   email: email,
+    #   password_init: password_init,
+    #   end_datetime: end_datetime,
+    #   view_end_datetime: view_end_datetime,
+    #   api_key: api_key
+    # }
 
+    uri = URI.parse(url)
+    logger.debug(uri)
     https = Net::HTTP.new(host, port)
-    req = Net::HTTP::Post.new(path)
-    req.set_form_data(params.to_json)
+    req = Net::HTTP::Get.new(path)
+    # req = Net::HTTP::Post.new(path)
+    # req.set_form_data(params: params.to_json)
     res = https.request(req)
     logger.debug(res)
   end

@@ -129,9 +129,10 @@
               td
             - else
               td = laboratory.current_sign_in_at.to_s(:datetime_jp)
+            / td = link_to('通知', '#', class: 'btn btn-info', onclick: `sendMail(#{current_admin}, #{laboratory}, 'laboratories')`,})
             td = link_to('通知', '#', class: 'btn btn-info login-info-notice-btn', 'data-toggle' => 'modal',
-                         'data-url' => admins_mail_notices_laboratory_path(laboratory.id), 'data-text' => '「' +laboratory.name + '」にログイン情報を通知します。',
-                         'data-target' => '#login-info-notice-modal')
+                          'data-url' => admins_mail_notices_laboratory_path(laboratory.id), 'data-text' => '「' +laboratory.name + '」にログイン情報を通知します。',
+                          'data-target' => '#login-info-notice-modal')
           - else
             td = link_to('編集', '/admins/laboratories/'+laboratory.id.to_s+'/edit', class: 'btn btn-outline-dark')
             td = link_to('削除', '#', class: 'btn btn-outline-dark delete-btn', 'data-toggle' => 'modal',
@@ -278,7 +279,8 @@
           p 上記のユーザーのEメールにログイン通知を送信します。
         .modal-footer
           button.btn.btn-secondary data-dismiss='modal' Close
-          = link_to('通知', '#', class: 'btn btn-info', id: 'login-info-notice-modal-btn', method: :post, data: { disable_with: "通知中..." })
+          / = link_to('通知', '#', class: 'btn btn-info', data: { disable_with: "通知中..." }, onclick: "sendMail()")
+          = link_to('通知', '#', class: 'btn btn-info', id: 'login-info-notice-modal-btn', method: :post,)
   .modal.fade#mail-notice-modal tabindex='-1' role='dialog' aria-hidden='true'
     .modal-dialog role='document'
       .modal-content
@@ -309,6 +311,12 @@
 // 削除ボダンのモーダル
 // 時々二重定数の定義というエラーがでるため、varで定数を定義
 javascript:
+  const sendMail = function (currentAdmin, laboratory, type) {
+    console.log(currentAdmin)
+    console.log(laboratory)
+    console.log(type)
+  }
+
   var URL_ATTR = 'href';
   var MODAL_ATTR = 'data-url';
   var DELETE_BTN_CLASS = 'delete-btn';
