@@ -22,6 +22,8 @@ gem 'activerecord-nulldb-adapter'
 
 gem "actionview", ">= 5.2.4.2"
 
+gem "sendgrid-actionmailer"
+
 # excel import
 gem 'roo'
 # excel export

@@ -2,6 +2,9 @@ require_relative 'boot'
 
 require "rails"
 require 'csv'
+require 'net/http'
+require 'uri'
+require 'json'
 require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
@@ -31,6 +34,12 @@ module App
     config.active_record.default_timezone = :local
     config.i18n.default_locale = :ja
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
+
+    # config.action_mailer.delivery_method = :sendgrid_actionmailer
+    # config.action_mailer.sendgrid_actionmailer_settings = {
+    #   api_key: ENV['SENDGRID_API_KEY'],
+    #   raise_delivery_errors: true
+    # }
 
     # whenever config
     config.autoload_paths += %W(#{config.root}/lib)

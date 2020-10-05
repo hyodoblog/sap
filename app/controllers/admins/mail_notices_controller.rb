@@ -5,7 +5,8 @@ class Admins::MailNoticesController < Admins::ApplicationController
   def student
     student = current_admin.student.find(params[:id])
     if student.present?
-      NotificationMailer.send_login_info(student, current_admin, 'sap/students/devise/sessions').deliver
+      send_mail(student, current_admin, 'students')
+      # NotificationMailer.send_login_info(student, current_admin, 'sap/students/devise/sessions').deliver
       flash[:notice] = student.name + "にログイン情報を通知しました"
     else
       flash[:alert] = '学生情報の取得に失敗しました'
@@ -16,7 +17,8 @@ class Admins::MailNoticesController < Admins::ApplicationController
   def laboratory
     laboratory = current_admin.laboratory.find(params[:id])
     if laboratory.present?
-      NotificationMailer.send_login_info(laboratory, current_admin, 'sap/laboratories/devise/sessions').deliver
+      send_mail(laboratory, current_admin, 'laboratories')
+      # NotificationMailer.send_login_info(laboratory, current_admin, 'sap/laboratories/devise/sessions').deliver
       flash[:notice] = laboratory.name + "にログイン情報を通知しました"
     else
       flash[:alert] = '研究室情報の取得に失敗しました'
@@ -45,15 +47,52 @@ class Admins::MailNoticesController < Admins::ApplicationController
 
   private
 
+  def send_mail(user, admin, type)
+    university_name = admin.university_name
+    faculty_name = admin.faculty_name
+    department_name = admin.department_name
+    name = user.name
+    login_link = 'https://sap.hyodoblog.com/' + admin.sap_key + '/' + type + '/sign_in'
+    email = user.email
+    password_init = user.password_init
+    end_datetime = admin.end_datetime.to_s(:datetime_jp)
+    view_end_datetime = admin.view_end_datetime.to_s(:datetime_jp)
+    api_key = ENV['API_KEY']
+    host = 'us-central1-test-pg-yukihira-280008.cloudfunctions.net'
+    port = nil
+    # path = `/sapSendMail?university_name=#{university_name}&faculty_name=#{faculty_name}&department_name=#{department_name}&name=#{name}&login_link=#{login_link}&email=#{email}&password_init=#{password_init}&api_key=#{api_key}`
+    path = '/helloWorld'
+    params = {
+      university_name: university_name,
+      faculty_name: faculty_name,
+      department_name: department_name,
+      name: name,
+      login_link: login_link,
+      email: email,
+      password_init: password_init,
+      end_datetime: end_datetime,
+      view_end_datetime: view_end_datetime,
+      api_key: api_key
+    }
+
+    https = Net::HTTP.new(host, port)
+    req = Net::HTTP::Post.new(path)
+    req.set_form_data(params.to_json)
+    res = https.request(req)
+    logger.debug(res)
+  end
+
   def send_student
     current_admin.student.each do |student|
-      NotificationMailer.send_login_info(student, current_admin, 'sap/students/devise/sessions').deliver
+      send_mail(student, current_admin, 'students')
+      # NotificationMailer.send_login_info(student, current_admin, 'sap/students/devise/sessions').deliver
     end
   end
 
   def send_laboratory
     current_admin.laboratory.each do |laboratory|
-      NotificationMailer.send_login_info(laboratory, current_admin, 'sap/laboratories/devise/sessions').deliver
+      send_mail(laboratory, current_admin, 'laboratories')
+      # NotificationMailer.send_login_info(laboratory, current_admin, 'sap/laboratories/devise/sessions').deliver
     end
   end
 end

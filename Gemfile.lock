@@ -217,6 +217,7 @@ GEM
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
     ruby_dep (1.5.0)
+    ruby_http_client (3.5.1)
     rubyzip (2.3.0)
     sassc (2.2.1)
       ffi (~> 1.9)
@@ -226,6 +227,11 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    sendgrid-actionmailer (3.1.0)
+      mail (~> 2.7)
+      sendgrid-ruby (~> 6.0)
+    sendgrid-ruby (6.3.5)
+      ruby_http_client (~> 3.4)
     sitemap_generator (6.1.0)
       builder (~> 3.0)
     slim (4.0.1)
@@ -307,6 +313,7 @@ DEPENDENCIES
   rspec-rails
   rubyzip (>= 1.2.1)
   sassc-rails
+  sendgrid-actionmailer
   sitemap_generator
   slim-rails
   spring
