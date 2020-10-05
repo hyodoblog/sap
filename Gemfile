@@ -7,7 +7,7 @@ git_source(:github) do |repo|
 end
 
 ruby '2.6.5'
-gem 'rails', '5.2.4.2'
+gem 'rails', '6.0.3.3'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'dotenv-rails'
 gem "puma", ">= 3.12.3"
@@ -17,7 +17,7 @@ gem 'bcrypt'
 gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
-gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
+gem 'rails-i18n', '~> 6.0' # For 5.0.x, 5.1.x and 5.2.x
 gem 'activerecord-nulldb-adapter'
 
 gem "actionview", ">= 5.2.4.2"
