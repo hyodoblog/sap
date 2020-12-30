@@ -1,6 +1,0 @@
-User-Agent:*
-Disallow: /sign_in
-Disallow: /sign_up
-Disallow: /admins/
-Disallow: /*/laboratories/
-Disallow: /*/students/

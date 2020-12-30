@@ -1,8 +1,0 @@
-p = "こんにちは#{@email}さん"
-
-- if @resource.try(:unconfirmed_email?)
-  p メールが次のように変更されていることを通知するために連絡します
-  p = @resource.unconfirmed_email
-- else
-  p Eメールが次のように変更されたことをお知らせするためにご連絡いたします
-  p = @resource.email

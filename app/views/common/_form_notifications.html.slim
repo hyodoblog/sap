@@ -1,7 +1,0 @@
-- flash.each do |key, value|
-  - case key
-  - when "error_messages" then
-    ul.alert.alert-danger.mt-2
-      - value.each do |v|
-        li.alert-link
-          = v
