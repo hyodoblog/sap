@@ -36,3 +36,5 @@
 #public/sitemap*
 #public/assets
 .idea
+
+.DS_Store
