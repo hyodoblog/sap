@@ -1,9 +1,22 @@
 <template>
-  <div></div>
+  <div>
+    <h1>indeeeeeex</h1>
+    <about/>
+    <service/>
+    <history/>
+  </div>
 </template>
 
 <script>
+import About from '~/components/top/About.vue'
+import History from '~/components/top/History.vue'
+import Service from '~/components/top/Service.vue'
 export default {
   layout: 'auth',
+  components: {
+    About,
+    Service,
+    History,
+  }
 }
 </script>
