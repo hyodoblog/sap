@@ -1,6 +1,7 @@
 <template>
-    <div>
+    <div id="section">
         <h1> --- About --- </h1>
+        <img src="/kougi.jpg">
         <h2>学生と教授の満足度を高める</h2>
         <a>SAP(Student Assignment Program)とは、研究室と学生のマッチングを行うシステムです。
             多くの大学では、大学3年次の末に卒業研究、若しくは、ゼミの為に研究室への配属が行われます。
@@ -18,3 +19,15 @@
     }),
   }
 </script>
+
+<style>
+#section{
+  background-color: white;
+}
+h1{
+  color: black;
+}
+h2{
+  color: black;
+}
+</style>

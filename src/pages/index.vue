@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>indeeeeeex</h1>
+    <img src="top.PNG">
     <about/>
     <service/>
     <history/>
@@ -12,7 +12,7 @@ import About from '~/components/top/About.vue'
 import History from '~/components/top/History.vue'
 import Service from '~/components/top/Service.vue'
 export default {
-  layout: 'auth',
+  //layout: 'auth',
   components: {
     About,
     Service,

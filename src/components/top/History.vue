@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="section">
         <h1>--- History ---</h1>
         <div>
         <h2>九工大で16年間培ってきたシステム</h2>
@@ -7,6 +7,7 @@
 SAPが誕生したのが2004年で、それから電子のみで使用されてきました。
 15年間、教授達が実際に使用する中で溜め込んだノウハウを基に、全国の大学でも使用できるよう改善したものが当サービス
 「研究室マッチングシステム」です。</a>
+        <img src="kyukoudai.jpg">
         </div>
 </div>
 </template>
@@ -20,3 +21,15 @@ SAPが誕生したのが2004年で、それから電子のみで使用されて�
     }),
   }
 </script>
+
+<style>
+#section{
+  background-color: white;
+}
+h1{
+  color: black;
+}
+h2{
+  color: black;
+}
+</style>
