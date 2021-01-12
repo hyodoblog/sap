@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div class="top">
     <img src="top.PNG" />
     <about />
+    <p></p>
     <service />
+    <p></p>
     <history />
   </div>
 </template>
@@ -20,3 +22,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.top {
+  background-color: white;
+}
+</style>
