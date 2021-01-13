@@ -1,7 +1,7 @@
 <template>
-  <div id="section">
+  <div class="section">
     <h1>--- History ---</h1>
-    <div>
+    <div id="history">
       <h2>九工大で16年間培ってきたシステム</h2>
       <a
         >SAPは、私（当サービスの開発者）が所属していた九州工業大学情報工学部電子情報工学科（以降、電子と略す）の研究室配属で実際に使われているシステムです。
@@ -22,8 +22,14 @@ export default {
 </script>
 
 <style>
-#section {
+.section {
+  width: 80%;
+  margin-left: 10%;
   background-color: rgba(255, 255, 255, 0.8);
+}
+#about{
+  width: 90%;
+  margin-left: 5%;
 }
 h1 {
   color: black;
