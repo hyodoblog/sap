@@ -35,38 +35,38 @@ export default {
   width: 100%;
   background-color: white;
 }
-.bluebox{
+.bluebox {
   z-index: 0;
-  width        : 200%;
-  height       : 180px;
-  background-color: #3BB8EB;
+  width: 200%;
+  height: 180px;
+  background-color: #3bb8eb;
   transform: translate(-30%, 0) rotate(-20deg);
 }
-.greenbox{
+.greenbox {
   z-index: 0;
-  width        : 200%;
-  height       : 180px;
-  margin-left       : 0;
-  background-color: #AACD02;
+  width: 200%;
+  height: 180px;
+  margin-left: 0;
+  background-color: #aacd02;
   transform: translate(-30%, 0) rotate(20deg);
 }
-.pinkbox{
+.pinkbox {
   z-index: 0;
-  width        : 200%;
-  height       : 180px;
-  margin       : 0 auto;
-  background-color: #E45F9D;
+  width: 200%;
+  height: 180px;
+  margin: 0 auto;
+  background-color: #e45f9d;
   transform: translate(-30%, 0) rotate(-20deg);
 }
-.about{
+.about {
   position: relative;
   z-index: 10;
 }
-.service{
+.service {
   position: relative;
   z-index: 10;
 }
-.history{
+.history {
   position: relative;
   z-index: 10;
 }
