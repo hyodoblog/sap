@@ -2,14 +2,18 @@
   <div class="section">
     <h1>--- History ---</h1>
     <div id="history">
-      <h2>九工大で16年間培ってきたシステム</h2>
-      <a
-        >SAPは、私（当サービスの開発者）が所属していた九州工業大学情報工学部電子情報工学科（以降、電子と略す）の研究室配属で実際に使われているシステムです。
-        SAPが誕生したのが2004年で、それから電子のみで使用されてきました。
-        15年間、教授達が実際に使用する中で溜め込んだノウハウを基に、全国の大学でも使用できるよう改善したものが当サービス
-        「研究室マッチングシステム」です。</a
-      >
-      <img src="kyukoudai.jpg" />
+      <div class="history1">
+        <h2>九工大で16年間培ってきたシステム</h2>
+        <a
+          >SAPは、私（当サービスの開発者）が所属していた九州工業大学情報工学部電子情報工学科（以降、電子と略す）の研究室配属で実際に使われているシステムです。
+          SAPが誕生したのが2004年で、それから電子のみで使用されてきました。
+          15年間、教授達が実際に使用する中で溜め込んだノウハウを基に、全国の大学でも使用できるよう改善したものが当サービス
+          「研究室マッチングシステム」です。</a
+        >
+      </div>
+      <div class="history2">
+        <img src="kyukoudai.jpg" />
+      </div>
     </div>
   </div>
 </template>
@@ -27,9 +31,22 @@ export default {
   margin-left: 10%;
   background-color: rgba(255, 255, 255, 0.8);
 }
-#about {
+#history {
+  display: flex;
   width: 90%;
   margin-left: 5%;
+}
+.history1 {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.history2 {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 h1 {
   color: black;

@@ -60,14 +60,14 @@ export default {
 }
 .about {
   position: relative;
-  z-index: 10;
+  z-index: 1;
 }
 .service {
   position: relative;
-  z-index: 10;
+  z-index: 1;
 }
 .history {
   position: relative;
-  z-index: 10;
+  z-index: 1;
 }
 </style>
