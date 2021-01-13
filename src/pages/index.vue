@@ -1,11 +1,18 @@
 <template>
   <div class="top">
-    <img src="top.PNG" />
-    <about />
-    <p></p>
-    <service />
-    <p></p>
-    <history />
+    <img src="ogp.jpg" />
+    <div class="about">
+      <about />
+    </div>
+    <div class="bluebox"></div>
+    <div class="service">
+      <service />
+    </div>
+    <div class="greenbox"></div>
+    <div class="history">
+      <history />
+    </div>
+    <div class="pinkbox"></div>
   </div>
 </template>
 
@@ -25,6 +32,42 @@ export default {
 
 <style>
 .top {
+  width: 100%;
   background-color: white;
+}
+.bluebox {
+  z-index: 0;
+  width: 200%;
+  height: 180px;
+  background-color: #3bb8eb;
+  transform: translate(-30%, 0) rotate(-20deg);
+}
+.greenbox {
+  z-index: 0;
+  width: 200%;
+  height: 180px;
+  margin-left: 0;
+  background-color: #aacd02;
+  transform: translate(-30%, 0) rotate(20deg);
+}
+.pinkbox {
+  z-index: 0;
+  width: 200%;
+  height: 180px;
+  margin: 0 auto;
+  background-color: #e45f9d;
+  transform: translate(-30%, 0) rotate(-20deg);
+}
+.about {
+  position: relative;
+  z-index: 10;
+}
+.service {
+  position: relative;
+  z-index: 10;
+}
+.history {
+  position: relative;
+  z-index: 10;
 }
 </style>
