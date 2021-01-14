@@ -7,8 +7,8 @@
       </div>
       <div class="about_box">
         <h4>学生と教授の満足度を高める</h4>
-        <p
-          >SAP(Student Assignment
+        <p>
+          SAP(Student Assignment
           Program)とは、研究室と学生のマッチングを行うシステムです。<br />
           多くの大学では、大学3年次の末に卒業研究、若しくは、ゼミの為に研究室への配属が行われます。<br />
           この研究室配属において、学生同士の相談や成績順などの単純な方法では、学生と教授双方の意向を反映させつつ、配属における満足度を高めることは困難です。<br />
@@ -26,7 +26,6 @@
         <h1 class="about_innerBox-sectionTitle">title</h1>
       </section>
     </div> -->
-    
   </div>
 </template>
 
