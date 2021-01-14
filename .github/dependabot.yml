@@ -6,16 +6,15 @@ updates:
     interval: daily
   open-pull-requests-limit: 10
   reviewers:
-    - hyodoblog
+    - yusei-hyodo
   assignees:
-    - hyodoblog
-updates:
+    - yusei-hyodo
 - package-ecosystem: npm
   directory: "/functions"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
   reviewers:
-    - hyodoblog
+    - yusei-hyodo
   assignees:
-    - hyodoblog
+    - yusei-hyodo
