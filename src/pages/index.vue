@@ -1,6 +1,8 @@
 <template>
-  <div class="top">
-    <img src="ogp.jpg" />
+  <div id="home">
+    <div class="top">
+      <img src="ogp.jpg" />
+    </div>
     <div class="about">
       <about />
     </div>
@@ -31,9 +33,14 @@ export default {
 </script>
 
 <style>
-.top {
+#home {
   width: 100%;
   background-color: white;
+}
+.top img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .bluebox {
   z-index: 0;
@@ -61,13 +68,16 @@ export default {
 .about {
   position: relative;
   z-index: 1;
+  padding-top: 3rem !important;
 }
 .service {
   position: relative;
   z-index: 1;
+  padding-top: 3rem !important;
 }
 .history {
   position: relative;
   z-index: 1;
+  padding-top: 3rem !important;
 }
 </style>

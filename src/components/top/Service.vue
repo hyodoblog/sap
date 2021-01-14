@@ -1,27 +1,21 @@
 <template>
   <div class="section">
-    <h1>--- Service ---</h1>
+    <h2>--- Service ---</h2>
     <div id="service">
-      <div class="hige">
+      <div class="serbox">
         <img src="hige.png" />
-        <h2>会員登録は1人で使用可能</h2>
-        <a
-          >会員登録したユーザーが管理者となります。たったの2ステップで初期設定は完了します。</a
-        >
+        <h4>会員登録は1人で使用可能</h4>
+        <p>会員登録したユーザーが管理者となります。たったの2ステップで初期設定は完了します。</p>
       </div>
-      <div class="dc">
+      <div class="serbox">
         <img src="dc.png" />
-        <h2>いつでも希望を変更可能</h2>
-        <a
-          >学生は、システムの稼働期間内であればいつでも何回でも希望の研究室を変更することができます。</a
-        >
+        <h4>いつでも希望を変更可能</h4>
+        <p>学生は、システムの稼働期間内であればいつでも何回でも希望の研究室を変更することができます。</p>
       </div>
-      <div class="pc">
+      <div class="serbox">
         <img src="pc.png" />
-        <h2>独自の配属アルゴリズム</h2>
-        <a
-          >安定結婚問題を解くアルゴリズムを応用した研究室配属アルゴリズムを用いて配属処理をしております。</a
-        >
+        <h4>独自の配属アルゴリズム</h4>
+        <p>安定結婚問題を解くアルゴリズムを応用した研究室配属アルゴリズムを用いて配属処理をしております。</p>
       </div>
     </div>
   </div>
@@ -45,28 +39,29 @@ export default {
   width: 90%;
   margin-left: 5%;
 }
-.hige {
+.serbox {
   position: relative;
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
-}
-.dc {
-  position: relative;
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-.pc {
-  position: relative;
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-h1 {
-  color: black;
+
+  -webkit-box-flex: 0;
+    flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
 }
 h2 {
-  color: black;
+  text-align: center;
+  color: #555;
+  font-family: ヒラギノ角ゴ ProN, W3;
+  font-size: 2rem;
+}
+h4 {
+  color: #444;
+  font-family: ten-mincho, serif;
+  font-size: 1.5rem;
+}
+p {
+  font-family: YuMincho, 'Yu Mincho', serif;
+  font-size: 20px;
 }
 </style>
