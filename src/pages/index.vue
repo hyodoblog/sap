@@ -1,36 +1,27 @@
-<template>
-  <div id="home">
-    <div class="top">
-      <img src="home.jpg" />
-      <h1>研究室マッチングシステム</h1>
-    </div>
-    <div class="about">
-      <about />
-    </div>
-    <div class="bluebox"></div>
-    <div class="service">
-      <service />
-    </div>
-    <div class="greenbox"></div>
-    <div class="history">
-      <history />
-    </div>
-    <div class="pinkbox"></div>
-  </div>
+<template lang="pug">
+  v-app
+    FarstView
+    About
+    //- Service
+    //- History
 </template>
 
 <script>
+import { Component, Vue } from 'nuxt-property-decorator'
+import FarstView from '~/components/top/FarstView.vue'
 import About from '~/components/top/About.vue'
 import History from '~/components/top/History.vue'
 import Service from '~/components/top/Service.vue'
-export default {
-  // layout: 'auth',
+
+@Component({
   components: {
+    FarstView,
     About,
     Service,
     History,
   },
-}
+})
+export default class extends Vue {}
 </script>
 
 <style>
@@ -43,7 +34,7 @@ export default {
   height: 100%;
   object-fit: cover;
 }
-h1{
+h1 {
   text-align: center;
 }
 .top img {

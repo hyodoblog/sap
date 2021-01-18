@@ -1,32 +1,25 @@
-<template>
-  <div class="section">
-    <h2>--- About ---</h2>
-    <div id="about">
-      <div class="about_box">
-        <img src="/kougi.jpg" />
-      </div>
-      <div class="about_box">
-        <h4>学生と教授の満足度を高める</h4>
-        <p>
-          SAP(Student Assignment
-          Program)とは、研究室と学生のマッチングを行うシステムです。<br />
-          多くの大学では、大学3年次の末に卒業研究、若しくは、ゼミの為に研究室への配属が行われます。<br />
-          この研究室配属において、学生同士の相談や成績順などの単純な方法では、学生と教授双方の意向を反映させつつ、配属における満足度を高めることは困難です。<br />
-          それを解決するために開発されたのが、当サービス<br />
-          「研究室マッチングシステム」です。
-        </p>
-      </div>
-    </div>
-
-    <!-- <div class="about">
-      <section class="about_innerBox">
-        <img class="about_innterBox-image" src="">
-      </section>
-      <section class="about_innerBox">
-        <h1 class="about_innerBox-sectionTitle">title</h1>
-      </section>
-    </div> -->
-  </div>
+<template lang="pug">
+  section
+    h2 --- About ---
+    
+    v-row
+      v-col(cols="12" sm="6")
+        v-img(
+          src="/kougi.jpg"
+          width="100%"
+        )
+      v-col(cols="12" sm="6")
+        h4 学生と教授の満足度を高める
+        p
+          | SAP(Student Assignment Program)とは、研究室と学生のマッチングを行うシステムです。
+          br
+          | 多くの大学では、大学3年次の末に卒業研究、若しくは、ゼミの為に研究室への配属が行われます。
+          br
+          | この研究室配属において、学生同士の相談や成績順などの単純な方法では、学生と教授双方の意向を反映させつつ、配属における満足度を高めることは困難です。
+          br
+          | それを解決するために開発されたのが、当サービス
+          br
+          | 「研究室マッチングシステム」です。
 </template>
 
 <script>
@@ -36,7 +29,7 @@ export default {
 </script>
 
 <style>
-@media (min-width: 1200px){
+@media (min-width: 1200px) {
   .section {
     width: 100%;
     margin-left: 10%;
@@ -46,7 +39,7 @@ export default {
     border-radius: 2rem;
   }
 }
-@media (min-width: 900px){
+@media (min-width: 900px) {
   .section {
     width: 100%;
     margin-left: 10%;
@@ -56,7 +49,7 @@ export default {
     border-radius: 2rem;
   }
 }
-@media (min-width: 768px){
+@media (min-width: 768px) {
   .section {
     width: 100%;
     margin-left: 10%;
@@ -66,7 +59,7 @@ export default {
     border-radius: 2rem;
   }
 }
-@media (min-width: 576px){
+@media (min-width: 576px) {
   .section {
     width: 100%;
     margin-left: 10%;
@@ -76,7 +69,7 @@ export default {
     border-radius: 2rem;
   }
 }
-@media (min-width: 0px){
+@media (min-width: 0px) {
   .section {
     width: 100%;
     margin-left: 10%;
