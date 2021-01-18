@@ -46,6 +46,11 @@ export default {
 h1{
   text-align: center;
 }
+.top img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .bluebox {
   z-index: 0;
   width: 200%;

@@ -17,6 +17,15 @@
         </p>
       </div>
     </div>
+
+    <!-- <div class="about">
+      <section class="about_innerBox">
+        <img class="about_innterBox-image" src="">
+      </section>
+      <section class="about_innerBox">
+        <h1 class="about_innerBox-sectionTitle">title</h1>
+      </section>
+    </div> -->
   </div>
 </template>
 
