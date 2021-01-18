@@ -3,7 +3,7 @@
     <h2>--- About ---</h2>
     <div id="about">
       <div class="about_box">
-        <img src="/kougi.jpg" />
+        <img src="/kougi.jpg" width="288" height="162" />
       </div>
       <div class="about_box">
         <h4>学生と教授の満足度を高める</h4>
@@ -36,70 +36,19 @@ export default {
 </script>
 
 <style>
-@media (min-width: 1200px){
-  .section {
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 50%;
-    padding: 3rem !important;
-    background-color: rgba(252, 252, 252, 0.55);
-    border-radius: 2rem;
-  }
-}
-@media (min-width: 900px){
-  .section {
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 3rem !important;
-    background-color: rgba(252, 252, 252, 0.55);
-    border-radius: 2rem;
-  }
-}
-@media (min-width: 768px){
-  .section {
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 3rem !important;
-    background-color: rgba(252, 252, 252, 0.55);
-    border-radius: 2rem;
-  }
-}
-@media (min-width: 576px){
-  .section {
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 3rem !important;
-    background-color: rgba(252, 252, 252, 0.55);
-    border-radius: 2rem;
-  }
-}
-@media (min-width: 0px){
-  .section {
-    width: 100%;
-    margin-left: 10%;
-    padding: 3rem !important;
-    background-color: rgba(252, 252, 252, 0.55);
-    border-radius: 2rem;
-  }
-}
 div {
   display: block;
 }
-/* .section {
+.section {
   width: 100%;
   margin-left: 10%;
-  margin-right: 10%;
   padding: 3rem !important;
   background-color: rgba(252, 252, 252, 0.55);
   border-radius: 2rem;
-} */
+}
 #about {
   display: flex;
   width: 100%;
-  background-color: rgba(252, 252, 252, 0.9);
 }
 .about_box {
   /* position: relative; */
