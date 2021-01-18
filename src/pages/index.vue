@@ -1,7 +1,8 @@
 <template>
   <div id="home">
     <div class="top">
-      <img src="ogp.jpg" />
+      <img src="home.jpg" />
+      <h1>研究室マッチングシステム</h1>
     </div>
     <div class="about">
       <about />
@@ -35,7 +36,15 @@ export default {
 <style>
 #home {
   width: 100%;
-  background-color: white;
+  background-color: gold;
+}
+.top img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+h1{
+  text-align: center;
 }
 .top img {
   width: 100%;
@@ -67,6 +76,7 @@ export default {
 }
 .about {
   position: relative;
+  width: 90%;
   z-index: 1;
   padding-top: 3rem !important;
 }
