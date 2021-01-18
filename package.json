@@ -11,7 +11,7 @@
     "lintfix": "eslint --ext .js,.ts,.vue --ignore-path .gitignore . --fix"
   },
   "dependencies": {
-    "@nuxt/typescript-runtime": "^2.0.0",
+    "@nuxt/typescript-runtime": "^2.0.1",
     "@nuxtjs/axios": "^5.12.5",
     "core-js": "^3.8.2",
     "nuxt": "^2.14.12"
