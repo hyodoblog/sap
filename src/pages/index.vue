@@ -1,9 +1,11 @@
 <template lang="pug">
   v-app
-    FarstView
-    About
-    //- Service
-    //- History
+    div.index
+      FarstView
+      div#about
+        About
+      Service
+      History
 </template>
 
 <script>
@@ -25,6 +27,12 @@ export default class extends Vue {}
 </script>
 
 <style>
+.index {
+  background-color: gold;
+}
+#about {
+  padding: 3rem;
+}
 #home {
   width: 100%;
   background-color: gold;
