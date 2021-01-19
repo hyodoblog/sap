@@ -2,7 +2,7 @@
   section
     h2 --- About ---
     
-    v-row
+    v-row(justify="center" align-content="center")
       v-col(cols="12" sm="6")
         v-img(
           src="/kougi.jpg"
@@ -28,96 +28,31 @@ export default {
 }
 </script>
 
-<style>
-@media (min-width: 1200px) {
-  .section {
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 50%;
-    padding: 3rem !important;
-    background-color: rgba(252, 252, 252, 0.55);
-    border-radius: 2rem;
-  }
-}
-@media (min-width: 900px) {
-  .section {
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 3rem !important;
-    background-color: rgba(252, 252, 252, 0.55);
-    border-radius: 2rem;
-  }
-}
-@media (min-width: 768px) {
-  .section {
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 3rem !important;
-    background-color: rgba(252, 252, 252, 0.55);
-    border-radius: 2rem;
-  }
-}
-@media (min-width: 576px) {
-  .section {
-    width: 100%;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 3rem !important;
-    background-color: rgba(252, 252, 252, 0.55);
-    border-radius: 2rem;
-  }
-}
-@media (min-width: 0px) {
-  .section {
-    width: 100%;
-    margin-left: 10%;
-    padding: 3rem !important;
-    background-color: rgba(252, 252, 252, 0.55);
-    border-radius: 2rem;
-  }
-}
-div {
-  display: block;
-}
-/* .section {
+<style lang="scss" scoped>
+section {
+  position: relative;
   width: 100%;
-  margin-left: 10%;
-  margin-right: 10%;
-  padding: 3rem !important;
+  height: 100vh;
+  padding: 3rem;
   background-color: rgba(252, 252, 252, 0.55);
   border-radius: 2rem;
-} */
-#about {
-  display: flex;
-  width: 100%;
-  background-color: rgba(252, 252, 252, 0.9);
+
+  h2 {
+    text-align: center;
+    color: #555;
+    font-family: ヒラギノ角ゴ ProN, W3;
+    font-size: 2rem;
+  }
+
+  h4 {
+    color: #444;
+    font-family: ten-mincho, serif;
+    font-size: 1.5rem;
+  }
+  p {
+    font-family: YuMincho, 'Yu Mincho', serif;
+    font-size: 20px;
+  }
 }
-.about_box {
-  /* position: relative; */
-  /* width: 100%; */
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-#about img {
-  width: 480px; /*960*/
-  height: 270px; /*540*/
-}
-h2 {
-  text-align: center;
-  color: #555;
-  font-family: ヒラギノ角ゴ ProN, W3;
-  font-size: 2rem;
-}
-h4 {
-  color: #444;
-  font-family: ten-mincho, serif;
-  font-size: 1.5rem;
-}
-p {
-  font-family: YuMincho, 'Yu Mincho', serif;
-  font-size: 20px;
-}
+
 </style>
