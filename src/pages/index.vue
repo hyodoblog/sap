@@ -27,10 +27,10 @@ export default class extends Vue {}
 </script>
 
 <style>
-.index{
+.index {
   background-color: gold;
 }
-#about{
+#about {
   padding: 3rem;
 }
 #home {
