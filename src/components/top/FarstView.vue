@@ -32,6 +32,7 @@ section {
     left: 50%;
     transform: translate(-50%);
     white-space: nowrap;
+    font-size: 3rem;
   }
 }
 </style>

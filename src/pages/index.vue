@@ -1,11 +1,13 @@
 <template lang="pug">
-  v-app
-    div.index
-      FarstView
+  v-app.index
+      div#farst
+        FarstView
       div#about
         About
-      Service
-      History
+      div#service
+        Service
+      div#history
+        History
 </template>
 
 <script>
@@ -26,67 +28,34 @@ import Service from '~/components/top/Service.vue'
 export default class extends Vue {}
 </script>
 
-<style>
+<style lang="scss" scoped>
 .index {
-  background-color: gold;
-}
-#about {
-  padding: 3rem;
-}
-#home {
-  width: 100%;
-  background-color: gold;
-}
-.top img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-h1 {
-  text-align: center;
-}
-.top img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.bluebox {
-  z-index: 0;
-  width: 200%;
-  height: 180px;
-  background-color: #3bb8eb;
-  transform: translate(-30%, 0) rotate(-20deg);
-}
-.greenbox {
-  z-index: 0;
-  width: 200%;
-  height: 180px;
-  margin-left: 0;
-  background-color: #aacd02;
-  transform: translate(-30%, 0) rotate(20deg);
-}
-.pinkbox {
-  z-index: 0;
-  width: 200%;
-  height: 180px;
-  margin: 0 auto;
-  background-color: #e45f9d;
-  transform: translate(-30%, 0) rotate(-20deg);
-}
-.about {
   position: relative;
-  width: 90%;
-  z-index: 1;
-  padding-top: 3rem !important;
-}
-.service {
-  position: relative;
-  z-index: 1;
-  padding-top: 3rem !important;
-}
-.history {
-  position: relative;
-  z-index: 1;
-  padding-top: 3rem !important;
+  background-color: white;
+
+  @media (min-width: 0px) {
+  }
+
+  #about {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  #service {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  #history {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
 }
 </style>
