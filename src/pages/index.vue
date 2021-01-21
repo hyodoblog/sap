@@ -31,6 +31,9 @@ export default class extends Vue {}
 <style lang="scss" scoped>
 .index {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: white;
 
   @media (min-width: 0px) {
@@ -38,23 +41,14 @@ export default class extends Vue {}
 
   #about {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 1rem;
   }
   #service {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 1rem;
   }
   #history {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 1rem;
   }
 }

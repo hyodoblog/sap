@@ -29,19 +29,22 @@ export default {
 <style lang="scss" scoped>
 section {
   position: relative;
-  height: 100vh;
 
   @media (min-width: 0px) {
-    width: 100%;
+    width: 500px;
+    height: 800px;
   }
   @media (min-width: 600px) {
     width: 600px;
+    height: 800px;
   }
   @media (min-width: 960px) {
     width: 1100px;
+    height: 500px;
   }
   @media (min-width: 1264px) {
     width: 1100px;
+    height: 500px;
   }
 
   .box {
