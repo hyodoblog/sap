@@ -32,19 +32,22 @@ export default {
 <style lang="scss" scoped>
 section {
   position: relative;
-  height: 100vh;
 
   @media (min-width: 0px) {
-    width: 100%;
+    width: 500px;
+    height: 1300px;
   }
   @media (min-width: 600px) {
     width: 600px;
+    height: 1200px;
   }
   @media (min-width: 960px) {
     width: 1100px;
+    height: 600px;
   }
   @media (min-width: 1264px) {
     width: 1100px;
+    height: 600px;
   }
 
   .service {
@@ -55,8 +58,8 @@ section {
     border-radius: 2rem;
 
     img {
-      width: 100%;
-      object-fit: cover;
+      width: 200px;
+      height: 200px;
     }
     h2 {
       text-align: center;
@@ -66,11 +69,13 @@ section {
       padding-bottom: 2rem;
     }
     h4 {
+      text-align: center;
       color: #444;
       font-family: ten-mincho, serif;
       font-size: 1.5rem;
     }
     p {
+      text-align: center;
       font-family: YuMincho, 'Yu Mincho', serif;
       font-size: 20px;
     }
