@@ -8,7 +8,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class extends Vue {}
+export default class FarstViewComponent extends Vue {}
 </script>
 
 <style lang="scss" scoped>
@@ -33,6 +33,7 @@ section {
     transform: translate(-50%);
     white-space: nowrap;
     font-size: 3rem;
+    color: rgba(10, 10, 10, 0.45);
   }
 }
 </style>

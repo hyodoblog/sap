@@ -21,10 +21,11 @@
             | 「研究室マッチングシステム」です。
 </template>
 
-<script>
-export default {
-  data: () => ({}),
-}
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class TopAboutComponent extends Vue {}
 </script>
 
 <style lang="scss" scoped>

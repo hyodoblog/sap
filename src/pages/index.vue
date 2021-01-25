@@ -25,7 +25,7 @@ import Service from '~/components/top/Service.vue'
     History,
   },
 })
-export default class extends Vue {}
+export default class IndexPage extends Vue {}
 </script>
 
 <style lang="scss" scoped>
