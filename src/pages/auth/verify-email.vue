@@ -1,12 +1,12 @@
 <template lang="pug">
-  v-app
+  v-container(fluid)
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
-  middleware: 'auth',
+  layout: 'auth',
 })
-export default class AuthLayout extends Vue {}
+export default class AuthVerifyEmailPage extends Vue {}
 </script>

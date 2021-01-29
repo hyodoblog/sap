@@ -23,7 +23,7 @@ const config: NuxtConfig = {
     FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID as string,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID as string,
   },
-  plugins: [],
+  plugins: ['~/plugins/api', '~/plugins/routes', '~/plugins/rules', '~/plugins/utils'],
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
   modules: ['@nuxtjs/axios'],
   axios: {},

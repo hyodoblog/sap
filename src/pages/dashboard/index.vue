@@ -1,12 +1,12 @@
 <template lang="pug">
-  v-app
+  v-container(fluid)
 </template>
 
 <script>
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
-  layout: 'auth',
+  layout: 'dashboard',
 })
 export default class DashboardPage extends Vue {}
 </script>
