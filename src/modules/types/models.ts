@@ -23,12 +23,13 @@ export interface User extends Base {
   email: string
   nichName: string
   description: string
-  gendar: Gender
+  gender: Gender
 }
 
 // *******************
-// /users/apps
+// /apps
 export interface App extends Base {
+  userUid: string
   name: string
   description: string
   startAt: firebase.firestore.Timestamp
@@ -37,21 +38,21 @@ export interface App extends Base {
 }
 
 // *******************
-// /users/apps/group
+// /apps/group
 export interface Group extends Base {
   name: string
   description: string
 }
 
 // ****************************
-// /users/apps/chats
-export interface Chats extends Base {
+// /apps/chats
+export interface Chat extends Base {
   userUid: string
   content: string
 }
 
 // ****************************
-// /users/apps/participateUsers
+// /apps/participateUsers
 // uidはuserUid
 export interface ParticipateUser extends Base {
   groupUid: string

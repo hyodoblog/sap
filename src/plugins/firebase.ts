@@ -2,11 +2,11 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 // import { AuthHandler } from '~/modules/handlers/fire/auth'
-// import { StoreHandler } from '~/modules/handlers/fire/store'
+import { StoreHandler } from '~/modules/handlers/fire/store'
 
 export interface FirebaseApi {
   // auth: AuthHandler
-  // store: StoreHandler
+  store: StoreHandler
 }
 
 export default function (_: any, inject: (arg0: string, arg1: FirebaseApi) => void) {
@@ -28,7 +28,7 @@ export default function (_: any, inject: (arg0: string, arg1: FirebaseApi) => vo
 
     const fire: FirebaseApi = {
       // auth: new AuthHandler(firebase.auth()),
-      // store: new StoreHandler(firebase.firestore()),
+      store: new StoreHandler(firebase.firestore()),
     }
 
     inject('fire', fire)
