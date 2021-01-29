@@ -50,7 +50,7 @@
       nuxt-link.font-weight-bold(:to="$routes.front.signup") ここで作成します
 </template>
 
-<script>
+<script lang="ts">
 /*
 |---------------------------------------------------------------------
 | Sign In Page Component
@@ -63,53 +63,53 @@ import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
   layout: 'auth',
-  data() {
-    return {
-      // sign in buttons
-      isLoading: false,
-      isSignInDisabled: false,
-
-      // form
-      isFormValid: true,
-      email: '',
-      password: '',
-
-      // form error
-      error: false,
-      errorMessages: '',
-
-      errorProvider: false,
-      errorProviderMessages: '',
-
-      // show password field
-      showPassword: false,
-
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required',
-      },
-    }
-  },
-  methods: {
-    submit() {
-      if (this.$refs.form.validate()) {
-        this.isLoading = true
-        this.isSignInDisabled = true
-        this.signIn(this.email, this.password)
-      }
-    },
-    signIn(email, password) {
-      this.$router.push('/')
-    },
-    signInProvider(provider) {},
-    resetErrors() {
-      this.error = false
-      this.errorMessages = ''
-
-      this.errorProvider = false
-      this.errorProviderMessages = ''
-    },
-  },
 })
-export default class AuthSigninPage extends Vue {}
+export default class AuthSigninPage extends Vue {
+  // sign in buttons
+  isLoading = false
+  isSignInDisabled = false
+
+  // form
+  isFormValid = true
+  email = ''
+  password = ''
+
+  // form error
+  error = false
+  errorMessages = ''
+
+  errorProvider = false
+  errorProviderMessages = ''
+
+  // show password field
+  showPassword = false
+
+  // input rules
+  rules = {
+    required: (value: any) => (value && Boolean(value)) || '入力してください',
+  }
+
+  submit() {
+    // @ts-ignore
+    if (this.$refs.form.validate()) {
+      this.isLoading = true
+      this.isSignInDisabled = true
+      this.signIn(this.email, this.password)
+    }
+  }
+
+  signIn(email: string, password: string) {
+    console.log(email)
+    console.log(password)
+    this.$router.push('/')
+  }
+
+  resetErrors() {
+    this.error = false
+    this.errorMessages = ''
+
+    this.errorProvider = false
+    this.errorProviderMessages = ''
+  }
+}
 </script>

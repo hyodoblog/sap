@@ -81,71 +81,61 @@ import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
   layout: 'auth',
-  data() {
-    return {
-      // sign up buttons
-      isLoading: false,
-      isSignUpDisabled: false,
+})
+export default class AuthSignupPage extends Vue {
+  // sign up buttons
+  isLoading = false
+  isSignUpDisabled = false
 
-      // form
-      isFormValid: true,
-      email: '',
-      password: '',
-      name: '',
+  // form
+  isFormValid = true
+  email = ''
+  password = ''
+  name = ''
 
-      // form error
-      errorName: false,
-      errorEmail: false,
-      errorPassword: false,
-      errorNameMessage: '',
-      errorEmailMessage: '',
-      errorPasswordMessage: '',
+  // form error
+  errorName = false
+  errorEmail = false
+  errorPassword = false
+  errorNameMessage = ''
+  errorEmailMessage = ''
+  errorPasswordMessage = ''
 
-      errorProvider: false,
-      errorProviderMessages: '',
+  errorProvider = false
+  errorProviderMessages = ''
 
-      // show password field
-      showPassword: false,
+  // show password field
+  showPassword = false
 
-      // external providers
-      providers: [{
-        id: 'google',
-        label: 'Google',
-        isLoading: false
-      }, {
-        id: 'facebook',
-        label: 'Facebook',
-        isLoading: false
-      }],
+  // input rules
+  rules = {
+    required: (value: any) => (value && Boolean(value)) || '入力してください',
+  }
 
-      // input rules
-      rules: {
-        required: (value) => (value && Boolean(value)) || 'Required'
-      }
-    }
-  },
-  methods: {
-    submit() {
-      if (this.$refs.form.validate()) {
-        this.isLoading = true
-        this.isSignUpDisabled = true
-        this.signUp(this.email, this.password)
-      }
-    },
-    signUp(email, password) {},
-    signInProvider(provider) {},
-    resetErrors() {
-      this.errorName = false
-      this.errorEmail = false
-      this.errorPassword = false
-      this.errorNameMessage = ''
-      this.errorEmailMessage = ''
-      this.errorPasswordMessage = ''
-
-      this.errorProvider = false
-      this.errorProviderMessages = ''
+  submit() {
+    // @ts-ignore
+    if (this.$refs.form.validate()) {
+      this.isLoading = true
+      this.isSignUpDisabled = true
+      this.signUp(this.email, this.password)
     }
   }
-})
-export default class AuthSignupPage extends Vue {}
+
+  signUp(email: string, password: string) {
+    console.log(email)
+    console.log(password)
+  }
+
+  resetErrors() {
+    this.errorName = false
+    this.errorEmail = false
+    this.errorPassword = false
+    this.errorNameMessage = ''
+    this.errorEmailMessage = ''
+    this.errorPasswordMessage = ''
+
+    this.errorProvider = false
+    this.errorProviderMessages = ''
+  }
+}
 </script>
