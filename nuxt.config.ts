@@ -14,7 +14,7 @@ const config: NuxtConfig = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-  css: ['~/assets/styles/common.scss'],
+  css: ['~/assets/styles/theme.scss'],
   env: {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY as string,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN as string,
@@ -28,7 +28,7 @@ const config: NuxtConfig = {
   modules: ['@nuxtjs/axios'],
   axios: {},
   vuetify: {
-    customVariables: ['~/assets/styles/variables.scss'],
+    customVariables: ['~/assets/styles/vuetify/variables/_index.scss'],
     treeShake: true,
   },
   build: {},
