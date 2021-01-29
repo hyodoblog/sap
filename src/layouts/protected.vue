@@ -68,7 +68,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
-  middleware: 'dashboard',
+  middleware: 'protected',
 })
 export default class AuthLayout extends Vue {
   cards = ['Today', 'Yesterday']

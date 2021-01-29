@@ -1,16 +1,32 @@
 <template lang="pug">
-  v-app.index
-      div#farst
+  v-main
+    v-app-bar(flat height="80")
+      v-container.py-0.px-0.px-sm-2.fill-height(fluid)
+        nuxt-link.d-flex.align-center.text-decoration-none.mr-2(to="/dashboard/analytics")
+          img(:src="require('@/assets/imgs/header-logo.png')" height="36")
+
+        v-spacer
+
+        .d-none.d-md-block
+          v-btn(text to="#about") SAPとは
+          v-btn(text to="#service") 概要
+          v-btn(text to="#history") 歴史
+          v-btn(text class="mx-1" to="/auth/signin") サインイン
+
+        v-btn(outlined large to="/auth/signup") サインアップ
+
+    .index
+      #farst
         FarstView
-      div#about
+      #about
         About
-      div#service
+      #service
         Service
-      div#history
+      #history
         History
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import FarstView from '~/components/top/FarstView.vue'
 import About from '~/components/top/About.vue'
@@ -30,20 +46,14 @@ export default class IndexPage extends Vue {}
 
 <style lang="scss" scoped>
 .index {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: white;
-
-  @media (min-width: 0px) {
-  }
 
   #about {
     position: relative;
     padding: 1rem;
   }
   #service {
+    text-align: center;
     position: relative;
     padding: 1rem;
   }

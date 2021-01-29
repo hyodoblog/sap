@@ -1,11 +1,12 @@
 <template lang="pug">
-  v-app
-    nuxt
+  v-container(fluid)
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 
-@Component
-export default class DefaultLayout extends Vue {}
+@Component({
+  layout: 'protected',
+})
+export default class AppsPage extends Vue {}
 </script>
