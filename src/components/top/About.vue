@@ -87,13 +87,29 @@ section {
   }
 
   .box {
+    overflow: hidden;
+    margin-top: 100px;
     position: absolute;
     z-index: 0;
-    width: 200%;
-    height: 30%;
     background-color: #3bb8eb;
-    transform: translate(-25%, 50%) rotate(-20deg);
-    // margin: 0 auto;
+    width: 200%;
+    height: 180px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-50deg);
+
+    @media (min-width: 600px) {
+      transform: translate(-50%, -50%) rotate(-40deg);
+      height: 240px;
+    }
+    @media (min-width: 960px) {
+      transform: translate(-50%, -50%) rotate(-30deg);
+      height: 270px;
+    }
+    @media (min-width: 1264px) {
+      transform: translate(-50%, -50%) rotate(-20deg);
+      height: 300px;
+    }
   }
 }
 </style>

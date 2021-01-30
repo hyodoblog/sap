@@ -33,6 +33,10 @@ export default {
 section {
   position: relative;
 
+  img {
+    width: 100%;
+  }
+
   @media (min-width: 0px) {
     width: 500px;
     height: 1300px;
@@ -58,7 +62,7 @@ section {
     border-radius: 2rem;
 
     img {
-      width: 200px;
+      max-width: 200px;
       height: 200px;
     }
     h2 {
@@ -82,12 +86,28 @@ section {
   }
 
   .box {
-    position: absolute;
+    overflow: hidden;
     z-index: 0;
-    width: 200%;
-    height: 30%;
     background-color: #aacd02;
-    transform: translate(-25%, 50%) rotate(20deg);
+    position: absolute;
+    width: 200%;
+    height: 180px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0) rotate(50deg);
+
+    @media (min-width: 600px) {
+      transform: translate(-50%, -50%) rotate(40deg);
+      height: 240px;
+    }
+    @media (min-width: 960px) {
+      transform: translate(-50%, -50%) rotate(30deg);
+      height: 270px;
+    }
+    @media (min-width: 1264px) {
+      transform: translate(-50%, -50%) rotate(20deg);
+      height: 300;
+    }
   }
 }
 </style>
