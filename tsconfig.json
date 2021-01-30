@@ -25,6 +25,7 @@
       ]
     },
     "types": [
+      "./src/modules/types",
       "@types/node",
       "@nuxt/types"
     ]

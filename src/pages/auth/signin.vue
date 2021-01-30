@@ -15,7 +15,6 @@
             label="Eメール"
             name="email"
             outlined
-            @keyup.enter="submit"
             @change="resetErrors"
           )
 
@@ -90,18 +89,33 @@ export default class AuthSigninPage extends Vue {
   }
 
   submit() {
-    // @ts-ignore
-    if (this.$refs.form.validate()) {
+    try {
+      // バリデーション
+      // @ts-ignore
+      if (!this.$refs.form.validate()) {
+        this.$store.dispatch('snackbar/error', '会員登録済みのメールアドレスです。')
+        return
+      }
+
+      // サインイン開始
+
       this.isLoading = true
       this.isSignInDisabled = true
+
       this.signIn(this.email, this.password)
+
+      this.$router.push(this.$routes.front.sapApps)
+    } catch {
+      this.$store.dispatch('snackbar/error', 'サインインに失敗しました。')
+    } finally {
+      this.isLoading = false
+      this.isSignInDisabled = false
     }
   }
 
-  signIn(email: string, password: string) {
-    console.log(email)
-    console.log(password)
-    this.$router.push('/')
+  async signIn(email: string, password: string) {
+    const user = await this.$fire.auth.signInWithEmailAndPassword(email, password)
+    await this.$store.dispatch('auth/init', { uid: user.uid })
   }
 
   resetErrors() {

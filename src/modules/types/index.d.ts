@@ -4,7 +4,7 @@ import { RoutesApi } from '~/plugins/routes'
 declare module 'vue/types/vue' {
   interface Vue {
     readonly $fire: FirebaseApi
-    readonly $rotues: RoutesApi
+    readonly $routes: RoutesApi
   }
 }
 
