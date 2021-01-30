@@ -29,43 +29,41 @@ const TIMEOUT = 10
 
 @Component({
   layout: 'auth',
-  data() {
-    return {
-      isLoading: false,
-      disabled: true,
-      times: 0,
-      resendInterval: null,
-      secondsToEnable: TIMEOUT,
-      seconds: '',
-    }
-  },
+})
+export default class AuthVerifyEmailPage extends Vue {
+  isLoading = false
+  disabled = true
+  times = 0
+  secondsToEnable = TIMEOUT
+  seconds = ''
+
   mounted() {
     this.setTimer()
-  },
-  beforeDestroy() {
-    clearInterval(this.resendInterval)
-  },
-  methods: {
-    async resend() {
-      this.setTimer()
-    },
-    setTimer() {
-      this.disabled = true
-      this.times++
-      this.secondsToEnable = TIMEOUT * this.times
+  }
 
-      this.resendInterval = setInterval(() => {
-        if (this.secondsToEnable === 0) {
-          clearInterval(this.resendInterval)
-          this.seconds = ''
-          this.disabled = false
-        } else {
-          this.seconds = `( ${this.secondsToEnable} )`
-          this.secondsToEnable--
-        }
-      }, 1000)
-    },
-  },
-})
-export default class AuthVerifyEmailPage extends Vue {}
+  beforeDestroy() {
+    clearInterval()
+  }
+
+  resend() {
+    this.setTimer()
+  }
+
+  setTimer() {
+    this.disabled = true
+    this.times++
+    this.secondsToEnable = TIMEOUT * this.times
+
+    setInterval(() => {
+      if (this.secondsToEnable === 0) {
+        clearInterval()
+        this.seconds = ''
+        this.disabled = false
+      } else {
+        this.seconds = `( ${this.secondsToEnable} )`
+        this.secondsToEnable--
+      }
+    }, 1000)
+  }
+}
 </script>

@@ -21,9 +21,7 @@ export enum Gender {
 }
 export interface User extends Base {
   email: string
-  nichName: string
-  description: string
-  gender: Gender
+  nickname: string
 }
 
 // *******************

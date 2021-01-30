@@ -10,6 +10,17 @@ export class AuthState {
   }
 }
 
+export class SnackbarState {
+  text: string
+  color: string
+
+  constructor() {
+    this.text = ''
+    this.color = ''
+  }
+}
+
 export interface RootState {
   auth?: AuthState
+  snackbar?: SnackbarState
 }

@@ -61,14 +61,17 @@
         </v-row>
       </v-container>
     </v-main>
+    <Snackbar />
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import Snackbar from '~/components/Snackbar.vue'
 
 @Component({
   middleware: 'protected',
+  components: { Snackbar },
 })
 export default class AuthLayout extends Vue {
   cards = ['Today', 'Yesterday']

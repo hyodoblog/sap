@@ -8,13 +8,16 @@ export class UserDb {
     this.usersRef = db.collection('users')
   }
 
-  private getInitData(): User {
+  private getInitData(nickname: string): User {
     return {
       email: '',
-      nichName: '',
-      description: '',
-      gender: Gender.OTHER,
+      nickname,
     }
+  }
+
+  public async isUserToEmail(email: string): Promise<boolean> {
+    const docs = await this.usersRef.where('email', '==', email).get()
+    return !docs.empty
   }
 
   public async getItem(uid: string): Promise<User | null> {
@@ -26,8 +29,8 @@ export class UserDb {
     }
   }
 
-  public async setInit(uid: string): Promise<User> {
-    const item = this.getInitData()
+  public async setInit(uid: string, nickname: string): Promise<User> {
+    const item = this.getInitData(nickname)
     await this.usersRef.doc(uid).set({
       ...item,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),

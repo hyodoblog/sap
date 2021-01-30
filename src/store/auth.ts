@@ -22,4 +22,20 @@ export const mutations: MutationTree<AuthState> = {
   },
 }
 
-export const actions: ActionTree<AuthState, RootState> = {}
+export const actions: ActionTree<AuthState, RootState> = {
+  async init({ commit }, { uid, nickname }) {
+    try {
+      const user = await this.$fire.store.user.getItem(uid)
+      if (user) {
+        commit('SET_USER', user)
+        commit('SET_USER_UID', uid)
+      } else {
+        const user = await this.$fire.store.user.setInit(uid, nickname)
+        commit('SET_USER', user)
+        commit('SET_USER_UID', uid)
+      }
+    } catch {
+      this.dispatch('snackbar/error', 'ユーザー情報の初期化に失敗しました。')
+    }
+  },
+}

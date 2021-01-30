@@ -8,7 +8,7 @@
       v-card-text
         v-form(ref="form" v-model="isFormValid" lazy-validation)
           v-text-field(
-            v-model="name"
+            v-model="nickname"
             :rules="[rules.required]"
             :validate-on-blur="false"
             :error="errorName"
@@ -78,6 +78,7 @@
 |
 */
 import { Component, Vue } from 'nuxt-property-decorator'
+import { User } from '~/modules/types/models'
 
 @Component({
   layout: 'auth',
@@ -91,7 +92,7 @@ export default class AuthSignupPage extends Vue {
   isFormValid = true
   email = ''
   password = ''
-  name = ''
+  nickname = ''
 
   // form error
   errorName = false
@@ -101,9 +102,6 @@ export default class AuthSignupPage extends Vue {
   errorEmailMessage = ''
   errorPasswordMessage = ''
 
-  errorProvider = false
-  errorProviderMessages = ''
-
   // show password field
   showPassword = false
 
@@ -112,18 +110,41 @@ export default class AuthSignupPage extends Vue {
     required: (value: any) => (value && Boolean(value)) || '入力してください',
   }
 
-  submit() {
-    // @ts-ignore
-    if (this.$refs.form.validate()) {
+  async submit() {
+    try {
+      // ユーザー情報を確認
+      const isUser = await this.$fire.store.user.isUserToEmail(this.email)
+      if (isUser) {
+        this.$store.dispatch('snackbar/error', '会員登録済みのメールアドレスです。')
+        return
+      }
+
+      // バリデーション
+      // @ts-ignore
+      if (!this.$refs.form.validate()) {
+        this.$store.dispatch('snackbar/error', '会員登録済みのメールアドレスです。')
+        return
+      }
+
+      // 登録開始
+
       this.isLoading = true
       this.isSignUpDisabled = true
-      this.signUp(this.email, this.password)
+
+      await this.signUp(this.email, this.password)
+
+      this.$router.push(this.$routes.front.sapApps)
+    } catch {
+      this.$store.dispatch('snackbar/error', 'サインアップに失敗しました。')
+    } finally {
+      this.isLoading = false
+      this.isSignUpDisabled = false
     }
   }
 
-  signUp(email: string, password: string) {
-    console.log(email)
-    console.log(password)
+  async signUp(email: string, password: string) {
+    const user = await this.$fire.auth.createUserWithEmailAndPassword(email, password)
+    await this.$store.dispatch('auth/init', { uid: user.uid, nickname: this.nickname })
   }
 
   resetErrors() {
@@ -133,9 +154,6 @@ export default class AuthSignupPage extends Vue {
     this.errorNameMessage = ''
     this.errorEmailMessage = ''
     this.errorPasswordMessage = ''
-
-    this.errorProvider = false
-    this.errorProviderMessages = ''
   }
 }
 </script>

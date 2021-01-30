@@ -12,13 +12,16 @@
         .layout-content.ma-auto.w-full
           nuxt
         .overline.mt-4 Build by Yusei Hyodo
+    Snackbar
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+const Snackbar = () => import('~/components/Snackbar.vue')
 
 @Component({
   middleware: 'auth',
+  components: { Snackbar },
 })
 export default class AuthLayout extends Vue {}
 </script>

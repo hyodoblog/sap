@@ -2,7 +2,10 @@ export default class {
   top = '/'
 
   // dashboard
-  dashboard = '/dashboard'
+  sapApps = '/sap-apps'
+  sapApp(sapUid: string) {
+    return `/sap-apps/${sapUid}`
+  }
 
   // auth
   signin = '/auth/signin'
