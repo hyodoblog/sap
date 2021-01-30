@@ -10,6 +10,14 @@ export class AuthState {
   }
 }
 
+export class IndexState {
+  drawer: boolean
+
+  constructor() {
+    this.drawer = false
+  }
+}
+
 export class SnackbarState {
   text: string
   color: string
@@ -22,5 +30,6 @@ export class SnackbarState {
 
 export interface RootState {
   auth?: AuthState
+  index?: IndexState
   snackbar?: SnackbarState
 }

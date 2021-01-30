@@ -2,6 +2,10 @@ import { NuxtConfig } from '@nuxt/types'
 import * as dotenv from 'dotenv'
 dotenv.config()
 
+const port = 3040
+
+const isDev = (): boolean => process.env.NODE_ENV === 'development'
+
 const config: NuxtConfig = {
   srcDir: 'src/',
   head: {
@@ -23,10 +27,16 @@ const config: NuxtConfig = {
     FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID as string,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID as string,
   },
+  server: {
+    port: isDev() ? port : process.env.PORT,
+  },
+  serverMiddleware: [{ path: '/api', handler: '~/server' }],
   plugins: ['~/plugins/api', '~/plugins/firebase', '~/plugins/routes', '~/plugins/rules', '~/plugins/utils'],
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
-  modules: ['@nuxtjs/axios'],
-  axios: {},
+  modules: ['@nuxtjs/axios', 'cookie-universal-nuxt'],
+  axios: {
+    baseURL: isDev() ? `http://localhost:${port}/api` : `https://admin.${process.env.AXIOS_BASE_URL_DOMAIN}/api`,
+  },
   vuetify: {
     customVariables: ['~/assets/styles/vuetify/variables/_index.scss'],
     treeShake: true,

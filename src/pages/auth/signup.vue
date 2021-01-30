@@ -144,6 +144,9 @@ export default class AuthSignupPage extends Vue {
 
   async signUp(email: string, password: string) {
     const user = await this.$fire.auth.createUserWithEmailAndPassword(email, password)
+    const headers = this.$fire.auth.getAuthHeaders()
+    const { token } = await this.$api.back.createCookie({ token: await user.getIdToken() }, headers)
+    this.$cookies.set('session', token)
     await this.$store.dispatch('auth/init', { uid: user.uid, nickname: this.nickname })
   }
 

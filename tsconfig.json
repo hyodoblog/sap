@@ -27,7 +27,10 @@
     "types": [
       "./src/modules/types",
       "@types/node",
-      "@nuxt/types"
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "cookie-universal-nuxt",
+      "vuetify"
     ]
   },
   "exclude": [

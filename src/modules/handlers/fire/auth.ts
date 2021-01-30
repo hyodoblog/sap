@@ -13,15 +13,21 @@ export class AuthHandler {
     return res.user.uid
   }
 
-  public async getIdToken(): Promise<string> {
+  private async getIdToken(): Promise<string> {
     const idToken = await this.auth.currentUser?.getIdToken()
     if (!idToken) throw Error
     return idToken
   }
 
+  public async getAuthHeaders(): Promise<any> {
+    const idToken = await this.getIdToken()
+    return {
+      Authorization: `Bearer ${idToken}`,
+    }
+  }
+
   public async createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.User> {
     const res = await this.auth.createUserWithEmailAndPassword(email, password)
-    console.log(res)
     if (!res.user) throw Error
     return res.user
   }
