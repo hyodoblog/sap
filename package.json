@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.1",
-    "@nuxtjs/axios": "^5.12.5",
+    "@nuxtjs/axios": "^5.13.0",
     "cookie-universal-nuxt": "^2.1.4",
     "cookieparser": "^0.1.0",
     "core-js": "^3.8.3",
