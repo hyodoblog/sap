@@ -8,12 +8,12 @@
     v-divider
 
     v-list
-      v-list-item(v-for="[icon, text] in links" :key="icon" link)
+      v-list-item(v-for="item in links" :key="item.text" link :to="item.link")
         v-list-item-icon
-          v-icon {{ icon }}
+          v-icon {{ item.icon }}
 
         v-list-item-content
-          v-list-item-title {{ text }}
+          v-list-item-title {{ item.text }}
 </template>
 
 <script lang="ts">
@@ -22,24 +22,16 @@ import { User } from '~/modules/types/models'
 
 @Component
 export default class CoreNavigationComponent extends Vue {
-  drawer = true
-
   get user(): User {
     return this.$store.state.auth.user
   }
 
+  drawer = null
   links = [
     {
-      icon: 'mdi-inbox-arrow-down',
-      text: 'Inbox',
-    },
-    {
-      icon: 'mdi-inbox-arrow-down',
-      text: 'Inbox',
-    },
-    {
-      icon: 'mdi-inbox-arrow-down',
-      text: 'Inbox',
+      icon: 'mdi-monitor-dashboard',
+      text: 'SAP一覧',
+      link: '/sap-apps',
     },
   ]
 }
