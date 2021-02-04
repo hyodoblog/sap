@@ -26,12 +26,21 @@ export class AuthHandler {
     }
   }
 
-  // public async sendSignInLinkToEmail(email: string): Promise<void> {
-  //   const actionCodeSettings: firebase.auth.ActionCodeSettings = {
-  //     url: '',
-  //   }
-  //   await this.auth.sendSignInLinkToEmail(email, actionCodeSettings)
-  // }
+  public async sendSignInLinkToEmail(email: string): Promise<void> {
+    const actionCodeSettings: firebase.auth.ActionCodeSettings = {
+      url: `${process.env.BASE_URL}/auth/signup`,
+      handleCodeInApp: true,
+    }
+    await this.auth.sendSignInLinkToEmail(email, actionCodeSettings)
+  }
+
+  public getOnAuthStateChanged(): Promise<void> {
+    return new Promise((resolve) =>
+      this.auth.onAuthStateChanged(() => {
+        resolve()
+      })
+    )
+  }
 
   public async createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.User> {
     const res = await this.auth.createUserWithEmailAndPassword(email, password)
@@ -62,6 +71,10 @@ export class AuthHandler {
   }
 
   // auth
+
+  public currentUser(): firebase.User | null {
+    return this.auth.currentUser
+  }
 
   public isEmailVerified(): boolean {
     if (!this.auth.currentUser) throw new Error('not auth.')

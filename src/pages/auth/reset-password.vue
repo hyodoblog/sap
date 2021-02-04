@@ -39,7 +39,6 @@ import { Middleware } from '@nuxt/types'
 const middleware: Middleware = ({ route }) => {
   const { code } = route.query
   // if (!code)
-  console.log(code)
 }
 
 @Component({

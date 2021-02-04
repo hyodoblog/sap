@@ -4,7 +4,7 @@ dotenv.config()
 
 const port = 3040
 
-const isDev = (): boolean => process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development'
 
 const config: NuxtConfig = {
   srcDir: 'src/',
@@ -26,16 +26,17 @@ const config: NuxtConfig = {
     FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET as string,
     FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID as string,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID as string,
+    BASE_URL: isDev ? `http://localhost:${port}` : (process.env.BASE_URL as string),
   },
   server: {
-    port: isDev() ? port : process.env.PORT,
+    port: isDev ? port : process.env.PORT,
   },
   serverMiddleware: [{ path: '/api', handler: '~/server' }],
   plugins: ['~/plugins/api', '~/plugins/firebase', '~/plugins/routes', '~/plugins/rules', '~/plugins/utils'],
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
   modules: ['@nuxtjs/axios', 'cookie-universal-nuxt'],
   axios: {
-    baseURL: isDev() ? `http://localhost:${port}/api` : `https://admin.${process.env.AXIOS_BASE_URL_DOMAIN}/api`,
+    baseURL: isDev ? `http://localhost:${port}/api` : `${process.env.BASE_URL}/api`,
   },
   vuetify: {
     customVariables: ['~/assets/styles/vuetify/variables/_index.scss'],

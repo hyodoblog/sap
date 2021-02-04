@@ -15,14 +15,6 @@
 </template>
 
 <script lang="ts">
-/*
-|---------------------------------------------------------------------
-| Verify Email Page Component
-|---------------------------------------------------------------------
-|
-| Template to wait for the verification on the user email
-|
-*/
 import { Component, Vue } from 'nuxt-property-decorator'
 
 const TIMEOUT = 10
