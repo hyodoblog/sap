@@ -1,4 +1,12 @@
-import { User } from './models'
+import { App, User } from './models'
+
+export class AppState {
+  items: App[]
+
+  constructor() {
+    this.items = []
+  }
+}
 
 export class AuthState {
   userUid: string | null

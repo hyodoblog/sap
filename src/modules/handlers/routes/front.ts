@@ -3,9 +3,8 @@ export default class {
 
   // dashboard
   sapApps = '/sap-apps'
-  sapApp(sapUid: string) {
-    return `/sap-apps/${sapUid}`
-  }
+  sapApp = (sapUid: string) => `/sap-apps/${sapUid}`
+  sapAppNew = '/sap-apps/new'
 
   // auth
   signin = '/auth/signin'

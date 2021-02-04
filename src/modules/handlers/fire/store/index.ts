@@ -30,4 +30,11 @@ export class StoreHandler {
     const date = at.toDate()
     return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
   }
+
+  public getConvertTimeJa(timestamp: firebase.firestore.Timestamp): string {
+    const date = timestamp.toDate()
+    return `${date.getMonth() + 1}月${date.getDate()}日 ${`0${date.getHours()}`.slice(
+      -2
+    )}時${`0${date.getMinutes()}`.slice(-2)}}分`
+  }
 }

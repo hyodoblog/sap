@@ -14,11 +14,6 @@ interface Base {
 
 // *******************
 // /users
-export enum Gender {
-  MALE = 1,
-  FEMALE = 2,
-  OTHER = 3,
-}
 export interface User extends Base {
   email: string
   nickname: string
@@ -28,6 +23,7 @@ export interface User extends Base {
 // /apps
 export interface App extends Base {
   userUid: string
+  iconPath: string
   name: string
   description: string
   startAt: firebase.firestore.Timestamp
@@ -53,6 +49,7 @@ export interface Chat extends Base {
 // /apps/participateUsers
 // uidはuserUid
 export interface ParticipateUser extends Base {
+  userUid: string // 検索用
   groupUid: string
   hopeUserUidItems: string[]
 }
