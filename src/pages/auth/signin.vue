@@ -88,7 +88,7 @@ export default class AuthSigninPage extends Vue {
     required: (value: any) => (value && Boolean(value)) || '入力してください',
   }
 
-  submit() {
+  async submit() {
     try {
       // バリデーション
       // @ts-ignore
@@ -102,7 +102,7 @@ export default class AuthSigninPage extends Vue {
       this.isLoading = true
       this.isSignInDisabled = true
 
-      this.signIn(this.email, this.password)
+      await this.signIn(this.email, this.password)
 
       this.$router.push(this.$routes.front.sapApps)
     } catch {

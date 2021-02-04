@@ -33,18 +33,18 @@
 </template>
 
 <script lang="ts">
-/*
-|---------------------------------------------------------------------
-| Reset Page Component
-|---------------------------------------------------------------------
-|
-| Page Form to insert new password and proceed to sign in
-|
-*/
 import { Component, Vue } from 'nuxt-property-decorator'
+import { Middleware } from '@nuxt/types'
+
+const middleware: Middleware = ({ route }) => {
+  const { code } = route.query
+  // if (!code)
+  console.log(code)
+}
 
 @Component({
   layout: 'auth',
+  middleware,
 })
 export default class AuthResetPasswordPage extends Vue {
   isLoading = false

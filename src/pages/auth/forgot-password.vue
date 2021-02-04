@@ -8,7 +8,7 @@
         v-form(ref="form" v-model="isFormValid" lazy-validation @submit.prevent="submit")
           v-text-field(
             v-model="email"
-            :rules="[rules.required]"
+            :rules="rules.email"
             :validate-on-blur="false"
             :error="error"
             :error-messages="errorMessages"
@@ -32,14 +32,6 @@
 </template>
 
 <script lang="ts">
-/*
-|---------------------------------------------------------------------
-| Forgot Page Component
-|---------------------------------------------------------------------
-|
-| Template to send email to remember/replace password
-|
-*/
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
@@ -59,20 +51,25 @@ export default class AuthForgotPasswordPage extends Vue {
 
   // input rules
   rules = {
-    required: (value: any) => (value && Boolean(value)) || 'Required',
+    email: [
+      (value: any) => (value && Boolean(value)) || 'Required',
+      (v: any) => /.+@.+\..+/.test(v) || 'メールアドレス形式で入力してください',
+    ],
   }
 
-  submit(e: any) {
-    console.log(e)
+  submit() {
     // @ts-ignore
     if (this.$refs.form.validate()) {
-      console.log('submit')
+      this.isLoading = true
+      this.resetEmail(this.email).finally(() => {
+        this.$store.dispatch('snackbar/success', '登録済みの場合、メールアドレスにリセットリンクを送信しました。')
+        this.isLoading = false
+      })
     }
   }
 
-  resetEmail(email: string, password: string) {
-    console.log(email)
-    console.log(password)
+  async resetEmail(email: string) {
+    await this.$fire.auth.verifyPasswordResetCode(email)
   }
 
   resetErrors() {

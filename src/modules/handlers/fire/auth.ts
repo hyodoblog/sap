@@ -26,6 +26,13 @@ export class AuthHandler {
     }
   }
 
+  // public async sendSignInLinkToEmail(email: string): Promise<void> {
+  //   const actionCodeSettings: firebase.auth.ActionCodeSettings = {
+  //     url: '',
+  //   }
+  //   await this.auth.sendSignInLinkToEmail(email, actionCodeSettings)
+  // }
+
   public async createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.User> {
     const res = await this.auth.createUserWithEmailAndPassword(email, password)
     if (!res.user) throw Error
@@ -42,7 +49,27 @@ export class AuthHandler {
     await this.auth.signOut()
   }
 
-  public async forgetPassword(email: string): Promise<void> {
+  public async sendPasswordResetEmail(email: string): Promise<void> {
     await this.auth.sendPasswordResetEmail(email)
+  }
+
+  public async verifyPasswordResetCode(code: string): Promise<void> {
+    await this.auth.verifyPasswordResetCode(code)
+  }
+
+  public async isSignInWithEmailLink(): Promise<void> {
+    await this.auth.isSignInWithEmailLink(window.location.href)
+  }
+
+  // auth
+
+  public isEmailVerified(): boolean {
+    if (!this.auth.currentUser) throw new Error('not auth.')
+    return this.auth.currentUser.emailVerified
+  }
+
+  public async sendEmailVerification(): Promise<void> {
+    if (!this.auth.currentUser) throw new Error('not auth.')
+    await this.auth.currentUser.sendEmailVerification()
   }
 }

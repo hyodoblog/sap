@@ -69,16 +69,7 @@
 </template>
 
 <script lang="ts">
-/*
-|---------------------------------------------------------------------
-| Sign Up Page Component
-|---------------------------------------------------------------------
-|
-| Template for user sign up with external providers buttons
-|
-*/
 import { Component, Vue } from 'nuxt-property-decorator'
-import { User } from '~/modules/types/models'
 
 @Component({
   layout: 'auth',
@@ -112,16 +103,13 @@ export default class AuthSignupPage extends Vue {
 
   async submit() {
     try {
+      // バリデーション
+      // @ts-ignore
+      if (!this.$refs.form.validate()) return
+
       // ユーザー情報を確認
       const isUser = await this.$fire.store.user.isUserToEmail(this.email)
       if (isUser) {
-        this.$store.dispatch('snackbar/error', '会員登録済みのメールアドレスです。')
-        return
-      }
-
-      // バリデーション
-      // @ts-ignore
-      if (!this.$refs.form.validate()) {
         this.$store.dispatch('snackbar/error', '会員登録済みのメールアドレスです。')
         return
       }
