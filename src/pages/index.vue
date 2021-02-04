@@ -7,13 +7,16 @@
 
         v-spacer
 
-        .d-none.d-md-block
-          v-btn(text to="#about") SAPとは
-          v-btn(text to="#service") 概要
-          v-btn(text to="#history") 歴史
-          v-btn(text class="mx-1" to="/auth/signin") サインイン
+        template(v-if="isAuthenticated")
+          v-btn(outlined large :to="$routes.front.sapApps") SAPリスト
+        template(v-else)
+          .d-none.d-md-block
+            v-btn(text to="#about") SAPとは
+            v-btn(text to="#service") 概要
+            v-btn(text to="#history") 歴史
+            v-btn(text class="mx-1" :to="$routes.front.signin") サインイン
 
-        v-btn(outlined large to="/auth/signup") サインアップ
+          v-btn(outlined large :to="$routes.front.signup") サインアップ
 
     .index
       #farst
@@ -41,7 +44,11 @@ import Service from '~/components/top/Service.vue'
     History,
   },
 })
-export default class IndexPage extends Vue {}
+export default class IndexPage extends Vue {
+  get isAuthenticated(): boolean {
+    return this.$store.getters['auth/isAuthenticated']
+  }
+}
 </script>
 
 <style lang="scss" scoped>
