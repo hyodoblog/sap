@@ -23,14 +23,14 @@ export const mutations: MutationTree<AuthState> = {
 }
 
 export const actions: ActionTree<AuthState, RootState> = {
-  async init({ commit }, { uid, nickname }) {
+  async init({ commit }, { uid, nickname, email }) {
     try {
       const user = await this.$fire.store.user.getItem(uid)
       if (user) {
         commit('SET_USER', user)
         commit('SET_USER_UID', uid)
       } else {
-        const user = await this.$fire.store.user.setInit(uid, nickname)
+        const user = await this.$fire.store.user.setInit(uid, nickname, email)
         commit('SET_USER', user)
         commit('SET_USER_UID', uid)
       }

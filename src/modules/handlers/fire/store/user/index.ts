@@ -8,9 +8,9 @@ export class UserDb {
     this.usersRef = db.collection('users')
   }
 
-  private getInitData(nickname: string): User {
+  private getInitData(nickname: string, email: string): User {
     return {
-      email: '',
+      email,
       nickname,
     }
   }
@@ -29,8 +29,8 @@ export class UserDb {
     }
   }
 
-  public async setInit(uid: string, nickname: string): Promise<User> {
-    const item = this.getInitData(nickname)
+  public async setInit(uid: string, nickname: string, email: string): Promise<User> {
+    const item = this.getInitData(nickname, email)
     await this.usersRef.doc(uid).set({
       ...item,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),

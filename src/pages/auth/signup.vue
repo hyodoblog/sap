@@ -122,7 +122,7 @@ export default class AuthSignupPage extends Vue {
       await this.signUp(this.email, this.password)
 
       this.$router.push(this.$routes.front.sapApps)
-      this.$store.dispatch('snackbar/error', 'サインアップが完了しました。')
+      this.$store.dispatch('snackbar/success', 'サインアップが完了しました。')
     } catch {
       this.$store.dispatch('snackbar/error', 'サインアップに失敗しました。')
     } finally {
@@ -136,7 +136,7 @@ export default class AuthSignupPage extends Vue {
     const headers = await this.$fire.auth.getAuthHeaders()
     const { token } = await this.$api.back.createCookie({ token: await user.getIdToken() }, headers)
     this.$cookies.set('session', token)
-    await this.$store.dispatch('auth/init', { uid: user.uid, nickname: this.nickname })
+    await this.$store.dispatch('auth/init', { uid: user.uid, nickname: this.nickname, email: this.email })
   }
 
   resetErrors() {
