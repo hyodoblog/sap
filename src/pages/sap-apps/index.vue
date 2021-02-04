@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 const BaseVComponent = () => import('~/components/base/BaseVComponent.vue')
-const SapAppsTable = () => import('~/components/page/sap-apps/table.vue')
+const SapAppsTable = () => import('~/components/page/sap-apps/Table.vue')
 
 @Component({
   layout: 'protected',

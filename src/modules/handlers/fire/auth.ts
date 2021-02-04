@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 
-export class AuthHandler {
+export class AuthFire {
   private auth: firebase.auth.Auth
 
   constructor(auth: firebase.auth.Auth) {

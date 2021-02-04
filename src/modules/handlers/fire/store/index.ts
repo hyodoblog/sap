@@ -1,22 +1,26 @@
 import firebase from 'firebase/app'
-import { AppDb } from './app'
-import { ChatDb } from './app/chat'
-import { GroupDb } from './app/group'
-import { ParticipateUserDb } from './app/participate-user'
+import { ChatDb } from './sap-app/chat'
+import { GroupDb } from './sap-app/group'
+import { ParticipateUserDb } from './sap-app/participate-user'
+import { SapAppDb } from './sap-app'
 import { UserDb } from './user'
 
-export class StoreHandler {
+export class StoreFire {
   public user: UserDb
-  public app: AppDb
   public group: GroupDb
   public participateUser: ParticipateUserDb
   public chat: ChatDb
+  public sapApp: SapAppDb
   public db: firebase.firestore.Firestore
 
   constructor(db: firebase.firestore.Firestore) {
     this.db = db
+
+    // users
     this.user = new UserDb(db)
-    this.app = new AppDb(db)
+
+    // sapApps
+    this.sapApp = new SapAppDb(db)
     this.group = new GroupDb(db)
     this.participateUser = new ParticipateUserDb(db)
     this.chat = new ChatDb(db)
@@ -36,5 +40,13 @@ export class StoreHandler {
     return `${date.getMonth() + 1}月${date.getDate()}日 ${`0${date.getHours()}`.slice(
       -2
     )}時${`0${date.getMinutes()}`.slice(-2)}}分`
+  }
+
+  public convertTimestamp(date: Date | number): firebase.firestore.Timestamp {
+    if (typeof date === 'object') {
+      return firebase.firestore.Timestamp.fromDate(date)
+    } else {
+      return firebase.firestore.Timestamp.fromMillis(date)
+    }
   }
 }

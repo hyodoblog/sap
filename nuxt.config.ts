@@ -32,7 +32,7 @@ const config: NuxtConfig = {
     port: isDev ? port : process.env.PORT,
   },
   serverMiddleware: [{ path: '/api', handler: '~/server' }],
-  plugins: ['~/plugins/api', '~/plugins/firebase', '~/plugins/routes', '~/plugins/rules', '~/plugins/utils'],
+  plugins: ['~/plugins/api', '~/plugins/firebase', '~/plugins/routes', '~/plugins/form-rules', '~/plugins/utils'],
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
   modules: ['@nuxtjs/axios', 'cookie-universal-nuxt'],
   axios: {

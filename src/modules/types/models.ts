@@ -20,8 +20,8 @@ export interface User extends Base {
 }
 
 // *******************
-// /apps
-export interface App extends Base {
+// /sapApps
+export interface SapApp extends Base {
   userUid: string
   iconPath: string
   name: string

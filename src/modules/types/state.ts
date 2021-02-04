@@ -1,12 +1,4 @@
-import { App, User } from './models'
-
-export class AppState {
-  items: App[]
-
-  constructor() {
-    this.items = []
-  }
-}
+import { SapApp, User } from './models'
 
 export class AuthState {
   userUid: string | null
@@ -26,6 +18,14 @@ export class IndexState {
   }
 }
 
+export class SapAppState {
+  items: SapApp[]
+
+  constructor() {
+    this.items = []
+  }
+}
+
 export class SnackbarState {
   text: string
   color: string
@@ -39,5 +39,6 @@ export class SnackbarState {
 export interface RootState {
   auth?: AuthState
   index?: IndexState
+  sapApp?: SapAppState
   snackbar?: SnackbarState
 }

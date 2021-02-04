@@ -1,7 +1,12 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import BackRoutesHandler from '../routes/back'
 import { AxiosApi } from './axios'
-import { ApiCreateCookieReqParams, ApiCreateCookieResParams, ApiVerifyCookieReqParams } from '~/modules/types/api'
+import {
+  ApiCreateCookieReqParams,
+  ApiCreateCookieResParams,
+  ApiCreateSapAppReqParams,
+  ApiVerifyCookieReqParams,
+} from '~/modules/types/api'
 
 export class BackApi extends AxiosApi {
   private backRoutes: BackRoutesHandler
@@ -21,5 +26,11 @@ export class BackApi extends AxiosApi {
 
   public async verifyCookie(params: ApiVerifyCookieReqParams): Promise<void> {
     await this.axios.post(this.backRoutes.verifyCookie, params)
+  }
+
+  // sap
+
+  public async createSapApp(params: ApiCreateSapAppReqParams, headers: any) {
+    await this.axios.post(this.backRoutes.createSapApp, params, { headers })
   }
 }
