@@ -24,7 +24,7 @@
       v-card.pa-4
         VueCropper(
           ref="cropper"
-          :aspect-ratio="1/1"
+          :aspect-ratio="maxWidth/maxHeight"
           :src="beforeImgDataURL"
           :guides="true"
           :view-mode="2"
