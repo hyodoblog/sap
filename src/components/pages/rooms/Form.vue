@@ -64,26 +64,27 @@
             | 開始日時
             v-chip.ml-1(x-small) 必須
         v-col.py-2(cols="8")
-          DatetimeForm(:datetimeValue.sync="startAt")
+          DatetimeForm(:datetimeValue.sync="startAtTime")
 
       v-divider.my-4
 
-      //- v-row.align-center
-      //-   v-col.py-2(cols="4")
-      //-     .subtitle-1
-      //-       | 投票締め切り日時
-      //-       v-chip.ml-1(x-small) 必須
-      //-   v-col.py-2(cols="8")
-      
-      //- v-divider.my-4
+      v-row.align-center
+        v-col.py-2(cols="4")
+          .subtitle-1
+            | 投票締め切り日時
+            v-chip.ml-1(x-small) 必須
+        v-col.py-2(cols="8")
+          DatetimeForm(:datetimeValue.sync="votingEndAtTime")
 
-      //- v-row.align-center
-      //-   v-col.py-2(cols="4")
-      //-     .subtitle-1
-      //-       | 閲覧終了日時
-      //-       v-chip.ml-1(x-small) 必須
-      //-   v-col.py-2(cols="8")
-          
+      v-divider.my-4
+
+      v-row.align-center
+        v-col.py-2(cols="4")
+          .subtitle-1
+            | 閲覧終了日時
+            v-chip.ml-1(x-small) 必須
+        v-col.py-2(cols="8")
+          DatetimeForm(:datetimeValue.sync="browsingEndAtTime")
   
       v-divider.my-4
 
