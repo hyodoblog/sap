@@ -50,6 +50,8 @@ export interface RoomChat extends Base {
 // /rooms/participateUsers
 export interface RoomParticipateUser extends Base {
   groupUid: string
+  displayName: string
+  email: string
   loginToken: string
   hopeParticipateUserUidItems: string[]
 }

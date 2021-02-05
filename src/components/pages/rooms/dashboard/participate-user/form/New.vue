@@ -3,30 +3,30 @@
     v-btn(
       color="primary"
       @click="dialog = true"
-    ) グループ追加する
-    RoomGroupFormDialog(
+    ) メンバーを追加する
+    RoomParticipateUserFormDialog(
       :dialogValue.sync="dialog"
       submitText="追加する"
       :nameValue.sync="name"
-      :descriptionValue.sync="description"
+      :emailValue.sync="email"
       :submitFunc="submit"
     )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-const RoomGroupFormDialog = () => import('~/components/pages/rooms/dashboard/group/form/Dialog.vue')
+const RoomParticipateUserFormDialog = () => import('~/components/pages/rooms/dashboard/group/form/Dialog.vue')
 
 @Component({
-  components: { RoomGroupFormDialog },
+  components: { RoomParticipateUserFormDialog },
 })
-export default class RoomsDashboardGroupFormNewComponent extends Vue {
+export default class RoomsDashboardParticipateUserFormNewComponent extends Vue {
   dialog = false
 
   // form vars
 
   name = ''
-  description = ''
+  email = ''
 
   // form submti
 

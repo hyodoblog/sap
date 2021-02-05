@@ -25,8 +25,11 @@
 import { Component, Prop, PropSync, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class RoomsDashboardParticipateUserDialogFormComponent extends Vue {
+export default class RoomsDashboardParticipateUserFormDialogComponent extends Vue {
   @PropSync('dialogValue', { type: Boolean, required: true }) dialog: boolean
+
+  @PropSync('nameValue', { type: String, required: true }) name: string
+  @PropSync('emailValue', { type: String, required: true }) email: string
 
   @Prop({ type: String, required: true }) readonly submitText: string
   @Prop({ type: Function, required: true }) submitFunc: () => Promise<void>

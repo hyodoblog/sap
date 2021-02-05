@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { ParticipateUser } from '~/modules/types/models'
+import { RoomParticipateUser } from '~/modules/types/models'
 const BaseMaterialCard = () => import('~/components/base/BaseMaterialCard.vue')
 
 @Component({
@@ -44,7 +44,7 @@ export default class RoomsDashboardParticipateUserTableComponent extends Vue {
     }
   }
 
-  get items(): ParticipateUser[] {
+  get items(): RoomParticipateUser[] {
     return this.$store.state.room['participate-user'].items
   }
 

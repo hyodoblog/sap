@@ -5,7 +5,7 @@
     persistent
   )
     v-card
-      v-row
+      .d-flex
         v-col(cols="5")
           .subtitle-1
             | 名前
