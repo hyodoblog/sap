@@ -31,6 +31,25 @@
             v-model="name"
             :disabled="disabled"
             :rules="rules.name"
+            counter="30"
+            required
+            outlined
+            dense
+            @input="change"
+          )
+      
+      v-divider.my-4
+      v-row.align-center
+        v-col(cols="4")
+          .subtitle-1
+            | 説明
+            v-chip.ml-1(x-small) 必須
+        v-col(cols="8")
+          v-text-field.mt-2(
+            v-model="description"
+            :disabled="disabled"
+            :rules="rules.description"
+            counter="100"
             required
             outlined
             dense
@@ -42,33 +61,28 @@
       v-row.align-center
         v-col.py-2(cols="4")
           .subtitle-1
-            | 日付
-            v-chip.ml-1(x-small) 必須
-        v-col.py-2(cols="8")
-          DatetimeForm(:datetimeValue="startAt")
-
-      v-row.align-center
-        v-col.py-2(cols="4")
-          .subtitle-1
             | 開始日時
             v-chip.ml-1(x-small) 必須
         v-col.py-2(cols="8")
-          
+          DatetimeForm(:datetimeValue.sync="startAt")
 
-      v-row.align-center
-        v-col.py-2(cols="4")
-          .subtitle-1
-            | 投票締め切り日時
-            v-chip.ml-1(x-small) 必須
-        v-col.py-2(cols="8")
-          
+      v-divider.my-4
 
-      v-row.align-center
-        v-col.py-2(cols="4")
-          .subtitle-1
-            | 閲覧終了日時
-            v-chip.ml-1(x-small) 必須
-        v-col.py-2(cols="8")
+      //- v-row.align-center
+      //-   v-col.py-2(cols="4")
+      //-     .subtitle-1
+      //-       | 投票締め切り日時
+      //-       v-chip.ml-1(x-small) 必須
+      //-   v-col.py-2(cols="8")
+      
+      //- v-divider.my-4
+
+      //- v-row.align-center
+      //-   v-col.py-2(cols="4")
+      //-     .subtitle-1
+      //-       | 閲覧終了日時
+      //-       v-chip.ml-1(x-small) 必須
+      //-   v-col.py-2(cols="8")
           
   
       v-divider.my-4
@@ -122,7 +136,7 @@ export default class extends mixins(BlockUnloadMixin) {
   loading = false
   submitLoading = false
   resetLoading = false
-  rules = this.$formRules.sapApp
+  rules = this.$formRules.room
 
   // form date
   date = ''
@@ -240,9 +254,9 @@ export default class extends mixins(BlockUnloadMixin) {
     this.disabled = this.submitLoading = true
     this.submitFunc()
       .then(() => {
-        this.$store.dispatch('sap/init')
+        this.$store.dispatch('room/init')
         this.isBlockUnload = false
-        this.$router.push(this.$routes.front.sapApps)
+        this.$router.push(this.$routes.front.rooms)
       })
       .finally(() => {
         this.disabled = this.submitLoading = false

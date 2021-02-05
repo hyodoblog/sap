@@ -2,19 +2,19 @@ import firebase from 'firebase/app'
 import { Room } from '~/modules/types/models'
 
 export class RoomDb {
-  private sapAppsRef: firebase.firestore.CollectionReference
+  private roomsRef: firebase.firestore.CollectionReference
 
   constructor(db: firebase.firestore.Firestore) {
-    this.sapAppsRef = db.collection('sapApps')
+    this.roomsRef = db.collection('rooms')
   }
 
   public getUid(): string {
-    return this.sapAppsRef.doc().id
+    return this.roomsRef.doc().id
   }
 
   public async getItems(userUid: string): Promise<Room[]> {
     const items: Room[] = []
-    const docs = await this.sapAppsRef.where('userUid', '==', userUid).get()
+    const docs = await this.roomsRef.where('userUid', '==', userUid).get()
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
@@ -25,7 +25,7 @@ export class RoomDb {
   }
 
   public async getItem(uid: string): Promise<Room | null> {
-    const doc = await this.sapAppsRef.doc(uid).get()
+    const doc = await this.roomsRef.doc(uid).get()
     if (doc.exists) {
       return {
         uid: doc.id,
@@ -37,7 +37,7 @@ export class RoomDb {
   }
 
   public async setItem(item: Room): Promise<void> {
-    await this.sapAppsRef.doc().set({
+    await this.roomsRef.doc().set({
       ...item,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -48,13 +48,13 @@ export class RoomDb {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
-    await this.sapAppsRef.doc(uid).update({
+    await this.roomsRef.doc(uid).update({
       ...item,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     } as Room)
   }
 
   public async deleteItem(uid: string): Promise<void> {
-    await this.sapAppsRef.doc(uid).delete()
+    await this.roomsRef.doc(uid).delete()
   }
 }

@@ -104,7 +104,7 @@ export default class AuthSigninPage extends Vue {
 
       await this.signIn(this.email, this.password)
 
-      this.$router.push(this.$routes.front.sapApps)
+      this.$router.push(this.$routes.front.rooms)
     } catch {
       this.$store.dispatch('snackbar/error', 'サインインに失敗しました。')
     } finally {

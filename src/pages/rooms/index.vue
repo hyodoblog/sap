@@ -10,7 +10,7 @@
           .title あなたが作成した部屋
           v-btn(
             color="primary"
-            :to="$routes.front.sapAppNew"
+            :to="$routes.front.roomNew"
           ) 部屋を作成する
       v-col(cols="12")
         RoomsTable

@@ -12,7 +12,7 @@ if (!admin.apps.length) {
 
 export const db = admin.firestore()
 export const usersRef = db.collection('users')
-export const sapAppsRef = db.collection('sapApps')
+export const roomsRef = db.collection('rooms')
 
 export const getNowTimestamp = () => admin.firestore.Timestamp.now()
 export const getServerTimestamp = () => admin.firestore.FieldValue.serverTimestamp()

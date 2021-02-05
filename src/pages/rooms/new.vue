@@ -1,31 +1,34 @@
 <template lang="pug">
   v-container(style="max-width:1000px")
-    BaseVComponent(title="SAP作成" icon="mdi-monitor-dashboard")
+    BaseVComponent(title="部屋作成" icon="mdi-monitor-dashboard")
 
-    RoomsForm(
-      submitText="作成する"
-      :imgDataURLValue.sync="imgDataURL"
-      :nameValue.sync="name"
-      :descriptionValue.sync="description"
-      :startAtValue.sync="startAt"
-      :votingEndAtValue.sync="votingEndAt"
-      :browsingEndAtValue.sync="browsingEndAt"
-      :submitFunc="submit"
-    )
+    client-only
+      RoomForm(
+        submitText="作成する"
+        :roomUidValue.sync="roomUid"
+        :imgDataURLValue.sync="imgDataURL"
+        :nameValue.sync="name"
+        :descriptionValue.sync="description"
+        :startAtValue.sync="startAt"
+        :votingEndAtValue.sync="votingEndAt"
+        :browsingEndAtValue.sync="browsingEndAt"
+        :submitFunc="submit"
+      )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
 const BaseVComponent = () => import('~/components/base/BaseVComponent.vue')
-const RoomsForm = () => import('~/components/page/sap-apps/Form.vue')
+const RoomForm = () => import('~/components/pages/rooms/Form.vue')
 
 @Component({
   layout: 'protected',
-  components: { BaseVComponent, RoomsForm },
+  components: { BaseVComponent, RoomForm },
 })
 export default class RoomNewPage extends Vue {
   // form var
+  roomUid = ''
   name = ''
   description = ''
   startAt = this.$fire.store.getNowAtToDate()
@@ -35,10 +38,10 @@ export default class RoomNewPage extends Vue {
 
   async submit(): Promise<void> {
     // ファイルパスを取得
-    const sapAppUid = this.$fire.store.sapApp.getUid()
+    const roomUid = this.$fire.store.room.getUid()
     let iconPath = ''
     if (this.imgDataURL) {
-      iconPath = `menus/${sapAppUid}.jpg`
+      iconPath = `rooms/${roomUid}.jpg`
     }
 
     try {
@@ -58,7 +61,7 @@ export default class RoomNewPage extends Vue {
         browsingEndAt: this.$fire.store.convertTimestamp(this.browsingEndAt),
       }
       const headers = await this.$fire.auth.getAuthHeaders()
-      await this.$api.back.createRoom({ sapAppUid, sapAppItem: itme }, headers)
+      await this.$api.back.createRoom({ roomUid, roomItem: itme }, headers)
     } catch {
       if (iconPath) {
         this.$fire.storage.delete(iconPath)

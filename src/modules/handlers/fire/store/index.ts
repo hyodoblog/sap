@@ -10,7 +10,7 @@ export class StoreFire {
   public group: GroupDb
   public participateUser: ParticipateUserDb
   public chat: ChatDb
-  public sapApp: RoomDb
+  public room: RoomDb
   public db: firebase.firestore.Firestore
 
   constructor(db: firebase.firestore.Firestore) {
@@ -19,8 +19,8 @@ export class StoreFire {
     // users
     this.user = new UserDb(db)
 
-    // sapApps
-    this.sapApp = new RoomDb(db)
+    // rooms
+    this.room = new RoomDb(db)
     this.group = new GroupDb(db)
     this.participateUser = new ParticipateUserDb(db)
     this.chat = new ChatDb(db)
