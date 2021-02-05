@@ -2,16 +2,12 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
     match /{allPaths=**} {
-      allow read: if isAuthenticated();
-      allow write: if isAdminAuthenticated();
+      allow read: if true;
+      allow write: if isAuthenticated()
     }
 
     function isAuthenticated() {
       return request.auth != null
-    }
-
-    function isAdminAuthenticated() {
-      return request.auth.token.admin == true
     }
   }
 }
