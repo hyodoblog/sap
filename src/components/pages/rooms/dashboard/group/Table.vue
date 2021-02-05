@@ -29,6 +29,7 @@
       :dialogValue.sync="dialog"
       title="グループを編集"
       submitText="編集する"
+      :groupUid="groupUid"
       :displayNameValue.sync="displayName"
       :descriptionValue.sync="description"
       :maxNumValue.sync="maxNum"

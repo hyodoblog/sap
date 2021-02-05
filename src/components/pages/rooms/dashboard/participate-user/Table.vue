@@ -25,6 +25,7 @@
             td(v-text="item.email")
 
     RoomParticipateUserFormDialog(
+      :isEdit="true"
       :dialogValue.sync="dialog"
       title="メンバーを編集"
       submitText="編集する"

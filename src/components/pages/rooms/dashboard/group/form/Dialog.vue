@@ -78,6 +78,31 @@
             :loading="isLoading"
             @click="submit"
           ) {{ submitText }}
+
+        .my-4.text-center(v-if="isEdit")
+          v-btn(color="error" text @click="removeDialog = true") 削除する
+
+          v-dialog(
+            v-model="removeDialog"
+            max-width="400"
+            persistent
+          )
+            v-card
+              v-card-title 本当に削除しますか？
+              v-card-actions
+                v-btn(
+                  text
+                  :disabled="isRemoveLoading"
+                  @click="removeDialog = false"
+                ) いいえ
+                v-spacer
+                v-btn(
+                  color="error"
+                  elevation="0"
+                  :disabled="isRemoveLoading"
+                  :loading="isRemoveLoading"
+                  @click="remove"
+                ) はい
 </template>
 
 <script lang="ts">
@@ -87,6 +112,7 @@ import { Component, Prop, PropSync, Vue } from 'nuxt-property-decorator'
 export default class RoomsDashboardGroupFormDialogComponent extends Vue {
   @PropSync('dialogValue', { type: Boolean, required: true }) dialog: boolean
 
+  @Prop({ type: String, default: '' }) readonly groupUid: string
   @PropSync('displayNameValue', { type: String, required: true }) displayName: string
   @PropSync('descriptionValue', { type: String, required: true }) description: string
   @PropSync('maxNumValue', { type: Number, required: true }) maxNum: number
@@ -94,6 +120,10 @@ export default class RoomsDashboardGroupFormDialogComponent extends Vue {
   @Prop({ type: String, required: true }) readonly title: string
   @Prop({ type: String, required: true }) readonly submitText: string
   @Prop({ type: Function, required: true }) submitFunc: () => Promise<void>
+
+  get isEdit(): boolean {
+    return !!this.groupUid
+  }
 
   isValid = true
   isLoading = false
@@ -120,6 +150,29 @@ export default class RoomsDashboardGroupFormDialogComponent extends Vue {
       this.isLoading = false
       this.dialog = false
     })
+  }
+
+  // remove
+
+  removeDialog = false
+  isRemoveLoading = false
+
+  remove() {
+    this.isRemoveLoading = true
+    const roomUid = this.$route.params.uid
+    return this.$fire.store.roomGroup
+      .deleteItem(roomUid, this.groupUid)
+      .then(() => {
+        this.$store.dispatch('snackbar/success', `「${this.displayName}」グループを削除しました。`)
+        this.$store.dispatch('room/group/init')
+        this.dialog = this.removeDialog = false
+      })
+      .catch(() => {
+        this.$store.dispatch('snackbar/error', `「${this.displayName}」グループの削除に失敗しました。`)
+      })
+      .finally(() => {
+        this.isRemoveLoading = false
+      })
   }
 }
 </script>
