@@ -2,9 +2,9 @@ export default class {
   top = '/'
 
   // dashboard
-  sapApps = '/sap-apps'
-  sapApp = (sapUid: string) => `/sap-apps/${sapUid}`
-  sapAppNew = '/sap-apps/new'
+  rooms = '/rooms'
+  room = (roomUid: string) => `/rooms/${roomUid}`
+  roomNew = '/rooms/new'
 
   // auth
   signin = '/auth/signin'

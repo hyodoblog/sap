@@ -35,7 +35,7 @@ const BaseMaterialCard = () => import('~/components/base/BaseMaterialCard.vue')
 @Component({
   components: { BaseMaterialCard },
 })
-export default class SapAppsTable extends Vue {
+export default class RoomsTable extends Vue {
   search = ''
 
   headers = [
@@ -70,8 +70,8 @@ export default class SapAppsTable extends Vue {
     return []
   }
 
-  movePage(userUid: string) {
-    this.$router.push(`/sap-apps/${userUid}`)
+  movePage(roomUid: string) {
+    this.$router.push(this.$routes.front.room(roomUid))
   }
 }
 </script>

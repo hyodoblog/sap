@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
-import { SapApp } from '~/modules/types/models'
+import { Room } from '~/modules/types/models'
 
-export class SapAppDb {
+export class RoomDb {
   private sapAppsRef: firebase.firestore.CollectionReference
 
   constructor(db: firebase.firestore.Firestore) {
@@ -12,46 +12,46 @@ export class SapAppDb {
     return this.sapAppsRef.doc().id
   }
 
-  public async getItems(userUid: string): Promise<SapApp[]> {
-    const items: SapApp[] = []
+  public async getItems(userUid: string): Promise<Room[]> {
+    const items: Room[] = []
     const docs = await this.sapAppsRef.where('userUid', '==', userUid).get()
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
         ...doc.data(),
-      } as SapApp)
+      } as Room)
     })
     return items
   }
 
-  public async getItem(uid: string): Promise<SapApp | null> {
+  public async getItem(uid: string): Promise<Room | null> {
     const doc = await this.sapAppsRef.doc(uid).get()
     if (doc.exists) {
       return {
         uid: doc.id,
         ...doc.data(),
-      } as SapApp
+      } as Room
     } else {
       return null
     }
   }
 
-  public async setItem(item: SapApp): Promise<void> {
+  public async setItem(item: Room): Promise<void> {
     await this.sapAppsRef.doc().set({
       ...item,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    } as SapApp)
+    } as Room)
   }
 
-  public async updateItem(uid: string, item: SapApp): Promise<void> {
+  public async updateItem(uid: string, item: Room): Promise<void> {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
     await this.sapAppsRef.doc(uid).update({
       ...item,
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    } as SapApp)
+    } as Room)
   }
 
   public async deleteItem(uid: string): Promise<void> {

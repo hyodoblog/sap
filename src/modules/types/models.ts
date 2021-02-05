@@ -20,8 +20,8 @@ export interface User extends Base {
 }
 
 // *******************
-// /sapApps
-export interface SapApp extends Base {
+// /rooms
+export interface Room extends Base {
   userUid: string
   iconPath: string
   name: string
@@ -32,21 +32,21 @@ export interface SapApp extends Base {
 }
 
 // *******************
-// /apps/group
+// /rooms/group
 export interface Group extends Base {
   name: string
   description: string
 }
 
 // ****************************
-// /apps/chats
+// /rooms/chats
 export interface Chat extends Base {
   userUid: string
   content: string
 }
 
 // ****************************
-// /apps/participateUsers
+// /rooms/participateUsers
 // uidはuserUid
 export interface ParticipateUser extends Base {
   userUid: string // 検索用

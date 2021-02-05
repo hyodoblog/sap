@@ -3,6 +3,6 @@ export default class {
   createCookie = '/cookie/create'
   verifyCookie = '/cookie/verify'
 
-  // sapApp
-  createSapApp = '/sap-apps/create'
+  // room
+  createRoom = '/room/create'
 }

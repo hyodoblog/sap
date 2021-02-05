@@ -4,7 +4,7 @@ import { AxiosApi } from './axios'
 import {
   ApiCreateCookieReqParams,
   ApiCreateCookieResParams,
-  ApiCreateSapAppReqParams,
+  ApiCreateRoomReqParams,
   ApiVerifyCookieReqParams,
 } from '~/modules/types/api'
 
@@ -28,9 +28,9 @@ export class BackApi extends AxiosApi {
     await this.axios.post(this.backRoutes.verifyCookie, params)
   }
 
-  // sap
+  // room
 
-  public async createSapApp(params: ApiCreateSapAppReqParams, headers: any) {
-    await this.axios.post(this.backRoutes.createSapApp, params, { headers })
+  public async createRoom(params: ApiCreateRoomReqParams, headers: any) {
+    await this.axios.post(this.backRoutes.createRoom, params, { headers })
   }
 }

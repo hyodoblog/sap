@@ -1,7 +1,7 @@
+import { Room } from './models'
+
 // *******************
 // cookie
-
-import { SapApp } from './models'
 
 export interface ApiCreateCookieReqParams {
   token: string
@@ -15,7 +15,10 @@ export interface ApiVerifyCookieReqParams {
   sessionCookie: string
 }
 
-export interface ApiCreateSapAppReqParams {
-  sapAppUid: string
-  sapAppItem: SapApp
+// *******************
+// room
+
+export interface ApiCreateRoomReqParams {
+  roomUid: string
+  roomItem: Room
 }

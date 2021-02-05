@@ -30,8 +30,8 @@ export default class CoreNavigationComponent extends Vue {
   links = [
     {
       icon: 'mdi-monitor-dashboard',
-      text: 'SAP一覧',
-      link: '/sap-apps',
+      text: '部屋管理',
+      link: this.$routes.front.rooms,
     },
   ]
 }

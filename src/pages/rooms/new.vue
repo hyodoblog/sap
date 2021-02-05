@@ -2,7 +2,7 @@
   v-container(style="max-width:1000px")
     BaseVComponent(title="SAP作成" icon="mdi-monitor-dashboard")
 
-    SapAppsForm(
+    RoomsForm(
       submitText="作成する"
       :imgDataURLValue.sync="imgDataURL"
       :nameValue.sync="name"
@@ -16,15 +16,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { SapApp } from '~/modules/types/models'
+import { Room } from '~/modules/types/models'
 const BaseVComponent = () => import('~/components/base/BaseVComponent.vue')
-const SapAppsForm = () => import('~/components/page/sap-apps/Form.vue')
+const RoomsForm = () => import('~/components/page/sap-apps/Form.vue')
 
 @Component({
   layout: 'protected',
-  components: { BaseVComponent, SapAppsForm },
+  components: { BaseVComponent, RoomsForm },
 })
-export default class SapAppNewPage extends Vue {
+export default class RoomNewPage extends Vue {
   // form var
   name = ''
   description = ''
@@ -48,7 +48,7 @@ export default class SapAppNewPage extends Vue {
       }
 
       // firestoreに保存
-      const itme: SapApp = {
+      const itme: Room = {
         userUid: this.$store.state.auth.userUid,
         iconPath,
         name: this.name,
@@ -58,7 +58,7 @@ export default class SapAppNewPage extends Vue {
         browsingEndAt: this.$fire.store.convertTimestamp(this.browsingEndAt),
       }
       const headers = await this.$fire.auth.getAuthHeaders()
-      await this.$api.back.createSapApp({ sapAppUid, sapAppItem: itme }, headers)
+      await this.$api.back.createRoom({ sapAppUid, sapAppItem: itme }, headers)
     } catch {
       if (iconPath) {
         this.$fire.storage.delete(iconPath)

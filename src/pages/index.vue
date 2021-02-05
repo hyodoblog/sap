@@ -8,7 +8,7 @@
         v-spacer
 
         template(v-if="isAuthenticated")
-          v-btn(outlined large :to="$routes.front.sapApps") SAPリスト
+          v-btn(outlined large :to="$routes.front.rooms") 部屋一覧
         template(v-else)
           .d-none.d-md-block
             v-btn(text to="#about") SAPとは

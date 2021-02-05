@@ -1,12 +1,12 @@
-import SapAppFormRule from '~/modules/handlers/form-rules/sap-app'
+import RoomFormRule from '~/modules/handlers/form-rules/room'
 
 export interface FormRulesApi {
-  sapApp: SapAppFormRule
+  room: RoomFormRule
 }
 
 export default function (_: any, inject: (arg0: string, arg1: FormRulesApi) => void) {
   const formRules: FormRulesApi = {
-    sapApp: new SapAppFormRule(),
+    room: new RoomFormRule(),
   }
 
   inject('formRules', formRules)

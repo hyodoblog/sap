@@ -1,8 +1,8 @@
 import firebase from 'firebase/app'
-import { ChatDb } from './sap-app/chat'
-import { GroupDb } from './sap-app/group'
-import { ParticipateUserDb } from './sap-app/participate-user'
-import { SapAppDb } from './sap-app'
+import { ChatDb } from './room/chat'
+import { GroupDb } from './room/group'
+import { ParticipateUserDb } from './room/participate-user'
+import { RoomDb } from './room'
 import { UserDb } from './user'
 
 export class StoreFire {
@@ -10,7 +10,7 @@ export class StoreFire {
   public group: GroupDb
   public participateUser: ParticipateUserDb
   public chat: ChatDb
-  public sapApp: SapAppDb
+  public sapApp: RoomDb
   public db: firebase.firestore.Firestore
 
   constructor(db: firebase.firestore.Firestore) {
@@ -20,7 +20,7 @@ export class StoreFire {
     this.user = new UserDb(db)
 
     // sapApps
-    this.sapApp = new SapAppDb(db)
+    this.sapApp = new RoomDb(db)
     this.group = new GroupDb(db)
     this.participateUser = new ParticipateUserDb(db)
     this.chat = new ChatDb(db)
