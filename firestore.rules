@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /users/{userUid} {
+      allow read: if isUserAuthenticated(userUid) || isAdminAuthenticated();
+      allow write: if isUserAuthenticated(userUid) || isAdminAuthenticated();
+    }
+
+    // users collectionGroup
+    // match /{path=**}/orders/{uid} {
+    //   allow read, write: if isAdminAuthenticated();
+    // }
+
+    // match /{path=**}/messages/{uid} {
+    //   allow read, write: if isAdminAuthenticated();
+    // }
+
+    // room
+
+    match /rooms/{userUid} {
+      allow read: if isAuthenticated();
+      allow write: if isAdminAuthenticated();
+
+      match /messages/{uid} {
+        allow read, write: if isAuthenticated();
+      }
+
+      match /groups/{uid} {
+        allow read, write: if isAuthenticated();
+      }
+
+      match /participateUsers/{uid} {
+        allow read, write: if isAuthenticated();
+      }
+    }
+  
+    function isAdminAuthenticated() {
+      return request.auth.token.admin == true
+    }
+
+    function isAuthenticated() {
+      return request.auth != null
+    }
+
+    function isUserAuthenticated(userId) {
+      return request.auth != null && request.auth.uid == userId
+    }
+  }
+}
