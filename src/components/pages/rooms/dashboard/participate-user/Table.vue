@@ -29,6 +29,7 @@
       :dialogValue.sync="dialog"
       title="メンバーを編集"
       submitText="編集する"
+      :participateUserUid="participateUserUid"
       :displayNameValue.sync="displayName"
       :emailValue.sync="email"
       :submitFunc="editSubmit"
@@ -76,13 +77,13 @@ export default class RoomsDashboardParticipateUserTableComponent extends Vue {
   // edit form
 
   dialog = false
-  groupUid = ''
+  participateUserUid = ''
   displayName = ''
   email = ''
   priority = 0
 
   editOn(item: RoomParticipateUser) {
-    this.groupUid = item.uid as string
+    this.participateUserUid = item.uid as string
     this.displayName = item.displayName
     this.email = item.email
     this.dialog = true
@@ -91,7 +92,10 @@ export default class RoomsDashboardParticipateUserTableComponent extends Vue {
   editSubmit() {
     const roomUid = this.$route.params.uid
     return this.$fire.store.roomParticipateUser
-      .updateItem(roomUid, this.groupUid, { displayName: this.displayName, email: this.email } as RoomParticipateUser)
+      .updateItem(roomUid, this.participateUserUid, {
+        displayName: this.displayName,
+        email: this.email,
+      } as RoomParticipateUser)
       .then(() => this.$store.dispatch('snackbar/success', '参加メンバーを編集しました。'))
       .catch(() => this.$store.dispatch('snackbar/error', '参加メンバーの編集に失敗しました。'))
   }
