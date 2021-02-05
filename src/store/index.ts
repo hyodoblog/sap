@@ -32,12 +32,10 @@ export const actions: ActionTree<RootState, RootState> = {
       const cookieData = getUserFromCookie(sessionCookie)
       if (cookieData && !this.getters['auth/isAuthenticated']) {
         try {
-          await this.$api.back.verifyCookie({ sessionCookie })
-          const uid = cookieData.user_id
-          const user = await this.$fire.store.user.getItem(uid)
-          if (user === null) throw Error
+          const userUid = cookieData.user_id
+          const user = await this.$api.back.verifyCookie({ sessionCookie, userUid })
 
-          this.commit('auth/SET_USER_UID', uid)
+          this.commit('auth/SET_USER_UID', userUid)
           this.commit('auth/SET_USER', user)
           // this.commit('config/public/SET', config)
         } catch {}

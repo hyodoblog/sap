@@ -1,4 +1,4 @@
-import { Room } from './models'
+import { Room, User } from './models'
 
 // *******************
 // cookie
@@ -13,6 +13,11 @@ export interface ApiCreateCookieResParams {
 
 export interface ApiVerifyCookieReqParams {
   sessionCookie: string
+  userUid: string
+}
+
+export interface ApiVerifyCookieResParams {
+  user: User
 }
 
 // *******************

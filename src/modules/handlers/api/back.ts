@@ -6,6 +6,7 @@ import {
   ApiCreateCookieResParams,
   ApiCreateRoomReqParams,
   ApiVerifyCookieReqParams,
+  ApiVerifyCookieResParams,
 } from '~/modules/types/api'
 
 export class BackApi extends AxiosApi {
@@ -24,8 +25,11 @@ export class BackApi extends AxiosApi {
     return resData
   }
 
-  public async verifyCookie(params: ApiVerifyCookieReqParams): Promise<void> {
-    await this.axios.post(this.backRoutes.verifyCookie, params)
+  public async verifyCookie(params: ApiVerifyCookieReqParams): Promise<ApiVerifyCookieResParams> {
+    const res = await this.axios.post(this.backRoutes.verifyCookie, params)
+    const resData = res.data as ApiVerifyCookieResParams
+    if (!resData.user) throw Error
+    return resData
   }
 
   // room
