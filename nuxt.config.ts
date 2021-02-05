@@ -18,7 +18,7 @@ const config: NuxtConfig = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-  css: ['~/assets/styles/theme.scss'],
+  css: ['~/assets/styles/theme.scss', '~/assets/styles/common.scss'],
   env: {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY as string,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN as string,

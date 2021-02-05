@@ -20,18 +20,17 @@
               style="max-width: 250px"
             )
         template(v-slot:item="{ item }")
-          tr(@click="editOn(item)")
-            td
-              v-avatar.logo-mini
-                v-img(:src="$utils.url.getImgUrl(item.iconPath)")
+          tr(class="pointer" @click="editOn(item)")
             td(v-text="item.name")
             td(v-text="item.description")
+            td(v-text="item.priority")
       
     RoomGroupFormDialog(
       :dialogValue.sync="dialog"
       submitText="編集する"
       :nameValue.sync="name"
       :descriptionValue.sync="description"
+      :priorityValue.sync="priority"
       :submitFunc="editSubmit"
     )
 </template>
@@ -49,7 +48,8 @@ export default class RoomsDashboardGroupTableComponent extends Vue {
   async mounted() {
     if (this.items.length === 0) {
       this.loading = true
-      await this.$store.dispatch('room/group/init')
+      const roomUid = this.$route.params.uid
+      await this.$store.dispatch('room/group/init', roomUid)
       this.loading = false
     }
   }
@@ -63,11 +63,6 @@ export default class RoomsDashboardGroupTableComponent extends Vue {
 
   headers = [
     {
-      text: '',
-      value: 'iconPath',
-      sortable: false,
-    },
-    {
       text: '名前',
       value: 'name',
     },
@@ -75,20 +70,34 @@ export default class RoomsDashboardGroupTableComponent extends Vue {
       text: '詳細',
       value: 'description',
     },
+    {
+      text: '優先度',
+      value: 'priority',
+    },
   ]
 
   // edit form
 
   dialog = false
+  groupUid = ''
   name = ''
   description = ''
+  priority = 0
 
   editOn(item: RoomGroup) {
+    this.groupUid = item.uid as string
     this.name = item.name
     this.description = item.description
-    this.dialog = false
+    this.priority = item.priority
+    this.dialog = true
   }
 
-  editSubmit() {}
+  editSubmit() {
+    const roomUid = this.$route.params.uid
+    return this.$fire.store.roomGroup
+      .updateItem(roomUid, this.groupUid, { name: this.name, description: this.description, priority: this.priority })
+      .then(() => this.$store.dispatch('snackbar/success', 'グループを編集しました。'))
+      .catch(() => this.$store.dispatch('snackbar/error', 'グループの編集に失敗しました。'))
+  }
 }
 </script>

@@ -34,9 +34,9 @@ export interface Room extends Base {
 // *******************
 // /rooms/group
 export interface RoomGroup extends Base {
-  iconPath: string
   name: string
   description: string
+  priority: number
 }
 
 // ****************************

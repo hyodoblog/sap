@@ -21,9 +21,3 @@ export default class FormDatetimeComponnet extends Vue {
   @PropSync('datetimeValue', { type: String, required: true }) datetime: string
 }
 </script>
-
-<style lang="scss" scoped>
-.pointer:hover {
-  cursor: pointer;
-}
-</style>

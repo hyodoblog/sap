@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-const RoomParticipateUserFormDialog = () => import('~/components/pages/rooms/dashboard/group/form/Dialog.vue')
+const RoomParticipateUserFormDialog = () => import('~/components/pages/rooms/dashboard/participate-user/form/Dialog.vue')
 
 @Component({
   components: { RoomParticipateUserFormDialog },

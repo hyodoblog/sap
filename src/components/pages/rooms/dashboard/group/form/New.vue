@@ -9,6 +9,7 @@
       submitText="追加する"
       :nameValue.sync="name"
       :descriptionValue.sync="description"
+      :priorityValue.sync="priority"
       :submitFunc="submit"
     )
 </template>
@@ -27,9 +28,16 @@ export default class RoomsDashboardGroupFormNewComponent extends Vue {
 
   name = ''
   description = ''
+  priority = 0
 
   // form submti
 
-  submit() {}
+  submit() {
+    const roomUid = this.$route.params.uid
+    return this.$fire.store.roomGroup
+      .setItem(roomUid, { name: this.name, description: this.description, priority: this.priority })
+      .then(() => this.$store.dispatch('snackbar/success', 'グループを保存しました。'))
+      .catch(() => this.$store.dispatch('snackbar/error', 'グループの保存に失敗しました。'))
+  }
 }
 </script>
