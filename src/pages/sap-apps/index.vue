@@ -8,7 +8,7 @@
         v-btn(
           color="primary"
           :to="$routes.front.sapAppNew"
-        ) SAPを追加する
+        ) SAPを作成する
 
       v-col(cols="12")
         SapAppsTable

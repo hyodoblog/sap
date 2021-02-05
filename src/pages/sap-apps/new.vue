@@ -1,9 +1,9 @@
 <template lang="pug">
   v-container(style="max-width:1000px")
-    BaseVComponent(title="SAP追加" icon="mdi-monitor-dashboard")
+    BaseVComponent(title="SAP作成" icon="mdi-monitor-dashboard")
 
     SapAppsForm(
-      submitText="追加する"
+      submitText="作成する"
       :imgDataURLValue.sync="imgDataURL"
       :nameValue.sync="name"
       :descriptionValue.sync="description"
