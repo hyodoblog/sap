@@ -126,6 +126,9 @@ export default class RoomsDashboardParticipateUserFormDialogComponent extends Vu
       this.isValid = true
       this.isLoading = false
       this.dialog = false
+      // reset
+      this.displayName = ''
+      this.email = ''
     })
   }
 

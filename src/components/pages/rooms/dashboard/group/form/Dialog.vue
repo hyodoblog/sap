@@ -149,6 +149,10 @@ export default class RoomsDashboardGroupFormDialogComponent extends Vue {
       this.isValid = true
       this.isLoading = false
       this.dialog = false
+      // reset
+      this.displayName = ''
+      this.description = ''
+      this.maxNum = 0
     })
   }
 
