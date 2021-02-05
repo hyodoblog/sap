@@ -6,8 +6,9 @@
     ) メンバーを追加する
     RoomParticipateUserFormDialog(
       :dialogValue.sync="dialog"
+      title="メンバーを追加"
       submitText="追加する"
-      :nameValue.sync="name"
+      :displayNameValue.sync="displayName"
       :emailValue.sync="email"
       :submitFunc="submit"
     )
@@ -15,7 +16,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-const RoomParticipateUserFormDialog = () => import('~/components/pages/rooms/dashboard/participate-user/form/Dialog.vue')
+const RoomParticipateUserFormDialog = () =>
+  import('~/components/pages/rooms/dashboard/participate-user/form/Dialog.vue')
 
 @Component({
   components: { RoomParticipateUserFormDialog },
@@ -25,11 +27,22 @@ export default class RoomsDashboardParticipateUserFormNewComponent extends Vue {
 
   // form vars
 
-  name = ''
+  displayName = ''
   email = ''
 
   // form submti
 
-  submit() {}
+  submit() {
+    const roomUid = this.$route.params.uid
+    return this.$fire.store.roomParticipateUser
+      .setItem(roomUid, {
+        displayName: this.displayName,
+        email: this.email,
+        loginToken: this.$utils.utility.getRandomToken(40),
+        hopeGroupUidItems: [],
+      })
+      .then(() => this.$store.dispatch('snackbar/success', 'メンバーを保存しました。'))
+      .catch(() => this.$store.dispatch('snackbar/error', 'メンバーの保存に失敗しました。'))
+  }
 }
 </script>

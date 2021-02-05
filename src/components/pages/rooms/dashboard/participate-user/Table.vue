@@ -20,12 +20,13 @@
               style="max-width: 250px"
             )
         template(v-slot:item="{ item }")
-          tr.pointer
+          tr.pointer(@click="editOn(item)")
             td(v-text="item.displayName")
             td(v-text="item.email")
 
     RoomParticipateUserFormDialog(
       :dialogValue.sync="dialog"
+      title="メンバーを編集"
       submitText="編集する"
       :displayNameValue.sync="displayName"
       :emailValue.sync="email"

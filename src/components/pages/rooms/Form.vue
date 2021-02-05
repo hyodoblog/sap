@@ -6,9 +6,9 @@
       lazy-validation
     )
       v-row.align-center
-        v-col(cols="4")
+        v-col(cols="5")
           .subtitle-1 アイコン
-        v-col(cols="8")
+        v-col(cols="7")
           ImgCropForm(
             canvasId="image-canvas"
             :isUpdate="isUpdate"
@@ -22,11 +22,11 @@
       v-divider.my-3
 
       v-row.align-center
-        v-col(cols="4")
+        v-col(cols="5")
           .subtitle-1
             | 名前
             v-chip.ml-1(x-small) 必須
-        v-col(cols="8")
+        v-col(cols="7")
           v-text-field.mt-2(
             v-model="name"
             :disabled="disabled"
@@ -40,9 +40,9 @@
       
       v-divider.my-3
       v-row.align-center
-        v-col(cols="4")
+        v-col(cols="5")
           .subtitle-1 説明
-        v-col(cols="8")
+        v-col(cols="7")
           v-text-field.mt-2(
             v-model="description"
             :disabled="disabled"

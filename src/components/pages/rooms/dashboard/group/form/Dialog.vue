@@ -18,11 +18,11 @@
         v-divider.my-3
 
         v-row.align-center
-          v-col(cols="4")
+          v-col(cols="5")
             .subtitle-1
               | 表示名
               v-chip.ml-1(x-small) 必須
-          v-col(cols="8")
+          v-col(cols="7")
             v-text-field.mt-2(
               v-model="displayName"
               :disabled="isLoading"
@@ -35,9 +35,9 @@
         v-divider.my-3
 
         v-row.align-center
-          v-col(cols="4")
+          v-col(cols="5")
             .subtitle-1 説明
-          v-col(cols="8")
+          v-col(cols="7")
             v-text-field.mt-2(
               v-model="description"
               :disabled="isLoading"
@@ -49,11 +49,11 @@
         v-divider.my-3
 
         v-row.align-center
-          v-col(cols="4")
+          v-col(cols="5")
             .subtitle-1
               | 最大参加人数
               v-chip.ml-1(x-small) 必須
-          v-col(cols="8")
+          v-col(cols="7")
             v-text-field.mt-2(
               v-model.number="maxNum"
               :disabled="isLoading"
