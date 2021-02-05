@@ -1,8 +1,14 @@
 <template lang="pug">
   v-container(fluid)
     v-row
-      v-col(cols="12")
-        BaseVComponent(:title="`${item.name}部屋`" icon="mdi-monitor-dashboard")
+      v-col
+        BaseVComponent(:title="`「${item.name}」部屋`" icon="mdi-monitor-dashboard")
+      v-col.text-right
+        v-btn(
+          color="warning"
+          elevation="0"
+          :to="$routes.front.roomEdit(item.uid)"
+        ) 部屋を編集する
 
     RoomsDashboardGroupList
 
