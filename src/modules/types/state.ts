@@ -1,4 +1,4 @@
-import { Group, ParticipateUser, Room, User } from './models'
+import { RoomGroup, RoomParticipateUser, Room, User } from './models'
 
 export class AuthState {
   userUid: string | null
@@ -27,7 +27,7 @@ export class RoomState {
 }
 
 export class RoomGroupState {
-  items: Group[]
+  items: RoomGroup[]
 
   constructor() {
     this.items = []
@@ -35,7 +35,7 @@ export class RoomGroupState {
 }
 
 export class RoomParticipateUserState {
-  items: ParticipateUser[]
+  items: RoomParticipateUser[]
 
   constructor() {
     this.items = []

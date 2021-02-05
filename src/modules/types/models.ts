@@ -33,7 +33,7 @@ export interface Room extends Base {
 
 // *******************
 // /rooms/group
-export interface Group extends Base {
+export interface RoomGroup extends Base {
   iconPath: string
   name: string
   description: string
@@ -41,16 +41,15 @@ export interface Group extends Base {
 
 // ****************************
 // /rooms/chats
-export interface Chat extends Base {
+export interface RoomChat extends Base {
   userUid: string
   content: string
 }
 
 // ****************************
 // /rooms/participateUsers
-// uidはuserUid
-export interface ParticipateUser extends Base {
-  userUid: string // 検索用
+export interface RoomParticipateUser extends Base {
   groupUid: string
-  hopeUserUidItems: string[]
+  loginToken: string
+  hopeParticipateUserUidItems: string[]
 }

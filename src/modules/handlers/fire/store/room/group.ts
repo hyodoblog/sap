@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
-import { Group } from '~/modules/types/models'
+import { RoomGroup } from '~/modules/types/models'
 
-export class GroupDb {
+export class RoomGroupDb {
   private roomRef: firebase.firestore.CollectionReference
 
   constructor(db: firebase.firestore.Firestore) {
@@ -12,31 +12,31 @@ export class GroupDb {
     return this.roomRef.doc(roomUid).collection('groups')
   }
 
-  public async getItems(roomUid: string): Promise<Group[]> {
-    const items: Group[] = []
+  public async getItems(roomUid: string): Promise<RoomGroup[]> {
+    const items: RoomGroup[] = []
     const docs = await this.groupsRef(roomUid).get()
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
         ...doc.data(),
-      } as Group)
+      } as RoomGroup)
     })
     return items
   }
 
-  public async getItem(roomUid: string, groupUid: string): Promise<Group | null> {
+  public async getItem(roomUid: string, groupUid: string): Promise<RoomGroup | null> {
     const doc = await this.groupsRef(roomUid).doc(groupUid).get()
     if (doc.exists) {
       return {
         uid: doc.id,
         ...doc.data(),
-      } as Group
+      } as RoomGroup
     } else {
       return null
     }
   }
 
-  public async setItem(roomUid: string, item: Group): Promise<void> {
+  public async setItem(roomUid: string, item: RoomGroup): Promise<void> {
     await this.groupsRef(roomUid)
       .doc()
       .set({
@@ -46,7 +46,7 @@ export class GroupDb {
       })
   }
 
-  public async updateItem(roomUid: string, groupUid: string, item: Group): Promise<void> {
+  public async updateItem(roomUid: string, groupUid: string, item: RoomGroup): Promise<void> {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
@@ -55,7 +55,7 @@ export class GroupDb {
       .update({
         ...item,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      } as Group)
+      } as RoomGroup)
   }
 
   public async deleteItem(roomUid: string, groupUid: string): Promise<void> {

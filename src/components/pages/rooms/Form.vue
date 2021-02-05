@@ -115,7 +115,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, PropSync, mixins, Watch } from 'nuxt-property-decorator'
+import { Component, Prop, PropSync, mixins } from 'nuxt-property-decorator'
 import BlockUnloadMixin from '~/mixins/BlockUnload'
 // import { App } from '~/modules/types/models'
 const ImgCropForm = () => import('~/components/form/ImgCrop.vue')

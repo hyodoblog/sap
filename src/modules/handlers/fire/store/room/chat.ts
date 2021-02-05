@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
-import { Chat } from '~/modules/types/models'
+import { RoomChat } from '~/modules/types/models'
 
-export class ChatDb {
+export class RoomChatDb {
   private appsRef: firebase.firestore.CollectionReference
 
   constructor(db: firebase.firestore.Firestore) {
@@ -12,31 +12,31 @@ export class ChatDb {
     return this.appsRef.doc(appUid).collection('chats')
   }
 
-  public async getItems(appUid: string): Promise<Chat[]> {
-    const items: Chat[] = []
+  public async getItems(appUid: string): Promise<RoomChat[]> {
+    const items: RoomChat[] = []
     const docs = await this.chatsRef(appUid).get()
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
         ...doc.data(),
-      } as Chat)
+      } as RoomChat)
     })
     return items
   }
 
-  public async getItem(appUid: string, chatUid: string): Promise<Chat | null> {
+  public async getItem(appUid: string, chatUid: string): Promise<RoomChat | null> {
     const doc = await this.chatsRef(appUid).doc(chatUid).get()
     if (doc.exists) {
       return {
         uid: doc.id,
         ...doc.data(),
-      } as Chat
+      } as RoomChat
     } else {
       return null
     }
   }
 
-  public async setItem(appUid: string, item: Chat): Promise<void> {
+  public async setItem(appUid: string, item: RoomChat): Promise<void> {
     await this.chatsRef(appUid)
       .doc()
       .set({
@@ -46,7 +46,7 @@ export class ChatDb {
       })
   }
 
-  public async updateItem(appUid: string, chatUid: string, item: Chat): Promise<void> {
+  public async updateItem(appUid: string, chatUid: string, item: RoomChat): Promise<void> {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
@@ -55,7 +55,7 @@ export class ChatDb {
       .update({
         ...item,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      } as Chat)
+      } as RoomChat)
   }
 
   public async deleteItem(appUid: string, chatUid: string): Promise<void> {

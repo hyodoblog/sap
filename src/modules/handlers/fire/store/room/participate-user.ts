@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
-import { ParticipateUser } from '~/modules/types/models'
+import { RoomParticipateUser } from '~/modules/types/models'
 
-export class ParticipateUserDb {
+export class RoomParticipateUserDb {
   private roomsRef: firebase.firestore.CollectionReference
 
   constructor(db: firebase.firestore.Firestore) {
@@ -12,31 +12,31 @@ export class ParticipateUserDb {
     return this.roomsRef.doc(roomUid).collection('participateUsers')
   }
 
-  public async getItems(roomUid: string): Promise<ParticipateUser[]> {
-    const items: ParticipateUser[] = []
+  public async getItems(roomUid: string): Promise<RoomParticipateUser[]> {
+    const items: RoomParticipateUser[] = []
     const docs = await this.participateUsersRef(roomUid).get()
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
         ...doc.data(),
-      } as ParticipateUser)
+      } as RoomParticipateUser)
     })
     return items
   }
 
-  public async getItem(roomUid: string, groupUid: string): Promise<ParticipateUser | null> {
+  public async getItem(roomUid: string, groupUid: string): Promise<RoomParticipateUser | null> {
     const doc = await this.participateUsersRef(roomUid).doc(groupUid).get()
     if (doc.exists) {
       return {
         uid: doc.id,
         ...doc.data(),
-      } as ParticipateUser
+      } as RoomParticipateUser
     } else {
       return null
     }
   }
 
-  public async setItem(roomUid: string, item: ParticipateUser): Promise<void> {
+  public async setItem(roomUid: string, item: RoomParticipateUser): Promise<void> {
     await this.participateUsersRef(roomUid)
       .doc()
       .set({
@@ -46,7 +46,7 @@ export class ParticipateUserDb {
       })
   }
 
-  public async updateItem(roomUid: string, groupUid: string, item: ParticipateUser): Promise<void> {
+  public async updateItem(roomUid: string, groupUid: string, item: RoomParticipateUser): Promise<void> {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
@@ -55,7 +55,7 @@ export class ParticipateUserDb {
       .update({
         ...item,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      } as ParticipateUser)
+      } as RoomParticipateUser)
   }
 
   public async deleteItem(roomUid: string, groupUid: string): Promise<void> {

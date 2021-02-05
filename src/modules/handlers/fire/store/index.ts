@@ -1,16 +1,20 @@
 import firebase from 'firebase/app'
-import { ChatDb } from './room/chat'
-import { GroupDb } from './room/group'
-import { ParticipateUserDb } from './room/participate-user'
+import { RoomChatDb } from './room/chat'
+import { RoomGroupDb } from './room/group'
+import { RoomParticipateUserDb } from './room/participate-user'
 import { RoomDb } from './room'
 import { UserDb } from './user'
 
 export class StoreFire {
+  // users
   public user: UserDb
-  public group: GroupDb
-  public participateUser: ParticipateUserDb
-  public chat: ChatDb
+
+  // rooms
   public room: RoomDb
+  public roomGroup: RoomGroupDb
+  public roomParticipateUser: RoomParticipateUserDb
+  public roomChat: RoomChatDb
+
   public db: firebase.firestore.Firestore
 
   constructor(db: firebase.firestore.Firestore) {
@@ -21,9 +25,9 @@ export class StoreFire {
 
     // rooms
     this.room = new RoomDb(db)
-    this.group = new GroupDb(db)
-    this.participateUser = new ParticipateUserDb(db)
-    this.chat = new ChatDb(db)
+    this.roomGroup = new RoomGroupDb(db)
+    this.roomParticipateUser = new RoomParticipateUserDb(db)
+    this.roomChat = new RoomChatDb(db)
   }
 
   public getNowAtToDate(): Date {

@@ -19,33 +19,41 @@
             style="max-width: 250px"
           )
       template(v-slot:item="{ item }")
-        tr
+        tr(@click="editOn(item)")
           td
             v-avatar.logo-mini
               v-img(:src="$utils.url.getImgUrl(item.iconPath)")
           td(v-text="item.name")
           td(v-text="item.description")
+    
+      RoomGroupDialogForm(
+        :dialogValue.sync="dialog"
+        submitText="編集する"
+        :nameValue.sync="name"
+        :descriptionValue.sync="description"
+        :submitFunc="editSubmit"
+      )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { ParticipateUser } from '~/modules/types/models'
+import { RoomGroup } from '~/modules/types/models'
 const BaseMaterialCard = () => import('~/components/base/BaseMaterialCard.vue')
 
 @Component({
   components: { BaseMaterialCard },
 })
-export default class RoomsTable extends Vue {
+export default class RoomsDashboardGroupTableComponent extends Vue {
   async mounted() {
     if (this.items.length === 0) {
       this.loading = true
-      await this.$store.dispatch('room/participate-user/init')
+      await this.$store.dispatch('room/group/init')
       this.loading = false
     }
   }
 
-  get items(): ParticipateUser[] {
-    return this.$store.state.room['participate-user'].items
+  get items(): RoomGroup[] {
+    return this.$store.state.room.group.items
   }
 
   search = ''
@@ -62,9 +70,23 @@ export default class RoomsTable extends Vue {
       value: 'name',
     },
     {
-      text: 'メールアドレス',
-      value: 'email',
+      text: '詳細',
+      value: 'description',
     },
   ]
+
+  // edit form
+
+  dialog = false
+  name = ''
+  description = ''
+
+  editOn(item: Group) {
+    this.name = item.name
+    this.description = item.description
+    this.dialog = false
+  }
+
+  editSubmit() {}
 }
 </script>

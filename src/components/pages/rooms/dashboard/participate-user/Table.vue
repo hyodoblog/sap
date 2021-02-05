@@ -29,23 +29,23 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { Group } from '~/modules/types/models'
+import { ParticipateUser } from '~/modules/types/models'
 const BaseMaterialCard = () => import('~/components/base/BaseMaterialCard.vue')
 
 @Component({
   components: { BaseMaterialCard },
 })
-export default class RoomsTable extends Vue {
+export default class RoomsDashboardParticipateUserTableComponent extends Vue {
   async mounted() {
     if (this.items.length === 0) {
       this.loading = true
-      await this.$store.dispatch('room/group/init')
+      await this.$store.dispatch('room/participate-user/init')
       this.loading = false
     }
   }
 
-  get items(): Group[] {
-    return this.$store.state.room.group.items
+  get items(): ParticipateUser[] {
+    return this.$store.state.room['participate-user'].items
   }
 
   search = ''
@@ -62,8 +62,8 @@ export default class RoomsTable extends Vue {
       value: 'name',
     },
     {
-      text: '詳細',
-      value: 'description',
+      text: 'メールアドレス',
+      value: 'email',
     },
   ]
 }
