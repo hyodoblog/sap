@@ -5,6 +5,7 @@ import {
   ApiCreateCookieReqParams,
   ApiCreateCookieResParams,
   ApiCreateRoomReqParams,
+  ApiUpdateRoomReqParams,
   ApiVerifyCookieReqParams,
   ApiVerifyCookieResParams,
 } from '~/modules/types/api'
@@ -36,5 +37,9 @@ export class BackApi extends AxiosApi {
 
   public async createRoom(params: ApiCreateRoomReqParams, headers: any) {
     await this.axios.post(this.backRoutes.createRoom, params, { headers })
+  }
+
+  public async updateRoom(params: ApiUpdateRoomReqParams, headers: any) {
+    await this.axios.post(this.backRoutes.updateRoom, params, { headers })
   }
 }

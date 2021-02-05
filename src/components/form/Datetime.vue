@@ -5,7 +5,7 @@
       slot="before"
     )
       v-icon mdi-calendar
-    datetime.pointer(type="datetime" v-model="datetime" :input-id="datetimeId" format="yyyy-MM-dd HH:mm:ss")
+    datetime.pointer(type="datetime" v-model="datetimeToString" :input-id="datetimeId")
 </template>
 
 <script lang="ts">
@@ -18,6 +18,14 @@ import 'vue-datetime/dist/vue-datetime.css'
 })
 export default class FormDatetimeComponnet extends Vue {
   @Prop({ type: String, default: 'datetime-form' }) readonly datetimeId: string
-  @PropSync('datetimeValue', { type: String, required: true }) datetime: string
+  @PropSync('datetimeValue', { type: Date, required: true }) datetime: Date
+
+  get datetimeToString(): string {
+    return this.datetime.toISOString()
+  }
+
+  set datetimeToString(datetime: string) {
+    this.datetime = new Date(datetime)
+  }
 }
 </script>

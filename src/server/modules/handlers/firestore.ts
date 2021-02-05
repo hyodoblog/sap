@@ -30,3 +30,13 @@ export const firestoreSetRoom = async (uid: string, item: Room): Promise<void> =
     updatedAt: getServerTimestamp(),
   } as Room)
 }
+
+export const firestoreUpdateRoom = async (uid: string, item: Room): Promise<void> => {
+  delete item.uid
+  delete item.createdAt
+  delete item.updatedAt
+  await roomsRef.doc(uid).update({
+    ...item,
+    updatedAt: getServerTimestamp(),
+  } as Room)
+}

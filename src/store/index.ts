@@ -33,7 +33,7 @@ export const actions: ActionTree<RootState, RootState> = {
       if (cookieData && !this.getters['auth/isAuthenticated']) {
         try {
           const userUid = cookieData.user_id
-          const user = await this.$api.back.verifyCookie({ sessionCookie, userUid })
+          const { user } = await this.$api.back.verifyCookie({ sessionCookie, userUid })
 
           this.commit('auth/SET_USER_UID', userUid)
           this.commit('auth/SET_USER', user)

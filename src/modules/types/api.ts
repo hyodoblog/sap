@@ -27,3 +27,8 @@ export interface ApiCreateRoomReqParams {
   roomUid: string
   roomItem: Room
 }
+
+export interface ApiUpdateRoomReqParams {
+  roomUid: string
+  roomItem: Room
+}

@@ -39,6 +39,7 @@
           )
       
       v-divider.my-3
+
       v-row.align-center
         v-col(cols="5")
           .subtitle-1 説明
@@ -54,46 +55,46 @@
             @input="change"
           )
       
-      v-divider.my-3
+      v-divider.mt-3.mb-4
 
       v-row.align-center
-        v-col.py-2(cols="4")
+        v-col.py-2(cols="5")
           .subtitle-1
             | 開始日時
             v-chip.ml-1(x-small) 必須
-        v-col.py-2(cols="8")
+        v-col.py-2(cols="7")
           DatetimeForm(
-            datetimeId="startAtTime"
-            :datetimeValue.sync="startAtTime"
+            datetimeId="startAt"
+            :datetimeValue.sync="startAt"
           )
 
-      v-divider.my-3
+      v-divider.my-4
 
       v-row.align-center
-        v-col.py-2(cols="4")
+        v-col.py-2(cols="5")
           .subtitle-1
             | 投票締め切り日時
             v-chip.ml-1(x-small) 必須
-        v-col.py-2(cols="8")
+        v-col.py-2(cols="7")
           DatetimeForm(
-            datetimeId="votingEndAtTime"
-            :datetimeValue.sync="votingEndAtTime"
+            datetimeId="votingEndAt"
+            :datetimeValue.sync="votingEndAt"
           )
 
-      v-divider.my-3
+      v-divider.my-4
 
       v-row.align-center
-        v-col.py-2(cols="4")
+        v-col.py-2(cols="5")
           .subtitle-1
             | 閲覧終了日時
             v-chip.ml-1(x-small) 必須
-        v-col.py-2(cols="8")
+        v-col.py-2(cols="7")
           DatetimeForm(
-            datetimeId="browsingEndAtTime"
-            :datetimeValue.sync="browsingEndAtTime"
+            datetimeId="browsingEndAt"
+            :datetimeValue.sync="browsingEndAt"
           )
   
-      v-divider.my-3
+      v-divider.my-4
 
       v-btn(
         color="warning"
@@ -145,42 +146,6 @@ export default class extends mixins(BlockUnloadMixin) {
   submitLoading = false
   resetLoading = false
   rules = this.$formRules.room
-
-  // ---------------------
-  // time
-
-  get startAtTime(): string {
-    const date = new Date(this.startAt)
-    return `${date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`}:${
-      date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
-    }`
-  }
-
-  set startAtTime(date: string) {
-    this.startAt = new Date(date)
-  }
-
-  get votingEndAtTime(): string {
-    const date = new Date(this.votingEndAt)
-    return `${date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`}:${
-      date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
-    }`
-  }
-
-  set votingEndAtTime(date: string) {
-    this.votingEndAt = new Date(date)
-  }
-
-  get browsingEndAtTime(): string {
-    const date = new Date(this.browsingEndAt)
-    return `${date.getHours() >= 10 ? date.getHours() : `0${date.getHours()}`}:${
-      date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`
-    }`
-  }
-
-  set browsingEndAtTime(date: string) {
-    this.browsingEndAt = new Date(date)
-  }
 
   get isUpdate(): boolean {
     return !!this.uid

@@ -1,9 +1,11 @@
 import { Request, Response } from 'express'
 import { admin } from '../../../config/firebase'
 
+// modules handlers
+import { firestoreGetUser } from '../../../modules/handlers/firestore'
+
 // 型モジュール
 import { ApiVerifyCookieReqParams, ApiVerifyCookieResParams } from '../../../../modules/types/api'
-import { firestoreGetUser } from '~/server/modules/handlers/firestore'
 
 const isRequestBody = (data: any): data is ApiVerifyCookieReqParams =>
   data !== null && typeof data.sessionCookie === 'string'

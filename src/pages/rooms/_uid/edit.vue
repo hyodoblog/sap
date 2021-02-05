@@ -1,8 +1,8 @@
 <template lang="pug">
   v-container(style="max-width:1000px")
-    BaseVComponent(:title="`「${name}」部屋の編集`" icon="mdi-monitor-dashboard")
+    template(v-if="roomUid")
+      BaseVComponent(:title="`「${name}」部屋の編集`" icon="mdi-monitor-dashboard")
 
-    client-only
       RoomForm(
         submitText="作成する"
         :roomUidValue.sync="roomUid"
@@ -14,6 +14,9 @@
         :browsingEndAtValue.sync="browsingEndAt"
         :submitFunc="submit"
       )
+  
+    v-overlay(v-else)
+      v-progress-circular(indeterminate size="64")
 </template>
 
 <script lang="ts">
@@ -25,31 +28,32 @@ const RoomForm = () => import('~/components/pages/rooms/Form.vue')
 @Component({
   layout: 'protected',
   components: { BaseVComponent, RoomForm },
-  async asyncData({ app, error, route }) {
+})
+export default class RoomNewPage extends Vue {
+  async beforeCreate() {
     try {
-      const { uid } = route.params
-      const item = await app.$fire.store.room.getItem(uid)
+      const { uid } = this.$route.params
+      const item = await this.$fire.store.room.getItem(uid)
       if (item === null) throw Error
-      return {
-        roomUid: uid,
-        iconPath: item.iconPath,
-        name: item.name,
-        description: item.description,
-        startAt: item.startAt.toDate(),
-      }
+      this.setItem(item)
     } catch {
-      error({
+      this.$nuxt.error({
         statusCode: 404,
         message: 'ページが見つかりませんでした。',
       })
     }
-  },
-})
-export default class RoomNewPage extends Vue {
-  mounted() {
-    if (this.iconPath) {
-      this.getImgDataURLToUrl(this.iconPath)
-    }
+  }
+
+  setItem(item: Room) {
+    this.roomUid = item.uid as string
+    this.iconPath = item.iconPath
+    this.name = item.name
+    this.description = item.description
+    this.startAt = item.startAt.toDate()
+    this.votingEndAt = item.votingEndAt.toDate()
+    this.browsingEndAt = item.browsingEndAt.toDate()
+
+    if (this.iconPath) this.getImgDataURLToUrl(this.iconPath)
   }
 
   async getImgDataURLToUrl(filePath: string) {
@@ -64,10 +68,11 @@ export default class RoomNewPage extends Vue {
   }
 
   // form var
-  roomUid: string
-  iconPath: string
-  name: string
-  description: string
+
+  roomUid = ''
+  iconPath = ''
+  name = ''
+  description = ''
   startAt: Date
   votingEndAt: Date
   browsingEndAt: Date
@@ -97,14 +102,14 @@ export default class RoomNewPage extends Vue {
         browsingEndAt: this.$fire.store.convertTimestamp(this.browsingEndAt),
       }
       const headers = await this.$fire.auth.getAuthHeaders()
-      await this.$api.back.createRoom({ roomUid, roomItem: item }, headers)
-      this.$store.dispatch('snackbar/success', '部屋を作成しました。')
+      await this.$api.back.updateRoom({ roomUid: this.roomUid, roomItem: item }, headers)
+      this.$store.dispatch('snackbar/success', '部屋を編集しました。')
       this.$store.dispatch('room/init')
     } catch {
       if (iconPath) {
         this.$fire.storage.delete(iconPath)
       }
-      this.$store.dispatch('snackbar/error', '部屋の作成に失敗しました。')
+      this.$store.dispatch('snackbar/error', '部屋の編集に失敗しました。')
       throw Error
     }
   }

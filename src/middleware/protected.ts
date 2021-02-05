@@ -1,6 +1,6 @@
 import { Middleware } from '@nuxt/types'
 
-const protectedMiddleware: Middleware = ({ app, redirect, store }) => {
+const protectedMiddleware: Middleware = async ({ app, redirect, store }) => {
   if (!store.getters['auth/isAuthenticated']) {
     redirect(app.$routes.front.signin)
   }

@@ -1,18 +1,23 @@
 <template lang="pug">
   v-container(fluid)
-    v-row
-      v-col
-        BaseVComponent(:title="`「${item.name}」部屋`" icon="mdi-monitor-dashboard")
-      v-col.text-right
-        v-btn(
-          color="warning"
-          elevation="0"
-          :to="$routes.front.roomEdit(item.uid)"
-        ) 部屋を編集する
+    template(v-if="item")
+      v-row
+        v-col
+          BaseVComponent(:title="`「${item.name}」部屋`" icon="mdi-monitor-dashboard")
+        v-col.text-right
+          v-btn(
+            color="warning"
+            elevation="0"
+            :to="$routes.front.roomEdit(item.uid)"
+          ) 部屋を編集する
 
-    RoomsDashboardGroupList
+      RoomsDashboardGroupList
 
-    RoomsDashboardParticipateUserList
+      RoomsDashboardParticipateUserList
+
+    template(v-else)
+      v-overlay
+        v-progress-circular(indeterminate size="64")
 </template>
 
 <script lang="ts">
@@ -29,23 +34,22 @@ const RoomsDashboardParticipateUserList = () => import('~/components/pages/rooms
     RoomsDashboardGroupList,
     RoomsDashboardParticipateUserList,
   },
-  async asyncData({ app, error, route }) {
+})
+export default class RoomsDashboardComponent extends Vue {
+  async beforeCreate() {
     try {
-      const { uid } = route.params
-      const item = await app.$fire.store.room.getItem(uid)
+      const { uid } = this.$route.params
+      const item = await this.$fire.store.room.getItem(uid)
       if (item === null) throw Error
-      return {
-        item,
-      }
+      this.item = item
     } catch {
-      error({
+      this.$nuxt.error({
         statusCode: 404,
         message: 'ページが見つかりませんでした。',
       })
     }
-  },
-})
-export default class RoomsDashboardComponent extends Vue {
-  item: Room
+  }
+
+  item: Room | null = null
 }
 </script>

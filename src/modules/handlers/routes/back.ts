@@ -5,4 +5,5 @@ export default class {
 
   // room
   createRoom = '/room/create'
+  updateRoom = '/room/update'
 }

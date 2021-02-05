@@ -70,6 +70,14 @@ export class AuthFire {
     await this.auth.isSignInWithEmailLink(window.location.href)
   }
 
+  public isOnAuthStateChanged(): Promise<boolean> {
+    return new Promise((resolve) =>
+      this.auth.onAuthStateChanged((user) => {
+        resolve(!!user)
+      })
+    )
+  }
+
   // auth
 
   public currentUser(): firebase.User | null {
