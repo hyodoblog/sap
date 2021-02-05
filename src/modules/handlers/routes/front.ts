@@ -1,10 +1,11 @@
 export default class {
   top = '/'
 
-  // dashboard
+  // room
   rooms = '/rooms'
-  room = (roomUid: string) => `/rooms/${roomUid}`
   roomNew = '/rooms/new'
+  room = (roomUid: string) => `/rooms/${roomUid}/dashboard`
+  roomEdit = (roomUid: string) => `/rooms/${roomUid}/edit`
 
   // auth
   signin = '/auth/signin'

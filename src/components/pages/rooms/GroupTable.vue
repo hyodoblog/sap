@@ -19,30 +19,37 @@
             style="max-width: 250px"
           )
       template(v-slot:item="{ item }")
-        tr(@click="movePage(item.uid)" style="cursor: pointer")
+        tr
           td
             v-avatar.logo-mini
               v-img(:src="$utils.url.getImgUrl(item.iconPath)")
           td(v-text="item.name")
           td(v-text="item.description")
-          td(v-text="$fire.store.getConvertTimeJa(item.startAt)")
-          td(v-text="$fire.store.getConvertTimeJa(item.votingEndAt)")
-          td(v-text="$fire.store.getConvertTimeJa(item.browsingEndAt)")
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { Room } from '~/modules/types/models'
+import { Component, Vue } from 'nuxt-property-decorator'
+import { Group } from '~/modules/types/models'
 const BaseMaterialCard = () => import('~/components/base/BaseMaterialCard.vue')
 
 @Component({
   components: { BaseMaterialCard },
 })
 export default class RoomsTable extends Vue {
-  @Prop({ type: Boolean, required: true }) readonly loading: boolean
-  @Prop({ type: Array, required: true }) readonly items: Room[]
+  async mounted() {
+    if (this.items.length === 0) {
+      this.loading = true
+      await this.$store.dispatch('room/group/init')
+      this.loading = false
+    }
+  }
+
+  get items(): Group[] {
+    return this.$store.state.room.group.items
+  }
 
   search = ''
+  loading = false
 
   headers = [
     {
@@ -58,22 +65,6 @@ export default class RoomsTable extends Vue {
       text: '詳細',
       value: 'description',
     },
-    {
-      text: '開始日時',
-      value: 'startAt',
-    },
-    {
-      text: '投票終了日時',
-      value: 'votingEndAt',
-    },
-    {
-      text: '閲覧可能日時',
-      value: 'browsingEndAt',
-    },
   ]
-
-  movePage(roomUid: string) {
-    this.$router.push(this.$routes.front.room(roomUid))
-  }
 }
 </script>

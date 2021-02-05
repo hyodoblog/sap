@@ -13,18 +13,25 @@
             :to="$routes.front.roomNew"
           ) 部屋を作成する
       v-col(cols="12")
-        RoomsTable
+        RoomsTable(
+          :loading="roomLoading"
+          :items="roomItems"
+        )
 
     v-row
       v-col(cols="12")
         .d-flex.justify-space-between.align-center
           .title 参加中の部屋
       v-col(cols="12")
-        RoomsTable
+        RoomsTable(
+          :loading="participateLoading"
+          :items="[]"
+        )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import { Room } from '~/modules/types/models'
 const BaseVComponent = () => import('~/components/base/BaseVComponent.vue')
 const RoomsTable = () => import('~/components/pages/rooms/Table.vue')
 
@@ -32,5 +39,18 @@ const RoomsTable = () => import('~/components/pages/rooms/Table.vue')
   layout: 'protected',
   components: { BaseVComponent, RoomsTable },
 })
-export default class RoomsPage extends Vue {}
+export default class RoomsPage extends Vue {
+  async mounted() {
+    this.roomLoading = this.participateLoading = true
+    if (this.roomItems.length === 0) await this.$store.dispatch('room/init')
+    this.roomLoading = this.participateLoading = false
+  }
+
+  roomLoading = false
+  participateLoading = false
+
+  get roomItems(): Room[] {
+    return this.$store.state.room.items
+  }
+}
 </script>

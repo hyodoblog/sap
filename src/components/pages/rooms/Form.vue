@@ -41,9 +41,7 @@
       v-divider.my-4
       v-row.align-center
         v-col(cols="4")
-          .subtitle-1
-            | 説明
-            v-chip.ml-1(x-small) 必須
+          .subtitle-1 説明
         v-col(cols="8")
           v-text-field.mt-2(
             v-model="description"
@@ -64,7 +62,10 @@
             | 開始日時
             v-chip.ml-1(x-small) 必須
         v-col.py-2(cols="8")
-          DatetimeForm(:datetimeValue.sync="startAtTime")
+          DatetimeForm(
+            datetimeId="startAtTime"
+            :datetimeValue.sync="startAtTime"
+          )
 
       v-divider.my-4
 
@@ -74,7 +75,10 @@
             | 投票締め切り日時
             v-chip.ml-1(x-small) 必須
         v-col.py-2(cols="8")
-          DatetimeForm(:datetimeValue.sync="votingEndAtTime")
+          DatetimeForm(
+            datetimeId="votingEndAtTime"
+            :datetimeValue.sync="votingEndAtTime"
+          )
 
       v-divider.my-4
 
@@ -84,7 +88,10 @@
             | 閲覧終了日時
             v-chip.ml-1(x-small) 必須
         v-col.py-2(cols="8")
-          DatetimeForm(:datetimeValue.sync="browsingEndAtTime")
+          DatetimeForm(
+            datetimeId="browsingEndAtTime"
+            :datetimeValue.sync="browsingEndAtTime"
+          )
   
       v-divider.my-4
 
@@ -139,24 +146,6 @@ export default class extends mixins(BlockUnloadMixin) {
   resetLoading = false
   rules = this.$formRules.room
 
-  // form date
-  date = ''
-  setDate() {
-    const year = this.startAt.getFullYear()
-    const month = this.startAt.getMonth() + 1 >= 10 ? this.startAt.getMonth() + 1 : `0${this.startAt.getMonth() + 1}`
-    const date = this.startAt.getDate() >= 10 ? this.startAt.getDate() : `0${this.startAt.getDate()}`
-    this.date = `${year}-${month}-${date}`
-  }
-
-  @Watch('date')
-  changeDate() {
-    const at = this.startAt
-    const Hours = at.getHours() >= 10 ? String(at.getHours()) : `0${at.getHours()}`
-    const Minutes = at.getMinutes() >= 10 ? String(at.getMinutes()) : `0${at.getMinutes()}`
-
-    this.startAt = new Date(`${this.date}T${Hours}:${Minutes}`)
-  }
-
   // ---------------------
   // time
 
@@ -167,12 +156,8 @@ export default class extends mixins(BlockUnloadMixin) {
     }`
   }
 
-  set startAtTime(time: string) {
-    const at = this.startAt
-    const year = at.getFullYear()
-    const month = at.getMonth() + 1 >= 10 ? String(at.getMonth() + 1) : `0${at.getMonth() + 1}`
-    const date = at.getDate() >= 10 ? String(at.getDate()) : `0${at.getDate()}`
-    this.startAt = new Date(`${year}-${month}-${date}T${time}:00`)
+  set startAtTime(date: string) {
+    this.startAt = new Date(date)
   }
 
   get votingEndAtTime(): string {
@@ -182,12 +167,8 @@ export default class extends mixins(BlockUnloadMixin) {
     }`
   }
 
-  set votingEndAtTime(time: string) {
-    const at = this.votingEndAt
-    const year = at.getFullYear()
-    const month = at.getMonth() + 1 >= 10 ? String(at.getMonth() + 1) : `0${at.getMonth() + 1}`
-    const date = at.getDate() >= 10 ? String(at.getDate()) : `0${at.getDate()}`
-    this.votingEndAt = new Date(`${year}-${month}-${date}T${time}:00`)
+  set votingEndAtTime(date: string) {
+    this.votingEndAt = new Date(date)
   }
 
   get browsingEndAtTime(): string {
@@ -197,31 +178,8 @@ export default class extends mixins(BlockUnloadMixin) {
     }`
   }
 
-  set browsingEndAtTime(time: string) {
-    const at = this.browsingEndAt
-    const year = at.getFullYear()
-    const month = at.getMonth() + 1 >= 10 ? String(at.getMonth() + 1) : `0${at.getMonth() + 1}`
-    const date = at.getDate() >= 10 ? String(at.getDate()) : `0${at.getDate()}`
-    this.browsingEndAt = new Date(`${year}-${month}-${date}T${time}:00`)
-  }
-
-  @Watch('startAt')
-  changeStartAt() {
-    let at = new Date(this.startAt)
-    at.setHours(at.getHours() + 1)
-    at.setMinutes(at.getMinutes() + 30)
-    this.votingEndAt = at
-
-    at = new Date(this.votingEndAt)
-    at.setMinutes(at.getMinutes() + 30)
-    this.browsingEndAt = at
-  }
-
-  @Watch('votingEndAt')
-  changeLastOrderAt() {
-    const at = new Date(this.votingEndAt)
-    at.setMinutes(at.getMinutes() + 30)
-    this.browsingEndAt = at
+  set browsingEndAtTime(date: string) {
+    this.browsingEndAt = new Date(date)
   }
 
   get isUpdate(): boolean {

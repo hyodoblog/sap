@@ -51,7 +51,7 @@ export default class RoomNewPage extends Vue {
       }
 
       // firestoreに保存
-      const itme: Room = {
+      const item: Room = {
         userUid: this.$store.state.auth.userUid,
         iconPath,
         name: this.name,
@@ -61,11 +61,14 @@ export default class RoomNewPage extends Vue {
         browsingEndAt: this.$fire.store.convertTimestamp(this.browsingEndAt),
       }
       const headers = await this.$fire.auth.getAuthHeaders()
-      await this.$api.back.createRoom({ roomUid, roomItem: itme }, headers)
+      await this.$api.back.createRoom({ roomUid, roomItem: item }, headers)
+      this.$store.dispatch('snackbar/success', '部屋を作成しました。')
+      this.$store.dispatch('room/init')
     } catch {
       if (iconPath) {
         this.$fire.storage.delete(iconPath)
       }
+      this.$store.dispatch('snackbar/error', '部屋の作成に失敗しました。')
       throw Error
     }
   }

@@ -2,19 +2,19 @@ import firebase from 'firebase/app'
 import { Group } from '~/modules/types/models'
 
 export class GroupDb {
-  private appsRef: firebase.firestore.CollectionReference
+  private roomRef: firebase.firestore.CollectionReference
 
   constructor(db: firebase.firestore.Firestore) {
-    this.appsRef = db.collection('apps')
+    this.roomRef = db.collection('rooms')
   }
 
-  private groupsRef(appUid: string): firebase.firestore.CollectionReference {
-    return this.appsRef.doc(appUid).collection('groups')
+  private groupsRef(roomUid: string): firebase.firestore.CollectionReference {
+    return this.roomRef.doc(roomUid).collection('groups')
   }
 
-  public async getItems(appUid: string): Promise<Group[]> {
+  public async getItems(roomUid: string): Promise<Group[]> {
     const items: Group[] = []
-    const docs = await this.groupsRef(appUid).get()
+    const docs = await this.groupsRef(roomUid).get()
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
@@ -24,8 +24,8 @@ export class GroupDb {
     return items
   }
 
-  public async getItem(appUid: string, groupUid: string): Promise<Group | null> {
-    const doc = await this.groupsRef(appUid).doc(groupUid).get()
+  public async getItem(roomUid: string, groupUid: string): Promise<Group | null> {
+    const doc = await this.groupsRef(roomUid).doc(groupUid).get()
     if (doc.exists) {
       return {
         uid: doc.id,
@@ -36,8 +36,8 @@ export class GroupDb {
     }
   }
 
-  public async setItem(appUid: string, item: Group): Promise<void> {
-    await this.groupsRef(appUid)
+  public async setItem(roomUid: string, item: Group): Promise<void> {
+    await this.groupsRef(roomUid)
       .doc()
       .set({
         ...item,
@@ -46,11 +46,11 @@ export class GroupDb {
       })
   }
 
-  public async updateItem(appUid: string, groupUid: string, item: Group): Promise<void> {
+  public async updateItem(roomUid: string, groupUid: string, item: Group): Promise<void> {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
-    await this.groupsRef(appUid)
+    await this.groupsRef(roomUid)
       .doc(groupUid)
       .update({
         ...item,
@@ -58,7 +58,7 @@ export class GroupDb {
       } as Group)
   }
 
-  public async deleteItem(appUid: string, groupUid: string): Promise<void> {
-    await this.groupsRef(appUid).doc(groupUid).delete()
+  public async deleteItem(roomUid: string, groupUid: string): Promise<void> {
+    await this.groupsRef(roomUid).doc(groupUid).delete()
   }
 }

@@ -21,3 +21,5 @@ export const firebaseVerifyIdToken = async (req: Request): Promise<admin.auth.De
 }
 
 export const getServerTimestamp = () => admin.firestore.FieldValue.serverTimestamp()
+
+export const converTimestamp = (secondes: number) => admin.firestore.Timestamp.fromMillis(secondes * 1000)

@@ -17,7 +17,9 @@ export const mutations: MutationTree<RoomState> = {
 export const actions: ActionTree<RoomState, RootState> = {
   async init({ commit }) {
     try {
-      await this
+      const userUid = this.state.auth?.userUid as string
+      const items = await this.$fire.store.room.getItems(userUid)
+      commit('SET', items)
     } catch {
       this.dispatch('snackbar/error', '部屋情報の初期化に失敗しました。')
       commit('RESET')

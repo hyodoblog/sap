@@ -2,19 +2,19 @@ import firebase from 'firebase/app'
 import { ParticipateUser } from '~/modules/types/models'
 
 export class ParticipateUserDb {
-  private appsRef: firebase.firestore.CollectionReference
+  private roomsRef: firebase.firestore.CollectionReference
 
   constructor(db: firebase.firestore.Firestore) {
-    this.appsRef = db.collection('apps')
+    this.roomsRef = db.collection('rooms')
   }
 
-  private participateUsersRef(appUid: string): firebase.firestore.CollectionReference {
-    return this.appsRef.doc(appUid).collection('participateUsers')
+  private participateUsersRef(roomUid: string): firebase.firestore.CollectionReference {
+    return this.roomsRef.doc(roomUid).collection('participateUsers')
   }
 
-  public async getItems(appUid: string): Promise<ParticipateUser[]> {
+  public async getItems(roomUid: string): Promise<ParticipateUser[]> {
     const items: ParticipateUser[] = []
-    const docs = await this.participateUsersRef(appUid).get()
+    const docs = await this.participateUsersRef(roomUid).get()
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
@@ -24,8 +24,8 @@ export class ParticipateUserDb {
     return items
   }
 
-  public async getItem(appUid: string, groupUid: string): Promise<ParticipateUser | null> {
-    const doc = await this.participateUsersRef(appUid).doc(groupUid).get()
+  public async getItem(roomUid: string, groupUid: string): Promise<ParticipateUser | null> {
+    const doc = await this.participateUsersRef(roomUid).doc(groupUid).get()
     if (doc.exists) {
       return {
         uid: doc.id,
@@ -36,8 +36,8 @@ export class ParticipateUserDb {
     }
   }
 
-  public async setItem(appUid: string, item: ParticipateUser): Promise<void> {
-    await this.participateUsersRef(appUid)
+  public async setItem(roomUid: string, item: ParticipateUser): Promise<void> {
+    await this.participateUsersRef(roomUid)
       .doc()
       .set({
         ...item,
@@ -46,11 +46,11 @@ export class ParticipateUserDb {
       })
   }
 
-  public async updateItem(appUid: string, groupUid: string, item: ParticipateUser): Promise<void> {
+  public async updateItem(roomUid: string, groupUid: string, item: ParticipateUser): Promise<void> {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
-    await this.participateUsersRef(appUid)
+    await this.participateUsersRef(roomUid)
       .doc(groupUid)
       .update({
         ...item,
@@ -58,7 +58,7 @@ export class ParticipateUserDb {
       } as ParticipateUser)
   }
 
-  public async deleteItem(appUid: string, groupUid: string): Promise<void> {
-    await this.participateUsersRef(appUid).doc(groupUid).delete()
+  public async deleteItem(roomUid: string, groupUid: string): Promise<void> {
+    await this.participateUsersRef(roomUid).doc(groupUid).delete()
   }
 }
