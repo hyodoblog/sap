@@ -6,10 +6,11 @@
     ) グループ追加する
     RoomGroupFormDialog(
       :dialogValue.sync="dialog"
+      title="グループを追加"
       submitText="追加する"
-      :nameValue.sync="name"
+      :displayNameValue.sync="displayName"
       :descriptionValue.sync="description"
-      :priorityValue.sync="priority"
+      :maxNumValue.sync="maxNum"
       :submitFunc="submit"
     )
 </template>
@@ -26,16 +27,22 @@ export default class RoomsDashboardGroupFormNewComponent extends Vue {
 
   // form vars
 
-  name = ''
+  displayName = ''
   description = ''
-  priority = 0
+  maxNum = 0
 
   // form submti
 
   submit() {
     const roomUid = this.$route.params.uid
     return this.$fire.store.roomGroup
-      .setItem(roomUid, { name: this.name, description: this.description, priority: this.priority })
+      .setItem(roomUid, {
+        displayName: this.displayName,
+        description: this.description ? this.description : null,
+        maxNum: this.maxNum > 0 ? this.maxNum : null,
+        loginToken: this.$utils.utility.getRandomToken(40),
+        hopeParticipateUserUidItems: [],
+      })
       .then(() => this.$store.dispatch('snackbar/success', 'グループを保存しました。'))
       .catch(() => this.$store.dispatch('snackbar/error', 'グループの保存に失敗しました。'))
   }

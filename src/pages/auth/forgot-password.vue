@@ -22,7 +22,7 @@
           v-btn(
             :loading="isLoading"
             block
-            x-large
+            large
             color="primary"
             @click="submit"
           ) パスワードリセットのリクエスト

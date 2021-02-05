@@ -19,7 +19,7 @@
             @input="change"
           )
 
-      v-divider.my-4
+      v-divider.my-3
 
       v-row.align-center
         v-col(cols="4")
@@ -38,7 +38,7 @@
             @input="change"
           )
       
-      v-divider.my-4
+      v-divider.my-3
       v-row.align-center
         v-col(cols="4")
           .subtitle-1 説明
@@ -54,7 +54,7 @@
             @input="change"
           )
       
-      v-divider.my-4
+      v-divider.my-3
 
       v-row.align-center
         v-col.py-2(cols="4")
@@ -67,7 +67,7 @@
             :datetimeValue.sync="startAtTime"
           )
 
-      v-divider.my-4
+      v-divider.my-3
 
       v-row.align-center
         v-col.py-2(cols="4")
@@ -80,7 +80,7 @@
             :datetimeValue.sync="votingEndAtTime"
           )
 
-      v-divider.my-4
+      v-divider.my-3
 
       v-row.align-center
         v-col.py-2(cols="4")
@@ -93,7 +93,7 @@
             :datetimeValue.sync="browsingEndAtTime"
           )
   
-      v-divider.my-4
+      v-divider.my-3
 
       v-btn(
         color="warning"

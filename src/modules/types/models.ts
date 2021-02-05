@@ -31,27 +31,28 @@ export interface Room extends Base {
   browsingEndAt: firebase.firestore.Timestamp
 }
 
-// *******************
-// /rooms/group
-export interface RoomGroup extends Base {
-  name: string
-  description: string
-  priority: number
-}
-
 // ****************************
 // /rooms/chats
 export interface RoomChat extends Base {
-  userUid: string
+  displayName: string
   content: string
+}
+
+// *******************
+// /rooms/group
+export interface RoomGroup extends Base {
+  displayName: string
+  description: string | null
+  maxNum: number | null
+  loginToken: string
+  hopeParticipateUserUidItems: string[]
 }
 
 // ****************************
 // /rooms/participateUsers
 export interface RoomParticipateUser extends Base {
-  groupUid: string
   displayName: string
   email: string
   loginToken: string
-  hopeParticipateUserUidItems: string[]
+  hopeGroupUidItems: string[]
 }

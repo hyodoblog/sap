@@ -20,17 +20,18 @@
               style="max-width: 250px"
             )
         template(v-slot:item="{ item }")
-          tr(class="pointer" @click="editOn(item)")
-            td(v-text="item.name")
+          tr.pointer(@click="editOn(item)")
+            td(v-text="item.displayName")
             td(v-text="item.description")
-            td(v-text="item.priority")
+            td(v-text="item.maxNum")
       
     RoomGroupFormDialog(
       :dialogValue.sync="dialog"
+      title="グループを編集"
       submitText="編集する"
-      :nameValue.sync="name"
+      :displayNameValue.sync="displayName"
       :descriptionValue.sync="description"
-      :priorityValue.sync="priority"
+      :maxNumValue.sync="maxNum"
       :submitFunc="editSubmit"
     )
 </template>
@@ -71,8 +72,8 @@ export default class RoomsDashboardGroupTableComponent extends Vue {
       value: 'description',
     },
     {
-      text: '優先度',
-      value: 'priority',
+      text: '最大参加人数',
+      value: 'maxNum',
     },
   ]
 
@@ -80,22 +81,28 @@ export default class RoomsDashboardGroupTableComponent extends Vue {
 
   dialog = false
   groupUid = ''
-  name = ''
+  displayName = ''
   description = ''
-  priority = 0
+  maxNum = 0
 
   editOn(item: RoomGroup) {
     this.groupUid = item.uid as string
-    this.name = item.name
-    this.description = item.description
-    this.priority = item.priority
+    this.displayName = item.displayName
+    this.description = item.description === null ? '' : this.description
+    this.maxNum = item.maxNum === null ? 0 : this.maxNum
     this.dialog = true
   }
 
   editSubmit() {
     const roomUid = this.$route.params.uid
     return this.$fire.store.roomGroup
-      .updateItem(roomUid, this.groupUid, { name: this.name, description: this.description, priority: this.priority })
+      .updateItem(roomUid, this.groupUid, {
+        displayName: this.displayName,
+        description: this.description ? this.description : null,
+        maxNum: this.maxNum > 0 ? this.maxNum : null,
+        loginToken: this.$utils.utility.getRandomToken(30),
+        hopeParticipateUserUidItems: [],
+      })
       .then(() => this.$store.dispatch('snackbar/success', 'グループを編集しました。'))
       .catch(() => this.$store.dispatch('snackbar/error', 'グループの編集に失敗しました。'))
   }

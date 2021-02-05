@@ -8,7 +8,7 @@
       :disabled="disabled"
       block
       depressed
-      x-large
+      large
       color="primary"
       @click="resend"
     ) Re-send email {{ seconds }}

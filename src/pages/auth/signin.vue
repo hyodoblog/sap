@@ -37,7 +37,7 @@
             :loading="isLoading"
             :disabled="isSignInDisabled"
             block
-            x-large
+            large
             color="primary"
             @click="submit"
           ) サインイン

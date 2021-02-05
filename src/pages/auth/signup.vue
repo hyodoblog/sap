@@ -52,7 +52,7 @@
             :loading="isLoading"
             :disabled="isSignUpDisabled"
             block
-            x-large
+            large
             color="primary"
             @click="submit"
           ) アカウントを作成する

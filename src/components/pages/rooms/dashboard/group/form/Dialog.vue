@@ -10,29 +10,29 @@
         v-model="isValid"
         lazy-validation
       )
-        v-row
-          v-col(cols="12")
-            v-btn(icon @click="dialog = false")
-              v-icon mdi-close
+        .d-flex.justify-space-between.align-center
+          .title.font-weight-bold {{ title }}
+          v-btn(icon @click="dialog = false")
+            v-icon mdi-close
 
-        v-divider.my-4
+        v-divider.my-3
 
         v-row.align-center
           v-col(cols="4")
             .subtitle-1
-              | 名前
+              | 表示名
               v-chip.ml-1(x-small) 必須
           v-col(cols="8")
             v-text-field.mt-2(
-              v-model="name"
+              v-model="displayName"
               :disabled="isLoading"
-              :rules="rules.name"
+              :rules="rules.displayName"
               required
               outlined
               dense
             )
 
-        v-divider.my-4
+        v-divider.my-3
 
         v-row.align-center
           v-col(cols="4")
@@ -46,32 +46,32 @@
               dense
             )
 
-        v-divider.my-4
+        v-divider.my-3
 
         v-row.align-center
           v-col(cols="4")
             .subtitle-1
-              | 優先度
+              | 最大参加人数
               v-chip.ml-1(x-small) 必須
           v-col(cols="8")
             v-text-field.mt-2(
-              v-model.number="priority"
+              v-model.number="maxNum"
               :disabled="isLoading"
-              :rules="rules.priority"
-              hint="0~10の間で入力してください。大きいほど優先度が高くなります。"
+              :rules="rules.maxNum"
+              hint="無制限にする場合は「0」を記入する"
               persistent-hint
               type="number"
               required
               outlined
               dense
-              @input="setPriority"
+              @input="setMaxNum"
             )
 
-        v-divider.my-4
+        v-divider.my-3
 
         v-card-actions
           v-btn(
-            x-large
+            large
             color="warning"
             elevation="0"
             :disabled="isLoading"
@@ -87,10 +87,11 @@ import { Component, Prop, PropSync, Vue } from 'nuxt-property-decorator'
 export default class RoomsDashboardGroupFormDialogComponent extends Vue {
   @PropSync('dialogValue', { type: Boolean, required: true }) dialog: boolean
 
-  @PropSync('nameValue', { type: String, required: true }) name: string
+  @PropSync('displayNameValue', { type: String, required: true }) displayName: string
   @PropSync('descriptionValue', { type: String, required: true }) description: string
-  @PropSync('priorityValue', { type: Number, required: true }) priority: number
+  @PropSync('maxNumValue', { type: Number, required: true }) maxNum: number
 
+  @Prop({ type: String, required: true }) readonly title: string
   @Prop({ type: String, required: true }) readonly submitText: string
   @Prop({ type: Function, required: true }) submitFunc: () => Promise<void>
 
@@ -98,8 +99,8 @@ export default class RoomsDashboardGroupFormDialogComponent extends Vue {
   isLoading = false
   rules = this.$formRules.roomGroup
 
-  setPriority(num: string) {
-    this.priority = Number(num)
+  setMaxNum(num: string) {
+    this.maxNum = Number(num)
   }
 
   submit() {

@@ -26,7 +26,7 @@
       :loading="isLoading"
       block
       depressed
-      x-large
+      large
       color="primary"
       @click="confirmPasswordReset"
     ) Set new password and Sign In

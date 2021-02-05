@@ -2,7 +2,7 @@
   v-row.mb-6
     v-col(cols="12")
       .d-flex.justify-space-between.align-center
-        .title グループ一覧
+        .title 参加者一覧
         RoomParticipateUserFormNew
         
     v-col(cols="12")
