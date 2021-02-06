@@ -1,7 +1,7 @@
 <template lang="pug">
   v-container(style="max-width:1000px")
     template(v-if="roomUid")
-      BaseVComponent(:title="`「${name}」部屋の編集`" icon="mdi-monitor-dashboard")
+      BaseVComponent(:title="`「${title}」部屋の編集`" icon="mdi-monitor-dashboard")
 
       RoomForm(
         submitText="編集する"
@@ -45,6 +45,7 @@ export default class RoomNewPage extends Vue {
   }
 
   setItem(item: Room) {
+    this.title = item.name
     this.roomUid = item.uid as string
     this.iconPath = item.iconPath
     this.name = item.name
@@ -67,15 +68,17 @@ export default class RoomNewPage extends Vue {
     reader.readAsDataURL(res.data)
   }
 
+  title = ''
+
   // form var
 
   roomUid = ''
   iconPath = ''
   name = ''
   description = ''
-  startAt: Date
-  votingEndAt: Date
-  browsingEndAt: Date
+  startAt = new Date()
+  votingEndAt = new Date()
+  browsingEndAt = new Date()
   imgDataURL = ''
 
   async submit(): Promise<void> {

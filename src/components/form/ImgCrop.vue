@@ -65,7 +65,7 @@ export default class extends Vue {
   @Prop({ type: Number, default: false }) readonly maxHeight: number
   @Prop({ type: String, default: 'crop-canvas' }) readonly canvasId: string
   @Prop({ type: Boolean, required: true }) readonly disabled: boolean
-  @PropSync('imgDataURLValue', { type: String, required: true }) imgDataURL: string
+  @PropSync('imgDataURLValue', { type: String, required: true }) imgDataURL!: string
 
   mounted() {
     if (this.imgDataURL) {

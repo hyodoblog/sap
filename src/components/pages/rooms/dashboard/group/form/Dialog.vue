@@ -124,13 +124,13 @@ import { Component, Prop, PropSync, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class RoomsDashboardGroupFormDialogComponent extends Vue {
-  @PropSync('dialogValue', { type: Boolean, required: true }) dialog: boolean
+  @PropSync('dialogValue', { type: Boolean, required: true }) dialog!: boolean
 
-  @Prop({ type: String, default: '' }) readonly groupUid: string
-  @PropSync('displayNameValue', { type: String, required: true }) displayName: string
-  @PropSync('emailValue', { type: String, required: true }) email: string
-  @PropSync('descriptionValue', { type: String, required: true }) description: string
-  @PropSync('maxNumValue', { type: Number, required: true }) maxNum: number
+  @Prop({ type: String, default: '' }) readonly groupUid!: string
+  @PropSync('displayNameValue', { type: String, required: true }) displayName!: string
+  @PropSync('emailValue', { type: String, required: true }) email!: string
+  @PropSync('descriptionValue', { type: String, required: true }) description!: string
+  @PropSync('maxNumValue', { type: Number, required: true }) maxNum!: number
 
   @Prop({ type: String, required: true }) readonly title: string
   @Prop({ type: String, required: true }) readonly submitText: string

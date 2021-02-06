@@ -2,18 +2,17 @@
   v-container(style="max-width:1000px")
     BaseVComponent(title="部屋作成" icon="mdi-monitor-dashboard")
 
-    client-only
-      RoomForm(
-        submitText="作成する"
-        :roomUidValue.sync="roomUid"
-        :imgDataURLValue.sync="imgDataURL"
-        :nameValue.sync="name"
-        :descriptionValue.sync="description"
-        :startAtValue.sync="startAt"
-        :votingEndAtValue.sync="votingEndAt"
-        :browsingEndAtValue.sync="browsingEndAt"
-        :submitFunc="submit"
-      )
+    RoomForm(
+      submitText="作成する"
+      :roomUidValue.sync="roomUid"
+      :imgDataURLValue.sync="imgDataURL"
+      :nameValue.sync="name"
+      :descriptionValue.sync="description"
+      :startAtValue.sync="startAt"
+      :votingEndAtValue.sync="votingEndAt"
+      :browsingEndAtValue.sync="browsingEndAt"
+      :submitFunc="submit"
+    )
 </template>
 
 <script lang="ts">

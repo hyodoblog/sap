@@ -129,15 +129,23 @@ export default class extends mixins(BlockUnloadMixin) {
   @Prop({ type: String, required: true }) readonly submitText: string
 
   @Prop({ type: String, default: '' }) readonly uid: string
-  @PropSync('imgDataURLValue', { type: String, required: true }) imgDataURL: string
-  @PropSync('nameValue', { type: String, required: true }) name: string
-  @PropSync('descriptionValue', { type: String, required: true }) description: string
-  @PropSync('startAtValue', { type: Date, required: true }) startAt: Date
-  @PropSync('votingEndAtValue', { type: Date, required: true }) votingEndAt: Date
-  @PropSync('browsingEndAtValue', { type: Date, required: true }) browsingEndAt: Date
+  @PropSync('imgDataURLValue', { type: String, required: true }) imgDataURL!: string
+  @PropSync('nameValue', { type: String, required: true }) name!: string
+  @PropSync('descriptionValue', { type: String, required: true }) description!: string
+  @PropSync('startAtValue', { type: Date, required: true }) startAt!: Date
+  @PropSync('votingEndAtValue', { type: Date, required: true }) votingEndAt!: Date
+  @PropSync('browsingEndAtValue', { type: Date, required: true }) browsingEndAt!: Date
 
   @Prop({ type: Function, required: true }) submitFunc: () => Promise<void>
   @Prop({ type: Function, default: () => {} }) resetFunc: () => Promise<void>
+
+  get testStartAt(): Date {
+    return this.startAt
+  }
+
+  set testStartAt(startAt: Date) {
+    console.log(startAt)
+  }
 
   // form config
   valid = true
@@ -171,6 +179,19 @@ export default class extends mixins(BlockUnloadMixin) {
   submit() {
     // @ts-ignore
     if (!this.$refs.form.validate()) {
+      this.$store.dispatch('snackbar/error', '入力に誤りがあります。')
+      return
+    }
+    // 日付チェック
+    console.log(this.startAt.toDateString())
+    if (this.startAt.getTime() >= this.votingEndAt.getTime()) {
+      this.$store.dispatch('snackbar/error', '投票締め切り日時は、開始日時よりも後に設定してください。')
+      return
+    } else if (this.votingEndAt.getTime() >= this.browsingEndAt.getTime()) {
+      this.$store.dispatch('snackbar/error', '閲覧締め切り日時は、投票締め切り日時よりも後に設定してください。')
+      return
+    } else if (this.startAt.getTime() >= this.browsingEndAt.getTime()) {
+      this.$store.dispatch('snackbar/error', '閲覧締め切り日時は、開始日時よりも後に設定してください。')
       return
     }
 
