@@ -19,8 +19,7 @@ service cloud.firestore {
     // room
 
     match /rooms/{userUid} {
-      allow read: if isAuthenticated();
-      allow write: if isAdminAuthenticated();
+      allow read, write: if isAuthenticated();
 
       match /messages/{uid} {
         allow read, write: if isAuthenticated();
