@@ -22,7 +22,7 @@
         tr(@click="movePage(item.uid)" style="cursor: pointer")
           td
             v-avatar.logo-mini
-              v-img(:src="$utils.url.getImgUrl(item.iconPath)")
+              v-img(:src="$utils.url.getImgUrl(item.iconPath, item.updatedAt)")
           td(v-text="item.name")
           td(v-text="item.description")
           td(v-text="$fire.store.getConvertTimeJa(item.startAt)")
