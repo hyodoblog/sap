@@ -42,6 +42,7 @@ export interface RoomChat extends Base {
 // /rooms/group
 export interface RoomGroup extends Base {
   displayName: string
+  email: string | null
   description: string | null
   maxNum: number | null
   loginToken: string

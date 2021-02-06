@@ -22,7 +22,8 @@
         template(v-slot:item="{ item }")
           tr.pointer(@click="editOn(item)")
             td(v-text="item.displayName")
-            td(v-text="item.description")
+            td(v-text="item.email")
+            td(v-text="item.description" style="max-width: 180px;word-break: break-all;")
             td(v-text="item.maxNum")
       
     RoomGroupFormDialog(
@@ -31,6 +32,7 @@
       submitText="編集する"
       :groupUid="groupUid"
       :displayNameValue.sync="displayName"
+      :emailValue.sync="email"
       :descriptionValue.sync="description"
       :maxNumValue.sync="maxNum"
       :submitFunc="editSubmit"
@@ -69,6 +71,10 @@ export default class RoomsDashboardGroupTableComponent extends Vue {
       value: 'name',
     },
     {
+      text: 'メールアドレス',
+      value: 'email',
+    },
+    {
       text: '詳細',
       value: 'description',
     },
@@ -83,14 +89,16 @@ export default class RoomsDashboardGroupTableComponent extends Vue {
   dialog = false
   groupUid = ''
   displayName = ''
+  email = ''
   description = ''
   maxNum = 0
 
   editOn(item: RoomGroup) {
     this.groupUid = item.uid as string
     this.displayName = item.displayName
-    this.description = item.description === null ? '' : this.description
-    this.maxNum = item.maxNum === null ? 0 : this.maxNum
+    this.description = item.description === null ? '' : item.description
+    this.email = item.email === null ? '' : item.email
+    this.maxNum = item.maxNum === null ? 0 : item.maxNum
     this.dialog = true
   }
 
@@ -100,6 +108,7 @@ export default class RoomsDashboardGroupTableComponent extends Vue {
       .updateItem(roomUid, this.groupUid, {
         displayName: this.displayName,
         description: this.description ? this.description : null,
+        email: this.email ? this.email : null,
         maxNum: this.maxNum > 0 ? this.maxNum : null,
         loginToken: this.$utils.utility.getRandomToken(30),
         hopeParticipateUserUidItems: [],

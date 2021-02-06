@@ -36,6 +36,23 @@
 
         v-row.align-center
           v-col(cols="5")
+            .subtitle-1
+              | メールアドレス
+              v-chip.ml-1(x-small) 必須
+          v-col(cols="7")
+            v-text-field.mt-2(
+              v-model="email"
+              :disabled="isLoading"
+              :rules="rules.email"
+              outlined
+              required
+              dense
+            )
+
+        v-divider.my-3
+
+        v-row.align-center
+          v-col(cols="5")
             .subtitle-1 説明
           v-col(cols="7")
             v-text-field.mt-2(
@@ -114,6 +131,7 @@ export default class RoomsDashboardGroupFormDialogComponent extends Vue {
 
   @Prop({ type: String, default: '' }) readonly groupUid: string
   @PropSync('displayNameValue', { type: String, required: true }) displayName: string
+  @PropSync('emailValue', { type: String, required: true }) email: string
   @PropSync('descriptionValue', { type: String, required: true }) description: string
   @PropSync('maxNumValue', { type: Number, required: true }) maxNum: number
 

@@ -9,6 +9,7 @@
       title="グループを追加"
       submitText="追加する"
       :displayNameValue.sync="displayName"
+      :emailValue.sync="email"
       :descriptionValue.sync="description"
       :maxNumValue.sync="maxNum"
       :submitFunc="submit"
@@ -28,6 +29,7 @@ export default class RoomsDashboardGroupFormNewComponent extends Vue {
   // form vars
 
   displayName = ''
+  email = ''
   description = ''
   maxNum = 0
 
@@ -38,6 +40,7 @@ export default class RoomsDashboardGroupFormNewComponent extends Vue {
     return this.$fire.store.roomGroup
       .setItem(roomUid, {
         displayName: this.displayName,
+        email: this.email ? this.email : null,
         description: this.description ? this.description : null,
         maxNum: this.maxNum > 0 ? this.maxNum : null,
         loginToken: this.$utils.utility.getRandomToken(40),
