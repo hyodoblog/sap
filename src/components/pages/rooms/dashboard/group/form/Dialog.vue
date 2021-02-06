@@ -36,16 +36,13 @@
 
         v-row.align-center
           v-col(cols="5")
-            .subtitle-1
-              | メールアドレス
-              v-chip.ml-1(x-small) 必須
+            .subtitle-1 メールアドレス
           v-col(cols="7")
             v-text-field.mt-2(
               v-model="email"
               :disabled="isLoading"
               :rules="rules.email"
               outlined
-              required
               dense
             )
 

@@ -65,7 +65,7 @@ export default class RoomsDashboardParticipateUserTableComponent extends Vue {
 
   headers = [
     {
-      text: '名前',
+      text: '表示名',
       value: 'name',
     },
     {

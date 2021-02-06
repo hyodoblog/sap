@@ -24,7 +24,7 @@
       v-row.align-center
         v-col(cols="5")
           .subtitle-1
-            | 名前
+            | 表示名
             v-chip.ml-1(x-small) 必須
         v-col(cols="7")
           v-text-field.mt-2(
