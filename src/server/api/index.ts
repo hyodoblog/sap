@@ -13,6 +13,9 @@ import createRoomRouter from './routes/room/create'
 import updateRoomRouter from './routes/room/update'
 import deleteRoomRouter from './routes/room/delete'
 
+// invitation
+import allInvitationRouter from './routes/invitation/all'
+
 // *******************:
 
 const router = Router()
@@ -26,5 +29,8 @@ router.post(backRoutes.verifyCookie, verifyCookieRouter)
 router.post(backRoutes.createRoom, createRoomRouter)
 router.post(backRoutes.updateRoom, updateRoomRouter)
 router.delete(backRoutes.deleteRoom, deleteRoomRouter)
+
+// invitation
+router.post(backRoutes.allInvitation, allInvitationRouter)
 
 export default router

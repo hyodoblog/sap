@@ -36,3 +36,28 @@ export interface ApiUpdateRoomReqParams {
 export interface ApiDeleteRoomReqParams {
   roomUid: string
 }
+
+// *******************
+// invitation
+
+export interface ApiGroupInvitationReqParams {
+  roomUid: string
+  groupUid: string
+}
+
+export interface ApiGroupAllInvitationReqParams {
+  roomUid: string
+}
+
+export interface ApiParticipateUserInvitationReqParams {
+  roomUid: string
+  participateUserUid: string
+}
+
+export interface ApiParticipateUserAllInvitationReqParams {
+  roomUid: string
+}
+
+export interface ApiAllInvitationReqParams {
+  roomUid: string
+}

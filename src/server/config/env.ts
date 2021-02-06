@@ -1,4 +1,16 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
+
+const baseUrl = process.env.BASE_URL as string
 const stripeAccount = process.env.STRIPE_ACCOUNT as string
 const storageBucketName = process.env.FIREBASE_STORAGE_BUCKET as string
 
-export { stripeAccount, storageBucketName }
+const envSendGrid = {
+  apiKey: process.env.SENDGRID_API_KEY as string,
+  templateId: {
+    invitation: process.env.SENDGRID_TAMPLATE_ID_INVITATION as string,
+  },
+  fromEmail: process.env.SENDGRID_FROM_EMAIL as string,
+}
+
+export { baseUrl, stripeAccount, storageBucketName, envSendGrid }

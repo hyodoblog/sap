@@ -74,6 +74,16 @@ export default class RoomsDashboardInvitation extends Vue {
 
   participateUserAllSend() {}
 
-  allSend() {}
+  async allSend() {
+    try {
+      this.isDisabled = this.isAllLoading = true
+      const roomUid = this.$route.params.uid
+      const headers = await this.$fire.auth.getAuthHeaders()
+      await this.$api.back.allInvitation({ roomUid }, headers)
+      this.$store.dispatch('snackbar/success', '招待メールを送信しました。')
+    } catch {
+      this.$store.dispatch('snackbar/error', '招待メールの送信に失敗しました。')
+    }
+  }
 }
 </script>

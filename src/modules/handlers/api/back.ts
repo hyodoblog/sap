@@ -6,6 +6,7 @@ import {
   ApiCreateCookieResParams,
   ApiCreateRoomReqParams,
   ApiDeleteRoomReqParams,
+  ApiAllInvitationReqParams,
   ApiUpdateRoomReqParams,
   ApiVerifyCookieReqParams,
   ApiVerifyCookieResParams,
@@ -46,5 +47,11 @@ export class BackApi extends AxiosApi {
 
   public async deleteRoom(params: ApiDeleteRoomReqParams, headers: any) {
     await this.axios.delete(this.backRoutes.deleteRoom, { headers, params })
+  }
+
+  // invitation
+
+  public async allInvitation(params: ApiAllInvitationReqParams, headers: any) {
+    await this.axios.post(this.backRoutes.allInvitation, params, { headers })
   }
 }

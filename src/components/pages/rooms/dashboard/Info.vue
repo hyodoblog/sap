@@ -2,6 +2,11 @@
   v-card.pa-2
     .d-flex
       v-col.py-2(cols="5")
+        .title 公開状況
+      v-col.py-2(cols="7")
+        .subtitle-1 {{ item.isPublic ? '公開' : '非公開' }}
+    .d-flex
+      v-col.py-2(cols="5")
         .title 開始日時
       v-col.py-2(cols="7")
         .subtitle-1 {{ convertDatetime(item.startAt) }}

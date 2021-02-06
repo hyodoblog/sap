@@ -7,4 +7,11 @@ export default class {
   createRoom = '/room/create'
   updateRoom = '/room/update'
   deleteRoom = '/room/delete'
+
+  // invitation
+  groupInvitation = '/invitation/group'
+  groupAllInvitation = '/invitation/group/all'
+  participateUserInvitation = '/invitation/participate-user'
+  participateUserAllInvitation = '/invitation/participate-user/all'
+  allInvitation = '/invitation/all'
 }
