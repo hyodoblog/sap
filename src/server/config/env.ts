@@ -10,7 +10,9 @@ const envSendGrid = {
   templateId: {
     invitation: process.env.SENDGRID_TAMPLATE_ID_INVITATION as string,
   },
-  fromEmail: process.env.SENDGRID_FROM_EMAIL as string,
+  email: {
+    noreply: process.env.SENDGRID_FROM_EMAIL_NOREPLY as string,
+  },
 }
 
 export { baseUrl, stripeAccount, storageBucketName, envSendGrid }

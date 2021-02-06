@@ -7,6 +7,10 @@ import {
   ApiCreateRoomReqParams,
   ApiDeleteRoomReqParams,
   ApiAllInvitationReqParams,
+  ApiGroupAllInvitationReqParams,
+  ApiGroupInvitationReqParams,
+  ApiParticipateUserAllInvitationReqParams,
+  ApiParticipateUserInvitationReqParams,
   ApiUpdateRoomReqParams,
   ApiVerifyCookieReqParams,
   ApiVerifyCookieResParams,
@@ -50,6 +54,22 @@ export class BackApi extends AxiosApi {
   }
 
   // invitation
+
+  public async groupInvitation(params: ApiGroupInvitationReqParams, headers: any) {
+    await this.axios.post(this.backRoutes.groupInvitation, params, { headers })
+  }
+
+  public async groupAllInvitation(params: ApiGroupAllInvitationReqParams, headers: any) {
+    await this.axios.post(this.backRoutes.groupAllInvitation, params, { headers })
+  }
+
+  public async participateUserInvitation(params: ApiParticipateUserInvitationReqParams, headers: any) {
+    await this.axios.post(this.backRoutes.participateUserInvitation, params, { headers })
+  }
+
+  public async participateUserAllInvitation(params: ApiParticipateUserAllInvitationReqParams, headers: any) {
+    await this.axios.post(this.backRoutes.participateUserAllInvitation, params, { headers })
+  }
 
   public async allInvitation(params: ApiAllInvitationReqParams, headers: any) {
     await this.axios.post(this.backRoutes.allInvitation, params, { headers })

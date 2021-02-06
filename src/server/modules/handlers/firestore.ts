@@ -15,13 +15,11 @@ export const timestampConvertDatetimeJp = (at: admin.firestore.Timestamp): strin
 // *******************
 // /users
 
-export const firestoreGetUser = async (uid: string): Promise<User | null> => {
+export const firestoreGetUser = async (uid: string): Promise<User> => {
   const doc = await usersRef.doc(uid).get()
   if (doc.exists) {
     return doc.data() as User
-  } else {
-    return null
-  }
+  } else throw new Error('firestoreGetUserでデータが取得できませんでした。')
 }
 
 export const firestoreUpdateUser = async (uid: string, item: User): Promise<void> => {

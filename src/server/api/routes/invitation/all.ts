@@ -11,6 +11,7 @@ import {
   firestoreGetRoom,
   firestotreGetIsEmailGroups,
   firestotreGetIsEmailParticipateUsers,
+  firestoreGetUser,
 } from '../../../modules/handlers/firestore'
 import { utilsGetInvitationLoginLink } from '../../../modules/handlers/utils'
 
@@ -22,18 +23,20 @@ const isRequestBody = (data: any): data is ApiAllInvitationReqParams =>
 
 interface dynamicTemplateParams {
   email: string
-  userName: string
-  roomName: string
-  loginUrl: string
-  startDatetime: string
-  votingEndDatetime: string
-  browsingEndDatetime: string
+  user_name: string
+  room_owner_name: string
+  room_name: string
+  login_url: string
+  start_datetime: string
+  voting_end_datetime: string
+  browsing_end_datetime: string
 }
 const getSendUserItems = async (roomUid: string): Promise<dynamicTemplateParams[]> => {
   const sendUserItems: dynamicTemplateParams[] = []
 
   // データの取得
   const roomItem = await firestoreGetRoom(roomUid)
+  const ownerUserItem = await firestoreGetUser(roomItem.userUid)
   const groupItems = await firestotreGetIsEmailGroups(roomUid)
   const participateUserItems = await firestotreGetIsEmailParticipateUsers(roomUid)
 
@@ -41,12 +44,13 @@ const getSendUserItems = async (roomUid: string): Promise<dynamicTemplateParams[
   groupItems.forEach((item) => {
     sendUserItems.push({
       email: item.email as string,
-      userName: item.displayName,
-      roomName: roomItem.name,
-      startDatetime: timestampConvertDatetimeJp(roomItem.startAt),
-      votingEndDatetime: timestampConvertDatetimeJp(roomItem.votingEndAt),
-      browsingEndDatetime: timestampConvertDatetimeJp(roomItem.browsingEndAt),
-      loginUrl: utilsGetInvitationLoginLink({
+      user_name: item.displayName,
+      room_owner_name: ownerUserItem?.nickname,
+      room_name: roomItem.name,
+      start_datetime: timestampConvertDatetimeJp(roomItem.startAt),
+      voting_end_datetime: timestampConvertDatetimeJp(roomItem.votingEndAt),
+      browsing_end_datetime: timestampConvertDatetimeJp(roomItem.browsingEndAt),
+      login_url: utilsGetInvitationLoginLink({
         roomUid: roomItem.uid as string,
         type: 'group',
         groupUid: item.uid,
@@ -57,15 +61,16 @@ const getSendUserItems = async (roomUid: string): Promise<dynamicTemplateParams[
   participateUserItems.forEach((item) => {
     sendUserItems.push({
       email: item.email as string,
-      userName: item.displayName,
-      roomName: roomItem.name,
-      startDatetime: timestampConvertDatetimeJp(roomItem.startAt),
-      votingEndDatetime: timestampConvertDatetimeJp(roomItem.votingEndAt),
-      browsingEndDatetime: timestampConvertDatetimeJp(roomItem.browsingEndAt),
-      loginUrl: utilsGetInvitationLoginLink({
+      user_name: item.displayName,
+      room_owner_name: ownerUserItem?.nickname,
+      room_name: roomItem.name,
+      start_datetime: timestampConvertDatetimeJp(roomItem.startAt),
+      voting_end_datetime: timestampConvertDatetimeJp(roomItem.votingEndAt),
+      browsing_end_datetime: timestampConvertDatetimeJp(roomItem.browsingEndAt),
+      login_url: utilsGetInvitationLoginLink({
         roomUid: roomItem.uid as string,
-        type: 'participateUser',
-        participateUserUid: item.uid,
+        type: 'group',
+        groupUid: item.uid,
         loginToken: item.loginToken,
       }),
     })
@@ -79,7 +84,7 @@ const sendMail = (templateId: string, sendUserItems: dynamicTemplateParams[]): P
     sendUserItems.map((item) =>
       sgMail.send({
         to: item.email,
-        from: envSendGrid.fromEmail,
+        from: envSendGrid.email.noreply,
         templateId,
         dynamicTemplateData: item,
       })

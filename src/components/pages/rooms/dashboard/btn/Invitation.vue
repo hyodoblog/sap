@@ -41,7 +41,6 @@
         outlined
         large
         :disabled="isDisabled"
-        :loading="isDisabled"
         @click="dialog = false"
       ) 閉じる
 </template>
@@ -70,9 +69,35 @@ export default class RoomsDashboardInvitation extends Vue {
 
   // form submit func
 
-  groupAllSend() {}
+  async groupAllSend() {
+    try {
+      this.isDisabled = this.isGroupAllLoaidng = true
+      const roomUid = this.$route.params.uid
+      const headers = await this.$fire.auth.getAuthHeaders()
+      await this.$api.back.groupAllInvitation({ roomUid }, headers)
+      this.$store.dispatch('snackbar/success', '招待メールを送信しました。')
+      this.dialog = false
+    } catch {
+      this.$store.dispatch('snackbar/error', '招待メールの送信に失敗しました。')
+    } finally {
+      this.isDisabled = this.isGroupAllLoaidng = false
+    }
+  }
 
-  participateUserAllSend() {}
+  async participateUserAllSend() {
+    try {
+      this.isDisabled = this.isParticipateUserAllLoaidng = true
+      const roomUid = this.$route.params.uid
+      const headers = await this.$fire.auth.getAuthHeaders()
+      await this.$api.back.participateUserAllInvitation({ roomUid }, headers)
+      this.$store.dispatch('snackbar/success', '招待メールを送信しました。')
+      this.dialog = false
+    } catch {
+      this.$store.dispatch('snackbar/error', '招待メールの送信に失敗しました。')
+    } finally {
+      this.isDisabled = this.isParticipateUserAllLoaidng = false
+    }
+  }
 
   async allSend() {
     try {
@@ -81,8 +106,11 @@ export default class RoomsDashboardInvitation extends Vue {
       const headers = await this.$fire.auth.getAuthHeaders()
       await this.$api.back.allInvitation({ roomUid }, headers)
       this.$store.dispatch('snackbar/success', '招待メールを送信しました。')
+      this.dialog = false
     } catch {
       this.$store.dispatch('snackbar/error', '招待メールの送信に失敗しました。')
+    } finally {
+      this.isDisabled = this.isAllLoading = false
     }
   }
 }
