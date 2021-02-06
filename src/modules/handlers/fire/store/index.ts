@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
-import { RoomChatDb } from './room/chat'
 import { RoomGroupDb } from './room/group'
 import { RoomParticipateUserDb } from './room/participate-user'
+import { RoomMessageDb } from './room/message'
 import { RoomDb } from './room'
 import { UserDb } from './user'
 
@@ -13,7 +13,7 @@ export class StoreFire {
   public room: RoomDb
   public roomGroup: RoomGroupDb
   public roomParticipateUser: RoomParticipateUserDb
-  public roomChat: RoomChatDb
+  public roomMessage: RoomMessageDb
 
   public db: firebase.firestore.Firestore
 
@@ -27,7 +27,7 @@ export class StoreFire {
     this.room = new RoomDb(db)
     this.roomGroup = new RoomGroupDb(db)
     this.roomParticipateUser = new RoomParticipateUserDb(db)
-    this.roomChat = new RoomChatDb(db)
+    this.roomMessage = new RoomMessageDb(db)
   }
 
   public getNowAtToDate(): Date {

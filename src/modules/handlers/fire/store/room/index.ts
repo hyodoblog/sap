@@ -53,8 +53,4 @@ export class RoomDb {
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     } as Room)
   }
-
-  public async deleteItem(uid: string): Promise<void> {
-    await this.roomsRef.doc(uid).delete()
-  }
 }

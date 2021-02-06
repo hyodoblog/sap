@@ -11,6 +11,7 @@ import verifyCookieRouter from './routes/cookie/verify'
 // room
 import createRoomRouter from './routes/room/create'
 import updateRoomRouter from './routes/room/update'
+import deleteRoomRouter from './routes/room/delete'
 
 // *******************:
 
@@ -24,5 +25,6 @@ router.post(backRoutes.verifyCookie, verifyCookieRouter)
 // room
 router.post(backRoutes.createRoom, createRoomRouter)
 router.post(backRoutes.updateRoom, updateRoomRouter)
+router.delete(backRoutes.deleteRoom, deleteRoomRouter)
 
 export default router

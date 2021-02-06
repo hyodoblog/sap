@@ -14,6 +14,31 @@
         :browsingEndAtValue.sync="browsingEndAt"
         :submitFunc="submit"
       )
+
+      .my-4.text-center
+        v-btn(color="error" text @click="removeDialog = true") 削除する
+
+        v-dialog(
+          v-model="removeDialog"
+          max-width="400"
+          persistent
+        )
+          v-card
+            v-card-title 本当に削除しますか？
+            v-card-actions
+              v-btn(
+                text
+                :disabled="isRemoveLoading"
+                @click="removeDialog = false"
+              ) いいえ
+              v-spacer
+              v-btn(
+                color="error"
+                elevation="0"
+                :disabled="isRemoveLoading"
+                :loading="isRemoveLoading"
+                @click="remove"
+              ) はい
   
     v-overlay(v-else)
       v-progress-circular(indeterminate size="64")
@@ -114,6 +139,26 @@ export default class RoomNewPage extends Vue {
       }
       this.$store.dispatch('snackbar/error', '部屋の編集に失敗しました。')
       throw Error
+    }
+  }
+
+  // 削除
+
+  removeDialog = false
+  isRemoveLoading = false
+
+  async remove() {
+    try {
+      this.isRemoveLoading = true
+      const roomUid = this.$route.params.uid
+      const headers = await this.$fire.auth.getAuthHeaders()
+      await this.$api.back.deleteRoom({ roomUid }, headers)
+      this.$router.push(this.$routes.front.rooms)
+      this.$store.dispatch('snackbar/success', `「${this.name}」部屋を削除しました。`)
+      this.$store.dispatch('room/init')
+    } catch {
+      this.$store.dispatch('snackbar/error', `「${this.name}」部屋の削除に失敗しました。`)
+      this.isRemoveLoading = false
     }
   }
 }

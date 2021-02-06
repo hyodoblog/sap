@@ -32,10 +32,10 @@ export interface Room extends Base {
 }
 
 // ****************************
-// /rooms/chats
-export interface RoomChat extends Base {
+// /rooms/messages
+export interface RoomMessage extends Base {
   displayName: string
-  content: string
+  text: string
 }
 
 // *******************

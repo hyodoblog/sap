@@ -32,3 +32,7 @@ export interface ApiUpdateRoomReqParams {
   roomUid: string
   roomItem: Room
 }
+
+export interface ApiDeleteRoomReqParams {
+  roomUid: string
+}
