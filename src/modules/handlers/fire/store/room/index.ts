@@ -24,16 +24,14 @@ export class RoomDb {
     return items
   }
 
-  public async getItem(uid: string): Promise<Room | null> {
+  public async getItem(uid: string): Promise<Room> {
     const doc = await this.roomsRef.doc(uid).get()
     if (doc.exists) {
       return {
         uid: doc.id,
         ...doc.data(),
       } as Room
-    } else {
-      return null
-    }
+    } else throw Error
   }
 
   public async setItem(item: Room): Promise<void> {

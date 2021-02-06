@@ -13,41 +13,40 @@
 
       v-row
         v-col.text-right
-          RoomsDashboardInvitation
+          RoomDashboardInvitation
 
       v-row
         v-col
-          RoomsDashboardInfo(:item="item")
+          RoomDashboardInfo(:item="item")
 
-      RoomsDashboardGroupList
+      RoomDashboardGroupList
 
-      RoomsDashboardParticipateUserList
+      RoomDashboardParticipateUserList
 
-    template(v-else)
-      v-overlay
-        v-progress-circular(indeterminate size="64")
+    v-overlay(v-else)
+      v-progress-circular(indeterminate size="64")
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
 const BaseVComponent = () => import('~/components/base/BaseVComponent.vue')
-const RoomsDashboardInvitation = () => import('~/components/pages/rooms/dashboard/btn/Invitation.vue')
-const RoomsDashboardInfo = () => import('~/components/pages/rooms/dashboard/Info.vue')
-const RoomsDashboardGroupList = () => import('~/components/pages/rooms/dashboard/group/List.vue')
-const RoomsDashboardParticipateUserList = () => import('~/components/pages/rooms/dashboard/participate-user/List.vue')
+const RoomDashboardInvitation = () => import('~/components/pages/rooms/dashboard/btn/Invitation.vue')
+const RoomDashboardInfo = () => import('~/components/pages/rooms/dashboard/Info.vue')
+const RoomDashboardGroupList = () => import('~/components/pages/rooms/dashboard/group/List.vue')
+const RoomDashboardParticipateUserList = () => import('~/components/pages/rooms/dashboard/participate-user/List.vue')
 
 @Component({
   layout: 'protected',
   components: {
     BaseVComponent,
-    RoomsDashboardInvitation,
-    RoomsDashboardInfo,
-    RoomsDashboardGroupList,
-    RoomsDashboardParticipateUserList,
+    RoomDashboardInvitation,
+    RoomDashboardInfo,
+    RoomDashboardGroupList,
+    RoomDashboardParticipateUserList,
   },
 })
-export default class RoomsDashboardComponent extends Vue {
+export default class RoomDashboardComponent extends Vue {
   async beforeCreate() {
     try {
       const { uid } = this.$route.params

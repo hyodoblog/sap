@@ -48,7 +48,7 @@ const RoomGroupFormDialog = () => import('~/components/pages/rooms/dashboard/gro
 @Component({
   components: { BaseMaterialCard, RoomGroupFormDialog },
 })
-export default class RoomsDashboardGroupTableComponent extends Vue {
+export default class RoomDashboardGroupTableComponent extends Vue {
   async mounted() {
     if (this.items.length === 0) {
       this.loading = true

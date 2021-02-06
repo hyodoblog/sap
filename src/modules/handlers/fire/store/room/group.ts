@@ -24,16 +24,24 @@ export class RoomGroupDb {
     return items
   }
 
-  public async getItem(roomUid: string, groupUid: string): Promise<RoomGroup | null> {
+  public async getItem(roomUid: string, groupUid: string): Promise<RoomGroup> {
     const doc = await this.groupsRef(roomUid).doc(groupUid).get()
     if (doc.exists) {
       return {
         uid: doc.id,
         ...doc.data(),
       } as RoomGroup
-    } else {
-      return null
-    }
+    } else throw Error
+  }
+
+  public async getItemToLoginToken(roomUid: string, groupUid: string, loginToken: string): Promise<RoomGroup> {
+    const doc = await this.groupsRef(roomUid).doc(groupUid).get()
+    if (doc.exists && doc.data()?.loginToken === loginToken) {
+      return {
+        uid: doc.id,
+        ...doc.data(),
+      } as RoomGroup
+    } else throw Error
   }
 
   public async setItem(roomUid: string, item: RoomGroup): Promise<void> {

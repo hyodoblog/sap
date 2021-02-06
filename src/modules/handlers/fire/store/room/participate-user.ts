@@ -24,16 +24,28 @@ export class RoomParticipateUserDb {
     return items
   }
 
-  public async getItem(roomUid: string, groupUid: string): Promise<RoomParticipateUser | null> {
+  public async getItem(roomUid: string, groupUid: string): Promise<RoomParticipateUser> {
     const doc = await this.participateUsersRef(roomUid).doc(groupUid).get()
     if (doc.exists) {
       return {
         uid: doc.id,
         ...doc.data(),
       } as RoomParticipateUser
-    } else {
-      return null
-    }
+    } else throw Error
+  }
+
+  public async getItemToLoginToken(
+    roomUid: string,
+    groupUid: string,
+    loginToken: string
+  ): Promise<RoomParticipateUser> {
+    const doc = await this.participateUsersRef(roomUid).doc(groupUid).get()
+    if (doc.exists && doc.data()?.loginToken === loginToken) {
+      return {
+        uid: doc.id,
+        ...doc.data(),
+      } as RoomParticipateUser
+    } else throw Error
   }
 
   public async setItem(roomUid: string, item: RoomParticipateUser): Promise<void> {

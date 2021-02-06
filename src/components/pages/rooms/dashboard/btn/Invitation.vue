@@ -49,7 +49,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class RoomsDashboardInvitation extends Vue {
+export default class RoomDashboardInvitation extends Vue {
   dialog = false
 
   get groupNum(): number {

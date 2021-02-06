@@ -17,5 +17,5 @@ const RoomGroupTable = () => import('~/components/pages/rooms/dashboard/group/Ta
 @Component({
   components: { RoomGroupFormNew, RoomGroupTable },
 })
-export default class RoomsDashboardGroupListConmponent extends Vue {}
+export default class RoomDashboardGroupListConmponent extends Vue {}
 </script>

@@ -22,7 +22,7 @@ const RoomParticipateUserFormDialog = () =>
 @Component({
   components: { RoomParticipateUserFormDialog },
 })
-export default class RoomsDashboardParticipateUserFormNewComponent extends Vue {
+export default class RoomDashboardParticipateUserFormNewComponent extends Vue {
   dialog = false
 
   // form vars

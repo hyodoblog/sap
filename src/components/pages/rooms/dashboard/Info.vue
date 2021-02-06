@@ -28,7 +28,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
 
 @Component
-export default class RoomsDashboardInfo extends Vue {
+export default class RoomDashboardInfo extends Vue {
   @Prop({ type: Object, required: true }) readonly item: Room
 
   convertDatetime(at: firebase.firestore.Timestamp): string {

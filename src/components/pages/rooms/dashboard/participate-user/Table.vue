@@ -46,7 +46,7 @@ const RoomParticipateUserFormDialog = () =>
 @Component({
   components: { BaseMaterialCard, RoomParticipateUserFormDialog },
 })
-export default class RoomsDashboardParticipateUserTableComponent extends Vue {
+export default class RoomDashboardParticipateUserTableComponent extends Vue {
   async mounted() {
     if (this.items.length === 0) {
       this.loading = true

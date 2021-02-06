@@ -23,7 +23,7 @@ const RoomGroupFormDialog = () => import('~/components/pages/rooms/dashboard/gro
 @Component({
   components: { RoomGroupFormDialog },
 })
-export default class RoomsDashboardGroupFormNewComponent extends Vue {
+export default class RoomDashboardGroupFormNewComponent extends Vue {
   dialog = false
 
   // form vars

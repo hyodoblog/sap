@@ -123,7 +123,7 @@
 import { Component, Prop, PropSync, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class RoomsDashboardGroupFormDialogComponent extends Vue {
+export default class RoomDashboardGroupFormDialogComponent extends Vue {
   @PropSync('dialogValue', { type: Boolean, required: true }) dialog!: boolean
 
   @Prop({ type: String, default: '' }) readonly groupUid!: string

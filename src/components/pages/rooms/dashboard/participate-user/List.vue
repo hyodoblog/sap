@@ -17,7 +17,7 @@ const RoomParticipateUserTable = () => import('~/components/pages/rooms/dashboar
 @Component({
   components: { RoomParticipateUserFormNew, RoomParticipateUserTable },
 })
-export default class RoomsDashboardParticipateUserList extends Vue {
+export default class RoomDashboardParticipateUserList extends Vue {
   // new form
 
   dialog = false
