@@ -12,8 +12,12 @@
           ) 部屋を編集する
 
       v-row
+        v-col.text-right
+          RoomsDashboardInvitation
+
+      v-row
         v-col
-          RoomDashboardList(:item="item")
+          RoomsDashboardInfo(:item="item")
 
       RoomsDashboardGroupList
 
@@ -28,7 +32,8 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
 const BaseVComponent = () => import('~/components/base/BaseVComponent.vue')
-const RoomDashboardList = () => import('~/components/pages/rooms/dashboard/List.vue')
+const RoomsDashboardInvitation = () => import('~/components/pages/rooms/dashboard/btn/Invitation.vue')
+const RoomsDashboardInfo = () => import('~/components/pages/rooms/dashboard/Info.vue')
 const RoomsDashboardGroupList = () => import('~/components/pages/rooms/dashboard/group/List.vue')
 const RoomsDashboardParticipateUserList = () => import('~/components/pages/rooms/dashboard/participate-user/List.vue')
 
@@ -36,7 +41,8 @@ const RoomsDashboardParticipateUserList = () => import('~/components/pages/rooms
   layout: 'protected',
   components: {
     BaseVComponent,
-    RoomDashboardList,
+    RoomsDashboardInvitation,
+    RoomsDashboardInfo,
     RoomsDashboardGroupList,
     RoomsDashboardParticipateUserList,
   },

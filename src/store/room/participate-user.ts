@@ -1,8 +1,12 @@
-import { ActionTree, MutationTree } from 'vuex'
+import { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { RoomParticipateUser } from '~/modules/types/models'
 import { RoomParticipateUserState, RootState } from '~/modules/types/state'
 
 export const state = () => Object.assign({}, new RoomParticipateUserState())
+
+export const getters: GetterTree<RoomParticipateUserState, RootState> = {
+  getIsEmailNum: (state) => state.items.filter((item) => !!item.email).length,
+}
 
 export const mutations: MutationTree<RoomParticipateUserState> = {
   RESET(state) {
@@ -17,6 +21,7 @@ export const mutations: MutationTree<RoomParticipateUserState> = {
 export const actions: ActionTree<RoomParticipateUserState, RootState> = {
   async init({ commit }, roomUid: string) {
     try {
+      commit('RESET')
       const items = await this.$fire.store.roomParticipateUser.getItems(roomUid)
       commit('SET', items)
     } catch {

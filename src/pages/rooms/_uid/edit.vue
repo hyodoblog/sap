@@ -153,9 +153,9 @@ export default class RoomNewPage extends Vue {
       const roomUid = this.$route.params.uid
       const headers = await this.$fire.auth.getAuthHeaders()
       await this.$api.back.deleteRoom({ roomUid }, headers)
+      await this.$store.dispatch('room/init')
       this.$router.push(this.$routes.front.rooms)
       this.$store.dispatch('snackbar/success', `「${this.name}」部屋を削除しました。`)
-      this.$store.dispatch('room/init')
     } catch {
       this.$store.dispatch('snackbar/error', `「${this.name}」部屋の削除に失敗しました。`)
       this.isRemoveLoading = false
