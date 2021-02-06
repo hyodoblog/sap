@@ -39,6 +39,13 @@ export class StoreFire {
     return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
   }
 
+  public getConvertDatetimeJa(timestamp: firebase.firestore.Timestamp): string {
+    const date = timestamp.toDate()
+    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${`0${date.getHours()}`.slice(
+      -2
+    )}時${`0${date.getMinutes()}`.slice(-2)}分`
+  }
+
   public getConvertTimeJa(timestamp: firebase.firestore.Timestamp): string {
     const date = timestamp.toDate()
     return `${date.getMonth() + 1}月${date.getDate()}日 ${`0${date.getHours()}`.slice(

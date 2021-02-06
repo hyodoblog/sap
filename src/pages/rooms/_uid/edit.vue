@@ -4,7 +4,7 @@
       BaseVComponent(:title="`「${name}」部屋の編集`" icon="mdi-monitor-dashboard")
 
       RoomForm(
-        submitText="作成する"
+        submitText="編集する"
         :roomUidValue.sync="roomUid"
         :imgDataURLValue.sync="imgDataURL"
         :nameValue.sync="name"
@@ -104,7 +104,7 @@ export default class RoomNewPage extends Vue {
       const headers = await this.$fire.auth.getAuthHeaders()
       await this.$api.back.updateRoom({ roomUid: this.roomUid, roomItem: item }, headers)
       this.$store.dispatch('snackbar/success', '部屋を編集しました。')
-      this.$store.dispatch('room/init')
+      this.$router.push(this.$routes.front.room(this.roomUid))
     } catch {
       if (iconPath) {
         this.$fire.storage.delete(iconPath)

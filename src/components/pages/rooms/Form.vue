@@ -180,7 +180,6 @@ export default class extends mixins(BlockUnloadMixin) {
       .then(() => {
         this.$store.dispatch('room/init')
         this.isBlockUnload = false
-        this.$router.push(this.$routes.front.rooms)
       })
       .finally(() => {
         this.disabled = this.submitLoading = false

@@ -11,6 +11,10 @@
             :to="$routes.front.roomEdit(item.uid)"
           ) 部屋を編集する
 
+      v-row
+        v-col
+          RoomDashboardList(:item="item")
+
       RoomsDashboardGroupList
 
       RoomsDashboardParticipateUserList
@@ -24,6 +28,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
 const BaseVComponent = () => import('~/components/base/BaseVComponent.vue')
+const RoomDashboardList = () => import('~/components/pages/rooms/dashboard/List.vue')
 const RoomsDashboardGroupList = () => import('~/components/pages/rooms/dashboard/group/List.vue')
 const RoomsDashboardParticipateUserList = () => import('~/components/pages/rooms/dashboard/participate-user/List.vue')
 
@@ -31,6 +36,7 @@ const RoomsDashboardParticipateUserList = () => import('~/components/pages/rooms
   layout: 'protected',
   components: {
     BaseVComponent,
+    RoomDashboardList,
     RoomsDashboardGroupList,
     RoomsDashboardParticipateUserList,
   },

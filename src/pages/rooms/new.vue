@@ -63,7 +63,7 @@ export default class RoomNewPage extends Vue {
       const headers = await this.$fire.auth.getAuthHeaders()
       await this.$api.back.createRoom({ roomUid, roomItem: item }, headers)
       this.$store.dispatch('snackbar/success', '部屋を作成しました。')
-      this.$store.dispatch('room/init')
+      this.$router.push(this.$routes.front.rooms)
     } catch {
       if (iconPath) {
         this.$fire.storage.delete(iconPath)
