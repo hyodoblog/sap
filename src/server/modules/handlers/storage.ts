@@ -8,3 +8,7 @@ const storage = new Storage({ keyFilename })
 const bucket = storage.bucket(storageBucketName)
 
 export const storageSetPublic = (filePath: string): Promise<any> => bucket.file(filePath).makePublic()
+
+export const storageDeleteItem = async (filePath: string): Promise<void> => {
+  await bucket.file(filePath).delete()
+}
