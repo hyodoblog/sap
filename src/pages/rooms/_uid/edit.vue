@@ -3,17 +3,19 @@
     template(v-if="roomUid")
       BaseVComponent(:title="`「${title}」部屋の編集`" icon="mdi-monitor-dashboard")
 
-      RoomForm(
-        submitText="編集する"
-        :roomUidValue.sync="roomUid"
-        :imgDataURLValue.sync="imgDataURL"
-        :nameValue.sync="name"
-        :descriptionValue.sync="description"
-        :startAtValue.sync="startAt"
-        :votingEndAtValue.sync="votingEndAt"
-        :browsingEndAtValue.sync="browsingEndAt"
-        :submitFunc="submit"
-      )
+      client-only
+        RoomForm(
+          submitText="編集する"
+          :roomUidValue.sync="roomUid"
+          :imgDataURLValue.sync="imgDataURL"
+          :nameValue.sync="name"
+          :descriptionValue.sync="description"
+          :isPublicValue.sync="isPublic"
+          :startAtValue.sync="startAt"
+          :votingEndAtValue.sync="votingEndAt"
+          :browsingEndAtValue.sync="browsingEndAt"
+          :submitFunc="submit"
+        )
 
       .my-4.text-center
         v-btn(color="error" text @click="removeDialog = true") 削除する
@@ -75,6 +77,7 @@ export default class RoomNewPage extends Vue {
     this.iconPath = item.iconPath
     this.name = item.name
     this.description = item.description
+    this.isPublic = item.isPublic
     this.startAt = item.startAt.toDate()
     this.votingEndAt = item.votingEndAt.toDate()
     this.browsingEndAt = item.browsingEndAt.toDate()
@@ -101,6 +104,7 @@ export default class RoomNewPage extends Vue {
   iconPath = ''
   name = ''
   description = ''
+  isPublic = false
   startAt = new Date()
   votingEndAt = new Date()
   browsingEndAt = new Date()
@@ -125,6 +129,7 @@ export default class RoomNewPage extends Vue {
         iconPath,
         name: this.name,
         description: this.description,
+        isPublic: this.isPublic,
         startAt: this.$fire.store.convertTimestamp(this.startAt),
         votingEndAt: this.$fire.store.convertTimestamp(this.votingEndAt),
         browsingEndAt: this.$fire.store.convertTimestamp(this.browsingEndAt),

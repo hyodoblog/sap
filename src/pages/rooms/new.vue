@@ -2,17 +2,19 @@
   v-container(style="max-width:1000px")
     BaseVComponent(title="部屋作成" icon="mdi-monitor-dashboard")
 
-    RoomForm(
-      submitText="作成する"
-      :roomUidValue.sync="roomUid"
-      :imgDataURLValue.sync="imgDataURL"
-      :nameValue.sync="name"
-      :descriptionValue.sync="description"
-      :startAtValue.sync="startAt"
-      :votingEndAtValue.sync="votingEndAt"
-      :browsingEndAtValue.sync="browsingEndAt"
-      :submitFunc="submit"
-    )
+    client-only
+      RoomForm(
+        submitText="作成する"
+        :roomUidValue.sync="roomUid"
+        :imgDataURLValue.sync="imgDataURL"
+        :nameValue.sync="name"
+        :descriptionValue.sync="description"
+        :isPublicValue.sync="isPublic"
+        :startAtValue.sync="startAt"
+        :votingEndAtValue.sync="votingEndAt"
+        :browsingEndAtValue.sync="browsingEndAt"
+        :submitFunc="submit"
+      )
 </template>
 
 <script lang="ts">
@@ -30,6 +32,7 @@ export default class RoomNewPage extends Vue {
   roomUid = ''
   name = ''
   description = ''
+  isPublic = false
   startAt = this.$fire.store.getNowAtToDate()
   votingEndAt = this.$fire.store.getNowAtToDate()
   browsingEndAt = this.$fire.store.getNowAtToDate()
@@ -55,6 +58,7 @@ export default class RoomNewPage extends Vue {
         iconPath,
         name: this.name,
         description: this.description,
+        isPublic: this.isPublic,
         startAt: this.$fire.store.convertTimestamp(this.startAt),
         votingEndAt: this.$fire.store.convertTimestamp(this.votingEndAt),
         browsingEndAt: this.$fire.store.convertTimestamp(this.browsingEndAt),

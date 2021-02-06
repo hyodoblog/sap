@@ -55,6 +55,26 @@
             @input="change"
           )
       
+      v-divider.my-3
+
+      v-row.align-center
+        v-col(cols="5")
+          .subtitle-1
+            | 公開する
+            v-chip.ml-1(x-small) 必須
+        v-col(cols="7")
+          v-checkbox.mt-2(
+            v-model="isPublic"
+            :disabled="disabled"
+            hint="公開にすると誰でも参加できます。"
+            persistent-hint
+            color="red"
+            required
+            outlined
+            dense
+            @input="change"
+          )
+      
       v-divider.mt-3.mb-4
 
       v-row.align-center
@@ -118,7 +138,6 @@
 <script lang="ts">
 import { Component, Prop, PropSync, mixins } from 'nuxt-property-decorator'
 import BlockUnloadMixin from '~/mixins/BlockUnload'
-// import { App } from '~/modules/types/models'
 const ImgCropForm = () => import('~/components/form/ImgCrop.vue')
 const DatetimeForm = () => import('~/components/form/Datetime.vue')
 
@@ -132,20 +151,13 @@ export default class extends mixins(BlockUnloadMixin) {
   @PropSync('imgDataURLValue', { type: String, required: true }) imgDataURL!: string
   @PropSync('nameValue', { type: String, required: true }) name!: string
   @PropSync('descriptionValue', { type: String, required: true }) description!: string
+  @PropSync('isPublicValue', { type: Boolean, required: true }) isPublic!: boolean
   @PropSync('startAtValue', { type: Date, required: true }) startAt!: Date
   @PropSync('votingEndAtValue', { type: Date, required: true }) votingEndAt!: Date
   @PropSync('browsingEndAtValue', { type: Date, required: true }) browsingEndAt!: Date
 
   @Prop({ type: Function, required: true }) submitFunc: () => Promise<void>
   @Prop({ type: Function, default: () => {} }) resetFunc: () => Promise<void>
-
-  get testStartAt(): Date {
-    return this.startAt
-  }
-
-  set testStartAt(startAt: Date) {
-    console.log(startAt)
-  }
 
   // form config
   valid = true
@@ -183,7 +195,6 @@ export default class extends mixins(BlockUnloadMixin) {
       return
     }
     // 日付チェック
-    console.log(this.startAt.toDateString())
     if (this.startAt.getTime() >= this.votingEndAt.getTime()) {
       this.$store.dispatch('snackbar/error', '投票締め切り日時は、開始日時よりも後に設定してください。')
       return

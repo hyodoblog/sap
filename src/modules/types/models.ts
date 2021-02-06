@@ -26,6 +26,7 @@ export interface Room extends Base {
   iconPath: string
   name: string
   description: string
+  isPublic: boolean
   startAt: firebase.firestore.Timestamp
   votingEndAt: firebase.firestore.Timestamp
   browsingEndAt: firebase.firestore.Timestamp
