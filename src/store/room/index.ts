@@ -20,8 +20,7 @@ export const actions: ActionTree<RoomState, RootState> = {
       const userUid = this.state.user?.uid as string
       const items = await this.$fire.store.room.getItems(userUid)
       commit('SET', items)
-    } catch (err) {
-      console.log(err)
+    } catch {
       this.dispatch('snackbar/error', '部屋情報の初期化に失敗しました。')
       commit('RESET')
     }

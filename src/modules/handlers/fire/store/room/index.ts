@@ -16,10 +16,12 @@ export class RoomDb {
     const items: Room[] = []
     const docs = await this.roomsRef.where('userUid', '==', userUid).get()
     docs.forEach((doc) => {
-      items.push({
-        uid: doc.id,
-        ...doc.data(),
-      } as Room)
+      if (doc.exists) {
+        items.push({
+          uid: doc.id,
+          ...doc.data(),
+        } as Room)
+      }
     })
     return items
   }

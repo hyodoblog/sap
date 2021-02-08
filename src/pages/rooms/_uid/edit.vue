@@ -125,7 +125,7 @@ export default class RoomNewPage extends Vue {
 
       // firestoreに保存
       const item: Room = {
-        userUid: this.$store.state.user.userUid,
+        userUid: this.$store.state.user.uid,
         iconPath,
         name: this.name,
         description: this.description,
