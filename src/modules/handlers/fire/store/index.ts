@@ -18,7 +18,7 @@ export class StoreFire {
   public rootRef: firebase.firestore.DocumentReference
 
   constructor(db: firebase.firestore.Firestore) {
-    this.rootRef = db.collection('env').doc(process.env.FIREBASE_STORE_ROOT_COLLECTION)
+    this.rootRef = db.collection('envs').doc(process.env.FIREBASE_STORE_ROOT_COLLECTION)
 
     // users
     this.user = new UserDb(this.rootRef)

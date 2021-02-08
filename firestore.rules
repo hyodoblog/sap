@@ -2,9 +2,33 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    match /users/{userUid} {
-      allow read: if isUserAuthenticated(userUid) || isAdminAuthenticated();
-      allow write: if isUserAuthenticated(userUid) || isAdminAuthenticated();
+    match /envs/{appEnv} {
+      match /users/{userUid} {
+        allow read: if isUserAuthenticated(userUid) || isAdminAuthenticated();
+        allow write: if isUserAuthenticated(userUid) || isAdminAuthenticated();
+      }
+
+      // room
+
+      match /rooms/{roomUid} {
+        allow read: if isAuthenticated();
+        allow write: if isAuthenticated();
+
+        match /messages/{uid} {
+          allow read: if isAuthenticated();
+          allow write: if isAuthenticated();
+        }
+
+        match /groups/{uid} {
+          allow read: if isAuthenticated();
+          allow write: if isAuthenticated();
+        }
+
+        match /participateUsers/{uid} {
+          allow read: if isAuthenticated();
+          allow write: if isAuthenticated();
+        }
+      }
     }
 
     // users collectionGroup
@@ -15,24 +39,6 @@ service cloud.firestore {
     // match /{path=**}/messages/{uid} {
     //   allow read, write: if isAdminAuthenticated();
     // }
-
-    // room
-
-    match /rooms/{userUid} {
-      allow read, write: if isAuthenticated();
-
-      match /messages/{uid} {
-        allow read, write: if isAuthenticated();
-      }
-
-      match /groups/{uid} {
-        allow read, write: if isAuthenticated();
-      }
-
-      match /participateUsers/{uid} {
-        allow read, write: if isAuthenticated();
-      }
-    }
   
     function isAdminAuthenticated() {
       return request.auth.token.admin == true
