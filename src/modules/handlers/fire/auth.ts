@@ -34,9 +34,9 @@ export class AuthFire {
     await this.auth.sendSignInLinkToEmail(email, actionCodeSettings)
   }
 
-  public getOnAuthStateChanged(): Promise<void> {
+  public getOnUserStateChanged(): Promise<void> {
     return new Promise((resolve) =>
-      this.auth.onAuthStateChanged(() => {
+      this.auth.onUserStateChanged(() => {
         resolve()
       })
     )
@@ -70,9 +70,9 @@ export class AuthFire {
     await this.auth.isSignInWithEmailLink(window.location.href)
   }
 
-  public isOnAuthStateChanged(): Promise<boolean> {
+  public isOnUserStateChanged(): Promise<boolean> {
     return new Promise((resolve) =>
-      this.auth.onAuthStateChanged((user) => {
+      this.auth.onUserStateChanged((user) => {
         resolve(!!user)
       })
     )

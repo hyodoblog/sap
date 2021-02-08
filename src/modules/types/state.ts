@@ -1,20 +1,20 @@
 import { RoomGroup, RoomParticipateUser, Room, User } from './models'
 
-export class AuthState {
-  userUid: string | null
-  user: User | null
-
-  constructor() {
-    this.userUid = null
-    this.user = null
-  }
-}
-
 export class IndexState {
   drawer: boolean
 
   constructor() {
     this.drawer = false
+  }
+}
+
+export class UserState {
+  uid: string | null
+  item: User | null
+
+  constructor() {
+    this.uid = null
+    this.item = null
   }
 }
 
@@ -53,10 +53,15 @@ export class SnackbarState {
 }
 
 export interface RootState {
-  auth?: AuthState
+  // app
   index?: IndexState
+  snackbar?: SnackbarState
+
+  // /users
+  user?: UserState
+
+  // /rooms
   room?: RoomState
   roomGroup?: RoomGroupState
   roomParticipateUser?: RoomParticipateUserState
-  snackbar?: SnackbarState
 }

@@ -46,7 +46,7 @@ import Service from '~/components/top/Service.vue'
 })
 export default class IndexPage extends Vue {
   get isAuthenticated(): boolean {
-    return this.$store.getters['auth/isAuthenticated']
+    return this.$store.getters['user/isAuthenticated']
   }
 }
 </script>
