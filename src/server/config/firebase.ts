@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin'
+import { rootCollection } from './env'
 
 const serviAccount = require(`../../../key/${process.env.NODE_ENV}.json`)
 
@@ -11,6 +12,7 @@ if (!admin.apps.length) {
 }
 
 export const db = admin.firestore()
+const rootRef = db.collection('envs').doc(rootCollection)
 export const usersRef = rootRef.collection('users')
 export const roomsRef = rootRef.collection('rooms')
 
