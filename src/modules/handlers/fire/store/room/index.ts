@@ -4,8 +4,8 @@ import { Room } from '~/modules/types/models'
 export class RoomDb {
   private roomsRef: firebase.firestore.CollectionReference
 
-  constructor(db: firebase.firestore.Firestore) {
-    this.roomsRef = db.collection('rooms')
+  constructor(rootRef: firebase.firestore.DocumentReference) {
+    this.roomsRef = rootRef.collection('rooms')
   }
 
   public getUid(): string {

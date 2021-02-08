@@ -4,8 +4,8 @@ import { RoomMessage } from '~/modules/types/models'
 export class RoomMessageDb {
   private roomsRef: firebase.firestore.CollectionReference
 
-  constructor(db: firebase.firestore.Firestore) {
-    this.roomsRef = db.collection('rooms')
+  constructor(rootRef: firebase.firestore.DocumentReference) {
+    this.roomsRef = rootRef.collection('rooms')
   }
 
   private chatsRef(appUid: string): firebase.firestore.CollectionReference {

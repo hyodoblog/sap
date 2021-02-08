@@ -4,8 +4,8 @@ import { User } from '~/modules/types/models'
 export class UserDb {
   private usersRef: firebase.firestore.CollectionReference
 
-  constructor(db: firebase.firestore.Firestore) {
-    this.usersRef = db.collection('users')
+  constructor(rootRef: firebase.firestore.DocumentReference) {
+    this.usersRef = rootRef.collection('users')
   }
 
   private getInitData(nickname: string, email: string): User {

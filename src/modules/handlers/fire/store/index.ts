@@ -15,19 +15,19 @@ export class StoreFire {
   public roomParticipateUser: RoomParticipateUserDb
   public roomMessage: RoomMessageDb
 
-  public db: firebase.firestore.Firestore
+  public rootRef: firebase.firestore.DocumentReference
 
   constructor(db: firebase.firestore.Firestore) {
-    this.db = db
+    this.rootRef = db.collection('env').doc(process.env.FIREBASE_STORE_ROOT_COLLECTION)
 
     // users
-    this.user = new UserDb(db)
+    this.user = new UserDb(this.rootRef)
 
     // rooms
-    this.room = new RoomDb(db)
-    this.roomGroup = new RoomGroupDb(db)
-    this.roomParticipateUser = new RoomParticipateUserDb(db)
-    this.roomMessage = new RoomMessageDb(db)
+    this.room = new RoomDb(this.rootRef)
+    this.roomGroup = new RoomGroupDb(this.rootRef)
+    this.roomParticipateUser = new RoomParticipateUserDb(this.rootRef)
+    this.roomMessage = new RoomMessageDb(this.rootRef)
   }
 
   public getNowAtToDate(): Date {

@@ -4,8 +4,8 @@ import { RoomGroup } from '~/modules/types/models'
 export class RoomGroupDb {
   private roomRef: firebase.firestore.CollectionReference
 
-  constructor(db: firebase.firestore.Firestore) {
-    this.roomRef = db.collection('rooms')
+  constructor(rootRef: firebase.firestore.DocumentReference) {
+    this.roomRef = rootRef.collection('rooms')
   }
 
   private groupsRef(roomUid: string): firebase.firestore.CollectionReference {
