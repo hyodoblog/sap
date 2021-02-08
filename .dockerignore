@@ -3,6 +3,7 @@
 .github
 .nuxt
 .vscode
+functions
 deploy
 node_modules
 shell
