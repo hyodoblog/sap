@@ -107,13 +107,6 @@ export default class AuthSignupPage extends Vue {
       // @ts-ignore
       if (!this.$refs.form.validate()) return
 
-      // ユーザー情報を確認
-      const isUser = await this.$fire.store.user.isUserToEmail(this.email)
-      if (isUser) {
-        this.$store.dispatch('snackbar/error', '会員登録済みのメールアドレスです。')
-        return
-      }
-
       // 登録開始
 
       this.isLoading = true
