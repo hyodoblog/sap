@@ -2,24 +2,24 @@ import { Request, Response } from 'express'
 import { admin } from '../../../config/firebase'
 
 // modules handlers
-import { firestoreGetUser } from '../../../modules/handlers/firestore'
+import { firestoreGetUser, firestoreInitUser } from '../../../modules/handlers/firestore'
 
 // 型モジュール
 import { ApiVerifyCookieReqParams, ApiVerifyCookieResParams } from '../../../../modules/types/api'
 
 const isRequestBody = (data: any): data is ApiVerifyCookieReqParams =>
-  data !== null && typeof data.sessionCookie === 'string'
+  data !== null && typeof data.sessionCookie === 'string' && typeof data.email === 'string'
 
 export default async (req: Request, res: Response) => {
   try {
     const data = req.body
     if (!isRequestBody(data)) throw new Error('Reqest Body is not match')
 
-    const { sessionCookie, userUid } = data
+    const { sessionCookie, userUid, email } = data
 
     await admin.auth().verifySessionCookie(sessionCookie, true)
     const user = await firestoreGetUser(userUid)
-    if (user === null) throw new Error('ユーザー情報が見つかりませんでした。')
+    if (user === null) await firestoreInitUser(userUid, email)
 
     res
       .json({

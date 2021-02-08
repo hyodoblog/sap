@@ -17,7 +17,7 @@ export const mutations: MutationTree<RoomState> = {
 export const actions: ActionTree<RoomState, RootState> = {
   async init({ commit }) {
     try {
-      const userUid = this.state.auth?.userUid as string
+      const userUid = this.state.user?.uid as string
       const items = await this.$fire.store.room.getItems(userUid)
       commit('SET', items)
     } catch {

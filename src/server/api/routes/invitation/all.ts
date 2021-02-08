@@ -45,7 +45,7 @@ const getSendUserItems = async (roomUid: string): Promise<dynamicTemplateParams[
     sendUserItems.push({
       email: item.email as string,
       user_name: item.displayName,
-      room_owner_name: ownerUserItem?.nickname,
+      room_owner_name: ownerUserItem?.nickname as string,
       room_name: roomItem.name,
       start_datetime: timestampConvertDatetimeJp(roomItem.startAt),
       voting_end_datetime: timestampConvertDatetimeJp(roomItem.votingEndAt),
@@ -62,7 +62,7 @@ const getSendUserItems = async (roomUid: string): Promise<dynamicTemplateParams[
     sendUserItems.push({
       email: item.email as string,
       user_name: item.displayName,
-      room_owner_name: ownerUserItem?.nickname,
+      room_owner_name: ownerUserItem?.nickname as string,
       room_name: roomItem.name,
       start_datetime: timestampConvertDatetimeJp(roomItem.startAt),
       voting_end_datetime: timestampConvertDatetimeJp(roomItem.votingEndAt),

@@ -34,14 +34,6 @@ export class AuthFire {
     await this.auth.sendSignInLinkToEmail(email, actionCodeSettings)
   }
 
-  public getOnUserStateChanged(): Promise<void> {
-    return new Promise((resolve) =>
-      this.auth.onUserStateChanged(() => {
-        resolve()
-      })
-    )
-  }
-
   public async createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.User> {
     const res = await this.auth.createUserWithEmailAndPassword(email, password)
     if (!res.user) throw Error
@@ -68,14 +60,6 @@ export class AuthFire {
 
   public async isSignInWithEmailLink(): Promise<void> {
     await this.auth.isSignInWithEmailLink(window.location.href)
-  }
-
-  public isOnUserStateChanged(): Promise<boolean> {
-    return new Promise((resolve) =>
-      this.auth.onUserStateChanged((user) => {
-        resolve(!!user)
-      })
-    )
   }
 
   // auth

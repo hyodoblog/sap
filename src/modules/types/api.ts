@@ -14,6 +14,7 @@ export interface ApiCreateCookieResParams {
 export interface ApiVerifyCookieReqParams {
   sessionCookie: string
   userUid: string
+  email: string
 }
 
 export interface ApiVerifyCookieResParams {

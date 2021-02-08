@@ -23,7 +23,7 @@ import { User } from '~/modules/types/models'
 @Component
 export default class CoreNavigationComponent extends Vue {
   get user(): User {
-    return this.$store.state.auth.user
+    return this.$store.state.user.item
   }
 
   drawer = null
