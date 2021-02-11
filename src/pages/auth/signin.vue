@@ -102,23 +102,15 @@ export default class AuthSigninPage extends Vue {
       this.isLoading = true
       this.isSignInDisabled = true
 
-      await this.signIn(this.email, this.password)
+      await this.$store.dispatch('user/signIn', { email: this.email, password: this.password })
 
-      this.$router.push(this.$routes.front.rooms)
+      window.location.href = this.$routes.front.rooms
     } catch {
       this.$store.dispatch('snackbar/error', 'サインインに失敗しました。')
     } finally {
       this.isLoading = false
       this.isSignInDisabled = false
     }
-  }
-
-  async signIn(email: string, password: string) {
-    const user = await this.$fire.auth.signInWithEmailAndPassword(email, password)
-    const headers = await this.$fire.auth.getAuthHeaders()
-    const { token } = await this.$api.back.createCookie({ token: await user.getIdToken() }, headers)
-    this.$cookies.set('session', token)
-    await this.$store.dispatch('user/init', { uid: user.uid })
   }
 
   resetErrors() {

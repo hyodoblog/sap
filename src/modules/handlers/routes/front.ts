@@ -5,6 +5,7 @@ export default class {
   rooms = '/rooms'
   roomNew = '/rooms/new'
   room = (roomUid: string) => `/rooms/${roomUid}/dashboard`
+  roomVoting = (roomUid: string) => `/rooms/${roomUid}/voting`
   roomEdit = (roomUid: string) => `/rooms/${roomUid}/edit`
 
   // auth

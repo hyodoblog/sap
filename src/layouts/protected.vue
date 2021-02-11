@@ -1,12 +1,7 @@
 <template lang="pug">
   v-app#inspire
-    v-system-bar(app)
-      v-spacer
-      v-icon mdi-square
-      v-icon mdi-circle
-      v-icon mdi-triangle
-
-    CoreNavigation
+    CoreNavigation(:drawerValue.sync="navDrawer")
+    CoreAppBar(:drawerValue.sync="navDrawer")
 
     v-main
       nuxt
@@ -15,12 +10,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-const CoreNavigation = () => import('~/components/core/Navigation.vue')
-const Snackbar = () => import('~/components/Snackbar.vue')
 
 @Component({
   middleware: 'protected',
-  components: { CoreNavigation, Snackbar },
+  components: {
+    CoreAppBar: () => import('~/components/core/AppBar.vue'),
+    CoreNavigation: () => import('~/components/core/Navigation.vue'),
+    Snackbar: () => import('~/components/Snackbar.vue'),
+  },
 })
-export default class ProtectedLayout extends Vue {}
+export default class ProtectedLayout extends Vue {
+  navDrawer = null
+}
 </script>

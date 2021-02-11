@@ -37,7 +37,8 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import { Middleware } from '@nuxt/types'
 
 const middleware: Middleware = ({ route }) => {
-  const { code } = route.query
+  console.log(route)
+  // const { code } = route.query
   // if (!code)
 }
 

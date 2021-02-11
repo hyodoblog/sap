@@ -39,4 +39,17 @@ export const actions: ActionTree<UserState, RootState> = {
       commit('RESET')
     }
   },
+
+  async signIn({ dispatch }, { email, password }) {
+    const user = await this.$fire.auth.signInWithEmailAndPassword(email, password)
+    const headers = await this.$fire.auth.getAuthHeaders()
+    const { token } = await this.$api.back.createCookie({ token: await user.getIdToken() }, headers)
+    this.$cookies.set('session', token)
+    await dispatch('init', { uid: user.uid })
+  },
+
+  async signOut() {
+    await this.$fire.auth.signOut()
+    this.$cookies.remove('session')
+  },
 }

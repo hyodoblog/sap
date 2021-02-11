@@ -11,7 +11,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 import { Room, RoomGroup, RoomParticipateUser } from '~/modules/types/models'
 
 @Component({
-  layout: 'protected',
+  layout: 'voting',
 })
 export default class RoomVotingPage extends Vue {
   // 招待メールの処理
@@ -34,7 +34,7 @@ export default class RoomVotingPage extends Vue {
           this.room = room
           this.roomParticipateUserItem = roomParticipateUserItem
         } else throw Error
-      }
+      } else throw Error
     } catch {
       this.$nuxt.error({
         statusCode: 404,
