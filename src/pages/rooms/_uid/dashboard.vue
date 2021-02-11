@@ -3,6 +3,14 @@
     template(v-if="item")
       v-row
         v-col
+          v-btn(
+            icon
+            :to="$routes.front.rooms"
+          )
+            v-icon mdi-arrow-left
+
+      v-row
+        v-col
           BaseVComponent(:title="`「${item.name}」部屋`" icon="mdi-monitor-dashboard")
         v-col.text-right
           v-btn(
