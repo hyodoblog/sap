@@ -40,7 +40,7 @@ const RoomsTable = () => import('~/components/pages/rooms/Table.vue')
   components: { BaseVComponent, RoomsTable },
 })
 export default class RoomsPage extends Vue {
-  async mounted() {
+  async beforeMount() {
     this.roomLoading = this.participateLoading = true
     if (this.roomItems.length === 0) await this.$store.dispatch('room/init')
     this.roomLoading = this.participateLoading = false

@@ -29,7 +29,7 @@ export default class AuthVerifyEmailPage extends Vue {
   secondsToEnable = TIMEOUT
   seconds = ''
 
-  mounted() {
+  beforeMount() {
     this.setTimer()
   }
 

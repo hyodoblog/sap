@@ -49,7 +49,7 @@ const RoomGroupFormDialog = () => import('~/components/pages/rooms/dashboard/gro
   components: { BaseMaterialCard, RoomGroupFormDialog },
 })
 export default class RoomDashboardGroupTableComponent extends Vue {
-  async mounted() {
+  async beforeMount() {
     if (this.items.length === 0) {
       this.loading = true
       const roomUid = this.$route.params.uid

@@ -15,7 +15,7 @@ import { Room, RoomGroup, RoomParticipateUser } from '~/modules/types/models'
 })
 export default class RoomVotingPage extends Vue {
   // 招待メールの処理
-  async mounted() {
+  async beforeMount() {
     try {
       const { roomInvitationType, roomUid, loginToken, roomGroupUid, roomParticipateUserUid } = this.$route.query
       if (typeof roomInvitationType === 'string' && typeof roomUid === 'string' && typeof loginToken === 'string') {

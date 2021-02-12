@@ -45,7 +45,7 @@ import { Room } from '~/modules/types/models'
   },
 })
 export default class RoomDashboardComponent extends Vue {
-  async mounted() {
+  async beforeMount() {
     try {
       const { uid } = this.$route.params
       const item = await this.$fire.store.room.getItem(uid)

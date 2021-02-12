@@ -67,7 +67,7 @@ export default class extends Vue {
   @Prop({ type: Boolean, required: true }) readonly disabled: boolean
   @PropSync('imgDataURLValue', { type: String, required: true }) imgDataURL!: string
 
-  mounted() {
+  beforeMount() {
     if (this.imgDataURL) {
       this.displayCanvas(this.imgDataURL)
     } else {
