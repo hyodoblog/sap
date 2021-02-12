@@ -11,22 +11,18 @@ service cloud.firestore {
       // room
 
       match /rooms/{roomUid} {
-        allow read: if isAuthenticated();
-        allow write: if isAuthenticated();
+        allow read, write: if true;
 
         match /messages/{uid} {
-          allow read: if isAuthenticated();
-          allow write: if isAuthenticated();
+          allow read, write: if true;
         }
 
         match /groups/{uid} {
-          allow read: if isAuthenticated();
-          allow write: if isAuthenticated();
+          allow read, write: if true;
         }
 
         match /participateUsers/{uid} {
-          allow read: if isAuthenticated();
-          allow write: if isAuthenticated();
+          allow read, write: if true;
         }
       }
     }
