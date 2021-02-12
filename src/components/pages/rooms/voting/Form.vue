@@ -4,18 +4,27 @@
     v-model="isValid"
     lazy-validation
   )
-    draggable(v-model="items")
-      v-card.pa-2.d-flex.align-center(
-        v-for="(item, i) in items"
-        :key="i"
-      )
-        span.font-weight-bold 第{{ i + 1 }}希望
-        v-icon mdi-drag
-        .subtitle-1.ml-2 {{ item.displayName }}
+    .d-flex
+      v-col.pa-0(cols="3")
+        v-card.pa-2.d-flex.align-center(
+          v-for="i in draggableItems.length"
+          :key="i"
+          style="height:50px"
+        )
+          span.font-weight-bold 第{{ i + 1 }}希望
+      v-col.pa-0(cols="9")
+        draggable(v-model="draggableItems")
+          v-card.pa-2.d-flex.align-center(
+            v-for="item in draggableItems"
+            :key="item.uid"
+            style="height:50px"
+          )
+            v-icon mdi-drag
+            .subtitle-1.ml-2 {{ item.displayName }}
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
 import { RoomGroup, RoomParticipateUser } from '~/modules/types/models'
 
 @Component({
@@ -24,7 +33,18 @@ import { RoomGroup, RoomParticipateUser } from '~/modules/types/models'
   },
 })
 export default class RoomDashboardVotingFormComponnet extends Vue {
-  @Prop({ type: Array, required: true }) readonly items: RoomGroup[] | RoomParticipateUser[]
+  @Prop({ type: Array, required: true }) items: RoomGroup[] | RoomParticipateUser[]
+
+  mounted() {
+    this.draggableItems = this.items
+  }
+
+  draggableItems: RoomGroup[] | RoomParticipateUser[] = []
+
+  @Watch('items')
+  changeItems(items: RoomGroup[] | RoomParticipateUser[]) {
+    this.draggableItems = items
+  }
 
   isValid = true
   isLoading = false
