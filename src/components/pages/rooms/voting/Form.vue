@@ -95,16 +95,6 @@ export default class RoomDashboardVotingFormComponnet extends Vue {
   // draggable items
 
   mounted() {
-    this.draggableItems = (this.items as any[]).filter((item) => {
-      for (const hopeUid of this.hopeUidItems) if (hopeUid === item.uid) return true
-      return false
-    })
-    this.otherItems = (this.items as any[]).filter((item) => {
-      let flag = 0
-      for (const draggableItem of this.draggableItems) if (draggableItem.uid !== item.uid) flag += 1
-      if (flag === this.draggableItems.length) return true
-      else return false
-    })
     this.$watch('draggableItems', this.changeDraggableItems, { immediate: true })
     this.$watch('hopeUidItems', this.changeHopeUidItems, { immediate: true })
   }
@@ -117,10 +107,15 @@ export default class RoomDashboardVotingFormComponnet extends Vue {
   }
 
   changeHopeUidItems(hopeUidItems: string[]) {
-    this.draggableItems = (this.items as any[]).filter((item) => {
-      for (const hopeUid of hopeUidItems) if (hopeUid === item.uid) return true
-      return false
-    })
+    const draggableItems: RoomGroup[] | RoomParticipateUser[] = []
+    for (const hopeUid of hopeUidItems) {
+      for (const item of this.items) {
+        if (item.uid === hopeUid) {
+          draggableItems.push(item as any)
+        }
+      }
+    }
+    this.draggableItems = draggableItems
   }
 
   // form

@@ -69,11 +69,11 @@ export default class RoomVotingPage extends Vue {
   }
 
   get hopeGroupUidItems(): string[] | null {
-    return this.$store.state.invitation.authItem.hopeGroupUidItems ?? null
+    return this.$store.state.invitation.authItem.hopeGroupUidItems || null
   }
 
   get hopeParticipateUserUidItems(): string[] | null {
-    return this.$store.state.invitation.authItem.hopeParticipateUserUidItems ?? null
+    return this.$store.state.invitation.authItem.hopeParticipateUserUidItems || null
   }
 
   groupHopeSubmit(hopeItems: RoomGroup[]) {
