@@ -1,9 +1,11 @@
 <template lang="pug">
   v-container(fluid)
-    template(v-if="room && (roomGroupItem || roomParticipateUserItem)")
-
-    v-overlay(v-else)
+    //- loading
+    v-overlay(v-if="!isAuthenticated")
       v-progress-circular(indeterminate size="64")
+
+    template(v-else)
+
 </template>
 
 <script lang="ts">
@@ -14,39 +16,20 @@ import { Room, RoomGroup, RoomParticipateUser } from '~/modules/types/models'
   layout: 'public',
 })
 export default class RoomVotingPage extends Vue {
-  // 招待メールの処理
-  async beforeMount() {
-    try {
-      const { roomInvitationType, roomUid, loginToken, roomGroupUid, roomParticipateUserUid } = this.$route.query
-      if (typeof roomInvitationType === 'string' && typeof roomUid === 'string' && typeof loginToken === 'string') {
-        if (roomInvitationType === 'group' && typeof roomGroupUid === 'string') {
-          const room = await this.$fire.store.room.getItem(roomUid as string)
-          const roomGroupItem = await this.$fire.store.roomGroup.getItemToLoginToken(roomUid, roomGroupUid, loginToken)
-          console.log(roomGroupItem)
-          this.room = room
-          this.roomGroupItem = roomGroupItem
-        } else if (roomInvitationType === 'participateUser' && typeof roomParticipateUserUid === 'string') {
-          const room = await this.$fire.store.room.getItem(roomUid)
-          const roomParticipateUserItem = await this.$fire.store.roomParticipateUser.getItemToLoginToken(
-            roomUid,
-            roomParticipateUserUid,
-            loginToken
-          )
-          this.room = room
-          this.roomParticipateUserItem = roomParticipateUserItem
-        } else throw Error
-      } else throw Error
-    } catch (err) {
-      console.error(err)
-      this.$nuxt.error({
-        statusCode: 404,
-        message: 'ページが見つかりませんでした。',
-      })
-    }
+  get isAuthenticated(): boolean {
+    return this.$store.getters['invitation/isAuthenticated']
   }
 
-  room: Room | null = null
-  roomGroupItem: RoomGroup | null = null
-  roomParticipateUserItem: RoomParticipateUser | null = null
+  get roomItem(): Room | null {
+    return this.$store.state.invitation.roomItem
+  }
+
+  get roomGroupItems(): RoomGroup[] | null {
+    return this.$store.state.invitation.roomGroupItems
+  }
+
+  get roomParticipateUserItems(): RoomParticipateUser[] | null {
+    return this.$store.state.invitation.roomParticipateUserItems
+  }
 }
 </script>

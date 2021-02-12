@@ -1,4 +1,4 @@
-import { RoomGroup, RoomParticipateUser, Room, User } from './models'
+import { RoomGroup, RoomParticipateUser, Room, User, RoomInvitationType } from './models'
 
 export class IndexState {
   drawer: boolean
@@ -52,10 +52,29 @@ export class SnackbarState {
   }
 }
 
+export class InvitationState {
+  type: RoomInvitationType | null
+  authItem: RoomGroup | RoomParticipateUser | null
+  roomItem: Room | null
+  roomGroupItems: RoomGroup[] | null
+  roomParticipateUserItems: RoomParticipateUser[] | null
+
+  constructor() {
+    this.type = null
+    this.authItem = null
+    this.roomItem = null
+    this.roomGroupItems = null
+    this.roomParticipateUserItems = null
+  }
+}
+
 export interface RootState {
   // app
   index?: IndexState
   snackbar?: SnackbarState
+
+  // invitation
+  invitation?: InvitationState
 
   // /users
   user?: UserState
