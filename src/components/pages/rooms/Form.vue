@@ -90,7 +90,7 @@
             v-text-field.mt-2(
               v-if="isGroupHopeMaxNum"
               v-model.number="groupHopeMaxNum"
-              :disabled="isLoading"
+              :disabled="submitLoading"
               :rules="rules.maxNum"
               hint="無制限にする場合は「0」を記入する"
               persistent-hint
@@ -98,7 +98,6 @@
               required
               outlined
               dense
-              @input="setMaxNum"
             )
 
       v-divider.mt-3.mb-4
@@ -116,7 +115,7 @@
             v-text-field.mt-2(
               v-if="isParticipateUserHopeMaxNum"
               v-model.number="participateUserHopeMaxNum"
-              :disabled="isLoading"
+              :disabled="submitLoading"
               :rules="rules.maxNum"
               hint="無制限にする場合は「0」を記入する"
               persistent-hint
@@ -124,7 +123,6 @@
               required
               outlined
               dense
-              @input="setMaxNum"
             )
       
       v-divider.mt-3.mb-4
@@ -188,7 +186,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, PropSync, mixins } from 'nuxt-property-decorator'
+import { Component, Prop, PropSync, mixins, Watch } from 'nuxt-property-decorator'
 import BlockUnloadMixin from '~/mixins/BlockUnload'
 const ImgCropForm = () => import('~/components/form/ImgCrop.vue')
 const DatetimeForm = () => import('~/components/form/Datetime.vue')
@@ -204,6 +202,8 @@ export default class extends mixins(BlockUnloadMixin) {
   @PropSync('nameValue', { type: String, required: true }) name!: string
   @PropSync('descriptionValue', { type: String, required: true }) description!: string
   @PropSync('isPublicValue', { type: Boolean, required: true }) isPublic!: boolean
+  @PropSync('groupHopeMaxNumValue', { type: Number || null, default: null }) groupHopeMaxNum!: number | null
+  @PropSync('participateUserHopeMaxNumValue', { type: Number || null, default: null }) participateUserHopeMaxNum!:number | null
   @PropSync('startAtValue', { type: Date, required: true }) startAt!: Date
   @PropSync('votingEndAtValue', { type: Date, required: true }) votingEndAt!: Date
   @PropSync('browsingEndAtValue', { type: Date, required: true }) browsingEndAt!: Date
@@ -218,6 +218,24 @@ export default class extends mixins(BlockUnloadMixin) {
   submitLoading = false
   resetLoading = false
   rules = this.$formRules.room
+
+  // isGroupHopeMaxNum
+
+  isGroupHopeMaxNum = true
+  @Watch('isGroupHopeMaxNum')
+  changeIsGroupHopeMaxNum(isGroupHopeMaxNum: boolean) {
+    if (!isGroupHopeMaxNum) this.groupHopeMaxNum = null
+  }
+
+  // isParticipateUserHopeMaxNum
+
+  isParticipateUserHopeMaxNum = true
+  @Watch('isParticipateUserHopeMaxNum')
+  changeIsParticipateUserHopeMaxNum(isParticipateUserHopeMaxNum: boolean) {
+    if (!isParticipateUserHopeMaxNum) this.participateUserHopeMaxNum = null
+  }
+
+  // form func
 
   get isUpdate(): boolean {
     return !!this.uid
