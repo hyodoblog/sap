@@ -28,19 +28,23 @@ export default class RoomDashboardGroupFormNewCsvComponent extends Vue {
 
   // form submti
 
-  submit() {
-    // const roomUid = this.$route.params.uid
-    // return this.$fire.store.roomGroup
-    //   .setItem(roomUid, {
-    //     displayName: this.displayName,
-    //     email: this.email ? this.email : null,
-    //     description: this.description ? this.description : null,
-    //     maxNum: this.maxNum > 0 ? this.maxNum : null,
-    //     loginToken: this.$utils.utility.getRandomToken(40),
-    //     hopeParticipateUserUidItems: [],
-    //   })
-    //   .then(() => this.$store.dispatch('snackbar/success', 'グループを保存しました。'))
-    //   .catch(() => this.$store.dispatch('snackbar/error', 'グループの保存に失敗しました。'))
+  submit(csvData: string[][]) {
+    const roomUid = this.$route.params.uid
+    csvData.shift()
+    return Promise.all(
+      csvData.map((line) =>
+        this.$fire.store.roomGroup.setItem(roomUid, {
+          displayName: line[0],
+          email: line[1] ? line[1] : null,
+          description: line[2] ? line[2] : null,
+          maxNum: line[3] ? Number(line[3]) : null,
+          loginToken: this.$utils.utility.getRandomToken(40),
+          hopeParticipateUserUidItems: [],
+        })
+      )
+    )
+      .then(() => this.$store.dispatch('snackbar/success', 'グループを保存しました。'))
+      .catch(() => this.$store.dispatch('snackbar/error', 'グループの保存に失敗しました。'))
   }
 }
 </script>

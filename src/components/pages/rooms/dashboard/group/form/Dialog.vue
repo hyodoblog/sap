@@ -64,11 +64,16 @@
 
         v-row.align-center
           v-col(cols="5")
-            .subtitle-1
-              | 最大参加人数
-              v-chip.ml-1(x-small) 必須
+            .subtitle-1 最大参加人数
           v-col(cols="7")
+            v-checkbox(
+              v-model="isMaxNum"
+              label="設定しますか？"
+              hint="設定しない場合は無制限になります。"
+              :persistent-hint="!isMaxNum"
+            )
             v-text-field.mt-2(
+              v-if="isMaxNum"
               v-model.number="maxNum"
               :disabled="isLoading"
               :rules="rules.maxNum"
@@ -120,7 +125,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, PropSync, Vue } from 'nuxt-property-decorator'
+import { Component, Prop, PropSync, Vue, Watch } from 'nuxt-property-decorator'
 
 @Component
 export default class RoomDashboardGroupFormDialogComponent extends Vue {
@@ -130,7 +135,7 @@ export default class RoomDashboardGroupFormDialogComponent extends Vue {
   @PropSync('displayNameValue', { type: String, required: true }) displayName!: string
   @PropSync('emailValue', { type: String, required: true }) email!: string
   @PropSync('descriptionValue', { type: String, required: true }) description!: string
-  @PropSync('maxNumValue', { type: Number, required: true }) maxNum!: number
+  @PropSync('maxNumValue', { type: Number || null, default: null }) maxNum!: number | null
 
   @Prop({ type: String, required: true }) readonly title: string
   @Prop({ type: String, required: true }) readonly submitText: string
@@ -144,7 +149,15 @@ export default class RoomDashboardGroupFormDialogComponent extends Vue {
   isLoading = false
   rules = this.$formRules.roomGroup
 
+  isMaxNum = false
+
+  @Watch('isMaxNum')
+  changeIsMaxNum(isMaxNum: boolean) {
+    if (!isMaxNum) this.maxNum = null
+  }
+
   setMaxNum(num: string) {
+    this.isMaxNum = true
     this.maxNum = Number(num)
   }
 

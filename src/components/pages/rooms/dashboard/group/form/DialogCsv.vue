@@ -32,6 +32,9 @@
 
         v-divider.my-3
 
+        template(v-if="!!csvData")
+          .title.mb-2 追加するデータ： {{ csvData.length }}
+
         v-card-actions
           v-btn(
             large
@@ -45,6 +48,7 @@
 
 <script lang="ts">
 import { Component, Prop, PropSync, Vue } from 'nuxt-property-decorator'
+import encoding from 'encoding-japanese'
 
 @Component
 export default class RoomDashboardGroupFormDialogCsvComponent extends Vue {
@@ -52,22 +56,75 @@ export default class RoomDashboardGroupFormDialogCsvComponent extends Vue {
 
   @Prop({ type: String, required: true }) readonly title: string
   @Prop({ type: String, required: true }) readonly submitText: string
-  @Prop({ type: Function, required: true }) submitFunc: () => Promise<void>
+  @Prop({ type: Function, required: true }) submitFunc: (csvData: string[][]) => Promise<void>
 
   isValid = true
   isLoading = false
 
   file: File | null = null
 
-  changeFile(file: File | null) {
-    if (file !== null) {
-      console.log(file)
+  csvData: string[][] | null = null
+
+  async changeFile(file: File | null) {
+    try {
+      if (file !== null) {
+        const csvData = await this.getLinesToCsv(file)
+        if (!this.isCheckData(csvData)) throw Error
+
+        this.csvData = csvData
+      }
+    } catch (err) {
+      console.error(err)
+      this.$store.dispatch('snackbar/error', '正しい形式のCSVファイルを入力してください。')
     }
+  }
+
+  getLinesToCsv(file: File): Promise<string[][]> {
+    /* eslint prefer-promise-reject-errors: 0 */
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        let result = reader.result
+        if (result === null) reject('空データです。')
+
+        const sjisArray = this.$utils.utility.str2Array(result as string)
+
+        const uniArray = encoding.convert(sjisArray, 'UNICODE', 'UTF8')
+        result = encoding.codeToString(uniArray)
+        const lines = result.split('\n')
+        const csvData = lines.map((line) => line.split(','))
+        resolve(csvData)
+      }
+      reader.onerror = (err) => reject(err)
+      reader.readAsBinaryString(file)
+    })
+  }
+
+  isCheckData(lines: string[][]): boolean {
+    if (lines[0].length === 4) {
+      for (let i = 1; i < lines.length; i++) {
+        if (this.$formRules.roomGroup.displayName.some((rule) => typeof rule(lines[i][0]) === 'string')) return false
+        else if (this.$formRules.roomGroup.email.some((rule) => typeof rule(lines[i][1]) === 'string')) return false
+        else if (this.$formRules.roomGroup.description.some((rule) => typeof rule(lines[i][2]) === 'string'))
+          return false
+        else if (this.$formRules.roomGroup.maxNum.some((rule) => typeof rule(lines[i][3]) === 'string')) return false
+      }
+    }
+    // participateUser
+    else if (lines[0].length === 2) {
+      for (let i = 1; i < lines.length; i++) {
+        if (this.$formRules.roomPaticipateUser.displayName.some((rule) => typeof rule(lines[i][0]) === 'string'))
+          return false
+        else if (this.$formRules.roomPaticipateUser.email.some((rule) => typeof rule(lines[i][1]) === 'string'))
+          return false
+      }
+    } else return false
+    return true
   }
 
   submit() {
     // @ts-ignore
-    if (!this.$refs.form.validate()) {
+    if (this.csvData === null) {
       this.$store.dispatch('snackbar/error', '入力に誤りがあります。')
       return
     }
@@ -75,7 +132,7 @@ export default class RoomDashboardGroupFormDialogCsvComponent extends Vue {
     this.isValid = false
     this.isLoading = true
 
-    return this.submitFunc().finally(() => {
+    return this.submitFunc(this.csvData).finally(() => {
       const roomUid = this.$route.params.uid
       this.$store.dispatch('room/group/init', roomUid)
       this.isValid = true

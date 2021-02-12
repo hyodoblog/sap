@@ -9,4 +9,10 @@ export class UtilityUtil {
 
     return token
   }
+
+  public str2Array(str: string) {
+    const array = []
+    for (let i = 0; i < str.length; i++) array.push(str.charCodeAt(i))
+    return array
+  }
 }
