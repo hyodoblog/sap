@@ -6,7 +6,7 @@
     ) CSVで追加する
     FormDialogCsv(
       :dialogValue.sync="dialog"
-      title="グループを追加"
+      title="参加者一括で追加"
       submitText="追加する"
       :submitFunc="submit"
     )
@@ -20,7 +20,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
     FormDialogCsv: () => import('~/components/pages/rooms/dashboard/form/DialogCsv.vue'),
   },
 })
-export default class RoomDashboardGroupFormNewCsvComponent extends Vue {
+export default class RoomDashboardParticipateUserFormNewCsvComponent extends Vue {
   dialog = false
 
   isValid = true
@@ -33,22 +33,20 @@ export default class RoomDashboardGroupFormNewCsvComponent extends Vue {
     csvData.shift()
     return Promise.all(
       csvData.map((line) =>
-        this.$fire.store.roomGroup.setItem(roomUid, {
+        this.$fire.store.roomParticipateUser.setItem(roomUid, {
           displayName: line[0],
-          email: line[1] ? line[1] : null,
-          description: line[2] ? line[2] : null,
-          maxNum: line[3] ? Number(line[3]) : null,
+          email: line[1],
           loginToken: this.$utils.utility.getRandomToken(40),
-          hopeParticipateUserUidItems: [],
+          hopeGroupUidItems: [],
         })
       )
     )
       .then(() => {
-        this.$store.dispatch('snackbar/success', 'グループを保存しました。')
+        this.$store.dispatch('snackbar/success', '参加者を一括保存しました。')
         const roomUid = this.$route.params.uid
-        this.$store.dispatch('room/group/init', roomUid)
+        this.$store.dispatch('room/participate-user/init', roomUid)
       })
-      .catch(() => this.$store.dispatch('snackbar/error', 'グループの保存に失敗しました。'))
+      .catch(() => this.$store.dispatch('snackbar/error', '参加者の一括保存に失敗しました。'))
   }
 }
 </script>

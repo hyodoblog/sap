@@ -3,7 +3,9 @@
     v-col(cols="12")
       .d-flex.justify-space-between.align-center
         .title 参加者一覧
-        RoomParticipateUserFormNew
+        .d-flex
+          RoomParticipateUserFormNewCsv
+          RoomParticipateUserFormNew.ml-2
         
     v-col(cols="12")
       RoomParticipateUserTable
@@ -11,11 +13,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-const RoomParticipateUserFormNew = () => import('~/components/pages/rooms/dashboard/participate-user/form/New.vue')
-const RoomParticipateUserTable = () => import('~/components/pages/rooms/dashboard/participate-user/Table.vue')
 
 @Component({
-  components: { RoomParticipateUserFormNew, RoomParticipateUserTable },
+  components: {
+    RoomParticipateUserFormNewCsv: () => import('~/components/pages/rooms/dashboard/participate-user/form/NewCsv.vue'),
+    RoomParticipateUserFormNew: () => import('~/components/pages/rooms/dashboard/participate-user/form/New.vue'),
+    RoomParticipateUserTable: () => import('~/components/pages/rooms/dashboard/participate-user/Table.vue'),
+  },
 })
 export default class RoomDashboardParticipateUserList extends Vue {
   // new form

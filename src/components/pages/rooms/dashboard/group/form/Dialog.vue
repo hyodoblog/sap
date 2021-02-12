@@ -196,7 +196,7 @@ export default class RoomDashboardGroupFormDialogComponent extends Vue {
       .deleteItem(roomUid, this.groupUid)
       .then(() => {
         this.$store.dispatch('snackbar/success', `「${this.displayName}」グループを削除しました。`)
-        this.$store.dispatch('room/group/init')
+        this.$store.dispatch('room/group/init', roomUid)
         this.dialog = this.removeDialog = false
       })
       .catch(() => {

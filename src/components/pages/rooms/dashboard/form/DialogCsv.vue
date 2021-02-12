@@ -51,7 +51,7 @@ import { Component, Prop, PropSync, Vue } from 'nuxt-property-decorator'
 import encoding from 'encoding-japanese'
 
 @Component
-export default class RoomDashboardGroupFormDialogCsvComponent extends Vue {
+export default class RoomDashboardFormDialogCsvComponent extends Vue {
   @PropSync('dialogValue', { type: Boolean, required: true }) dialog!: boolean
 
   @Prop({ type: String, required: true }) readonly title: string
@@ -133,8 +133,6 @@ export default class RoomDashboardGroupFormDialogCsvComponent extends Vue {
     this.isLoading = true
 
     return this.submitFunc(this.csvData).finally(() => {
-      const roomUid = this.$route.params.uid
-      this.$store.dispatch('room/group/init', roomUid)
       this.isValid = true
       this.isLoading = false
       this.dialog = false
