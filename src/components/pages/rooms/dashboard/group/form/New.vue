@@ -3,7 +3,7 @@
     v-btn(
       color="primary"
       @click="dialog = true"
-    ) グループ追加する
+    ) 一つ追加する
     RoomGroupFormDialog(
       :dialogValue.sync="dialog"
       title="グループを追加"

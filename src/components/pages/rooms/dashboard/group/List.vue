@@ -3,7 +3,9 @@
     v-col(cols="12")
       .d-flex.justify-space-between.align-center
         .title グループ一覧
-        RoomGroupFormNew
+        div.d-flex
+          RoomGroupFormNewCsv
+          RoomGroupFormNew.ml-2
 
     v-col(cols="12")
       RoomGroupTable
@@ -11,11 +13,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-const RoomGroupFormNew = () => import('~/components/pages/rooms/dashboard/group/form/New.vue')
-const RoomGroupTable = () => import('~/components/pages/rooms/dashboard/group/Table.vue')
 
 @Component({
-  components: { RoomGroupFormNew, RoomGroupTable },
+  components: {
+    RoomGroupFormNewCsv: () => import('~/components/pages/rooms/dashboard/group/form/NewCsv.vue'),
+    RoomGroupFormNew: () => import('~/components/pages/rooms/dashboard/group/form/New.vue'),
+    RoomGroupTable: () => import('~/components/pages/rooms/dashboard/group/Table.vue'),
+  },
 })
 export default class RoomDashboardGroupListConmponent extends Vue {}
 </script>

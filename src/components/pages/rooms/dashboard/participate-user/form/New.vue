@@ -3,7 +3,7 @@
     v-btn(
       color="primary"
       @click="dialog = true"
-    ) メンバーを追加する
+    ) 一人追加する
     RoomParticipateUserFormDialog(
       :dialogValue.sync="dialog"
       title="メンバーを追加"
