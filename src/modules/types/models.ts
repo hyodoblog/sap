@@ -62,3 +62,11 @@ export interface RoomParticipateUser extends Base {
   loginToken: string
   hopeGroupUidItems: string[]
 }
+
+// ****************************
+// /rooms/matchings
+
+export interface RoomMatching extends Base {
+  groupUid: string
+  participateUserUidItems: string[]
+}

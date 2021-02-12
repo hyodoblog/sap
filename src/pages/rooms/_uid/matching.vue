@@ -6,6 +6,12 @@
 
     template(v-else)
       .title マッチングページ
+
+      v-simple-table(dense)
+        template(v-slot:default)
+          thead
+            tr
+              th
 </template>
 
 <script lang="ts">
