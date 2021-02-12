@@ -11,7 +11,7 @@
           :key="i"
           style="height:50px"
         )
-          span.font-weight-bold 第{{ i + 1 }}希望
+          span.body-2.font-weight-bold 第{{ i }}希望
       v-col.pa-0(cols="9")
         draggable(v-model="draggableItems")
           v-card.pa-2.d-flex.align-center(
@@ -20,12 +20,19 @@
             style="height:50px"
           )
             v-icon mdi-drag
-            .subtitle-1.ml-2 {{ item.displayName }}
+            .body-1.font-weight-bold.ml-2 {{ item.displayName }}
+    
+    .text-center.my-3
+      v-btn(
+        large
+        color="warning"
+        @click="submit"
+      ) 保存する
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
-import { RoomGroup, RoomParticipateUser } from '~/modules/types/models'
+import { RoomInvitationType, RoomGroup, RoomParticipateUser } from '~/modules/types/models'
 
 @Component({
   components: {
@@ -33,7 +40,9 @@ import { RoomGroup, RoomParticipateUser } from '~/modules/types/models'
   },
 })
 export default class RoomDashboardVotingFormComponnet extends Vue {
+  @Prop({ type: String, required: true }) type: RoomInvitationType
   @Prop({ type: Array, required: true }) items: RoomGroup[] | RoomParticipateUser[]
+  @Prop({ type: Array, required: true }) hopeUidItems: string[]
 
   mounted() {
     this.draggableItems = this.items
@@ -48,5 +57,9 @@ export default class RoomDashboardVotingFormComponnet extends Vue {
 
   isValid = true
   isLoading = false
+
+  submit() {
+    console.log(this.draggableItems)
+  }
 }
 </script>

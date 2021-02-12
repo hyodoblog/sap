@@ -7,8 +7,18 @@
     template(v-else)
       .title 投票ページ
 
-      VotingForm(v-if="type === 'group'" :items="roomGroupItems")
-      VotingForm(v-else-if="type === 'participateUser'" :items="roomParticipateUserItems")
+      VotingForm(
+        v-if="isGroup"
+        :type="type"
+        :items="roomGroupItems"
+        :hopeUidItems="hopeParticipateUserUidItems"
+      )
+      VotingForm(
+        v-else-if="isParticipateUser"
+        :type="type"
+        :items="roomParticipateUserItems"
+        :hopeUidItems="hopeGroupUidItems"
+      )
 </template>
 
 <script lang="ts">
@@ -26,6 +36,14 @@ export default class RoomVotingPage extends Vue {
     return this.$store.getters['invitation/isAuthenticated']
   }
 
+  get isGroup(): boolean {
+    return this.type === 'group' && !!this.hopeParticipateUserUidItems
+  }
+
+  get isParticipateUser(): boolean {
+    return this.type === 'participateUser' && !!this.hopeGroupUidItems
+  }
+
   get type(): RoomInvitationType | null {
     return this.$store.state.invitation.type
   }
@@ -40,6 +58,14 @@ export default class RoomVotingPage extends Vue {
 
   get roomParticipateUserItems(): RoomParticipateUser[] | null {
     return this.$store.state.invitation.roomParticipateUserItems
+  }
+
+  get hopeGroupUidItems(): string[] | null {
+    return this.$store.state.invitation.authItem.hopeGroupUidItems ?? null
+  }
+
+  get hopeParticipateUserUidItems(): string[] | null {
+    return this.$store.state.invitation.authItem.hopeParticipateUserUidItems ?? null
   }
 }
 </script>

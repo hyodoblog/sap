@@ -1,8 +1,8 @@
 import firebase from 'firebase/app'
 
-// *******************
+// ****************************
 // db
-// *******************
+// ****************************
 
 // common
 
@@ -12,14 +12,14 @@ interface Base {
   updatedAt?: firebase.firestore.Timestamp
 }
 
-// *******************
+// ****************************
 // /users
 export interface User extends Base {
   email: string
   nickname: string
 }
 
-// *******************
+// ****************************
 // /rooms
 export type RoomInvitationType = 'group' | 'participateUser'
 
@@ -29,6 +29,8 @@ export interface Room extends Base {
   name: string
   description: string
   isPublic: boolean
+  groupHopeMaxNum: number | null
+  participateUserHopeMaxNum: number | null
   startAt: firebase.firestore.Timestamp
   votingEndAt: firebase.firestore.Timestamp
   browsingEndAt: firebase.firestore.Timestamp
@@ -41,7 +43,7 @@ export interface RoomMessage extends Base {
   text: string
 }
 
-// *******************
+// ****************************
 // /rooms/group
 export interface RoomGroup extends Base {
   displayName: string
