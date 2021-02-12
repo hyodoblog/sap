@@ -6,18 +6,28 @@
 
     template(v-else)
       .title 投票ページ
+
+      VotingForm(v-if="type === 'group'" :items="roomGroupItems")
+      VotingForm(v-else-if="type === 'participateUser'" :items="roomParticipateUserItems")
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { Room, RoomGroup, RoomParticipateUser } from '~/modules/types/models'
+import { RoomInvitationType, Room, RoomGroup, RoomParticipateUser } from '~/modules/types/models'
 
 @Component({
   layout: 'public',
+  components: {
+    VotingForm: () => import('~/components/pages/rooms/voting/Form.vue'),
+  },
 })
 export default class RoomVotingPage extends Vue {
   get isAuthenticated(): boolean {
     return this.$store.getters['invitation/isAuthenticated']
+  }
+
+  get type(): RoomInvitationType | null {
+    return this.$store.state.invitation.type
   }
 
   get roomItem(): Room | null {

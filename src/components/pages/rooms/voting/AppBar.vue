@@ -1,6 +1,6 @@
 <template lang="pug">
   v-card(v-if="isAuthenticated")
-    v-toolbar(flat)
+    v-app-bar(flat)
       v-avatar
         v-img(:src="$utils.url.getImgUrl(roomItem.iconPath)")
       v-toolbar-title.ml-2 「{{ roomItem.name }}」部屋
