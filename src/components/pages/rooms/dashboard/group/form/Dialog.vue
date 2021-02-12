@@ -83,7 +83,6 @@
               required
               outlined
               dense
-              @input="setMaxNum"
             )
 
         v-divider.my-3
@@ -156,9 +155,10 @@ export default class RoomDashboardGroupFormDialogComponent extends Vue {
     if (!isMaxNum) this.maxNum = null
   }
 
-  setMaxNum(num: string) {
-    this.isMaxNum = true
-    this.maxNum = Number(num)
+  @Watch('maxNum', { immediate: true, deep: true })
+  changeMaxNum(maxNum: number | null) {
+    if (maxNum === null) this.isMaxNum = false
+    else this.isMaxNum = true
   }
 
   submit() {

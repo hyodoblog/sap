@@ -78,6 +78,58 @@
       v-divider.mt-3.mb-4
 
       v-row.align-center
+          v-col(cols="5")
+            .subtitle-1 グループの最大希望提出数
+          v-col(cols="7")
+            v-checkbox(
+              v-model="isGroupHopeMaxNum"
+              label="設定しますか？"
+              hint="設定しない場合は無制限になります。"
+              :persistent-hint="!isGroupHopeMaxNum"
+            )
+            v-text-field.mt-2(
+              v-if="isGroupHopeMaxNum"
+              v-model.number="groupHopeMaxNum"
+              :disabled="isLoading"
+              :rules="rules.maxNum"
+              hint="無制限にする場合は「0」を記入する"
+              persistent-hint
+              type="number"
+              required
+              outlined
+              dense
+              @input="setMaxNum"
+            )
+
+      v-divider.mt-3.mb-4
+
+      v-row.align-center
+          v-col(cols="5")
+            .subtitle-1 参加者の最大希望提出数
+          v-col(cols="7")
+            v-checkbox(
+              v-model="isParticipateUserHopeMaxNum"
+              label="設定しますか？"
+              hint="設定しない場合は無制限になります。"
+              :persistent-hint="!isParticipateUserHopeMaxNum"
+            )
+            v-text-field.mt-2(
+              v-if="isParticipateUserHopeMaxNum"
+              v-model.number="participateUserHopeMaxNum"
+              :disabled="isLoading"
+              :rules="rules.maxNum"
+              hint="無制限にする場合は「0」を記入する"
+              persistent-hint
+              type="number"
+              required
+              outlined
+              dense
+              @input="setMaxNum"
+            )
+      
+      v-divider.mt-3.mb-4
+
+      v-row.align-center
         v-col.py-2(cols="5")
           .subtitle-1
             | 開始日時

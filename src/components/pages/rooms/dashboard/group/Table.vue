@@ -91,14 +91,14 @@ export default class RoomDashboardGroupTableComponent extends Vue {
   displayName = ''
   email = ''
   description = ''
-  maxNum = 0
+  maxNum: number | null = null
 
   editOn(item: RoomGroup) {
     this.groupUid = item.uid as string
     this.displayName = item.displayName
     this.description = item.description === null ? '' : item.description
     this.email = item.email === null ? '' : item.email
-    this.maxNum = item.maxNum === null ? 0 : item.maxNum
+    this.maxNum = item.maxNum
     this.dialog = true
   }
 
@@ -109,7 +109,7 @@ export default class RoomDashboardGroupTableComponent extends Vue {
         displayName: this.displayName,
         description: this.description ? this.description : null,
         email: this.email ? this.email : null,
-        maxNum: this.maxNum >= 0 ? this.maxNum : null,
+        maxNum: this.maxNum,
         loginToken: this.$utils.utility.getRandomToken(30),
         hopeParticipateUserUidItems: [],
       })
