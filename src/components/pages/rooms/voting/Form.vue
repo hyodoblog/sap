@@ -22,13 +22,16 @@
           v-model="draggableItems"
           :options="{animation:300}"
         )
-          v-card.draggable.pa-2.d-flex.align-center(
+          v-card.draggable.pa-2.d-flex.justify-space-between.align-center(
             v-for="(item, i) in draggableItems"
             :key="item.uid"
             style="height:50px"
           )
-            v-icon mdi-drag
-            .body-1.font-weight-bold.ml-2 {{ item.displayName }}
+            .d-flex
+              v-icon mdi-drag
+              .body-1.font-weight-bold.ml-2 {{ item.displayName }}
+            v-btn(text small fab @click="remove(item.uid)")
+              v-icon mdi-delete
 
     .text-center.my-3
       v-btn(
@@ -158,6 +161,17 @@ export default class RoomDashboardVotingFormComponnet extends Vue {
     this.draggableItems = (this.draggableItems as any[]).concat(addItems)
     this.addItems = []
     this.$modal.hide('example')
+  }
+
+  // remove
+
+  remove(itemUid: string) {
+    for (let i = 0; i < this.draggableItems.length; i++) {
+      if (this.draggableItems[i].uid === itemUid) {
+        this.draggableItems.splice(i, 1)
+        return
+      }
+    }
   }
 }
 </script>
