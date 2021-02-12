@@ -13,5 +13,5 @@ import { Component, Vue } from 'nuxt-property-decorator'
     Snackbar: () => import('~/components/Snackbar.vue'),
   },
 })
-export default class VotingLayout extends Vue {}
+export default class PublicLayout extends Vue {}
 </script>

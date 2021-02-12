@@ -1,13 +1,7 @@
 <template lang="pug">
   v-container(fluid)
     template(v-if="item")
-      v-row
-        v-col
-          v-btn(
-            icon
-            :to="$routes.front.rooms"
-          )
-            v-icon mdi-arrow-left
+      BtnPageBack(:link="$routes.front.rooms")
 
       v-row
         v-col
@@ -38,24 +32,20 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
-const BaseVComponent = () => import('~/components/base/BaseVComponent.vue')
-const RoomDashboardInvitation = () => import('~/components/pages/rooms/dashboard/btn/Invitation.vue')
-const RoomDashboardInfo = () => import('~/components/pages/rooms/dashboard/Info.vue')
-const RoomDashboardGroupList = () => import('~/components/pages/rooms/dashboard/group/List.vue')
-const RoomDashboardParticipateUserList = () => import('~/components/pages/rooms/dashboard/participate-user/List.vue')
 
 @Component({
   layout: 'protected',
   components: {
-    BaseVComponent,
-    RoomDashboardInvitation,
-    RoomDashboardInfo,
-    RoomDashboardGroupList,
-    RoomDashboardParticipateUserList,
+    BaseVComponent: () => import('~/components/base/BaseVComponent.vue'),
+    BtnPageBack: () => import('~/components/btn/PageBack.vue'),
+    RoomDashboardInvitation: () => import('~/components/pages/rooms/dashboard/btn/Invitation.vue'),
+    RoomDashboardInfo: () => import('~/components/pages/rooms/dashboard/Info.vue'),
+    RoomDashboardGroupList: () => import('~/components/pages/rooms/dashboard/group/List.vue'),
+    RoomDashboardParticipateUserList: () => import('~/components/pages/rooms/dashboard/participate-user/List.vue'),
   },
 })
 export default class RoomDashboardComponent extends Vue {
-  async beforeCreate() {
+  async mounted() {
     try {
       const { uid } = this.$route.params
       const item = await this.$fire.store.room.getItem(uid)

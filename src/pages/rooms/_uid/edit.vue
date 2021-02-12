@@ -1,6 +1,8 @@
 <template lang="pug">
   v-container(style="max-width:1000px")
     template(v-if="roomUid")
+      BtnPageBack(:link="$routes.front.room(roomUid)")
+
       BaseVComponent(:title="`「${title}」部屋の編集`" icon="mdi-monitor-dashboard")
 
       client-only
@@ -49,15 +51,17 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
-const BaseVComponent = () => import('~/components/base/BaseVComponent.vue')
-const RoomForm = () => import('~/components/pages/rooms/Form.vue')
 
 @Component({
   layout: 'protected',
-  components: { BaseVComponent, RoomForm },
+  components: {
+    BaseVComponent: () => import('~/components/base/BaseVComponent.vue'),
+    BtnPageBack: () => import('~/components/btn/PageBack.vue'),
+    RoomForm: () => import('~/components/pages/rooms/Form.vue'),
+  },
 })
 export default class RoomNewPage extends Vue {
-  async beforeCreate() {
+  async mounted() {
     try {
       const { uid } = this.$route.params
       const item = await this.$fire.store.room.getItem(uid)
