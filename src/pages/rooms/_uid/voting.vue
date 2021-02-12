@@ -20,12 +20,9 @@ export default class RoomVotingPage extends Vue {
       const { roomInvitationType, roomUid, loginToken, roomGroupUid, roomParticipateUserUid } = this.$route.query
       if (typeof roomInvitationType === 'string' && typeof roomUid === 'string' && typeof loginToken === 'string') {
         if (roomInvitationType === 'group' && typeof roomGroupUid === 'string') {
-          console.log(roomInvitationType === 'group' && typeof roomGroupUid === 'string')
           const room = await this.$fire.store.room.getItem(roomUid as string)
-          console.log(roomInvitationType === 'group' && typeof roomGroupUid === 'string')
-          console.log(roomGroupUid)
           const roomGroupItem = await this.$fire.store.roomGroup.getItemToLoginToken(roomUid, roomGroupUid, loginToken)
-          console.log(roomInvitationType === 'group' && typeof roomGroupUid === 'string')
+          console.log(roomGroupItem)
           this.room = room
           this.roomGroupItem = roomGroupItem
         } else if (roomInvitationType === 'participateUser' && typeof roomParticipateUserUid === 'string') {

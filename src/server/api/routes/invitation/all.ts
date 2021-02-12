@@ -69,8 +69,8 @@ const getSendUserItems = async (roomUid: string): Promise<dynamicTemplateParams[
       browsing_end_datetime: timestampConvertDatetimeJp(roomItem.browsingEndAt),
       login_url: utilsGetInvitationLoginLink({
         roomUid: roomItem.uid as string,
-        type: 'group',
-        groupUid: item.uid,
+        type: 'participateUser',
+        participateUserUid: item.uid,
         loginToken: item.loginToken,
       }),
     })
