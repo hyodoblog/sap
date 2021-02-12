@@ -78,20 +78,26 @@ export default class RoomVotingPage extends Vue {
 
   groupHopeSubmit(hopeItems: RoomGroup[]) {
     const hopeUidItems = hopeItems.map((item) => item.uid)
-    return this.$fire.store.roomGroup.updateItem(this.roomUid, this.$store.state.invitation.authItem.uid, {
-      hopeParticipateUserUidItems:
-        this.roomItem?.groupHopeMaxNum === null ? hopeUidItems : hopeUidItems.slice(0, this.roomItem?.groupHopeMaxNum),
-    } as RoomGroup)
+    return this.$fire.store.roomGroup
+      .updateItem(this.roomUid, this.$store.state.invitation.authItem.uid, {
+        hopeParticipateUserUidItems:
+          this.roomItem?.groupHopeMaxNum === null
+            ? hopeUidItems
+            : hopeUidItems.slice(0, this.roomItem?.groupHopeMaxNum),
+      } as RoomGroup)
+      .then(() => this.$store.dispatch('invitation/resetAuthItem', 'group' as RoomInvitationType))
   }
 
   participateUserHopeSubmit(hopeItems: RoomParticipateUser[]) {
     const hopeUidItems = hopeItems.map((item) => item.uid)
-    return this.$fire.store.roomParticipateUser.updateItem(this.roomUid, this.$store.state.invitation.authItem.uid, {
-      hopeGroupUidItems:
-        this.roomItem?.participateUserHopeMaxNum === null
-          ? hopeUidItems
-          : hopeUidItems.slice(0, this.roomItem?.participateUserHopeMaxNum),
-    } as RoomParticipateUser)
+    return this.$fire.store.roomParticipateUser
+      .updateItem(this.roomUid, this.$store.state.invitation.authItem.uid, {
+        hopeGroupUidItems:
+          this.roomItem?.participateUserHopeMaxNum === null
+            ? hopeUidItems
+            : hopeUidItems.slice(0, this.roomItem?.participateUserHopeMaxNum),
+      } as RoomParticipateUser)
+      .then(() => this.$store.dispatch('invitation/resetAuthItem', 'participateUser' as RoomInvitationType))
   }
 }
 </script>

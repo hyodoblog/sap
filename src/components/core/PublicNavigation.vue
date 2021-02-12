@@ -34,7 +34,7 @@ export default class CorePublicNavigationComponent extends Vue {
         to: this.$routes.front.roomMatching(this.$route.params.uid),
       },
       {
-        title: 'Build by Yusei Hydoo. v.2.0.0',
+        title: 'v.2.0.0',
       },
     ]
   }

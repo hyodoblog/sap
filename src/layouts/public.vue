@@ -44,7 +44,7 @@ export default class PublicLayout extends Vue {
   async initGroup(roomUid: string, roomGroupUid: string, loginToken: string) {
     const authItem = await this.$fire.store.roomGroup.getItemToLoginToken(roomUid, roomGroupUid, loginToken)
     this.$store.commit('invitation/SET_AUTH_ITEM', { type: 'group', authItem } as InvitationState)
-    await this.init(roomUid)
+    await this.$store.dispatch('invitation/initRoom', roomUid)
   }
 
   async initParticipateUser(roomUid: string, roomParticipateUserUid: string, loginToken: string) {
@@ -54,19 +54,7 @@ export default class PublicLayout extends Vue {
       loginToken
     )
     this.$store.commit('invitation/SET_AUTH_ITEM', { type: 'participateUser', authItem } as InvitationState)
-
-    await this.init(roomUid)
-  }
-
-  async init(roomUid: string) {
-    const roomItem = await this.$fire.store.room.getItem(roomUid as string)
-    const roomGroupItems = await this.$fire.store.roomGroup.getItems(roomUid)
-    const roomParticipateUserItems = await this.$fire.store.roomParticipateUser.getItems(roomUid)
-    this.$store.commit('invitation/SET_ROOM_ITEMS', {
-      roomItem,
-      roomGroupItems,
-      roomParticipateUserItems,
-    } as InvitationState)
+    await this.$store.dispatch('invitation/initRoom', roomUid)
   }
 }
 </script>

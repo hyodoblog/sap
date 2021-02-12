@@ -105,14 +105,23 @@ export default class RoomDashboardVotingFormComponnet extends Vue {
       if (flag === this.draggableItems.length) return true
       else return false
     })
-    this.$watch('draggableItems', this.changeDraggableItems)
+    this.$watch('draggableItems', this.changeDraggableItems, { immediate: true })
+    this.$watch('hopeUidItems', this.changeHopeUidItems, { immediate: true })
   }
 
   draggableItems: RoomGroup[] | RoomParticipateUser[] = []
 
-  @Watch('items')
+  @Watch('items', { immediate: true })
   changeItems(items: RoomGroup[] | RoomParticipateUser[]) {
     this.draggableItems = items
+  }
+
+  changeHopeUidItems(hopeUidItems: string[]) {
+    console.log(hopeUidItems)
+    this.draggableItems = (this.items as any[]).filter((item) => {
+      for (const hopeUid of hopeUidItems) if (hopeUid === item.uid) return true
+      return false
+    })
   }
 
   // form
