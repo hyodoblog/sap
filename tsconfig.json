@@ -31,7 +31,8 @@
       "@nuxt/types",
       "@nuxtjs/axios",
       "cookie-universal-nuxt",
-      "vuetify"
+      "vuetify",
+      "vue-js-modal"
     ]
   },
   "exclude": [

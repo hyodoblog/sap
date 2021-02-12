@@ -33,7 +33,16 @@ const config: NuxtConfig = {
     port: isDev ? port : process.env.PORT,
   },
   serverMiddleware: [{ path: '/api', handler: '~/server' }],
-  plugins: ['~/plugins/api', '~/plugins/firebase', '~/plugins/routes', '~/plugins/form-rules', '~/plugins/utils'],
+  plugins: [
+    '~/plugins/api',
+    '~/plugins/firebase',
+    '~/plugins/routes',
+    '~/plugins/form-rules',
+    '~/plugins/utils',
+
+    // components
+    { src: '~/plugins/components/vue-js-modal', mode: 'client' },
+  ],
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
   modules: ['@nuxtjs/axios', 'cookie-universal-nuxt'],
   axios: {

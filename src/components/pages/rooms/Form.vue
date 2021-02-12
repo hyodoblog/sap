@@ -203,7 +203,10 @@ export default class extends mixins(BlockUnloadMixin) {
   @PropSync('descriptionValue', { type: String, required: true }) description!: string
   @PropSync('isPublicValue', { type: Boolean, required: true }) isPublic!: boolean
   @PropSync('groupHopeMaxNumValue', { type: Number || null, default: null }) groupHopeMaxNum!: number | null
-  @PropSync('participateUserHopeMaxNumValue', { type: Number || null, default: null }) participateUserHopeMaxNum!:number | null
+  @PropSync('participateUserHopeMaxNumValue', { type: Number || null, default: null }) participateUserHopeMaxNum!:
+    | number
+    | null
+
   @PropSync('startAtValue', { type: Date, required: true }) startAt!: Date
   @PropSync('votingEndAtValue', { type: Date, required: true }) votingEndAt!: Date
   @PropSync('browsingEndAtValue', { type: Date, required: true }) browsingEndAt!: Date

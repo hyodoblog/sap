@@ -10,6 +10,8 @@
         :nameValue.sync="name"
         :descriptionValue.sync="description"
         :isPublicValue.sync="isPublic"
+        :groupHopeMaxNumValue.sync="groupHopeMaxNum"
+        :participateUserHopeMaxNumValue.sync="participateUserHopeMaxNum"
         :startAtValue.sync="startAt"
         :votingEndAtValue.sync="votingEndAt"
         :browsingEndAtValue.sync="browsingEndAt"
@@ -33,6 +35,8 @@ export default class RoomNewPage extends Vue {
   name = ''
   description = ''
   isPublic = false
+  groupHopeMaxNum: number | null = null
+  participateUserHopeMaxNum: number | null = null
   startAt = this.$fire.store.getNowAtToDate()
   votingEndAt = this.$fire.store.getNowAtToDate()
   browsingEndAt = this.$fire.store.getNowAtToDate()
@@ -59,6 +63,8 @@ export default class RoomNewPage extends Vue {
         name: this.name,
         description: this.description,
         isPublic: this.isPublic,
+        groupHopeMaxNum: this.groupHopeMaxNum,
+        participateUserHopeMaxNum: this.participateUserHopeMaxNum,
         startAt: this.$fire.store.convertTimestamp(this.startAt),
         votingEndAt: this.$fire.store.convertTimestamp(this.votingEndAt),
         browsingEndAt: this.$fire.store.convertTimestamp(this.browsingEndAt),

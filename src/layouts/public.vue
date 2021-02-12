@@ -28,7 +28,8 @@ export default class PublicLayout extends Vue {
           await this.initParticipateUser(roomUid, roomParticipateUserUid, loginToken)
         } else throw Error
       } else throw Error
-    } catch {
+    } catch (err) {
+      console.error(err)
       this.$nuxt.error({
         statusCode: 404,
         message: 'ページが見つかりませんでした。',

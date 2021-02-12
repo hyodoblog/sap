@@ -10,14 +10,18 @@
       VotingForm(
         v-if="isGroup"
         :type="type"
-        :items="roomGroupItems"
+        :items="roomParticipateUserItems"
         :hopeUidItems="hopeParticipateUserUidItems"
+        :maxNum="roomItem.groupHopeMaxNum"
+        :submitFunc="groupHopeSubmit"
       )
       VotingForm(
         v-else-if="isParticipateUser"
         :type="type"
-        :items="roomParticipateUserItems"
+        :items="roomGroupItems"
         :hopeUidItems="hopeGroupUidItems"
+        :maxNum="roomItem.participateUserHopeMaxNum"
+        :submitFunc="participateUserHopeSubmit"
       )
 </template>
 
@@ -32,16 +36,20 @@ import { RoomInvitationType, Room, RoomGroup, RoomParticipateUser } from '~/modu
   },
 })
 export default class RoomVotingPage extends Vue {
+  get roomUid(): string {
+    return this.$route.params.uid
+  }
+
   get isAuthenticated(): boolean {
     return this.$store.getters['invitation/isAuthenticated']
   }
 
   get isGroup(): boolean {
-    return this.type === 'group' && !!this.hopeParticipateUserUidItems
+    return this.type === 'group' && this.hopeParticipateUserUidItems !== null
   }
 
   get isParticipateUser(): boolean {
-    return this.type === 'participateUser' && !!this.hopeGroupUidItems
+    return this.type === 'participateUser' && this.hopeGroupUidItems !== null
   }
 
   get type(): RoomInvitationType | null {
@@ -66,6 +74,24 @@ export default class RoomVotingPage extends Vue {
 
   get hopeParticipateUserUidItems(): string[] | null {
     return this.$store.state.invitation.authItem.hopeParticipateUserUidItems ?? null
+  }
+
+  groupHopeSubmit(hopeItems: RoomGroup[]) {
+    const hopeUidItems = hopeItems.map((item) => item.uid)
+    return this.$fire.store.roomGroup.updateItem(this.roomUid, this.$store.state.invitation.authItem.uid, {
+      hopeParticipateUserUidItems:
+        this.roomItem?.groupHopeMaxNum === null ? hopeUidItems : hopeUidItems.slice(0, this.roomItem?.groupHopeMaxNum),
+    } as RoomGroup)
+  }
+
+  participateUserHopeSubmit(hopeItems: RoomParticipateUser[]) {
+    const hopeUidItems = hopeItems.map((item) => item.uid)
+    return this.$fire.store.roomParticipateUser.updateItem(this.roomUid, this.$store.state.invitation.authItem.uid, {
+      hopeGroupUidItems:
+        this.roomItem?.participateUserHopeMaxNum === null
+          ? hopeUidItems
+          : hopeUidItems.slice(0, this.roomItem?.participateUserHopeMaxNum),
+    } as RoomParticipateUser)
   }
 }
 </script>
