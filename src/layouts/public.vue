@@ -1,7 +1,8 @@
 <template lang="pug">
   v-app
+    CorePublicNavigation(:drawerValue.sync="navDrawer")
     v-main.mx-auto(style="width:600px")
-      AppBar
+      AppBar(:drawerValue.sync="navDrawer")
       nuxt
     Snackbar
 </template>
@@ -13,10 +14,13 @@ import { InvitationState } from '~/modules/types/state'
 @Component({
   components: {
     AppBar: () => import('~/components/pages/rooms/voting/AppBar.vue'),
+    CorePublicNavigation: () => import('~/components/core/PublicNavigation.vue'),
     Snackbar: () => import('~/components/Snackbar.vue'),
   },
 })
 export default class PublicLayout extends Vue {
+  navDrawer = null
+
   // 招待メールの処理
   async beforeMount() {
     try {

@@ -1,4 +1,4 @@
-import { ActionTree, GetterTree, MutationTree } from 'vuex'
+import { ActionTree, MutationTree } from 'vuex'
 import jwtDecode from 'jwt-decode'
 import { IndexState, RootState } from '~/modules/types/state'
 const cookieparser = require('cookieparser')
@@ -11,10 +11,6 @@ interface CookieData {
 
 export const state = () => Object.assign({}, new IndexState())
 
-export const getters: GetterTree<IndexState, RootState> = {
-  drawer: (state) => state.drawer,
-}
-
 export const mutations: MutationTree<IndexState> = {
   RESET(state) {
     Object.assign(state, new IndexState())
@@ -23,25 +19,28 @@ export const mutations: MutationTree<IndexState> = {
   SET_DRAWER(state, drawer) {
     state.drawer = drawer
   },
+
+  SET_PUBLIC_DRAWER(state, publicDrawer) {
+    state.publicDrawer = publicDrawer
+  },
 }
 
 export const actions: ActionTree<RootState, RootState> = {
   async nuxtServerInit(_, { req }) {
-    const sessionCookie = getSessionCookie(req)
-    if (sessionCookie) {
-      const cookieData = getUserFromCookie(sessionCookie)
-      if (cookieData && !this.getters['user/isAuthenticated']) {
-        try {
+    try {
+      const sessionCookie = getSessionCookie(req)
+      if (sessionCookie) {
+        const cookieData = getUserFromCookie(sessionCookie)
+        if (cookieData && !this.getters['user/isAuthenticated']) {
           const userUid = cookieData.user_id
           const email = cookieData.email
           const { user } = await this.$api.back.verifyCookie({ sessionCookie, userUid, email })
 
           this.commit('user/SET_UID', userUid)
           this.commit('user/SET_ITEM', user)
-          // this.commit('config/public/SET', config)
-        } catch {}
+        }
       }
-    }
+    } catch {}
   },
 }
 

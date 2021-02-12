@@ -31,7 +31,7 @@
               v-icon mdi-drag
               .body-1.font-weight-bold.ml-2 {{ item.displayName }}
             v-btn(text small fab @click="remove(item.uid)")
-              v-icon mdi-delete
+              v-icon mdi-trash-can-outline
 
     .text-center.my-3
       v-btn(

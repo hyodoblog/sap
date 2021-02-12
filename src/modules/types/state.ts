@@ -2,9 +2,11 @@ import { RoomGroup, RoomParticipateUser, Room, User, RoomInvitationType } from '
 
 export class IndexState {
   drawer: boolean
+  publicDrawer: boolean
 
   constructor() {
     this.drawer = false
+    this.publicDrawer = false
   }
 }
 

@@ -7,15 +7,17 @@
 
       v-spacer
       
-      v-app-bar-nav-icon
+      v-app-bar-nav-icon(@click="drawer = !drawer")
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, PropSync, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
 
 @Component
 export default class RoomDashboardVotingAppBarComponent extends Vue {
+  @PropSync('drawerValue', { type: Boolean || null, default: null }) drawer: boolean | null
+
   get isAuthenticated(): boolean {
     return this.$store.getters['invitation/isAuthenticated']
   }
