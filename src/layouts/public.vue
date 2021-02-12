@@ -1,6 +1,7 @@
 <template lang="pug">
   v-app
-    v-main
+    v-main.mx-auto(style="width:600px")
+      AppBar
       nuxt
     Snackbar
 </template>
@@ -11,6 +12,7 @@ import { InvitationState } from '~/modules/types/state'
 
 @Component({
   components: {
+    AppBar: () => import('~/components/pages/rooms/voting/AppBar.vue'),
     Snackbar: () => import('~/components/Snackbar.vue'),
   },
 })
