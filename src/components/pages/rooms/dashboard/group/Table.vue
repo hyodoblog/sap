@@ -109,7 +109,7 @@ export default class RoomDashboardGroupTableComponent extends Vue {
         displayName: this.displayName,
         description: this.description ? this.description : null,
         email: this.email ? this.email : null,
-        maxNum: this.maxNum > 0 ? this.maxNum : null,
+        maxNum: this.maxNum >= 0 ? this.maxNum : null,
         loginToken: this.$utils.utility.getRandomToken(30),
         hopeParticipateUserUidItems: [],
       })
