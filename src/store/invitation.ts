@@ -1,5 +1,5 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
-import { RoomGroup, RoomInvitationType, RoomParticipateUser } from '~/modules/types/models'
+import { RoomInvitationType } from '~/modules/types/models'
 import { InvitationState, RootState } from '~/modules/types/state'
 
 export const state = () => Object.assign({}, new InvitationState())

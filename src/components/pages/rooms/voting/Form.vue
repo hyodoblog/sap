@@ -117,7 +117,6 @@ export default class RoomDashboardVotingFormComponnet extends Vue {
   }
 
   changeHopeUidItems(hopeUidItems: string[]) {
-    console.log(hopeUidItems)
     this.draggableItems = (this.items as any[]).filter((item) => {
       for (const hopeUid of hopeUidItems) if (hopeUid === item.uid) return true
       return false

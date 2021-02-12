@@ -27,11 +27,21 @@ export default class CorePublicNavigationComponent extends Vue {
     return [
       {
         title: '投票ページ',
-        to: this.$routes.front.roomVoting(this.$route.params.uid),
+        to:
+          this.$routes.front.roomVoting(this.$route.params.uid) +
+          '?' +
+          Object.keys(this.$route.query)
+            .map((key: string) => key + '=' + encodeURIComponent(this.$route.query[key] as string))
+            .join('&'),
       },
       {
         title: 'マッチング一覧ページ',
-        to: this.$routes.front.roomMatching(this.$route.params.uid),
+        to:
+          this.$routes.front.roomMatching(this.$route.params.uid) +
+          '?' +
+          Object.keys(this.$route.query)
+            .map((key: string) => key + '=' + encodeURIComponent(this.$route.query[key] as string))
+            .join('&'),
       },
       {
         title: 'v.2.0.0',

@@ -33,11 +33,8 @@ export default class PublicLayout extends Vue {
         } else throw Error
       } else throw Error
     } catch (err) {
-      console.error(err)
-      this.$nuxt.error({
-        statusCode: 404,
-        message: 'ページが見つかりませんでした。',
-      })
+      this.$store.dispatch('snackbar/error', '認証に失敗しました。')
+      this.$router.push(this.$routes.front.top)
     }
   }
 

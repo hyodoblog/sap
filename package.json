@@ -7,8 +7,8 @@
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
-    "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
-    "lintfix": "eslint --ext .js,.ts,.vue --ignore-path .gitignore . --fix",
+    "lint": "eslint --ext .js,.ts,.vue .",
+    "lintfix": "eslint --ext .js,.ts,.vue . --fix",
     "deploy:staging": "bash ./deploy/staging.sh",
     "deploy:prod": "bash ./deploy/prod.sh"
   },

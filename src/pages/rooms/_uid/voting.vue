@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-container(fluid)
+  v-container.px-2(fluid)
     //- loading
     v-overlay(v-if="!isAuthenticated")
       v-progress-circular(indeterminate size="64")
