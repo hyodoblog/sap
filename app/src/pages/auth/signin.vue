@@ -93,7 +93,7 @@ export default class AuthSigninPage extends Vue {
       // バリデーション
       // @ts-ignore
       if (!this.$refs.form.validate()) {
-        this.$store.dispatch('snackbar/error', '会員登録済みのメールアドレスです。')
+        this.$store.dispatch('snackbar/error', '正しく入力してください。')
         return
       }
 
