@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": [
+      "ESNext",
+      "ESNext.AsyncIterable",
+      "DOM"
+    ],
+    "esModuleInterop": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "app/src/*"
+      ],
+      "@/*": [
+        "app/src/*"
+      ]
+    },
+    "types": [
+      "./src/modules/types",
+      "@types/node",
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "cookie-universal-nuxt",
+      "vuetify",
+      "vue-js-modal"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    "dist",
+    "functions"
+  ]
+}

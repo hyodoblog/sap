@@ -5,6 +5,9 @@ do
   export $env
 done < .env
 
+cp ./key/development.json ./functions/key/development.json
+cp ./key/development.json ./app/key/development.json
+
 # *******************
 # functions
 
