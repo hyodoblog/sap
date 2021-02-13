@@ -1,6 +1,6 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
-import { RoomGroup } from 'app/src/modules/types/models'
-import { RoomGroupState, RootState } from 'app/src/modules/types/state'
+import { RoomGroup } from '~/modules/types/models'
+import { RoomGroupState, RootState } from '~/modules/types/state'
 
 export const state = () => Object.assign({}, new RoomGroupState())
 

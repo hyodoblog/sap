@@ -1,6 +1,6 @@
 import { ActionTree, MutationTree } from 'vuex'
 import jwtDecode from 'jwt-decode'
-import { IndexState, RootState } from 'app/src/modules/types/state'
+import { IndexState, RootState } from '~/modules/types/state'
 const cookieparser = require('cookieparser')
 
 interface CookieData {

@@ -1,6 +1,6 @@
-import RoomFormRule from 'app/src/modules/handlers/form-rules/room/index'
-import RoomGroupFormRule from 'app/src/modules/handlers/form-rules/room/group'
-import RoomParticipateUserFormRule from 'app/src/modules/handlers/form-rules/room/participate-user'
+import RoomFormRule from '~/modules/handlers/form-rules/room/index'
+import RoomGroupFormRule from '~/modules/handlers/form-rules/room/group'
+import RoomParticipateUserFormRule from '~/modules/handlers/form-rules/room/participate-user'
 
 export interface FormRulesApi {
   room: RoomFormRule

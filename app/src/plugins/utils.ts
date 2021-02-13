@@ -1,5 +1,5 @@
-import { UrlUtil } from 'app/src/modules/handlers/utils/url'
-import { UtilityUtil } from 'app/src/modules/handlers/utils/utility'
+import { UrlUtil } from '~/modules/handlers/utils/url'
+import { UtilityUtil } from '~/modules/handlers/utils/utility'
 
 export interface UtilsApi {
   url: UrlUtil

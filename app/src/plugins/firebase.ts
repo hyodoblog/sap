@@ -3,9 +3,9 @@ import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'
-import { AuthFire } from 'app/src/modules/handlers/fire/auth'
-import { StorageFire } from 'app/src/modules/handlers/fire/storage'
-import { StoreFire } from 'app/src/modules/handlers/fire/store'
+import { AuthFire } from '~/modules/handlers/fire/auth'
+import { StorageFire } from '~/modules/handlers/fire/storage'
+import { StoreFire } from '~/modules/handlers/fire/store'
 
 export interface FirebaseApi {
   auth: AuthFire

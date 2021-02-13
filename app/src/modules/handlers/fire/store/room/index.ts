@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import { Room } from 'app/src/modules/types/models'
+import { Room } from '~/modules/types/models'
 
 export class RoomDb {
   private roomsRef: firebase.firestore.CollectionReference

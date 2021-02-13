@@ -1,6 +1,6 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
-import { User } from 'app/src/modules/types/models'
-import { UserState, RootState } from 'app/src/modules/types/state'
+import { User } from '~/modules/types/models'
+import { UserState, RootState } from '~/modules/types/state'
 
 export const state = () => Object.assign({}, new UserState())
 

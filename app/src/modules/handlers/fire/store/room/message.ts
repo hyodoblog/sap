@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import { RoomMessage } from 'app/src/modules/types/models'
+import { RoomMessage } from '~/modules/types/models'
 
 export class RoomMessageDb {
   private roomsRef: firebase.firestore.CollectionReference

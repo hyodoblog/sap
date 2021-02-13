@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import { RoomParticipateUser } from 'app/src/modules/types/models'
+import { RoomParticipateUser } from '~/modules/types/models'
 
 export class RoomParticipateUserDb {
   private roomsRef: firebase.firestore.CollectionReference

@@ -1,6 +1,6 @@
 import { ActionTree, MutationTree } from 'vuex'
-import { Room } from 'app/src/modules/types/models'
-import { RoomState, RootState } from 'app/src/modules/types/state'
+import { Room } from '~/modules/types/models'
+import { RoomState, RootState } from '~/modules/types/state'
 
 export const state = () => Object.assign({}, new RoomState())
 

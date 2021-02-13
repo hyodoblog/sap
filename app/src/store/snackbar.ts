@@ -1,5 +1,5 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
-import { RootState, SnackbarState } from 'app/src/modules/types/state'
+import { RootState, SnackbarState } from '~/modules/types/state'
 
 export const state = () => Object.assign({}, new SnackbarState())
 

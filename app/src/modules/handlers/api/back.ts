@@ -14,7 +14,7 @@ import {
   ApiUpdateRoomReqParams,
   ApiVerifyCookieReqParams,
   ApiVerifyCookieResParams,
-} from 'app/src/modules/types/api'
+} from '~/modules/types/api'
 
 export class BackApi extends AxiosApi {
   private backRoutes: BackRoutesHandler

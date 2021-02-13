@@ -1,5 +1,5 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
-import { BackApi } from 'app/src/modules/handlers/api/back'
+import { BackApi } from '~/modules/handlers/api/back'
 
 export interface ApiApi {
   back: BackApi

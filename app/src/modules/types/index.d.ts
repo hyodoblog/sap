@@ -1,8 +1,8 @@
-import { ApiApi } from 'app/src/plugins/api'
-import { FirebaseApi } from 'app/src/plugins/firebase'
-import { FormRulesApi } from 'app/src/plugins/form-rules'
-import { RoutesApi } from 'app/src/plugins/routes'
-import { UtilsApi } from 'app/src/plugins/utils'
+import { ApiApi } from '~/plugins/api'
+import { FirebaseApi } from '~/plugins/firebase'
+import { FormRulesApi } from '~/plugins/form-rules'
+import { RoutesApi } from '~/plugins/routes'
+import { UtilsApi } from '~/plugins/utils'
 
 declare module 'vue/types/vue' {
   interface Vue {

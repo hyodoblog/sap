@@ -1,5 +1,5 @@
 import firebase from 'firebase/app'
-import { User } from 'app/src/modules/types/models'
+import { User } from '~/modules/types/models'
 
 export class UserDb {
   private usersRef: firebase.firestore.CollectionReference

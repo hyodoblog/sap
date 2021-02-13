@@ -1,4 +1,4 @@
-import FrontHandler from 'app/src/modules/handlers/routes/front'
+import FrontHandler from '~/modules/handlers/routes/front'
 
 export interface RoutesApi {
   front: FrontHandler

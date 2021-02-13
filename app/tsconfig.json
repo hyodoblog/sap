@@ -19,10 +19,10 @@
     "baseUrl": ".",
     "paths": {
       "~/*": [
-        "app/src/*"
+        "./src/*"
       ],
       "@/*": [
-        "app/src/*"
+        "./src/*"
       ]
     },
     "types": [

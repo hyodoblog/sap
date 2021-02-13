@@ -1,6 +1,6 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
-import { RoomParticipateUser } from 'app/src/modules/types/models'
-import { RoomParticipateUserState, RootState } from 'app/src/modules/types/state'
+import { RoomParticipateUser } from '~/modules/types/models'
+import { RoomParticipateUserState, RootState } from '~/modules/types/state'
 
 export const state = () => Object.assign({}, new RoomParticipateUserState())
 
