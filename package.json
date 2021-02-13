@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "emulators:start": "firebase emulators:start",
     "deploy:staging": "bash ./deploy/staging.sh",
     "deploy:prod": "bash ./deploy/prod.sh"
   }
