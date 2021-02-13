@@ -91,7 +91,7 @@
               v-model="groupDisplayName"
               :disabled="disabled"
               :rules="rules.displayName"
-              counter="30"
+              counter="15"
               required
               outlined
               dense
@@ -108,7 +108,6 @@
               v-model="groupIsEdit"
               label="編集権限を与えますか？"
               :disabled="disabled"
-              counter="30"
               @input="change"
             )
         
@@ -123,11 +122,12 @@
                 label="設定しますか？"
                 hint="設定しない場合は無制限になります。"
                 :persistent-hint="!isGroupHopeMaxNum"
+                :disabled="disabled"
               )
               v-text-field.mt-2(
                 v-if="isGroupHopeMaxNum"
                 v-model.number="groupHopeMaxNum"
-                :disabled="submitLoading"
+                :disabled="disabled"
                 :rules="rules.maxNum"
                 hint="無制限にする場合は「0」を記入する"
                 persistent-hint
@@ -153,7 +153,7 @@
               v-model="participateUserDisplayName"
               :disabled="disabled"
               :rules="rules.displayName"
-              counter="30"
+              counter="15"
               required
               outlined
               dense
@@ -169,6 +169,7 @@
             v-checkbox(
               v-model="participateUserIsEdit"
               label="編集権限を与えますか？"
+              :disabled="disabled"
               @input="change"
             )
         
@@ -183,13 +184,14 @@
               label="設定しますか？"
               hint="設定しない場合は無制限になります。"
               :persistent-hint="!isParticipateUserHopeMaxNum"
+              :disabled="disabled"
             )
             v-text-field.mt-2(
               v-if="isParticipateUserHopeMaxNum"
               v-model.number="participateUserHopeMaxNum"
-              :disabled="submitLoading"
               :rules="rules.maxNum"
               hint="無制限にする場合は「0」を記入する"
+              :disabled="disabled"
               persistent-hint
               type="number"
               required

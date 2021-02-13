@@ -5,7 +5,7 @@
       v-progress-circular(indeterminate size="64")
 
     template(v-else)
-      .title 希望提出ページ
+      .title {{ typeDisplayName }}専用 希望提出ページ
 
       VotingForm(
         v-if="isGroup"
@@ -36,6 +36,17 @@ import { RoomInvitationType, Room, RoomGroup, RoomParticipateUser } from '~/modu
   },
 })
 export default class RoomVotingPage extends Vue {
+  get typeDisplayName(): string {
+    switch (this.type) {
+      case 'group':
+        return this.roomItem?.groupDisplayName || 'グループ'
+      case 'participateUser':
+        return ''
+      default:
+        return ''
+    }
+  }
+
   get roomUid(): string {
     return this.$route.params.uid
   }
