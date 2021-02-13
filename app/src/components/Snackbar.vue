@@ -1,6 +1,6 @@
 <template lang="pug">
-  v-snackbar(v-model="isSnackbar" dark top :color="color" :timeout="-1")
-    .title.text-center {{ text }}
+  v-snackbar(v-model="isSnackbar" dark bottom right :color="color" :timeout="-1")
+    .text-center.title {{ text }}
 </template>
 
 <script lang="ts">
@@ -32,3 +32,12 @@ export default class SnackbarComponent extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.close-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(-50%, 0);
+}
+</style>
