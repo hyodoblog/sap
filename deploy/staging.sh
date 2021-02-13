@@ -19,7 +19,7 @@ cloudFunctions () {
 
 cloudRun () {
   gcloud config set project ${FIREBASE_PROJECT_ID}
-  docker build -t ${FIREBASE_PROJECT_ID}-staging .
+  docker build -t ${FIREBASE_PROJECT_ID}-staging ./app
   docker tag ${FIREBASE_PROJECT_ID}-staging gcr.io/${FIREBASE_PROJECT_ID}/staging
   docker push gcr.io/${FIREBASE_PROJECT_ID}/staging
   gcloud beta run deploy staging \
