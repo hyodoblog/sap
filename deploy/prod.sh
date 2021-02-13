@@ -10,6 +10,7 @@ done < .env
 
 cloudFunctions () {
   firebase functions:config:set store.env=${FIREBASE_STORE_ROOT_COLLECTION}
+  firebase functions:config:set gcp.service.account.id=${GCLOUD_SERVICE_ACCOUNT_ID}
   firebase deploy --only functions
 }
 

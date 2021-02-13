@@ -94,3 +94,7 @@ sw.*
 
 **/key/*
 !**/key/.keep
+
+# firebase emulators
+
+.runtimeconfig.json
