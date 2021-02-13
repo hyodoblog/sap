@@ -5,4 +5,6 @@ export default class {
     (v: any) => !!v || v === 0 || '入力してください',
     (v: any) => Number.isFinite(Number(v)) || '半角数字で入力してください',
   ]
+
+  displayName = [(v: any) => !v || (v && v.length <= 30) || '30文字以内で入力してください']
 }

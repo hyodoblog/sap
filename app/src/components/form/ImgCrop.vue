@@ -88,41 +88,43 @@ export default class extends Vue {
   beforeImgDataURL = ''
 
   displayCanvas(imgDataURL: string, isCrop?: boolean) {
-    const canvas = document.querySelector(`#${this.canvasId}`)
-    // @ts-ignore
-    const ctx = canvas.getContext('2d')
+    try {
+      const canvas = document.querySelector(`#${this.canvasId}`)
+      // @ts-ignore
+      const ctx = canvas.getContext('2d')
 
-    const img = new Image()
-    img.src = imgDataURL
-    img.onload = () => {
-      if (isCrop) {
-        // @ts-ignore
-        canvas.width = this.maxWidth
-        // @ts-ignore
-        canvas.height = this.maxHeight
-        let width: number, height: number, xOffset: number, yOffset: number
-        if (img.width > img.height) {
-          height = this.maxHeight
-          width = img.width * (this.maxHeight / img.height)
-          xOffset = -(width - this.maxWidth) / 2
-          yOffset = 0
+      const img = new Image()
+      img.src = imgDataURL
+      img.onload = () => {
+        if (isCrop) {
+          // @ts-ignore
+          canvas.width = this.maxWidth
+          // @ts-ignore
+          canvas.height = this.maxHeight
+          let width: number, height: number, xOffset: number, yOffset: number
+          if (img.width > img.height) {
+            height = this.maxHeight
+            width = img.width * (this.maxHeight / img.height)
+            xOffset = -(width - this.maxWidth) / 2
+            yOffset = 0
+          } else {
+            width = this.maxWidth
+            height = img.height * (this.maxWidth / img.width)
+            yOffset = -(height - this.maxHeight) / 2
+            xOffset = 0
+          }
+          ctx.drawImage(img, xOffset, yOffset, width, height)
+          this.imgDataURL = ctx.canvas.toDataURL()
         } else {
-          width = this.maxWidth
-          height = img.height * (this.maxWidth / img.width)
-          yOffset = -(height - this.maxHeight) / 2
-          xOffset = 0
+          // @ts-ignore
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
         }
-        ctx.drawImage(img, xOffset, yOffset, width, height)
-        this.imgDataURL = ctx.canvas.toDataURL()
-      } else {
-        // @ts-ignore
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        this.loading = false
       }
-      this.loading = false
-    }
-    img.onerror = (e: any) => {
-      console.error(e)
-    }
+      img.onerror = (e: any) => {
+        console.error(e)
+      }
+    } catch {}
   }
 
   setImg(file: any) {

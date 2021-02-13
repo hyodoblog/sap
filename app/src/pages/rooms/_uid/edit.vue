@@ -13,7 +13,11 @@
           :nameValue.sync="name"
           :descriptionValue.sync="description"
           :isPublicValue.sync="isPublic"
+          :groupDisplayNameValue.sync="groupDisplayName"
+          :groupIsEditValue.sync="groupIsEdit"
           :groupHopeMaxNumValue.sync="groupHopeMaxNum"
+          :participateUserDisplayNameValue.sync="participateUserDisplayName"
+          :participateUserIsEditValue.sync="participateUserIsEdit"
           :participateUserHopeMaxNumValue.sync="participateUserHopeMaxNum"
           :startAtValue.sync="startAt"
           :votingEndAtValue.sync="votingEndAt"
@@ -84,7 +88,11 @@ export default class RoomNewPage extends Vue {
     this.name = item.name
     this.description = item.description
     this.isPublic = item.isPublic
+    this.groupDisplayName = item.groupDisplayName
+    this.groupIsEdit = item.groupIsEdit
     this.groupHopeMaxNum = item.groupHopeMaxNum
+    this.participateUserDisplayName = item.participateUserDisplayName
+    this.participateUserIsEdit = item.participateUserIsEdit
     this.participateUserHopeMaxNum = item.participateUserHopeMaxNum
     this.startAt = item.startAt.toDate()
     this.votingEndAt = item.votingEndAt.toDate()
@@ -113,8 +121,18 @@ export default class RoomNewPage extends Vue {
   name = ''
   description = ''
   isPublic = false
+
+  // group
+  groupDisplayName: string | null = null
+  groupIsEdit: boolean
   groupHopeMaxNum: number | null = null
+
+  // participate user
+  participateUserDisplayName: string | null = null
+  participateUserIsEdit: boolean
   participateUserHopeMaxNum: number | null = null
+
+  // time
   startAt = new Date()
   votingEndAt = new Date()
   browsingEndAt = new Date()
@@ -140,8 +158,12 @@ export default class RoomNewPage extends Vue {
         name: this.name,
         description: this.description,
         isPublic: this.isPublic,
-        groupHopeMaxNum: this.groupHopeMaxNum,
-        participateUserHopeMaxNum: this.participateUserHopeMaxNum,
+        groupDisplayName: this.groupDisplayName || null,
+        groupIsEdit: this.groupIsEdit || false,
+        groupHopeMaxNum: this.groupHopeMaxNum || null,
+        participateUserDisplayName: this.participateUserDisplayName || null,
+        participateUserIsEdit: this.participateUserIsEdit || false,
+        participateUserHopeMaxNum: this.participateUserHopeMaxNum || null,
         startAt: this.$fire.store.convertTimestamp(this.startAt),
         votingEndAt: this.$fire.store.convertTimestamp(this.votingEndAt),
         browsingEndAt: this.$fire.store.convertTimestamp(this.browsingEndAt),

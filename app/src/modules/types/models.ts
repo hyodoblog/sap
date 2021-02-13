@@ -29,8 +29,18 @@ export interface Room extends Base {
   name: string
   description: string
   isPublic: boolean
+
+  // group
+  groupDisplayName: string | null
+  groupIsEdit: boolean
   groupHopeMaxNum: number | null
+
+  // participate user
+  participateUserDisplayName: string | null
+  participateUserIsEdit: boolean
   participateUserHopeMaxNum: number | null
+
+  // time
   startAt: firebase.firestore.Timestamp
   votingEndAt: firebase.firestore.Timestamp
   browsingEndAt: firebase.firestore.Timestamp

@@ -77,34 +77,106 @@
       
       v-divider.mt-3.mb-4
 
-      v-row.align-center
+      //- group
+
+      .subtitle-1.font-italic.mb-2 グループ設定
+
+      v-card.pa-4(outlined)
+
+        v-row.align-center
           v-col(cols="5")
-            .subtitle-1 グループの最大希望提出数
+            .subtitle-1 表示名
           v-col(cols="7")
-            v-checkbox(
-              v-model="isGroupHopeMaxNum"
-              label="設定しますか？"
-              hint="設定しない場合は無制限になります。"
-              :persistent-hint="!isGroupHopeMaxNum"
-            )
-            v-text-field.mt-2(
-              v-if="isGroupHopeMaxNum"
-              v-model.number="groupHopeMaxNum"
-              :disabled="submitLoading"
-              :rules="rules.maxNum"
-              hint="無制限にする場合は「0」を記入する"
-              persistent-hint
-              type="number"
+            v-text-field(
+              v-model="groupDisplayName"
+              :disabled="disabled"
+              :rules="rules.displayName"
+              counter="30"
               required
               outlined
               dense
+              @input="change"
             )
+        
+        v-divider.my-2
+
+        v-row.align-center
+          v-col(cols="5")
+            .subtitle-1 編集権限
+          v-col(cols="7")
+            v-checkbox(
+              v-model="groupIsEdit"
+              label="編集権限を与えますか？"
+              :disabled="disabled"
+              counter="30"
+              @input="change"
+            )
+        
+        v-divider.my-2
+
+        v-row.align-center
+            v-col(cols="5")
+              .subtitle-1 最大希望提出数
+            v-col(cols="7")
+              v-checkbox(
+                v-model="isGroupHopeMaxNum"
+                label="設定しますか？"
+                hint="設定しない場合は無制限になります。"
+                :persistent-hint="!isGroupHopeMaxNum"
+              )
+              v-text-field.mt-2(
+                v-if="isGroupHopeMaxNum"
+                v-model.number="groupHopeMaxNum"
+                :disabled="submitLoading"
+                :rules="rules.maxNum"
+                hint="無制限にする場合は「0」を記入する"
+                persistent-hint
+                type="number"
+                required
+                outlined
+                dense
+              )
 
       v-divider.mt-3.mb-4
 
-      v-row.align-center
+      //- particiapte user
+
+      .subtitle-1.font-italic.mb-2 参加者設定
+
+      v-card.pa-4(outlined)
+      
+        v-row.align-center
           v-col(cols="5")
-            .subtitle-1 参加者の最大希望提出数
+            .subtitle-1 表示名
+          v-col(cols="7")
+            v-text-field(
+              v-model="participateUserDisplayName"
+              :disabled="disabled"
+              :rules="rules.displayName"
+              counter="30"
+              required
+              outlined
+              dense
+              @input="change"
+            )
+        
+        v-divider.my-2
+
+        v-row.align-center
+          v-col(cols="5")
+            .subtitle-1 編集権限
+          v-col(cols="7")
+            v-checkbox(
+              v-model="participateUserIsEdit"
+              label="編集権限を与えますか？"
+              @input="change"
+            )
+        
+        v-divider.my-2
+
+        v-row.align-center
+          v-col(cols="5")
+            .subtitle-1 最大希望提出数
           v-col(cols="7")
             v-checkbox(
               v-model="isParticipateUserHopeMaxNum"
@@ -202,11 +274,23 @@ export default class extends mixins(BlockUnloadMixin) {
   @PropSync('nameValue', { type: String, required: true }) name!: string
   @PropSync('descriptionValue', { type: String, required: true }) description!: string
   @PropSync('isPublicValue', { type: Boolean, required: true }) isPublic!: boolean
+
+  // group
+  @PropSync('groupDisplayNameValue', { type: String || null, default: null }) groupDisplayName!: string | null
+  @PropSync('groupIsEditValue', { type: Boolean, required: true }) groupIsEdit!: number
   @PropSync('groupHopeMaxNumValue', { type: Number || null, default: null }) groupHopeMaxNum!: number | null
+
+  // participate user
+  @PropSync('participateUserDisplayNameValue', { type: String || null, default: null }) participateUserDisplayName!:
+    | string
+    | null
+
+  @PropSync('participateUserIsEditValue', { type: Boolean, required: true }) participateUserIsEdit!: number
   @PropSync('participateUserHopeMaxNumValue', { type: Number || null, default: null }) participateUserHopeMaxNum!:
     | number
     | null
 
+  // time
   @PropSync('startAtValue', { type: Date, required: true }) startAt!: Date
   @PropSync('votingEndAtValue', { type: Date, required: true }) votingEndAt!: Date
   @PropSync('browsingEndAtValue', { type: Date, required: true }) browsingEndAt!: Date
