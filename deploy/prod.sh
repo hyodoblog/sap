@@ -1,5 +1,5 @@
 # 環境変数をexport
-cp .env.prod .env
+cp .env.prod ./app/.env
 while read env
 do
   export $env
