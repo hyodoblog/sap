@@ -33,7 +33,7 @@
         v-divider.my-3
 
         template(v-if="!!csvData")
-          .title.mb-2 追加するデータ： {{ csvData.length }}
+          .title.mb-2 追加するデータ： {{ addDataNum }}
 
         v-card-actions
           v-btn(
@@ -64,6 +64,7 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
   file: File | null = null
 
   csvData: string[][] | null = null
+  addDataNum: number | null = null
 
   async changeFile(file: File | null) {
     try {
@@ -93,6 +94,9 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
         result = encoding.codeToString(uniArray)
         const lines = result.split('\n')
         const csvData = lines.map((line) => line.split(','))
+        if (csvData[csvData.length - 1].length === 1) csvData.pop()
+        csvData.shift()
+        this.addDataNum = csvData.length
         resolve(csvData)
       }
       reader.onerror = (err) => reject(err)
@@ -103,7 +107,7 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
   isCheckData(csvData: string[][]): boolean {
     // group
     if (csvData[0].length === 4) {
-      for (let i = 1; i < csvData.length; i++) {
+      for (let i = 0; i < csvData.length; i++) {
         if (csvData[i].length !== 4) continue
         if (this.$formRules.roomGroup.displayName.some((rule) => typeof rule(csvData[i][0]) === 'string')) return false
         else if (this.$formRules.roomGroup.email.some((rule) => typeof rule(csvData[i][1]) === 'string')) return false
@@ -135,12 +139,18 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
     this.isValid = false
     this.isLoading = true
 
-    return this.submitFunc(this.csvData).finally(() => {
-      this.isValid = true
-      this.isLoading = false
-      this.dialog = false
-      // reset
-    })
+    return this.submitFunc(this.csvData)
+      .then(() => {
+        this.file = null
+        this.addDataNum = null
+        this.csvData = null
+      })
+      .finally(() => {
+        this.isValid = true
+        this.isLoading = false
+        this.dialog = false
+        // reset
+      })
   }
 }
 </script>

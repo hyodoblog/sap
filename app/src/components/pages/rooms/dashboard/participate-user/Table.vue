@@ -20,9 +20,32 @@
               style="max-width: 250px"
             )
         template(v-slot:item="{ item }")
-          tr.pointer(@click="editOn(item)")
+          tr
             td(v-text="item.displayName")
             td(v-text="item.email")
+            td.text-right
+              v-tooltip(bottom)
+                template(v-slot:activator="{ attrs, on }")
+                  v-btn.mx-1(
+                    v-bind="attrs"
+                    light
+                    icon
+                    v-on="on"
+                    @click="editOn(item)"
+                  )
+                    v-icon.success--text mdi-pencil
+                span 編集
+              v-tooltip(bottom)
+                template(v-slot:activator="{ attrs, on }")
+                  v-btn.mx-1(
+                    v-bind="attrs"
+                    light
+                    icon
+                    v-on="on"
+                    @click="remove(item)"
+                  )
+                    v-icon.error--text mdi-delete
+                span 削除
 
     RoomParticipateUserFormDialog(
       :isEdit="true"
@@ -72,6 +95,11 @@ export default class RoomDashboardParticipateUserTableComponent extends Vue {
       text: 'メールアドレス',
       value: 'email',
     },
+    {
+      sortable: false,
+      text: '',
+      value: '',
+    },
   ]
 
   // edit form
@@ -98,6 +126,19 @@ export default class RoomDashboardParticipateUserTableComponent extends Vue {
       } as RoomParticipateUser)
       .then(() => this.$store.dispatch('snackbar/success', '参加メンバーを編集しました。'))
       .catch(() => this.$store.dispatch('snackbar/error', '参加メンバーの編集に失敗しました。'))
+  }
+
+  // remove form
+
+  async remove(item: RoomParticipateUser) {
+    try {
+      const roomUid = this.$route.params.uid
+      await this.$fire.store.roomParticipateUser.deleteItem(roomUid, item.uid as string)
+      this.$store.dispatch('room/participate-user/init', roomUid)
+      this.$store.dispatch('snackbar/success', `「${item.displayName}」を削除しました。`)
+    } catch {
+      this.$store.dispatch('snackbar/error', `「${item.displayName}」の削除に失敗しました。`)
+    }
   }
 }
 </script>

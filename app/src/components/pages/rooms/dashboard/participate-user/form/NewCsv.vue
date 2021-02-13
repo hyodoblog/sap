@@ -30,7 +30,6 @@ export default class RoomDashboardParticipateUserFormNewCsvComponent extends Vue
 
   submit(csvData: string[][]) {
     const roomUid = this.$route.params.uid
-    csvData.shift()
     return Promise.all(
       csvData.map((line) =>
         this.$fire.store.roomParticipateUser.setItem(roomUid, {

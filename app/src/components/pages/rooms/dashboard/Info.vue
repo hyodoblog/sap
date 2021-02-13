@@ -7,12 +7,12 @@
         .subtitle-1 {{ item.isPublic ? '公開' : '非公開' }}
     .d-flex
       v-col.py-2(cols="5")
-        .title グループの最大希望人数
+        .title グループの最大希望提出人数
       v-col.py-2(cols="7")
         .subtitle-1 {{ item.groupHopeMaxNum === null ? '無制限' : item.groupHopeMaxNum }}
     .d-flex
       v-col.py-2(cols="5")
-        .title 参加者の最大希望人数
+        .title 参加者の最大希望提出人数
       v-col.py-2(cols="7")
         .subtitle-1 {{ item.participateUserHopeMaxNum === null ? '無制限': item.participateUserHopeMaxNum }}
     .d-flex
