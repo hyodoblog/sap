@@ -32,9 +32,10 @@ export default class PublicLayout extends Vue {
           await this.initParticipateUser(roomUid, roomParticipateUserUid, loginToken)
         } else throw Error
       } else throw Error
-    } catch (err) {
-      this.$store.dispatch('snackbar/error', '認証に失敗しました。')
-      this.$router.push(this.$routes.front.top)
+    } catch {
+      this.$nuxt.error({
+        statusCode: 404,
+      })
     }
   }
 
