@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { Component, Prop, PropSync, Vue } from 'nuxt-property-decorator'
-import encoding from 'encoding-japanese'
+import encoding, { Encoding } from 'encoding-japanese'
 
 @Component
 export default class RoomDashboardFormDialogCsvComponent extends Vue {
@@ -69,13 +69,13 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
     try {
       if (file !== null) {
         const csvData = await this.getLinesToCsv(file)
-        if (!this.isCheckData(csvData)) throw Error
+        if (!this.isCheckData(csvData)) throw new Error('バリデーションエラー')
 
         this.csvData = csvData
       }
     } catch (err) {
-      console.error(err)
-      this.$store.dispatch('snackbar/error', '正しい形式のCSVファイルを入力してください。')
+      if (err === 'バリデーションエラー') this.$store.dispatch('snackbar/error', '入力されたデータに誤りがあります。')
+      else this.$store.dispatch('snackbar/error', '正しい形式のCSVファイルを入力してください。')
     }
   }
 
@@ -89,7 +89,7 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
 
         const sjisArray = this.$utils.utility.str2Array(result as string)
 
-        const uniArray = encoding.convert(sjisArray, 'UNICODE', 'UTF8')
+        const uniArray = encoding.convert(sjisArray, 'UNICODE', encoding.detect(sjisArray) as Encoding)
         result = encoding.codeToString(uniArray)
         const lines = result.split('\n')
         const csvData = lines.map((line) => line.split(','))
@@ -100,22 +100,25 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
     })
   }
 
-  isCheckData(lines: string[][]): boolean {
-    if (lines[0].length === 4) {
-      for (let i = 1; i < lines.length; i++) {
-        if (this.$formRules.roomGroup.displayName.some((rule) => typeof rule(lines[i][0]) === 'string')) return false
-        else if (this.$formRules.roomGroup.email.some((rule) => typeof rule(lines[i][1]) === 'string')) return false
-        else if (this.$formRules.roomGroup.description.some((rule) => typeof rule(lines[i][2]) === 'string'))
+  isCheckData(csvData: string[][]): boolean {
+    // group
+    if (csvData[0].length === 4) {
+      for (let i = 1; i < csvData.length; i++) {
+        if (csvData[i].length !== 4) continue
+        if (this.$formRules.roomGroup.displayName.some((rule) => typeof rule(csvData[i][0]) === 'string')) return false
+        else if (this.$formRules.roomGroup.email.some((rule) => typeof rule(csvData[i][1]) === 'string')) return false
+        else if (this.$formRules.roomGroup.description.some((rule) => typeof rule(csvData[i][2]) === 'string'))
           return false
-        else if (this.$formRules.roomGroup.maxNum.some((rule) => typeof rule(lines[i][3]) === 'string')) return false
+        else if (this.$formRules.roomGroup.maxNum.some((rule) => typeof rule(csvData[i][3]) === 'string')) return false
       }
     }
     // participateUser
-    else if (lines[0].length === 2) {
-      for (let i = 1; i < lines.length; i++) {
-        if (this.$formRules.roomPaticipateUser.displayName.some((rule) => typeof rule(lines[i][0]) === 'string'))
+    else if (csvData[0].length === 2) {
+      for (let i = 1; i < csvData.length; i++) {
+        if (csvData[i].length !== 2) continue
+        if (this.$formRules.roomPaticipateUser.displayName.some((rule) => typeof rule(csvData[i][0]) === 'string'))
           return false
-        else if (this.$formRules.roomPaticipateUser.email.some((rule) => typeof rule(lines[i][1]) === 'string'))
+        else if (this.$formRules.roomPaticipateUser.email.some((rule) => typeof rule(csvData[i][1]) === 'string'))
           return false
       }
     } else return false
