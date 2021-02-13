@@ -5,7 +5,11 @@
       v-progress-circular(indeterminate size="64")
 
     template(v-else)
-      .title {{ typeDisplayName }}専用 希望提出ページ
+      .title.mb-2 {{ typeDisplayName }}専用 希望提出ページ
+
+      VotingInfo(:item="authItem")
+
+      v-divider.my-4
 
       VotingForm(
         v-if="isGroup"
@@ -32,6 +36,7 @@ import { RoomInvitationType, Room, RoomGroup, RoomParticipateUser } from '~/modu
 @Component({
   layout: 'public',
   components: {
+    VotingInfo: () => import('~/components/pages/rooms/voting/Info.vue'),
     VotingForm: () => import('~/components/pages/rooms/voting/Form.vue'),
   },
 })
@@ -69,6 +74,10 @@ export default class RoomVotingPage extends Vue {
 
   get roomItem(): Room | null {
     return this.$store.state.invitation.roomItem
+  }
+
+  get authItem(): RoomGroup | RoomParticipateUser | null {
+    return this.$store.state.invitation.authItem
   }
 
   get roomGroupItems(): RoomGroup[] | null {
