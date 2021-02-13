@@ -84,6 +84,8 @@ export default class RoomNewPage extends Vue {
     this.name = item.name
     this.description = item.description
     this.isPublic = item.isPublic
+    this.groupHopeMaxNum = item.groupHopeMaxNum
+    this.participateUserHopeMaxNum = item.participateUserHopeMaxNum
     this.startAt = item.startAt.toDate()
     this.votingEndAt = item.votingEndAt.toDate()
     this.browsingEndAt = item.browsingEndAt.toDate()
