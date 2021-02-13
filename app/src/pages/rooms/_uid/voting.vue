@@ -5,7 +5,7 @@
       v-progress-circular(indeterminate size="64")
 
     template(v-else)
-      .title 投票ページ
+      .title 希望提出ページ
 
       VotingForm(
         v-if="isGroup"

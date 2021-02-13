@@ -143,7 +143,7 @@
       v-row.align-center
         v-col.py-2(cols="5")
           .subtitle-1
-            | 投票締め切り日時
+            | 希望提出締め切り日時
             v-chip.ml-1(x-small) 必須
         v-col.py-2(cols="7")
           DatetimeForm(
@@ -269,10 +269,10 @@ export default class extends mixins(BlockUnloadMixin) {
     }
     // 日付チェック
     if (this.startAt.getTime() >= this.votingEndAt.getTime()) {
-      this.$store.dispatch('snackbar/error', '投票締め切り日時は、開始日時よりも後に設定してください。')
+      this.$store.dispatch('snackbar/error', '希望提出締め切り日時は、開始日時よりも後に設定してください。')
       return
     } else if (this.votingEndAt.getTime() >= this.browsingEndAt.getTime()) {
-      this.$store.dispatch('snackbar/error', '閲覧締め切り日時は、投票締め切り日時よりも後に設定してください。')
+      this.$store.dispatch('snackbar/error', '閲覧締め切り日時は、希望提出締め切り日時よりも後に設定してください。')
       return
     } else if (this.startAt.getTime() >= this.browsingEndAt.getTime()) {
       this.$store.dispatch('snackbar/error', '閲覧締め切り日時は、開始日時よりも後に設定してください。')

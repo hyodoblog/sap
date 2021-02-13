@@ -22,7 +22,7 @@
         .subtitle-1 {{ convertDatetime(item.startAt) }}
     .d-flex
       v-col.py-2(cols="5")
-        .title 投票終了日時
+        .title 希望提出終了日時
       v-col.py-2(cols="7")
         .subtitle-1 {{ convertDatetime(item.votingEndAt) }}
     .d-flex

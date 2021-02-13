@@ -63,7 +63,7 @@ export default class RoomsTable extends Vue {
       value: 'startAt',
     },
     {
-      text: '投票終了日時',
+      text: '希望提出終了日時',
       value: 'votingEndAt',
     },
     {

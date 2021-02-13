@@ -26,7 +26,7 @@ export default class CorePublicNavigationComponent extends Vue {
   get items() {
     return [
       {
-        title: '投票ページ',
+        title: '希望提出ページ',
         to:
           this.$routes.front.roomVoting(this.$route.params.uid) +
           '?' +
