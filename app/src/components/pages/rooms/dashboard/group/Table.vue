@@ -26,6 +26,18 @@
             td(v-text="item.description" style="max-width: 180px;word-break: break-all;")
             td(v-text="item.maxNum")
             td.text-right
+              v-tooltip(v-if="!!item.email" bottom)
+                template(v-slot:activator="{ attrs, on }")
+                  v-btn.mx-1(
+                    v-bind="attrs"
+                    light
+                    icon
+                    v-on="on"
+                    :loading="loadingMailUid === item.uid"
+                    @click="sendMail(item)"
+                  )
+                    v-icon.info--text mdi-email
+                span 招待メールを送信
               v-tooltip(bottom)
                 template(v-slot:activator="{ attrs, on }")
                   v-btn.mx-1(
@@ -111,6 +123,24 @@ export default class RoomDashboardGroupTableComponent extends Vue {
       value: '',
     },
   ]
+
+  // send mail
+
+  loadingMailUid: string | null = null
+
+  async sendMail(item: RoomGroup) {
+    try {
+      this.loadingMailUid = item.uid as string
+      const roomUid = this.$route.params.uid
+      const headers = await this.$fire.auth.getAuthHeaders()
+      await this.$api.back.groupInvitation({ roomUid, groupUid: item.uid as string }, headers)
+      this.$store.dispatch('snackbar/success', `${item.displayName}さんへ招待メールを送りました。`)
+    } catch {
+      this.$store.dispatch('snackbar/error', `${item.displayName}さんへ招待メールの送信に失敗しました。`)
+    } finally {
+      this.loadingMailUid = null
+    }
+  }
 
   // edit form
 

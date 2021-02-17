@@ -66,6 +66,13 @@ export const firestoreUpdateRoom = async (uid: string, item: Room): Promise<void
 
 // /rooms/groups
 
+export const firestotreGetGroupItem = async (roomUid: string, groupUid: string): Promise<RoomGroup> => {
+  const doc = await roomsRef.doc(roomUid).collection('groups').doc(groupUid).get()
+  if (doc.exists) {
+    return { uid: doc.id, ...doc.data() } as RoomGroup
+  } else throw new Error('firestotreGetGroupItem not found.')
+}
+
 export const firestotreGetIsEmailGroups = async (roomUid: string): Promise<RoomGroup[]> => {
   const docs = await roomsRef.doc(roomUid).collection('groups').where('email', '!=', 'null').get()
   const items: RoomGroup[] = []
@@ -81,6 +88,13 @@ export const firestotreGetIsEmailGroups = async (roomUid: string): Promise<RoomG
 }
 
 // /rooms/participateUsers
+
+export const firestotreGetParticipateUserItem = async (roomUid: string, participateUserUid: string): Promise<RoomParticipateUser> => {
+  const doc = await roomsRef.doc(roomUid).collection('participateUsers').doc(participateUserUid).get()
+  if (doc.exists) {
+    return { uid: doc.id, ...doc.data() } as RoomParticipateUser
+  } else throw new Error('firestotreGetParticipateUserItem not found.')
+}
 
 export const firestotreGetIsEmailParticipateUsers = async (roomUid: string): Promise<RoomParticipateUser[]> => {
   const docs = await roomsRef.doc(roomUid).collection('participateUsers').where('email', '!=', 'null').get()

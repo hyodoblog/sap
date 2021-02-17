@@ -16,9 +16,9 @@ import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
   components: {
-    RoomGroupFormNewCsv: () => import('~/components/pages/rooms/dashboard/group/form/NewCsv.vue'),
-    RoomGroupFormNew: () => import('~/components/pages/rooms/dashboard/group/form/New.vue'),
-    RoomGroupTable: () => import('~/components/pages/rooms/dashboard/group/Table.vue'),
+    RoomGroupFormNewCsv: () => import('./form/NewCsv.vue'),
+    RoomGroupFormNew: () => import('./form/New.vue'),
+    RoomGroupTable: () => import('./Table.vue'),
   },
 })
 export default class RoomDashboardGroupListConmponent extends Vue {}

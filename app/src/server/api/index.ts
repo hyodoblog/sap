@@ -14,7 +14,9 @@ import updateRoomRouter from './routes/room/update'
 import deleteRoomRouter from './routes/room/delete'
 
 // invitation
+import groupInvitationRouter from './routes/invitation/group/index'
 import groupAllInvitationRouter from './routes/invitation/group/all'
+import participateUserInvitationRouter from './routes/invitation/participate-user/index'
 import participateUserAllInvitationRouter from './routes/invitation/participate-user/all'
 import allInvitationRouter from './routes/invitation/all'
 
@@ -33,7 +35,9 @@ router.post(backRoutes.updateRoom, updateRoomRouter)
 router.delete(backRoutes.deleteRoom, deleteRoomRouter)
 
 // invitation
+router.post(backRoutes.groupInvitation, groupInvitationRouter)
 router.post(backRoutes.groupAllInvitation, groupAllInvitationRouter)
+router.post(backRoutes.participateUserInvitation, participateUserInvitationRouter)
 router.post(backRoutes.participateUserAllInvitation, participateUserAllInvitationRouter)
 router.post(backRoutes.allInvitation, allInvitationRouter)
 

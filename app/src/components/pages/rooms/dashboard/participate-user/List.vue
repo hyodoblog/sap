@@ -16,9 +16,9 @@ import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
   components: {
-    RoomParticipateUserFormNewCsv: () => import('~/components/pages/rooms/dashboard/participate-user/form/NewCsv.vue'),
-    RoomParticipateUserFormNew: () => import('~/components/pages/rooms/dashboard/participate-user/form/New.vue'),
-    RoomParticipateUserTable: () => import('~/components/pages/rooms/dashboard/participate-user/Table.vue'),
+    RoomParticipateUserFormNewCsv: () => import('./form/NewCsv.vue'),
+    RoomParticipateUserFormNew: () => import('./form/New.vue'),
+    RoomParticipateUserTable: () => import('./Table.vue'),
   },
 })
 export default class RoomDashboardParticipateUserList extends Vue {

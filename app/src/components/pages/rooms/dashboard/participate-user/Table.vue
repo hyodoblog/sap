@@ -24,6 +24,18 @@
             td(v-text="item.displayName")
             td(v-text="item.email")
             td.text-right
+              v-tooltip(v-if="!!item.email" bottom)
+                template(v-slot:activator="{ attrs, on }")
+                  v-btn.mx-1(
+                    v-bind="attrs"
+                    light
+                    icon
+                    v-on="on"
+                    :loading="loadingMailUid === item.uid"
+                    @click="sendMail(item)"
+                  )
+                    v-icon.info--text mdi-email
+                span 招待メールを送信
               v-tooltip(bottom)
                 template(v-slot:activator="{ attrs, on }")
                   v-btn.mx-1(
@@ -101,6 +113,24 @@ export default class RoomDashboardParticipateUserTableComponent extends Vue {
       value: '',
     },
   ]
+
+  // send mail
+
+  loadingMailUid: string | null = null
+
+  async sendMail(item: RoomParticipateUser) {
+    try {
+      this.loadingMailUid = item.uid as string
+      const roomUid = this.$route.params.uid
+      const headers = await this.$fire.auth.getAuthHeaders()
+      await this.$api.back.participateUserInvitation({ roomUid, participateUserUid: item.uid as string }, headers)
+      this.$store.dispatch('snackbar/success', `${item.displayName}さんへ招待メールを送りました。`)
+    } catch {
+      this.$store.dispatch('snackbar/error', `${item.displayName}さんへ招待メールの送信に失敗しました。`)
+    } finally {
+      this.loadingMailUid = null
+    }
+  }
 
   // edit form
 

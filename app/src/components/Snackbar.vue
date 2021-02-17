@@ -28,7 +28,7 @@ export default class SnackbarComponent extends Vue {
   close() {
     setTimeout(() => {
       this.offSnackbar()
-    }, 5000)
+    }, 4000)
   }
 }
 </script>
