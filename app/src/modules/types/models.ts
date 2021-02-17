@@ -1,4 +1,4 @@
-import firebase from 'firebase/app'
+import admin from 'firebase/app'
 
 // ****************************
 // db
@@ -8,8 +8,8 @@ import firebase from 'firebase/app'
 
 interface Base {
   uid?: string
-  createdAt?: firebase.firestore.Timestamp
-  updatedAt?: firebase.firestore.Timestamp
+  createdAt?: admin.firestore.Timestamp
+  updatedAt?: admin.firestore.Timestamp
 }
 
 // ****************************
@@ -41,9 +41,9 @@ export interface Room extends Base {
   participateUserHopeMaxNum: number | null
 
   // time
-  startAt: firebase.firestore.Timestamp
-  votingEndAt: firebase.firestore.Timestamp
-  browsingEndAt: firebase.firestore.Timestamp
+  startAt: admin.firestore.Timestamp
+  votingEndAt: admin.firestore.Timestamp
+  browsingEndAt: admin.firestore.Timestamp
 }
 
 // ****************************
