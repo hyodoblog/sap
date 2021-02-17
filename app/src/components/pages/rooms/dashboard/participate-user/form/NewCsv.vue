@@ -33,8 +33,8 @@ export default class RoomDashboardParticipateUserFormNewCsvComponent extends Vue
     return Promise.all(
       csvData.map((line) =>
         this.$fire.store.roomParticipateUser.setItem(roomUid, {
-          displayName: line[0],
-          email: line[1],
+          displayName: line[0].replace(/\r?\n/g, ''),
+          email: line[1].replace(/\r?\n/g, ''),
           loginToken: this.$utils.utility.getRandomToken(40),
           hopeGroupUidItems: [],
         })

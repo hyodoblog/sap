@@ -29,6 +29,11 @@
               outlined
               @change="changeFile"
             )
+            a(
+              href="https://docs.google.com/spreadsheets/d/1VwYXHfUZ6QZgXDANTEd319wTljjIFK_2JqYI2_N-4Vo/edit?usp=sharing"
+              target="_blank"
+            ) テンプレート
+            
 
         v-divider.my-3
 
