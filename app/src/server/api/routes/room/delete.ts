@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 import { db, roomsRef } from '../../../config/firebase'
 
 // modules handlers
@@ -62,7 +61,7 @@ const deleteProcess = (roomUid: string) =>
     t.delete(roomRef)
   })
 
-export default async (req: Request, res: Response) => {
+export default async (req: any, res: any) => {
   try {
     const data = req.query
     if (!isRequestBody(data)) throw new Error('Reqest Body is not match')

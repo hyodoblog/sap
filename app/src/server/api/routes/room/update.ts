@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 
 // modules handlers
 import { converTimestamp, firebaseVerifyIdToken } from '../../../modules/handlers/firebase'
@@ -11,7 +10,7 @@ import { ApiCreateRoomReqParams } from '../../../../modules/types/api'
 const isRequestBody = (data: any): data is ApiCreateRoomReqParams =>
   data !== null && typeof data.roomUid === 'string' && data.roomItem !== null
 
-export default async (req: Request, res: Response) => {
+export default async (req: any, res: any) => {
   try {
     const data = req.body
     if (!isRequestBody(data)) throw new Error('Reqest Body is not match')

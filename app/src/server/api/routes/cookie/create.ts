@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 import { admin } from '../../../config/firebase'
 import { firebaseVerifyIdToken } from '../../../modules/handlers/firebase'
 
@@ -7,7 +6,7 @@ import { ApiCreateCookieReqParams, ApiCreateCookieResParams } from '../../../../
 
 const isRequestBody = (data: any): data is ApiCreateCookieReqParams => data !== null && typeof data.token === 'string'
 
-export default async (req: Request, res: Response) => {
+export default async (req: any, res: any) => {
   try {
     const data = req.body
     if (!isRequestBody(data)) throw new Error('Reqest Body is not match')

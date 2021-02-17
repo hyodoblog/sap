@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 
 // config
 import { envSendGrid } from '../../../../config/env'
@@ -72,7 +71,7 @@ const sendMail = (templateId: string, sendUserItems: dynamicTemplateParams[]): P
     )
   )
 
-export default async (req: Request, res: Response) => {
+export default async (req: any, res: any) => {
   try {
     const data = req.body
     if (!isRequestBody(data)) throw new Error('Reqest Body is not match')
