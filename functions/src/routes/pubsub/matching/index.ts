@@ -1,9 +1,18 @@
-import { admin, functions, getNowAt, roomsRef } from '../../config/firebase'
-import { Room } from '../../modules/types/models'
+import { admin, functions, getNowAt, roomsRef } from '../../../config/firebase'
+
+// modules handlers
+import matchingHandlers from './handlers'
+
+// modules types
+import { Room } from '../../../modules/types/models'
+
+// ********
+// handlers
+// ********
 
 const getRoomItems = async (nowAt: admin.firestore.Timestamp): Promise<Room[]> => {
   const items: Room[] = []
-  const docs = await roomsRef.where('startAt', '>=', nowAt).where('votingEndAt', '<=', nowAt).get()
+  const docs = await roomsRef.where('votingEndAt', '>', nowAt).get()
   docs.forEach((doc) => {
     if (doc.exists) {
       items.push({
@@ -19,15 +28,22 @@ const getRoomItems = async (nowAt: admin.firestore.Timestamp): Promise<Room[]> =
 // main関数
 // ********
 async function main() {
-  console.log('matching関数実行開始')
+  console.log('pubsubMatching関数実行開始')
 
-  const nowAt = getNowAt()
+  try {
+    const nowAt = getNowAt()
 
-  // 稼働中のroomの取得
-  const roomItems = await getRoomItems(nowAt)
-  console.log(roomItems)
+    // 稼働中のroomの取得
+    const roomItems = await getRoomItems(nowAt)
 
-  console.log('matching関数実行終了')
+    // matching
+    await matchingHandlers(roomItems)
+  } catch (err) {
+    console.log('pubsubMatching関数実行でエラーが発生しました。')
+    console.error(err)
+  }
+
+  console.log('pubsubMatching関数実行終了')
 }
 
 // *************
