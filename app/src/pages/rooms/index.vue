@@ -17,27 +17,18 @@
           :loading="roomLoading"
           :items="roomItems"
         )
-
-    v-row
-      v-col(cols="12")
-        .d-flex.justify-space-between.align-center
-          .title 参加中の部屋
-      v-col(cols="12")
-        RoomsTable(
-          :loading="participateLoading"
-          :items="[]"
-        )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
-const BaseVComponent = () => import('~/components/base/BaseVComponent.vue')
-const RoomsTable = () => import('~/components/pages/rooms/Table.vue')
 
 @Component({
   layout: 'protected',
-  components: { BaseVComponent, RoomsTable },
+  components: {
+    BaseVComponent: () => import('~/components/base/BaseVComponent.vue'),
+    RoomsTable: () => import('~/components/pages/rooms/Table.vue'),
+  },
 })
 export default class RoomsPage extends Vue {
   async beforeMount() {
