@@ -25,6 +25,8 @@
 
       RoomDashboardParticipateUserList
 
+      RoomDashboardWarning
+
     v-overlay(v-else)
       v-progress-circular(indeterminate size="64")
 </template>
@@ -42,6 +44,7 @@ import { Room } from '~/modules/types/models'
     RoomDashboardInfo: () => import('~/components/pages/rooms/dashboard/Info.vue'),
     RoomDashboardGroupList: () => import('~/components/pages/rooms/dashboard/group/List.vue'),
     RoomDashboardParticipateUserList: () => import('~/components/pages/rooms/dashboard/participate-user/List.vue'),
+    RoomDashboardWarning: () => import('~/components/pages/rooms/dashboard/Warning.vue'),
   },
 })
 export default class RoomDashboardComponent extends Vue {
