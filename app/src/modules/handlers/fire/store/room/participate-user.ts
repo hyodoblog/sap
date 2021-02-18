@@ -14,7 +14,7 @@ export class RoomParticipateUserDb {
 
   public async getItems(roomUid: string): Promise<RoomParticipateUser[]> {
     const items: RoomParticipateUser[] = []
-    const docs = await this.participateUsersRef(roomUid).get()
+    const docs = await this.participateUsersRef(roomUid).orderBy('displayName').get()
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,

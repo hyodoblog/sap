@@ -77,8 +77,6 @@
               v-model.number="maxNum"
               :disabled="isLoading"
               :rules="rules.maxNum"
-              hint="無制限にする場合は「0」を記入する"
-              persistent-hint
               type="number"
               required
               outlined

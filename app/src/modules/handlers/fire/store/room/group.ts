@@ -14,7 +14,7 @@ export class RoomGroupDb {
 
   public async getItems(roomUid: string): Promise<RoomGroup[]> {
     const items: RoomGroup[] = []
-    const docs = await this.groupsRef(roomUid).get()
+    const docs = await this.groupsRef(roomUid).orderBy('displayName').get()
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,

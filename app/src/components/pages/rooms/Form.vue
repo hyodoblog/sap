@@ -129,8 +129,6 @@
                 v-model.number="groupHopeMaxNum"
                 :disabled="disabled"
                 :rules="rules.maxNum"
-                hint="無制限にする場合は「0」を記入する"
-                persistent-hint
                 type="number"
                 required
                 outlined
@@ -190,9 +188,7 @@
               v-if="isParticipateUserHopeMaxNum"
               v-model.number="participateUserHopeMaxNum"
               :rules="rules.maxNum"
-              hint="無制限にする場合は「0」を記入する"
               :disabled="disabled"
-              persistent-hint
               type="number"
               required
               outlined
