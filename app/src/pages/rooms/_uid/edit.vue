@@ -1,7 +1,7 @@
 <template lang="pug">
   v-container(style="max-width:1000px")
     template(v-if="roomUid")
-      BtnPageBack(:link="$routes.front.room(roomUid)")
+      BtnPageBack(:link="$routes.front.roomDashboard(roomUid)")
 
       BaseVComponent(:title="`「${title}」部屋の編集`" icon="mdi-monitor-dashboard")
 
@@ -171,7 +171,7 @@ export default class RoomNewPage extends Vue {
       const headers = await this.$fire.auth.getAuthHeaders()
       await this.$api.back.updateRoom({ roomUid: this.roomUid, roomItem: item }, headers)
       this.$store.dispatch('snackbar/success', '部屋を編集しました。')
-      this.$router.push(this.$routes.front.room(this.roomUid))
+      this.$router.push(this.$routes.front.roomDashboard(this.roomUid))
     } catch {
       if (iconPath) {
         this.$fire.storage.delete(iconPath)

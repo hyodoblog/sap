@@ -1,31 +1,15 @@
 <template lang="pug">
   v-container(fluid)
     template(v-if="item")
-      BtnPageBack(:link="$routes.front.rooms")
+      BtnPageBack(:link="$routes.front.roomDashboard(item.uid)")
 
       v-row
         v-col
-          BaseVComponent(:title="`「${item.name}」部屋`" icon="mdi-monitor-dashboard")
-        v-col.text-right
-          v-btn(
-            color="warning"
-            elevation="0"
-            :to="$routes.front.roomEdit(item.uid)"
-          ) 部屋を編集する
+          BaseVComponent(:title="`「${item.name}」部屋の投票状況`" icon="mdi-monitor-dashboard")
 
       v-row
         v-col.text-right
           RoomDashboardInvitation
-
-      v-row
-        v-col
-          RoomDashboardInfo(:item="item")
-
-      RoomDashboardGroupList
-
-      RoomDashboardParticipateUserList
-
-      RoomDashboardWarning
 
     v-overlay(v-else)
       v-progress-circular(indeterminate size="64")
@@ -47,7 +31,7 @@ import { Room } from '~/modules/types/models'
     RoomDashboardWarning: () => import('~/components/pages/rooms/dashboard/Warning.vue'),
   },
 })
-export default class RoomDashboardComponent extends Vue {
+export default class RoomDashboardVotingPage extends Vue {
   async beforeMount() {
     try {
       const { uid } = this.$route.params

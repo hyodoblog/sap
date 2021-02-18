@@ -24,6 +24,10 @@ export default class PublicLayout extends Vue {
   // 招待メールの処理
   async mounted() {
     try {
+      if (this.$store.getters['user/isAuthenticated']) {
+        this.$router.push(this.$routes.front.roomDashboard(this.$route.params.uid))
+        return
+      }
       const { roomInvitationType, roomUid, loginToken, roomGroupUid, roomParticipateUserUid } = this.$route.query
       if (typeof roomInvitationType === 'string' && typeof roomUid === 'string' && typeof loginToken === 'string') {
         if (roomInvitationType === 'group' && typeof roomGroupUid === 'string') {

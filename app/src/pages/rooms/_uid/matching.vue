@@ -5,7 +5,9 @@
       v-progress-circular(indeterminate size="64")
 
     template(v-else)
-      .title マッチングページ
+      .d-flex.mb-3.justify-space-between
+        .title マッチングページ
+        .caption 最終更新日時：{{ $fire.store.getConvertDatetimeJa(items[0].updatedAt) }}
 
       v-simple-table(dense)
         template(v-slot:default)

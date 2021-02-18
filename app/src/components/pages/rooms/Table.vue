@@ -73,7 +73,7 @@ export default class RoomsTable extends Vue {
   ]
 
   movePage(roomUid: string) {
-    this.$router.push(this.$routes.front.room(roomUid))
+    this.$router.push(this.$routes.front.roomDashboard(roomUid))
   }
 }
 </script>

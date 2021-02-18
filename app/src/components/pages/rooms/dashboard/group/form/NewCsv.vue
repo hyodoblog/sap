@@ -34,9 +34,9 @@ export default class RoomDashboardGroupFormNewCsvComponent extends Vue {
       csvData.map((line) =>
         this.$fire.store.roomGroup.setItem(roomUid, {
           displayName: line[0].replace(/\r?\n/g, ''),
-          email: line[1] ? line[1].replace(/\r?\n/g, '') : null,
-          description: line[2] ? line[2].replace(/\r?\n/g, '') : null,
-          maxNum: line[3] ? Number(line[3].replace(/\r?\n/g, '')) : null,
+          email: line[1].replace(/\r?\n/g, '') ? line[1].replace(/\r?\n/g, '') : null,
+          description: line[2].replace(/\r?\n/g, '') ? line[2].replace(/\r?\n/g, '') : null,
+          maxNum: line[3].replace(/\r?\n/g, '') ? Number(line[3].replace(/\r?\n/g, '')) : null,
           loginToken: this.$utils.utility.getRandomToken(40),
           hopeParticipateUserUidItems: [],
         })
