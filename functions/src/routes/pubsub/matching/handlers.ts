@@ -29,11 +29,14 @@ interface Rate {
 // 4位: 3
 // 5位: 2
 const topAdbansePoint = 10
-const getInitRateItems = (hopeListItems: HopeItem[], items: RoomGroup[] | RoomParticipateUser[], maxNum: number): Rate[] => {
+const getInitRateItems = (
+  hopeListItems: HopeItem[],
+  items: RoomGroup[] | RoomParticipateUser[],
+  maxNum: number
+): Rate[] => {
   const rateItems: Rate[] = []
   for (const hopeListItem of hopeListItems) {
     for (let hopeUidItemsIndex = 0; hopeUidItemsIndex < hopeListItem.hopeUidItems.length; hopeUidItemsIndex++) {
-  
       // rateItemsの更新
       for (const item of items) {
         if (item.uid === hopeListItem.hopeUidItems[hopeUidItemsIndex]) {
@@ -42,7 +45,7 @@ const getInitRateItems = (hopeListItems: HopeItem[], items: RoomGroup[] | RoomPa
           if (hopeUidItemsIndex === 0) {
             rate = maxNum * topAdbansePoint
           } else {
-            rate = (maxNum - hopeUidItemsIndex)
+            rate = maxNum - hopeUidItemsIndex
           }
           rateItems.push({
             uid: hopeListItem.hopeUidItems[hopeUidItemsIndex],
@@ -80,7 +83,11 @@ const isAddMatchingGroupNumItems = (matchingGroupNumItems: MatchingGroupNum[], g
   if (totalMatchingGroupNum < totalMaxNum) return true
   else return false
 }
-const algorithmStep1 = (groupItems: RoomGroup[], groupLength: number, participateUserLength: number): MatchingGroupNum[] => {
+const algorithmStep1 = (
+  groupItems: RoomGroup[],
+  groupLength: number,
+  participateUserLength: number
+): MatchingGroupNum[] => {
   const averate = participateUserLength > groupLength ? Math.floor(participateUserLength / groupLength) : 1
   const matchingGroupNumItems: MatchingGroupNum[] = []
 
@@ -131,7 +138,10 @@ const algorithmStep1 = (groupItems: RoomGroup[], groupLength: number, participat
 
     for (const availableGroupItem of availableGroupItems) {
       for (const matchingGroupNumItem of matchingGroupNumItems) {
-        if (matchingGroupNumItem.groupUid === availableGroupItem.uid && availableGroupItem.maxNum as number > matchingGroupNumItem.num) {
+        if (
+          matchingGroupNumItem.groupUid === availableGroupItem.uid &&
+          (availableGroupItem.maxNum as number) > matchingGroupNumItem.num
+        ) {
           remainParticipateUserNum--
           matchingGroupNumItem.num++
         }
@@ -180,7 +190,11 @@ const isMatchingItems = (matchingItems: RoomMatching[], groupUid: string): boole
   }
   return false
 }
-const addMatchingItems = (matchingItems: RoomMatching[], groupUid: string, participateUserUid: string): RoomMatching[] => {
+const addMatchingItems = (
+  matchingItems: RoomMatching[],
+  groupUid: string,
+  participateUserUid: string
+): RoomMatching[] => {
   for (const matchingItem of matchingItems) {
     if (matchingItem.groupUid === groupUid) {
       for (let i = 0; i < matchingItem.participateUserUidItems.length; i++) {
@@ -196,9 +210,14 @@ const addMatchingItems = (matchingItems: RoomMatching[], groupUid: string, parti
 // conflict時の関数群
 interface ExchangeRes {
   exchangeIndex: number
-  exchangeParticipateUserUid: string 
+  exchangeParticipateUserUid: string
 }
-const getParticipateUsersUidIndexToExchange = (matchingItems: RoomMatching[], groupHopeToParticipateUserUidItems: HopeItem[], groupUid: string, participateUserUid: string): ExchangeRes | null => {
+const getParticipateUsersUidIndexToExchange = (
+  matchingItems: RoomMatching[],
+  groupHopeToParticipateUserUidItems: HopeItem[],
+  groupUid: string,
+  participateUserUid: string
+): ExchangeRes | null => {
   for (const groupHopeToParticipateUserUidItem of groupHopeToParticipateUserUidItems) {
     if (groupHopeToParticipateUserUidItem.uid === groupUid) {
       // ここに処理を書く
@@ -220,7 +239,7 @@ const getParticipateUsersUidIndexToExchange = (matchingItems: RoomMatching[], gr
         }
 
         // 競合した参加者同士が希望されている場合
-        while(isExistParticipateUserUidToHope) {
+        while (isExistParticipateUserUidToHope) {
           // 逆から検索
           for (let i = groupHopeToParticipateUserUidItem.hopeUidItems.length - 1; i >= 0; i--) {
             // 競合した参加者の希望が最下位の場合入れ替えない
@@ -244,20 +263,32 @@ const getParticipateUsersUidIndexToExchange = (matchingItems: RoomMatching[], gr
   }
   return null
 }
-const exchangeMatchaingItems = (matchingItems: RoomMatching[], afterGroupUid: string, changeParticipateUserIndex: number, participateUserUid: string): RoomMatching[] => {
-  for (let i = 0; i< matchingItems.length; i++) {
+const exchangeMatchaingItems = (
+  matchingItems: RoomMatching[],
+  afterGroupUid: string,
+  changeParticipateUserIndex: number,
+  participateUserUid: string
+): RoomMatching[] => {
+  for (let i = 0; i < matchingItems.length; i++) {
     if (matchingItems[i].groupUid === afterGroupUid) {
       matchingItems[i].participateUserUidItems[changeParticipateUserIndex] = participateUserUid
     }
   }
   return matchingItems
 }
-const deleteHopeParticipateUser = (groupHopeToParticipateUserUidItems: HopeItem[], groupUid: string, participateUserUid: string): HopeItem[] => {
+const deleteHopeParticipateUser = (
+  groupHopeToParticipateUserUidItems: HopeItem[],
+  groupUid: string,
+  participateUserUid: string
+): HopeItem[] => {
   for (let i = 0; groupHopeToParticipateUserUidItems.length; i++) {
     if (groupHopeToParticipateUserUidItems[i].uid === groupUid) {
       for (let j = 0; groupHopeToParticipateUserUidItems[i].hopeUidItems.length; j++) {
         if (groupHopeToParticipateUserUidItems[i].hopeUidItems[j] === participateUserUid) {
-          groupHopeToParticipateUserUidItems[i].hopeUidItems = groupHopeToParticipateUserUidItems[i].hopeUidItems.slice(j, 1)
+          groupHopeToParticipateUserUidItems[i].hopeUidItems = groupHopeToParticipateUserUidItems[i].hopeUidItems.slice(
+            j,
+            1
+          )
           return groupHopeToParticipateUserUidItems
         }
       }
@@ -265,10 +296,16 @@ const deleteHopeParticipateUser = (groupHopeToParticipateUserUidItems: HopeItem[
   }
   return groupHopeToParticipateUserUidItems
 }
-const algorithmStep3 = (matchingItems: RoomMatching[], groupHopeToParticipateUserUidItems: HopeItem[], participateUserHopeToGroupUidItems: HopeItem[], participateUserUid?: string): RoomMatching[] => {
+
+const algorithmStep3 = (
+  matchingItems: RoomMatching[],
+  groupHopeToParticipateUserUidItems: HopeItem[],
+  participateUserHopeToGroupUidItems: HopeItem[],
+  participateUserUid?: string
+): RoomMatching[] => {
   for (const participateUserHopeToGroupUidItem of participateUserHopeToGroupUidItems) {
     // 再帰処理時
-    if (!!participateUserUid) {
+    if (participateUserUid) {
       if (participateUserHopeToGroupUidItem.uid !== participateUserUid) continue
     }
 
@@ -278,22 +315,84 @@ const algorithmStep3 = (matchingItems: RoomMatching[], groupHopeToParticipateUse
 
       // マッチング可能な場合、追加
       if (isMatchingItems(matchingItems, participateUserHopeToGroupUid)) {
-        matchingItems = addMatchingItems(matchingItems, participateUserHopeToGroupUid, participateUserHopeToGroupUidItem.uid)
+        matchingItems = addMatchingItems(
+          matchingItems,
+          participateUserHopeToGroupUid,
+          participateUserHopeToGroupUidItem.uid
+        )
         break
-      } 
+      }
       // 競合発生時
       else {
-        const exchangeRes = getParticipateUsersUidIndexToExchange(matchingItems, groupHopeToParticipateUserUidItems, participateUserHopeToGroupUid, participateUserHopeToGroupUidItem.uid)
+        const exchangeRes = getParticipateUsersUidIndexToExchange(
+          matchingItems,
+          groupHopeToParticipateUserUidItems,
+          participateUserHopeToGroupUid,
+          participateUserHopeToGroupUidItem.uid
+        )
         // 入れ替わる場合
         if (exchangeRes !== null) {
-          matchingItems = exchangeMatchaingItems(matchingItems, participateUserHopeToGroupUid, exchangeRes.exchangeIndex, participateUserHopeToGroupUidItem.uid)
-          groupHopeToParticipateUserUidItems = deleteHopeParticipateUser(groupHopeToParticipateUserUidItems, participateUserHopeToGroupUid, exchangeRes.exchangeParticipateUserUid)
-          matchingItems = algorithmStep3(matchingItems, groupHopeToParticipateUserUidItems, participateUserHopeToGroupUidItems, exchangeRes.exchangeParticipateUserUid)
+          matchingItems = exchangeMatchaingItems(
+            matchingItems,
+            participateUserHopeToGroupUid,
+            exchangeRes.exchangeIndex,
+            participateUserHopeToGroupUidItem.uid
+          )
+          groupHopeToParticipateUserUidItems = deleteHopeParticipateUser(
+            groupHopeToParticipateUserUidItems,
+            participateUserHopeToGroupUid,
+            exchangeRes.exchangeParticipateUserUid
+          )
+          matchingItems = algorithmStep3(
+            matchingItems,
+            groupHopeToParticipateUserUidItems,
+            participateUserHopeToGroupUidItems,
+            exchangeRes.exchangeParticipateUserUid
+          )
           break
         }
       }
     }
   }
+
+  return matchingItems
+}
+
+// *******
+// Step 7
+// algorithm step4
+const isParticipateUserUidToMatchingItems = (matchingItems: RoomMatching[], participateUserUid: string): boolean => {
+  for (const matchingItem of matchingItems) {
+    for (const hopeParticipateUserUid of matchingItem.participateUserUidItems) {
+      if (hopeParticipateUserUid === participateUserUid) return true
+    }
+  }
+  return false
+}
+const addParticipateUserUidToMatchingItems = (
+  matchingItems: RoomMatching[],
+  participateUserUid: string
+): RoomMatching[] => {
+  for (let i = 0; i < matchingItems.length; i++) {
+    for (let j = 0; j < matchingItems[i].participateUserUidItems.length; j++) {
+      if (!matchingItems[i].participateUserUidItems[j]) {
+        matchingItems[i].participateUserUidItems[j] = participateUserUid
+        return matchingItems
+      }
+    }
+  }
+  return matchingItems
+}
+const algorithmStep4 = (matchingItems: RoomMatching[], participateUserItems: RoomParticipateUser[]): RoomMatching[] => {
+  // 未マッチングの参加者を整理
+  const remainParticipateUserUidItems: string[] = []
+  for (const participateUserItem of participateUserItems) {
+    if (!isParticipateUserUidToMatchingItems(matchingItems, participateUserItem.uid as string))
+      remainParticipateUserUidItems.push(participateUserItem.uid as string)
+  }
+
+  for (const remainParticipateUserUid of remainParticipateUserUidItems)
+    addParticipateUserUidToMatchingItems(matchingItems, remainParticipateUserUid)
 
   return matchingItems
 }
@@ -312,73 +411,92 @@ const deleteAllRoomMatchingItems = async (matchingsRef: admin.firestore.Collecti
 const setRoomMatchingItems = async (roomUid: string, matchingItems: RoomMatching[]): Promise<void> => {
   const matchingsRef = roomsRef.doc(roomUid).collection('matchings')
   await deleteAllRoomMatchingItems(matchingsRef)
-  await Promise.all(matchingItems.map((item) => matchingsRef.doc().set({ ...item, createdAt: getServerTimestamp(), updatedAt: getServerTimestamp() } as RoomMatching)))
+  await Promise.all(
+    matchingItems.map((item) =>
+      matchingsRef
+        .doc()
+        .set({ ...item, createdAt: getServerTimestamp(), updatedAt: getServerTimestamp() } as RoomMatching)
+    )
+  )
 }
 
 // ********
 // main関数
 // ********
 export default (roomItems: Room[]) =>
-  Promise.all(roomItems.map(async (roomItem) => {
-    // group変数の初期化
-    const groupItems = await firestotreGetGroupItems(roomItem.uid as string)
-    const groupHopeToParticipateUserUidItems: HopeItem[] = groupItems.map((item) => { return { uid: item.uid as string, hopeUidItems: item.hopeParticipateUserUidItems } })
-    const groupLength = groupItems.length
-    const groupRateMaxNum = roomItem.groupHopeMaxNum || groupLength
-    // participate user変数の初期化
-    const participateUserItems = await firestotreGetParticipateUserItem(roomItem.uid as string)
-    const participateUserHopeToGroupUidItems: HopeItem[] = participateUserItems.map((item) => { return { uid: item.uid as string, hopeUidItems: item.hopeGroupUidItems } })
-    const participateUserLength = participateUserItems.length
-    const participateUserRateMaxNum = roomItem.participateUserHopeMaxNum || participateUserLength
+  Promise.all(
+    roomItems.map(async (roomItem) => {
+      // group変数の初期化
+      const groupItems = await firestotreGetGroupItems(roomItem.uid as string)
+      const groupHopeToParticipateUserUidItems: HopeItem[] = groupItems.map((item) => {
+        return { uid: item.uid as string, hopeUidItems: item.hopeParticipateUserUidItems }
+      })
+      const groupLength = groupItems.length
+      const groupRateMaxNum = roomItem.groupHopeMaxNum || groupLength
+      // participate user変数の初期化
+      const participateUserItems = await firestotreGetParticipateUserItem(roomItem.uid as string)
+      const participateUserHopeToGroupUidItems: HopeItem[] = participateUserItems.map((item) => {
+        return { uid: item.uid as string, hopeUidItems: item.hopeGroupUidItems }
+      })
+      const participateUserLength = participateUserItems.length
+      const participateUserRateMaxNum = roomItem.participateUserHopeMaxNum || participateUserLength
 
-    // ----------------------
-    // --- アルゴリズムの実装 ---
+      // ----------------------
+      // --- アルゴリズムの実装 ---
 
-    // Step 1
-    // レート更新
-    const groupRateItems = getInitRateItems(participateUserHopeToGroupUidItems, groupItems, groupRateMaxNum)
-    const participateUserRateItems = getInitRateItems(groupHopeToParticipateUserUidItems, participateUserItems, participateUserRateMaxNum)
-    
-    // Step 2
-    // グループをレート順にソート
-    groupRateItems.sort(function (a, b) {
-      if (a.rate < b.rate) return 1
-      else return -1
+      // Step 1
+      // レート更新
+      const groupRateItems = getInitRateItems(participateUserHopeToGroupUidItems, groupItems, groupRateMaxNum)
+      const participateUserRateItems = getInitRateItems(
+        groupHopeToParticipateUserUidItems,
+        participateUserItems,
+        participateUserRateMaxNum
+      )
+
+      // Step 2
+      // グループをレート順にソート
+      groupRateItems.sort(function (a, b) {
+        if (a.rate < b.rate) return 1
+        else return -1
+      })
+
+      // Step 3
+      // Algorithm Step 1
+      // グループマッチングの人数を整理
+
+      const matchingGroupNumItems = algorithmStep1(groupItems, groupLength, participateUserLength)
+
+      participateUserRateItems
+
+      // Step 4
+      // Algorithm Step 2
+      // すべての参加者を未マッチングにする
+      let matchingItems = algorithmStep2(matchingGroupNumItems)
+
+      // Step 5
+      // Algorithm Step 3
+      // 希望を提出した参加者のマッチング処理
+
+      matchingItems = algorithmStep3(
+        matchingItems,
+        groupHopeToParticipateUserUidItems,
+        participateUserHopeToGroupUidItems
+      )
+
+      // Step 6
+      // マッチング度が高い参加者を確定処理する
+
+      // Step 7
+      // マッチングされてない参加者をランダムでマッチングする
+      matchingItems = algorithmStep4(matchingItems, participateUserItems)
+
+      // --- アルゴリズムの終了 ---
+      // ----------------------
+
+      // storeに保存
+      await setRoomMatchingItems(roomItem.uid as string, matchingItems)
     })
-
-    // Step 3
-    // Algorithm Step 1
-    // グループマッチングの人数を整理
-
-    const matchingGroupNumItems = algorithmStep1(groupItems, groupLength, participateUserLength)
-
-    participateUserRateItems
-  
-    // Step 4
-    // Algorithm Step 2
-    // すべての参加者を未マッチングにする
-    let matchingItems = algorithmStep2(matchingGroupNumItems)
-
-    // Step 5
-    // Algorithm Step 3
-    // 希望を提出した参加者のマッチング処理
-
-    matchingItems = algorithmStep3(matchingItems, groupHopeToParticipateUserUidItems, participateUserHopeToGroupUidItems)
-
-    console.log(matchingItems)
-    // Step 6
-    // マッチング度が高い参加者を確定処理する
-
-    // Step 7
-    // マッチングされてない参加者をランダムでマッチングする
-    // matchingItems = algorithmStep4(matchingItems, participateUserItems)
-
-    // --- アルゴリズムの終了 ---
-    // ----------------------
-
-    // storeに保存
-    await setRoomMatchingItems(roomItem.uid as string, matchingItems)
-  })).catch((err) => {
+  ).catch((err) => {
     console.log(err)
     // throw new Error(err)
   })
