@@ -1,8 +1,10 @@
+import { admin, getServerTimestamp, roomsRef } from '../../../config/firebase'
+
 // modules handlers
 import { firestotreGetGroupItems, firestotreGetParticipateUserItem } from '../../../modules/handlers/firestore'
 
 // modules types
-import { Room, RoomGroup, RoomParticipateUser } from '../../../modules/types/models'
+import { Room, RoomGroup, RoomParticipateUser, RoomMatching } from '../../../modules/types/models'
 
 // ********
 // handlers
@@ -140,6 +142,179 @@ const algorithmStep1 = (groupItems: RoomGroup[], groupLength: number, participat
   return matchingGroupNumItems
 }
 
+// *******
+// Step 4
+// algorithm step2
+
+const algorithmStep2 = (matchingGroupNumItems: MatchingGroupNum[]): RoomMatching[] => {
+  const items: RoomMatching[] = []
+  for (const matchingGroupNumItem of matchingGroupNumItems) {
+    const participateUserUidItems: string[] = []
+    for (let i = 0; i < matchingGroupNumItem.num; i++) participateUserUidItems.push('')
+    items.push({
+      groupUid: matchingGroupNumItem.groupUid,
+      participateUserUidItems,
+    })
+  }
+  return items
+}
+
+// *******
+// Step 5
+// algorithm step3
+
+// 追加処理関数群
+const isParticipateUserToMatchingItems = (matchingItems: RoomMatching[], participateUserUid: string): boolean => {
+  for (const matchingItem of matchingItems) {
+    for (const participateUserUidItem of matchingItem.participateUserUidItems) {
+      if (participateUserUidItem === participateUserUid) return true
+    }
+  }
+  return false
+}
+const isMatchingItems = (matchingItems: RoomMatching[], groupUid: string): boolean => {
+  for (const matchingItem of matchingItems) {
+    if (matchingItem.groupUid === groupUid) {
+      return matchingItem.participateUserUidItems.some((uid) => !uid)
+    }
+  }
+  return false
+}
+const addMatchingItems = (matchingItems: RoomMatching[], groupUid: string, participateUserUid: string): RoomMatching[] => {
+  for (const matchingItem of matchingItems) {
+    if (matchingItem.groupUid === groupUid) {
+      for (let i = 0; i < matchingItem.participateUserUidItems.length; i++) {
+        if (!matchingItem.participateUserUidItems[i]) {
+          matchingItem.participateUserUidItems[i] = participateUserUid
+          return matchingItems
+        }
+      }
+    }
+  }
+  return matchingItems
+}
+// conflict時の関数群
+interface ExchangeRes {
+  exchangeIndex: number
+  exchangeParticipateUserUid: string 
+}
+const getParticipateUsersUidIndexToExchange = (matchingItems: RoomMatching[], groupHopeToParticipateUserUidItems: HopeItem[], groupUid: string, participateUserUid: string): ExchangeRes | null => {
+  for (const groupHopeToParticipateUserUidItem of groupHopeToParticipateUserUidItems) {
+    if (groupHopeToParticipateUserUidItem.uid === groupUid) {
+      // ここに処理を書く
+      let isExistParticipateUserUidToHope = false
+      for (const hopeParticipateUserUid of groupHopeToParticipateUserUidItem.hopeUidItems) {
+        // 競合した参加者がマッチングされているグループが希望してない場合
+        if (hopeParticipateUserUid === participateUserUid) {
+          for (const matchingItem of matchingItems) {
+            if (matchingItem.groupUid === groupUid) {
+              for (let i = 0; i < matchingItem.participateUserUidItems.length; i++) {
+                if (!groupHopeToParticipateUserUidItem.hopeUidItems.includes(matchingItem.participateUserUidItems[i])) {
+                  return { exchangeIndex: i, exchangeParticipateUserUid: matchingItem.participateUserUidItems[i] }
+                }
+              }
+            }
+          }
+          isExistParticipateUserUidToHope = true
+          continue
+        }
+
+        // 競合した参加者同士が希望されている場合
+        while(isExistParticipateUserUidToHope) {
+          // 逆から検索
+          for (let i = groupHopeToParticipateUserUidItem.hopeUidItems.length - 1; i >= 0; i--) {
+            // 競合した参加者の希望が最下位の場合入れ替えない
+            if (groupHopeToParticipateUserUidItem.hopeUidItems[i] === participateUserUid) return null
+
+            for (const matchingItem of matchingItems) {
+              if (matchingItem.groupUid === groupUid) {
+                for (let mI = 0; mI < matchingItem.participateUserUidItems.length; mI++) {
+                  if (groupHopeToParticipateUserUidItem.hopeUidItems[i] === matchingItem.participateUserUidItems[mI]) {
+                    return { exchangeIndex: mI, exchangeParticipateUserUid: matchingItem.participateUserUidItems[mI] }
+                  }
+                }
+              }
+            }
+          }
+
+          return null
+        }
+      }
+    }
+  }
+  return null
+}
+const exchangeMatchaingItems = (matchingItems: RoomMatching[], afterGroupUid: string, changeParticipateUserIndex: number, participateUserUid: string): RoomMatching[] => {
+  for (let i = 0; i< matchingItems.length; i++) {
+    if (matchingItems[i].groupUid === afterGroupUid) {
+      matchingItems[i].participateUserUidItems[changeParticipateUserIndex] = participateUserUid
+    }
+  }
+  return matchingItems
+}
+const deleteHopeParticipateUser = (groupHopeToParticipateUserUidItems: HopeItem[], groupUid: string, participateUserUid: string): HopeItem[] => {
+  for (let i = 0; groupHopeToParticipateUserUidItems.length; i++) {
+    if (groupHopeToParticipateUserUidItems[i].uid === groupUid) {
+      for (let j = 0; groupHopeToParticipateUserUidItems[i].hopeUidItems.length; j++) {
+        if (groupHopeToParticipateUserUidItems[i].hopeUidItems[j] === participateUserUid) {
+          groupHopeToParticipateUserUidItems[i].hopeUidItems = groupHopeToParticipateUserUidItems[i].hopeUidItems.slice(j, 1)
+          return groupHopeToParticipateUserUidItems
+        }
+      }
+    }
+  }
+  return groupHopeToParticipateUserUidItems
+}
+const algorithmStep3 = (matchingItems: RoomMatching[], groupHopeToParticipateUserUidItems: HopeItem[], participateUserHopeToGroupUidItems: HopeItem[], participateUserUid?: string): RoomMatching[] => {
+  for (const participateUserHopeToGroupUidItem of participateUserHopeToGroupUidItems) {
+    // 再帰処理時
+    if (!!participateUserUid) {
+      if (participateUserHopeToGroupUidItem.uid !== participateUserUid) continue
+    }
+
+    for (const participateUserHopeToGroupUid of participateUserHopeToGroupUidItem.hopeUidItems) {
+      // すでにマッチング済みの参加者はスキップ
+      if (isParticipateUserToMatchingItems(matchingItems, participateUserHopeToGroupUid)) continue
+
+      // マッチング可能な場合、追加
+      if (isMatchingItems(matchingItems, participateUserHopeToGroupUid)) {
+        matchingItems = addMatchingItems(matchingItems, participateUserHopeToGroupUid, participateUserHopeToGroupUidItem.uid)
+        break
+      } 
+      // 競合発生時
+      else {
+        const exchangeRes = getParticipateUsersUidIndexToExchange(matchingItems, groupHopeToParticipateUserUidItems, participateUserHopeToGroupUid, participateUserHopeToGroupUidItem.uid)
+        // 入れ替わる場合
+        if (exchangeRes !== null) {
+          matchingItems = exchangeMatchaingItems(matchingItems, participateUserHopeToGroupUid, exchangeRes.exchangeIndex, participateUserHopeToGroupUidItem.uid)
+          groupHopeToParticipateUserUidItems = deleteHopeParticipateUser(groupHopeToParticipateUserUidItems, participateUserHopeToGroupUid, exchangeRes.exchangeParticipateUserUid)
+          matchingItems = algorithmStep3(matchingItems, groupHopeToParticipateUserUidItems, participateUserHopeToGroupUidItems, exchangeRes.exchangeParticipateUserUid)
+          break
+        }
+      }
+    }
+  }
+
+  return matchingItems
+}
+
+// **********
+// Storeに保存
+
+const deleteAllRoomMatchingItems = async (matchingsRef: admin.firestore.CollectionReference): Promise<void> => {
+  const uidItems: string[] = []
+  const docs = await matchingsRef.get()
+  docs.forEach((doc) => {
+    if (doc.exists) uidItems.push(doc.id)
+  })
+  await Promise.all(uidItems.map((uid) => matchingsRef.doc(uid).delete()))
+}
+const setRoomMatchingItems = async (roomUid: string, matchingItems: RoomMatching[]): Promise<void> => {
+  const matchingsRef = roomsRef.doc(roomUid).collection('matchings')
+  await deleteAllRoomMatchingItems(matchingsRef)
+  await Promise.all(matchingItems.map((item) => matchingsRef.doc().set({ ...item, createdAt: getServerTimestamp(), updatedAt: getServerTimestamp() } as RoomMatching)))
+}
+
 // ********
 // main関数
 // ********
@@ -178,26 +353,31 @@ export default (roomItems: Room[]) =>
     const matchingGroupNumItems = algorithmStep1(groupItems, groupLength, participateUserLength)
 
     participateUserRateItems
-    console.log(matchingGroupNumItems)
   
     // Step 4
     // Algorithm Step 2
     // すべての参加者を未マッチングにする
+    let matchingItems = algorithmStep2(matchingGroupNumItems)
 
     // Step 5
     // Algorithm Step 3
     // 希望を提出した参加者のマッチング処理
 
+    matchingItems = algorithmStep3(matchingItems, groupHopeToParticipateUserUidItems, participateUserHopeToGroupUidItems)
+
+    console.log(matchingItems)
     // Step 6
     // マッチング度が高い参加者を確定処理する
 
     // Step 7
     // マッチングされてない参加者をランダムでマッチングする
+    // matchingItems = algorithmStep4(matchingItems, participateUserItems)
 
     // --- アルゴリズムの終了 ---
     // ----------------------
 
     // storeに保存
+    await setRoomMatchingItems(roomItem.uid as string, matchingItems)
   })).catch((err) => {
     console.log(err)
     // throw new Error(err)
