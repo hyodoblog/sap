@@ -25,7 +25,7 @@
     "jwt-decode": "^3.1.2",
     "luxon": "^1.26.0",
     "nuxt": "^2.15.0",
-    "vue-cropperjs": "^5.0.0",
+    "vue-cropperjs": "4.2.0",
     "vue-datetime": "^1.0.0-beta.14",
     "vue-js-modal": "^2.0.0-rc.6",
     "vuedraggable": "^2.24.3",
