@@ -24,6 +24,11 @@ service cloud.firestore {
         match /participateUsers/{uid} {
           allow read, write: if true;
         }
+
+        match /matchings/{uid} {
+          allow read: if true;
+          allow write: if isAdminAuthenticated();
+        }
       }
     }
 
