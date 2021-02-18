@@ -51,8 +51,8 @@ async function main() {
 // *************
 // 本番
 const runtimeOpts: functions.RuntimeOptions = {
-  timeoutSeconds: 60,
-  memory: '128MB',
+  timeoutSeconds: 540,
+  memory: '512MB',
 }
 
 // emulator
