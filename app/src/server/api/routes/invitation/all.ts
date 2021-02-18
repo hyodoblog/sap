@@ -1,4 +1,3 @@
-
 // config
 import { envSendGrid } from '../../../config/env'
 import sgMail from '../../../config/sendgrid'

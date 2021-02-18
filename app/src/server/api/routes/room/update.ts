@@ -1,4 +1,3 @@
-
 // modules handlers
 import { converTimestamp, firebaseVerifyIdToken } from '../../../modules/handlers/firebase'
 import { firestoreUpdateRoom } from '../../../modules/handlers/firestore'

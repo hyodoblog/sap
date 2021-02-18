@@ -89,7 +89,10 @@ export const firestotreGetIsEmailGroups = async (roomUid: string): Promise<RoomG
 
 // /rooms/participateUsers
 
-export const firestotreGetParticipateUserItem = async (roomUid: string, participateUserUid: string): Promise<RoomParticipateUser> => {
+export const firestotreGetParticipateUserItem = async (
+  roomUid: string,
+  participateUserUid: string
+): Promise<RoomParticipateUser> => {
   const doc = await roomsRef.doc(roomUid).collection('participateUsers').doc(participateUserUid).get()
   if (doc.exists) {
     return { uid: doc.id, ...doc.data() } as RoomParticipateUser

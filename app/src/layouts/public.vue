@@ -22,7 +22,7 @@ export default class PublicLayout extends Vue {
   navDrawer = null
 
   // 招待メールの処理
-  async beforeMount() {
+  async mounted() {
     try {
       const { roomInvitationType, roomUid, loginToken, roomGroupUid, roomParticipateUserUid } = this.$route.query
       if (typeof roomInvitationType === 'string' && typeof roomUid === 'string' && typeof loginToken === 'string') {
