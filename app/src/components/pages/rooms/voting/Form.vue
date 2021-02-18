@@ -20,7 +20,10 @@
       v-col.pa-0(cols="9")
         draggable(
           v-model="draggableItems"
-          :options="{animation:300}"
+          handle=".handle"
+          :animation="300"
+          :scrollSensitivity="200"
+          height="auto"
         )
           v-card.draggable.pa-2.d-flex.justify-space-between.align-center(
             v-for="(item, i) in draggableItems"
@@ -44,15 +47,17 @@
 
     modal(
       name="example"
-      :adaptive="true"
       :scrollable="true"
       :max-width="400"
       width="90%"
       height="auto"
     )
       v-card
-        v-btn.ma-2(small fab color="error" @click="add")
-          v-icon mdi-plus
+        .d-flex.justify-space-between
+          v-btn.ma-2(small fab color="error" @click="add")
+            v-icon mdi-plus
+          v-btn.ma-2(small fab @click="$modal.hide('example')")
+            v-icon mdi-close
         v-data-table(
           v-model="addItems"
           :headers="headers"
@@ -75,11 +80,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
+import draggable from 'vuedraggable'
 import { RoomInvitationType, RoomGroup, RoomParticipateUser } from '~/modules/types/models'
 
 @Component({
   components: {
-    draggable: () => import('vuedraggable'),
+    draggable,
   },
 })
 export default class RoomDashboardVotingFormComponnet extends Vue {
