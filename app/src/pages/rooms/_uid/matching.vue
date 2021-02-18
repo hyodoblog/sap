@@ -39,7 +39,7 @@ export default class RoomMatchingPage extends Vue {
     }
   }
 
-  items: RoomMatching[] | null
+  items: RoomMatching[] | null = null
 
   get roomUid(): string {
     return this.$route.params.uid
@@ -54,12 +54,7 @@ export default class RoomMatchingPage extends Vue {
   }
 
   get loadingPage(): boolean {
-    return (
-      !this.$store.getters['invitation/isAuthenticated'] ||
-      !this.items ||
-      !this.roomGroupItems ||
-      !this.roomParticipateUserItems
-    )
+    return this.items === null || this.roomGroupItems === null || this.roomParticipateUserItems === null
   }
 
   // table
