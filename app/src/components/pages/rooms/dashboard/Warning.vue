@@ -16,7 +16,7 @@ export default class RoomDashboardWarningComponent extends Vue {
     if (!!this.roomParticipateUserItems && this.roomGroupItems.length > 0) {
       let totalMaxNum = 0
       for (const item of this.roomGroupItems) {
-        if (item.maxNum === null) break
+        if (item.maxNum === null) return false
         else totalMaxNum += item.maxNum
       }
       if (totalMaxNum < this.roomParticipateUserItems) return true

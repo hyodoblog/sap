@@ -5,7 +5,7 @@ do
   export $env
 done < .env
 
-cp ./key/production.json ./functions/key/production.json
+cp ./key/production.json ./functions/key/gcloud.json
 cp ./key/production.json ./app/key/production.json
 
 # *******************
@@ -35,6 +35,6 @@ cloudRun () {
     --allow-unauthenticated
 }
 
-# cloudFunctions & cloudRun
+cloudFunctions & cloudRun
 # cloudFunctions
-cloudRun
+# cloudRun
