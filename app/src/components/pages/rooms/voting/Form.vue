@@ -44,9 +44,8 @@
 
     modal(
       name="example"
-      :scrollable="true"
-      :max-width="400"
       width="90%"
+      :scrollable="true"
       height="auto"
     )
       v-card
@@ -59,6 +58,7 @@
           v-model="addItems"
           :headers="headers"
           :items="otherItems"
+          :items-per-page="otherItems.length"
           item-key="uid"
           show-select
           hide-default-header
