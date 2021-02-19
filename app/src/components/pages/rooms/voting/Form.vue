@@ -20,10 +20,7 @@
       v-col.pa-0(cols="9")
         draggable(
           v-model="draggableItems"
-          handle=".handle"
           :animation="300"
-          :scrollSensitivity="200"
-          height="auto"
         )
           v-card.draggable.pa-2.d-flex.justify-space-between.align-center(
             v-for="(item, i) in draggableItems"
@@ -80,12 +77,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
-import draggable from 'vuedraggable'
 import { RoomInvitationType, RoomGroup, RoomParticipateUser } from '~/modules/types/models'
 
 @Component({
   components: {
-    draggable,
+    draggable: () => import('vuedraggable'),
   },
 })
 export default class RoomDashboardVotingFormComponnet extends Vue {
