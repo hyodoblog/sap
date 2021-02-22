@@ -1,5 +1,6 @@
 # 環境変数をexport
 cp .env.staging ./app/.env
+cp .env.staging .env
 while read env
 do
   export $env

@@ -12,7 +12,7 @@ import { Room } from '../../../modules/types/models'
 
 const getRoomItems = async (nowAt: admin.firestore.Timestamp): Promise<Room[]> => {
   const items: Room[] = []
-  const docs = await roomsRef.where('votingEndAt', '>', nowAt).get()
+  const docs = await roomsRef.where('votingEndAt', '>=', nowAt).get()
   docs.forEach((doc) => {
     if (doc.exists) {
       items.push({
