@@ -1,10 +1,10 @@
-import { admin, functions, getNowAt, roomsRef } from '../../../config/firebase'
+import { admin, functions, getNowAt, roomsRef } from '../../config/firebase'
 
 // modules handlers
-import matchingHandlers from './handlers'
+import matchingHandlers from '../../modules/handlers/handlers'
 
 // modules types
-import { Room } from '../../../modules/types/models'
+import { Room } from '../../modules/types/models'
 
 // ********
 // handlers

@@ -1,10 +1,10 @@
-import { admin, getServerTimestamp, roomsRef } from '../../../config/firebase'
+import { admin, getServerTimestamp, roomsRef } from '../../config/firebase'
 
 // modules handlers
-import { firestotreGetGroupItems, firestotreGetParticipateUserItem } from '../../../modules/handlers/firestore'
+import { firestotreGetGroupItems, firestotreGetParticipateUserItem } from './firestore'
 
 // modules types
-import { Room, RoomGroup, RoomParticipateUser, RoomMatching } from '../../../modules/types/models'
+import { Room, RoomGroup, RoomParticipateUser, RoomMatching } from '../types/models'
 
 // ********
 // handlers
