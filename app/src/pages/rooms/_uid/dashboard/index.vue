@@ -18,6 +18,11 @@
           BaseVComponent(:title="`「${item.name}」部屋`" icon="mdi-monitor-dashboard")
         v-col.text-right
           v-btn(
+            color="primary"
+            elevation="0"
+            @click="matching"
+          ) マッチング手動実行
+          v-btn(
             color="warning"
             elevation="0"
             :to="$routes.front.roomEdit(item.uid)"
