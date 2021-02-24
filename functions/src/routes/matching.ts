@@ -47,7 +47,6 @@ async function main(data: any, context: functions.https.CallableContext) {
 // *************
 // functions設定
 // *************
-// 本番
 const runtimeOpts: functions.RuntimeOptions = {
   timeoutSeconds: 540,
   memory: '256MB',
