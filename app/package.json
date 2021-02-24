@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "cp ../.env.dev .env && cp ../key/development.json ./key/development.json  && nuxt-ts",
-    "build": "nuxt-ts build",
-    "start": "nuxt-ts start",
-    "generate": "nuxt-ts generate",
+    "dev": "cp ../.env.dev .env && cp ../key/development.json ./key/development.json  && nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
     "lint": "eslint --ext .js,.ts,.vue .",
     "lintfix": "eslint --ext .js,.ts,.vue . --fix"
   },

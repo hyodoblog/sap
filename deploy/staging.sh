@@ -22,6 +22,7 @@ cloudFunctions () {
 # cloud run
 
 cloudRun () {
+  gcloud config set account yusei.hyodo@youlib.net
   gcloud config set project ${FIREBASE_PROJECT_ID}
   docker build -t ${FIREBASE_PROJECT_ID}-staging ./app
   docker tag ${FIREBASE_PROJECT_ID}-staging gcr.io/${FIREBASE_PROJECT_ID}/staging
