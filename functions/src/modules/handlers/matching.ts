@@ -92,22 +92,28 @@ const algorithmStep1 = (
   const matchingGroupNumItems: MatchingGroupNum[] = []
 
   // 平均値をベースに仮割当をする
-  let availableGroupItems: RoomGroup[] = []
+  const availableGroupItems: RoomGroup[] = []
   let totalMatchingNum = 0
   for (const groupItem of groupItems) {
+    // 無制限設定のグループ
     if (groupItem.maxNum === null) {
       totalMatchingNum += averate
       matchingGroupNumItems.push({
         groupUid: groupItem.uid as string,
         num: averate,
       })
-    } else if (groupItem.maxNum <= averate) {
+      availableGroupItems.push(groupItem)
+    }
+    // 平均より最大人数が小さい場合
+    else if (groupItem.maxNum <= averate) {
       totalMatchingNum += groupItem.maxNum
       matchingGroupNumItems.push({
         groupUid: groupItem.uid as string,
         num: groupItem.maxNum,
       })
-    } else {
+    }
+    // 大きい場合
+    else {
       totalMatchingNum += averate
       matchingGroupNumItems.push({
         groupUid: groupItem.uid as string,
@@ -118,15 +124,13 @@ const algorithmStep1 = (
   }
 
   let remainParticipateUserNum = participateUserLength - totalMatchingNum
-  if (remainParticipateUserNum === 0 && availableGroupItems.length === 0) {
+  if (remainParticipateUserNum === 0) {
     return matchingGroupNumItems
   }
 
-  // 追加可能な
-  while (remainParticipateUserNum > 0) {
-    // 最大参加人数の設定ミスによる対策
-    if (!isAddMatchingGroupNumItems(matchingGroupNumItems, groupItems)) {
-      availableGroupItems = []
+  // 最大参加人数の設定ミスによる対策
+  if (!isAddMatchingGroupNumItems(matchingGroupNumItems, groupItems)) {
+    while (remainParticipateUserNum > 0) {
       for (const matchingGroupNumItem of matchingGroupNumItems) {
         matchingGroupNumItem.num++
         remainParticipateUserNum--
@@ -135,15 +139,18 @@ const algorithmStep1 = (
         }
       }
     }
+  }
 
+  // 追加可能な
+  while (remainParticipateUserNum > 0) {
     for (const availableGroupItem of availableGroupItems) {
       for (const matchingGroupNumItem of matchingGroupNumItems) {
-        if (
-          matchingGroupNumItem.groupUid === availableGroupItem.uid &&
-          (availableGroupItem.maxNum as number) > matchingGroupNumItem.num
-        ) {
+        if (matchingGroupNumItem.groupUid === availableGroupItem.uid) {
           remainParticipateUserNum--
           matchingGroupNumItem.num++
+          if (remainParticipateUserNum <= 0) {
+            return matchingGroupNumItems
+          }
         }
       }
     }
@@ -453,6 +460,8 @@ export default (roomItems: Room[]) =>
         participateUserRateMaxNum
       )
 
+      participateUserRateItems
+
       // Step 2
       // グループをレート順にソート
       groupRateItems.sort(function (a, b) {
@@ -463,10 +472,7 @@ export default (roomItems: Room[]) =>
       // Step 3
       // Algorithm Step 1
       // グループマッチングの人数を整理
-
       const matchingGroupNumItems = algorithmStep1(groupItems, groupLength, participateUserLength)
-
-      participateUserRateItems
 
       // Step 4
       // Algorithm Step 2
@@ -498,5 +504,5 @@ export default (roomItems: Room[]) =>
     })
   ).catch((err) => {
     console.log(err)
-    // throw new Error(err)
+    throw new Error(err)
   })
