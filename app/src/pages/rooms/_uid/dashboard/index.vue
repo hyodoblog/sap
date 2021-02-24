@@ -17,11 +17,7 @@
         v-col
           BaseVComponent(:title="`「${item.name}」部屋`" icon="mdi-monitor-dashboard")
         v-col.text-right
-          v-btn(
-            color="primary"
-            elevation="0"
-            @click="matching"
-          ) マッチング手動実行
+          RoomsDashboardBtnMatching.mr-2(:uid="item.uid")
           v-btn(
             color="warning"
             elevation="0"
@@ -55,6 +51,7 @@ import { Room } from '~/modules/types/models'
   components: {
     BaseVComponent: () => import('~/components/base/BaseVComponent.vue'),
     BtnPageBack: () => import('~/components/btn/PageBack.vue'),
+    RoomsDashboardBtnMatching: () => import('~/components/pages/rooms/dashboard/btn/Matching.vue'),
     RoomDashboardInvitation: () => import('~/components/pages/rooms/dashboard/btn/Invitation.vue'),
     RoomDashboardInfo: () => import('~/components/pages/rooms/dashboard/Info.vue'),
     RoomDashboardGroupList: () => import('~/components/pages/rooms/dashboard/group/List.vue'),

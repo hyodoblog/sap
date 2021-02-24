@@ -1,14 +1,17 @@
 import firebase from 'firebase/app'
 import 'firebase/analytics'
 import 'firebase/auth'
+import 'firebase/functions'
 import 'firebase/firestore'
 import 'firebase/storage'
 import { AuthFire } from '~/modules/handlers/fire/auth'
+import { FunctionsFire } from '~/modules/handlers/fire/functions'
 import { StorageFire } from '~/modules/handlers/fire/storage'
 import { StoreFire } from '~/modules/handlers/fire/store'
 
 export interface FirebaseApi {
   auth: AuthFire
+  functions: FunctionsFire
   storage: StorageFire
   store: StoreFire
 }
@@ -30,6 +33,7 @@ export default function (_: any, inject: (arg0: string, arg1: FirebaseApi) => vo
 
   const fire: FirebaseApi = {
     auth: new AuthFire(firebase.auth()),
+    functions: new FunctionsFire(firebase.app().functions('asia-northeast1')),
     storage: new StorageFire(firebase.storage()),
     store: new StoreFire(firebase.firestore()),
   }
