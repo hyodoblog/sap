@@ -2,7 +2,7 @@
   v-row.mb-6
     v-col(cols="12")
       .d-flex.justify-space-between.align-center
-        .title グループ一覧
+        .title グループ一覧（{{ $store.state.room.group.items.length }}）
         div.d-flex
           RoomGroupFormNewCsv
           RoomGroupFormNew.ml-2

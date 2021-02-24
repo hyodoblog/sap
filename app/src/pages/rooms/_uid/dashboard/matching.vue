@@ -15,7 +15,7 @@
 
       v-row
         v-col(cols="12")
-          v-simple-table(dense)
+          v-simple-table
             template(v-slot:default)
               thead
                 tr

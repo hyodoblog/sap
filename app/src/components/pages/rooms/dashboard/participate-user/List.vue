@@ -2,7 +2,7 @@
   v-row.mb-6
     v-col(cols="12")
       .d-flex.justify-space-between.align-center
-        .title 参加者一覧
+        .title 参加者一覧（{{ $store.state.room['participate-user'].items.length }}）
         .d-flex
           RoomParticipateUserFormNewCsv
           RoomParticipateUserFormNew.ml-2
