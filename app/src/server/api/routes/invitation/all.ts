@@ -81,8 +81,8 @@ const sendMail = (templateId: string, sendUserItems: dynamicTemplateParams[]): P
   Promise.all(
     sendUserItems.map((item) =>
       sgMail.send({
-        to: item.email,
-        from: envSendGrid.email.noreply,
+        to: item.email.replace(/\r?\n/g, ''),
+        from: envSendGrid.email.noreply.replace(/\r?\n/g, ''),
         templateId,
         dynamicTemplateData: item,
       })
