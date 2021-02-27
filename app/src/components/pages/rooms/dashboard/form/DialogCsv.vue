@@ -97,7 +97,7 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
 
         const uniArray = encoding.convert(sjisArray, 'UNICODE', encoding.detect(sjisArray) as Encoding)
         result = encoding.codeToString(uniArray)
-        const lines = result.split('\n')
+        const lines = result.replace(/\r/g, '').split('\n')
         const csvData = lines.map((line) => line.split(','))
         if (csvData[csvData.length - 1].length === 1) csvData.pop()
         csvData.shift()
