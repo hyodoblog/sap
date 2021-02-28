@@ -14,7 +14,24 @@ const config: NuxtConfig = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          '多くの大学では、大学3年次の末に研究室への配属が行われます。この研究室配属において、学生と研究室の満足度を高める目的で開発されたシステムが当サービス、「研究室マッチングシステム」です。',
+      },
+      { hid: 'og:site_name', property: 'og:site_name', content: '研究室マッチングシステム' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: 'https://sap.hyodoblog.com/ogp.jpg' },
+      { hid: 'og:title', property: 'og:title', content: this.currentPost.fields.title + '｜TOMIGAYA BASE' },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content:
+          '多くの大学では、大学3年次の末に研究室への配属が行われます。この研究室配属において、学生と研究室の満足度を高める目的で開発されたシステムが当サービス、「研究室マッチングシステム」です。',
+      },
+      { hid: 'og:image', property: 'og:image', content: 'https://sap.hyodoblog.com/ogp.jpg' },
+      { hid: 'twitter:card', property: 'twitter:card', content: 'summary_large_image' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
