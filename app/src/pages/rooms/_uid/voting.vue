@@ -7,7 +7,9 @@
     template(v-else)
       .title.mb-2 {{ typeDisplayName }}専用 希望提出ページ
 
-      VotingInfo(:item="authItem")
+      VotingInfo.mb-4(:item="authItem")
+
+      adsbygoogle(v-if="isDev" ad-stot="1699494596")
 
       v-divider.my-4
 
@@ -16,6 +18,7 @@
         :type="type"
         :items="roomParticipateUserItems"
         :hopeUidItems="hopeParticipateUserUidItems"
+        :roomItem="roomItem"
         :maxNum="roomItem.groupHopeMaxNum"
         :submitFunc="groupHopeSubmit"
       )
@@ -27,6 +30,8 @@
         :maxNum="roomItem.participateUserHopeMaxNum"
         :submitFunc="participateUserHopeSubmit"
       )
+
+      adsbygoogle(v-if="isDev" ad-stot="1699494596")
 </template>
 
 <script lang="ts">
@@ -41,6 +46,10 @@ import { RoomInvitationType, Room, RoomGroup, RoomParticipateUser } from '~/modu
   },
 })
 export default class RoomVotingPage extends Vue {
+  get isDev(): boolean {
+    return process.env.NODE_ENV !== 'development'
+  }
+
   get typeDisplayName(): string {
     switch (this.type) {
       case 'group':

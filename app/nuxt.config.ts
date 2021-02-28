@@ -44,7 +44,19 @@ const config: NuxtConfig = {
     { src: '~/plugins/components/vue-js-modal', mode: 'client' },
   ],
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
-  modules: ['@nuxtjs/axios', 'cookie-universal-nuxt'],
+  modules: [
+    '@nuxtjs/axios',
+    'cookie-universal-nuxt',
+    [
+      '@nuxtjs/google-adsense',
+      {
+        id: process.env.GA_ADSENSE_ID,
+        pageLevelAds: true,
+        analyticsUacct: process.env.GA_TRACKING_ID,
+        analyticsDomainName: 'sap.hyodoblog.com',
+      },
+    ],
+  ],
   axios: {
     baseURL: isDev ? `http://localhost:${port}/api` : `${process.env.BASE_URL}/api`,
   },

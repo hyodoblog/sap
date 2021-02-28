@@ -77,7 +77,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
-import { RoomInvitationType, RoomGroup, RoomParticipateUser } from '~/modules/types/models'
+import { Room, RoomInvitationType, RoomGroup, RoomParticipateUser } from '~/modules/types/models'
 
 @Component({
   components: {
@@ -85,10 +85,11 @@ import { RoomInvitationType, RoomGroup, RoomParticipateUser } from '~/modules/ty
   },
 })
 export default class RoomDashboardVotingFormComponnet extends Vue {
-  @Prop({ type: String, required: true }) type: RoomInvitationType
-  @Prop({ type: Array, required: true }) items: RoomGroup[] | RoomParticipateUser[]
-  @Prop({ type: Array, required: true }) hopeUidItems: string[]
-  @Prop({ type: Number || null, required: true, default: null }) maxNum: number | null
+  @Prop({ type: Object, required: true }) roomItem!: Room
+  @Prop({ type: String, required: true }) type!: RoomInvitationType
+  @Prop({ type: Array, required: true }) items!: RoomGroup[] | RoomParticipateUser[]
+  @Prop({ type: Array, required: true }) hopeUidItems!: string[]
+  @Prop({ type: Number || null, required: true, default: null }) maxNum!: number | null
 
   @Prop({ type: Function, required: true }) submitFunc: (
     hopeItems: RoomGroup[] | RoomParticipateUser[]
@@ -125,7 +126,20 @@ export default class RoomDashboardVotingFormComponnet extends Vue {
   isValid = true
   isLoading = false
 
+  isCheckDate(): boolean {
+    const nowAt = this.$fire.store.getNowAt()
+    if (this.roomItem.startAt.seconds <= nowAt.seconds && this.roomItem.votingEndAt.seconds >= nowAt.seconds) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   submit() {
+    if (!this.isCheckDate()) {
+      this.$store.dispatch('snackbar/error', '投票時期が過ぎています')
+      return
+    }
     this.isValid = false
     this.isLoading = true
     return this.submitFunc(this.draggableItems)

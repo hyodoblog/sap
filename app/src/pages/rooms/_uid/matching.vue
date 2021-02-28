@@ -9,6 +9,8 @@
         .title マッチングページ
         .caption 最終更新日時：{{ $fire.store.getConvertDatetimeJa(items[0].updatedAt) }}
 
+      adsbygoogle(v-if="isDev" ad-stot="1699494596")
+
       v-simple-table(dense)
         template(v-slot:default)
           thead
@@ -19,6 +21,8 @@
             tr(v-for="item in items")
               td {{ getGroupDispalyName(item.groupUid) }}
               td {{ getParticipateUserDisplayNameItems(item.participateUserUidItems) }}
+
+      adsbygoogle(v-if="isDev" ad-stot="1699494596")
 </template>
 
 <script lang="ts">
@@ -29,6 +33,10 @@ import { RoomGroup, RoomParticipateUser, RoomMatching } from '~/modules/types/mo
   layout: 'public',
 })
 export default class RoomMatchingPage extends Vue {
+  get isDev(): boolean {
+    return process.env.NODE_ENV !== 'development'
+  }
+
   async mounted() {
     try {
       const roomUid = this.$route.params.uid

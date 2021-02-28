@@ -34,10 +34,9 @@ export default class PublicLayout extends Vue {
       } else throw Error
     } catch {
       if (this.$store.getters['user/isAuthenticated']) {
-        this.$router.push(this.$routes.front.roomDashboard(this.$route.params.uid))
-        return
+        return this.$router.push(this.$routes.front.roomDashboard(this.$route.params.uid))
       }
-      this.$nuxt.error({
+      return this.$nuxt.error({
         statusCode: 404,
       })
     }

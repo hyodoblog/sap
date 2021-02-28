@@ -33,6 +33,10 @@ export class StoreFire {
     this.roomMatching = new RoomMatchingDb(this.rootRef)
   }
 
+  getNowAt(): firebase.firestore.Timestamp {
+    return firebase.firestore.Timestamp.now()
+  }
+
   getNowAtToDate(): Date {
     return firebase.firestore.Timestamp.now().toDate()
   }
