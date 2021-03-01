@@ -27,6 +27,7 @@
         :type="type"
         :items="roomGroupItems"
         :hopeUidItems="hopeGroupUidItems"
+        :roomItem="roomItem"
         :maxNum="roomItem.participateUserHopeMaxNum"
         :submitFunc="participateUserHopeSubmit"
       )
