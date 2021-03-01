@@ -27,8 +27,6 @@ async function main(data: any, context: functions.https.CallableContext) {
   console.log('matching関数実行開始')
 
   try {
-    console.log(data)
-    console.log(context)
     if (!context.auth?.uid) throw new Error('not Auth')
     const roomUid = data.roomUid
     if (!roomUid) throw new Error('request body is not.')

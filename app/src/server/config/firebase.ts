@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin'
 import { rootCollection } from './env'
 
-const serviAccount = require(`../../../key/${process.env.NODE_ENV}.json`)
+const serviAccount = require('../../../key/gcloud.json')
 
 if (!admin.apps.length) {
   admin.initializeApp({

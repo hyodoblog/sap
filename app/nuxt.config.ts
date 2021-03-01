@@ -23,7 +23,7 @@ const config: NuxtConfig = {
       { hid: 'og:site_name', property: 'og:site_name', content: '研究室マッチングシステム' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       { hid: 'og:url', property: 'og:url', content: 'https://sap.hyodoblog.com/ogp.jpg' },
-      { hid: 'og:title', property: 'og:title', content: this.currentPost.fields.title + '｜TOMIGAYA BASE' },
+      { hid: 'og:title', property: 'og:title', content: '研究室マッチングシステム' },
       {
         hid: 'og:description',
         property: 'og:description',

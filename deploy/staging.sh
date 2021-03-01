@@ -7,7 +7,7 @@ do
 done < .env
 
 cp ./key/production.json ./functions/key/gcloud.json
-cp ./key/production.json ./app/key/production.json
+cp ./key/production.json ./app/key/gcloud.json
 
 # *******************
 # functions

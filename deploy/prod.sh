@@ -3,10 +3,10 @@ cp .env.prod ./app/.env
 while read env
 do
   export $env
-done < .env
+done < .env.prod
 
-cp ./key/production.json ./functions/key/production.json
-cp ./key/production.json ./app/key/production.json
+cp ./key/production.json ./functions/key/gcloud.json
+cp ./key/production.json ./app/key/gcloud.json
 
 # *******************
 # functions
