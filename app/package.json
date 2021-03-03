@@ -49,7 +49,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "nuxt-property-decorator": "^2.9.1",
     "prettier": "^2.2.1",
-    "pug": "^3.0.0",
+    "pug": "^3.0.1",
     "pug-plain-loader": "^1.1.0"
   }
 }
