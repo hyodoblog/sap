@@ -11,7 +11,7 @@
 
       adsbygoogle(v-if="isDev" ad-stot="1699494596")
 
-      v-simple-table(dense)
+      v-simple-table.my-6(dense)
         template(v-slot:default)
           thead
             tr
