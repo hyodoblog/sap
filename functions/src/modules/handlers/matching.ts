@@ -288,9 +288,9 @@ const deleteHopeParticipateUser = (
   groupUid: string,
   participateUserUid: string
 ): HopeItem[] => {
-  for (let i = 0; groupHopeToParticipateUserUidItems.length; i++) {
+  for (let i = 0; i < groupHopeToParticipateUserUidItems.length; i++) {
     if (groupHopeToParticipateUserUidItems[i].uid === groupUid) {
-      for (let j = 0; groupHopeToParticipateUserUidItems[i].hopeUidItems.length; j++) {
+      for (let j = 0; j < groupHopeToParticipateUserUidItems[i].hopeUidItems.length; j++) {
         if (groupHopeToParticipateUserUidItems[i].hopeUidItems[j] === participateUserUid) {
           groupHopeToParticipateUserUidItems[i].hopeUidItems = groupHopeToParticipateUserUidItems[i].hopeUidItems.slice(
             j,
