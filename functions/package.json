@@ -22,7 +22,7 @@
     "@types/request-promise": "^4.1.47",
     "@types/stripe": "^8.0.416",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
-    "@typescript-eslint/parser": "^4.20.0",
+    "@typescript-eslint/parser": "^4.22.1",
 
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
