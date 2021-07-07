@@ -19,7 +19,7 @@
     "firebase-functions": "^3.14.1"
   },
   "devDependencies": {
-    "@types/request-promise": "^4.1.47",
+    "@types/request-promise": "^4.1.48",
     "@types/stripe": "^8.0.416",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
