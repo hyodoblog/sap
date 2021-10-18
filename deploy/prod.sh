@@ -1,12 +1,12 @@
 # 環境変数をexport
-cp .env.prod ./app/.env
+cp .env.prod ./packages/app/.env
 while read env
 do
   export $env
 done < .env.prod
 
-cp ./key/production.json ./functions/key/gcloud.json
-cp ./key/production.json ./app/key/gcloud.json
+cp ./key/production.json ./packages/functions/key/gcloud.json
+cp ./key/production.json ./packages/app/key/gcloud.json
 
 # *******************
 # functions
@@ -21,9 +21,8 @@ cloudFunctions () {
 # cloud run
 
 cloudRun () {
-  gcloud config set account yusei.hyodo@youlib.net
   gcloud config set project ${FIREBASE_PROJECT_ID}
-  docker build -t ${FIREBASE_PROJECT_ID}-prod ./app
+  docker build -t ${FIREBASE_PROJECT_ID}-prod ./packages/app
   docker tag ${FIREBASE_PROJECT_ID}-prod gcr.io/${FIREBASE_PROJECT_ID}/prod
   docker push gcr.io/${FIREBASE_PROJECT_ID}/prod
   gcloud beta run deploy prod \

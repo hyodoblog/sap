@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "clear": "rm -rf .nuxt node_modules package-lock.json",
     "dev": "cp ../.env.dev .env && cp ../key/development.json ./key/development.json  && nuxt",
     "build": "nuxt build",
     "start": "nuxt start",

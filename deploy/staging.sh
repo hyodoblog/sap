@@ -1,13 +1,13 @@
 # 環境変数をexport
-cp .env.staging ./app/.env
+cp .env.staging ./packages/app/.env
 cp .env.staging .env
 while read env
 do
   export $env
 done < .env
 
-cp ./key/production.json ./functions/key/gcloud.json
-cp ./key/production.json ./app/key/gcloud.json
+cp ./key/production.json ./packages/functions/key/gcloud.json
+cp ./key/production.json ./packages/app/key/gcloud.json
 
 # *******************
 # functions
