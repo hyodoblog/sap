@@ -1,7 +1,7 @@
 import { admin, getServerTimestamp, roomsRef } from '../../config/firebase'
 
 // modules handlers
-import { firestotreGetGroupItems, firestotreGetParticipateUserItem } from './firestore'
+import { firestoreGetGroupItems, firestoreGetParticipateUserItem } from './firestore'
 
 // modules types
 import { Room, RoomGroup, RoomParticipateUser, RoomMatching } from '../types/models'
@@ -434,14 +434,14 @@ export default (roomItems: Room[]) =>
   Promise.all(
     roomItems.map(async (roomItem) => {
       // group変数の初期化
-      const groupItems = await firestotreGetGroupItems(roomItem.uid as string)
+      const groupItems = await firestoreGetGroupItems(roomItem.uid as string)
       const groupHopeToParticipateUserUidItems: HopeItem[] = groupItems.map((item) => {
         return { uid: item.uid as string, hopeUidItems: item.hopeParticipateUserUidItems }
       })
       const groupLength = groupItems.length
       const groupRateMaxNum = roomItem.groupHopeMaxNum || groupLength
       // participate user変数の初期化
-      const participateUserItems = await firestotreGetParticipateUserItem(roomItem.uid as string)
+      const participateUserItems = await firestoreGetParticipateUserItem(roomItem.uid as string)
       const participateUserHopeToGroupUidItems: HopeItem[] = participateUserItems.map((item) => {
         return { uid: item.uid as string, hopeUidItems: item.hopeGroupUidItems }
       })

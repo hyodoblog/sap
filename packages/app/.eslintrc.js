@@ -2,30 +2,48 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true,
+    node: true
   },
   extends: [
+    '@nuxtjs',
     '@nuxtjs/eslint-config-typescript',
-    'eslint:recommended',
-    'prettier',
     'plugin:prettier/recommended',
     'plugin:nuxt/recommended',
+    'plugin:import/errors'
   ],
-  plugins: ['prettier'],
-  // add your custom rules here
+  plugins: ['vue', '@typescript-eslint', 'import'],
   rules: {
-    semi: [2, 'never'],
-    'no-console': 'off',
-    'vue/max-attributes-per-line': 'off',
-    'prettier/prettier': ['error', { semi: false }],
-    'no-new': 'off',
-    'no-undef': 'off',
-    'no-unused-vars': 'off',
-    camelcase: [
-      0,
+    // import
+    'import/named': 'off',
+    'import/no-unresolved': 'off',
+    'sort-imports': 0,
+
+    // prettier
+    'no-console': [
+      'error',
       {
-        properties: 'always',
-      },
+        allow: ['warn', 'error']
+      }
     ],
-  },
+
+    // vue
+    'vue/html-closing-bracket-newline': [
+      'error',
+      {
+        singleline: 'never',
+        multiline: 'always'
+      }
+    ],
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'always'
+        }
+      }
+    ],
+    'vue/no-v-html': 'off',
+    'vue/attributes-order': 'error',
+    'vue/v-slot-style': 'error'
+  }
 }

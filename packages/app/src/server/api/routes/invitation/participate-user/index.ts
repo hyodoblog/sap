@@ -8,7 +8,7 @@ import {
   timestampConvertDatetimeJp,
   firestoreGetRoom,
   firestoreGetUser,
-  firestotreGetParticipateUserItem,
+  firestoreGetParticipateUserItem,
 } from '../../../../modules/handlers/firestore'
 import { utilsGetInvitationLoginLink } from '../../../../modules/handlers/utils'
 
@@ -18,6 +18,7 @@ import { ApiParticipateUserInvitationReqParams } from '../../../../../modules/ty
 const isRequestBody = (data: any): data is ApiParticipateUserInvitationReqParams =>
   data !== null && typeof data.roomUid === 'string' && typeof data.participateUserUid === 'string'
 
+/* eslint-disable */
 interface dynamicTemplateParams {
   email: string
   user_name: string
@@ -32,7 +33,7 @@ const getSendUserItem = async (roomUid: string, participateUserUid: string): Pro
   // データの取得
   const roomItem = await firestoreGetRoom(roomUid)
   const ownerUserItem = await firestoreGetUser(roomItem.userUid)
-  const participateUserItem = await firestotreGetParticipateUserItem(roomUid, participateUserUid)
+  const participateUserItem = await firestoreGetParticipateUserItem(roomUid, participateUserUid)
 
   // データの整形
   const sendUserItem: dynamicTemplateParams = {

@@ -1,7 +1,7 @@
 import { roomsRef } from '../../config/firebase'
 import { RoomGroup, RoomParticipateUser } from '../types/models'
 
-export const firestotreGetGroupItems = async (roomUid: string): Promise<RoomGroup[]> => {
+export const firestoreGetGroupItems = async (roomUid: string): Promise<RoomGroup[]> => {
   const items: RoomGroup[] = []
   const docs = await roomsRef.doc(roomUid).collection('groups').get()
   docs.forEach((doc) => {
@@ -12,7 +12,7 @@ export const firestotreGetGroupItems = async (roomUid: string): Promise<RoomGrou
   return items
 }
 
-export const firestotreGetParticipateUserItem = async (roomUid: string): Promise<RoomParticipateUser[]> => {
+export const firestoreGetParticipateUserItem = async (roomUid: string): Promise<RoomParticipateUser[]> => {
   const items: RoomParticipateUser[] = []
   const docs = await roomsRef.doc(roomUid).collection('participateUsers').get()
   docs.forEach((doc) => {

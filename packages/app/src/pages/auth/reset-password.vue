@@ -34,17 +34,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { Middleware } from '@nuxt/types'
-
-const middleware: Middleware = ({ route }) => {
-  console.log(route)
-  // const { code } = route.query
-  // if (!code)
-}
 
 @Component({
   layout: 'auth',
-  middleware,
 })
 export default class AuthResetPasswordPage extends Vue {
   isLoading = false

@@ -25,8 +25,8 @@ declare module '@nuxt/types' {
 }
 
 declare module 'vuex' {
-  /* eslint @typescript-eslint/no-unused-vars: 0 */
   /* eslint no-unused-vars: 0 */
+  /* eslint @typescript-eslint/no-unused-vars: 0 */
   interface Store<S> {
     $api: ApiApi
     $fire: FirebaseApi

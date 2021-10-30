@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode'
 import { IndexState, RootState } from '~/modules/types/state'
 const cookieparser = require('cookieparser')
 
+/* eslint-disable */
 interface CookieData {
   admin: boolean
   user_id: string

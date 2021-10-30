@@ -7,7 +7,7 @@ import { firebaseVerifyIdToken } from '../../../../modules/handlers/firebase'
 import {
   timestampConvertDatetimeJp,
   firestoreGetRoom,
-  firestotreGetIsEmailGroups,
+  firestoreGetIsEmailGroups,
   firestoreGetUser,
 } from '../../../../modules/handlers/firestore'
 import { utilsGetInvitationLoginLink } from '../../../../modules/handlers/utils'
@@ -18,6 +18,7 @@ import { ApiAllInvitationReqParams } from '../../../../../modules/types/api'
 const isRequestBody = (data: any): data is ApiAllInvitationReqParams =>
   data !== null && typeof data.roomUid === 'string'
 
+/* eslint-disable */
 interface dynamicTemplateParams {
   email: string
   user_name: string
@@ -34,7 +35,7 @@ const getSendUserItems = async (roomUid: string): Promise<dynamicTemplateParams[
   // データの取得
   const roomItem = await firestoreGetRoom(roomUid)
   const ownerUserItem = await firestoreGetUser(roomItem.userUid)
-  const groupItems = await firestotreGetIsEmailGroups(roomUid)
+  const groupItems = await firestoreGetIsEmailGroups(roomUid)
 
   // データの整形
   groupItems.forEach((item) => {

@@ -19,11 +19,11 @@
           img(src="/kyukoudai.jpg")
 </template>
 
-<script>
-export default {
-  components: {},
-  data: () => ({}),
-}
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class TopHistoryComponent extends Vue {}
 </script>
 
 <style lang="scss" scoped>

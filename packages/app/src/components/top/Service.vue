@@ -22,11 +22,11 @@
             | 安定結婚問題を解くアルゴリズムを応用した研究室配属アルゴリズムを用いて配属処理をしております。
 </template>
 
-<script>
-export default {
-  components: {},
-  data: () => ({}),
-}
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class TopServiceComponent extends Vue {}
 </script>
 
 <style lang="scss" scoped>

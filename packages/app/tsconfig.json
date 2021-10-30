@@ -16,6 +16,7 @@
       "@nuxtjs/axios",
       "@nuxtjs/moment",
       "@types/node",
+      "cookie-universal-nuxt",
       "vuetify",
     ]
   },

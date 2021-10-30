@@ -1,7 +1,4 @@
-.gitignore
-functions
 node_modules
-dist
-seeds
-
-src/static/*
+!.*.js
+*.d.ts
+.eslintrc.js
