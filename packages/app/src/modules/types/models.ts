@@ -21,6 +21,7 @@ export interface User extends Base {
 
 // ****************************
 // /rooms
+
 export type RoomInvitationType = 'group' | 'participateUser'
 
 export interface Room extends Base {
