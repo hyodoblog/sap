@@ -9,7 +9,6 @@
         RoomForm(
           submitText="編集する"
           :roomUidValue.sync="roomUid"
-          :imgDataURLValue.sync="imgDataURL"
           :nameValue.sync="name"
           :descriptionValue.sync="description"
           :isPublicValue.sync="isPublic"
@@ -84,7 +83,6 @@ export default class RoomNewPage extends Vue {
   setItem(item: Room) {
     this.title = item.name
     this.roomUid = item.uid as string
-    this.iconPath = item.iconPath
     this.name = item.name
     this.description = item.description
     this.isPublic = item.isPublic
@@ -97,19 +95,6 @@ export default class RoomNewPage extends Vue {
     this.startAt = item.startAt.toDate()
     this.votingEndAt = item.votingEndAt.toDate()
     this.browsingEndAt = item.browsingEndAt.toDate()
-
-    if (this.iconPath) this.getImgDataURLToUrl(this.iconPath)
-  }
-
-  async getImgDataURLToUrl(filePath: string) {
-    const downloadUrl = await this.$fire.storage.getDownloadURL(filePath)
-    const res = await this.$axios.get(downloadUrl, { responseType: 'blob' })
-    const reader = new FileReader()
-    reader.onload = (e: any) => {
-      const imgDataURL = e.target.result as string
-      this.imgDataURL = imgDataURL
-    }
-    reader.readAsDataURL(res.data)
   }
 
   title = ''
@@ -117,7 +102,6 @@ export default class RoomNewPage extends Vue {
   // form var
 
   roomUid = ''
-  iconPath = ''
   name = ''
   description = ''
   isPublic = false
@@ -136,25 +120,12 @@ export default class RoomNewPage extends Vue {
   startAt = new Date()
   votingEndAt = new Date()
   browsingEndAt = new Date()
-  imgDataURL = ''
 
   async submit(): Promise<void> {
-    // ファイルパスを取得
-    let iconPath = ''
-    if (this.imgDataURL) {
-      iconPath = `rooms/${this.roomUid}.jpg`
-    }
-
     try {
-      // 画像をアップロード
-      if (iconPath) {
-        await this.$fire.storage.uploadToDataURL(iconPath, this.imgDataURL)
-      }
-
       // firestoreに保存
       const item: Room = {
         userUid: this.$store.state.user.uid,
-        iconPath,
         name: this.name,
         description: this.description,
         isPublic: this.isPublic,
@@ -173,9 +144,6 @@ export default class RoomNewPage extends Vue {
       this.$store.dispatch('snackbar/success', '部屋を編集しました。')
       this.$router.push(this.$routes.front.roomDashboard(this.roomUid))
     } catch {
-      if (iconPath) {
-        this.$fire.storage.delete(iconPath)
-      }
       this.$store.dispatch('snackbar/error', '部屋の編集に失敗しました。')
       throw Error
     }

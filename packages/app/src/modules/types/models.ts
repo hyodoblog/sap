@@ -26,7 +26,6 @@ export type RoomInvitationType = 'group' | 'participateUser'
 
 export interface Room extends Base {
   userUid: string
-  iconPath: string
   name: string
   description: string
   isPublic: boolean
@@ -42,9 +41,9 @@ export interface Room extends Base {
   participateUserHopeMaxNum: number | null
 
   // time
-  startAt: admin.firestore.Timestamp
-  votingEndAt: admin.firestore.Timestamp
-  browsingEndAt: admin.firestore.Timestamp
+  startAt: firebase.firestore.Timestamp
+  votingEndAt: firebase.firestore.Timestamp
+  browsingEndAt: firebase.firestore.Timestamp
 }
 
 // ****************************

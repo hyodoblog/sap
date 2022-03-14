@@ -6,7 +6,6 @@
       RoomForm(
         submitText="作成する"
         :roomUidValue.sync="roomUid"
-        :imgDataURLValue.sync="imgDataURL"
         :nameValue.sync="name"
         :descriptionValue.sync="description"
         :isPublicValue.sync="isPublic"
@@ -53,26 +52,15 @@ export default class RoomNewPage extends Vue {
   startAt = this.$fire.store.getNowAtToDate()
   votingEndAt = this.$fire.store.getNowAtToDate()
   browsingEndAt = this.$fire.store.getNowAtToDate()
-  imgDataURL = ''
 
   async submit(): Promise<void> {
     // ファイルパスを取得
     const roomUid = this.$fire.store.room.getUid()
-    let iconPath = ''
-    if (this.imgDataURL) {
-      iconPath = `rooms/${roomUid}.jpg`
-    }
 
     try {
-      // 画像をアップロード
-      if (iconPath) {
-        await this.$fire.storage.uploadToDataURL(iconPath, this.imgDataURL)
-      }
-
       // firestoreに保存
       const item: Room = {
         userUid: this.$store.state.user.uid,
-        iconPath,
         name: this.name,
         description: this.description,
         isPublic: this.isPublic,
@@ -91,9 +79,6 @@ export default class RoomNewPage extends Vue {
       this.$store.dispatch('snackbar/success', '部屋を作成しました。')
       this.$router.push(this.$routes.front.rooms)
     } catch {
-      if (iconPath) {
-        this.$fire.storage.delete(iconPath)
-      }
       this.$store.dispatch('snackbar/error', '部屋の作成に失敗しました。')
       throw Error
     }

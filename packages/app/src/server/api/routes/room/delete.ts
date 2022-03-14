@@ -14,11 +14,6 @@ const deleteProcess = (roomUid: string) =>
     // データを取得
     const roomRef = roomsRef.doc(roomUid)
 
-    // iconPathの取得
-    const roomDoc = await t.get(roomRef)
-    if (!roomDoc.exists) throw new Error('部屋情報が見つかりませんでした。')
-    const iconPath = roomDoc.data()?.iconPath
-
     // /rooms/groupsを取得
     const roomGorupUidItems: string[] = []
     const roomGroupsRef = roomRef.collection('groups')
@@ -48,11 +43,6 @@ const deleteProcess = (roomUid: string) =>
         roomMessageUidItems.push(doc.id)
       }
     })
-
-    // 画像の削除
-    if (iconPath) {
-      await storageDeleteItem(iconPath)
-    }
 
     // データの削除
     roomGorupUidItems.forEach((uid) => t.delete(roomGroupsRef.doc(uid)))

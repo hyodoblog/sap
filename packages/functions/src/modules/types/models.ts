@@ -25,7 +25,6 @@ export type RoomInvitationType = 'group' | 'participateUser'
 
 export interface Room extends Base {
   userUid: string
-  iconPath: string
   name: string
   description: string
   isPublic: boolean

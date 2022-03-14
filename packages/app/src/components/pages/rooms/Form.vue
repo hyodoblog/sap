@@ -7,22 +7,6 @@
     )
       v-row.align-center
         v-col(cols="5")
-          .subtitle-1 アイコン
-        v-col(cols="7")
-          ImgCropForm(
-            canvasId="image-canvas"
-            :isUpdate="isUpdate"
-            :maxWidth="300"
-            :maxHeight="300"
-            :imgDataURLValue.sync="imgDataURL"
-            :disabled="disabled"
-            @input="change"
-          )
-
-      v-divider.my-3
-
-      v-row.align-center
-        v-col(cols="5")
           .subtitle-1
             | 表示名
             v-chip.ml-1(x-small) 必須
@@ -258,17 +242,15 @@
 <script lang="ts">
 import { Component, Prop, PropSync, mixins, Watch } from 'nuxt-property-decorator'
 import BlockUnloadMixin from '~/mixins/BlockUnload'
-const ImgCropForm = () => import('~/components/form/ImgCrop.vue')
 const DatetimeForm = () => import('~/components/form/Datetime.vue')
 
 @Component({
-  components: { ImgCropForm, DatetimeForm },
+  components: { DatetimeForm },
 })
 export default class extends mixins(BlockUnloadMixin) {
   @Prop({ type: String, required: true }) readonly submitText: string
 
   @Prop({ type: String, default: '' }) readonly uid: string
-  @PropSync('imgDataURLValue', { type: String, required: true }) imgDataURL!: string
   @PropSync('nameValue', { type: String, required: true }) name!: string
   @PropSync('descriptionValue', { type: String, required: true }) description!: string
   @PropSync('isPublicValue', { type: Boolean, required: true }) isPublic!: boolean

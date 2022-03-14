@@ -1,7 +1,6 @@
 // modules handlers
 import { converTimestamp, firebaseVerifyIdToken } from '../../../modules/handlers/firebase'
 import { firestoreUpdateRoom } from '../../../modules/handlers/firestore'
-import { storageSetPublic } from '../../../modules/handlers/storage'
 
 // 型モジュール
 import { ApiCreateRoomReqParams } from '../../../../modules/types/api'
@@ -17,9 +16,6 @@ export default async (req: any, res: any) => {
     if (!decodedIdToken.uid) throw new Error('Not Permission Error.')
 
     const { roomUid, roomItem } = data
-    if (roomItem.iconPath) {
-      await storageSetPublic(roomItem.iconPath)
-    }
     roomItem.startAt = converTimestamp(roomItem.startAt.seconds)
     roomItem.votingEndAt = converTimestamp(roomItem.votingEndAt.seconds)
     roomItem.browsingEndAt = converTimestamp(roomItem.browsingEndAt.seconds)
