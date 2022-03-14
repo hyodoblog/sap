@@ -4,27 +4,11 @@
     "baseUrl": ".",
     "outDir": "dist",
     "paths": {
-      "~/*": [
-        "./src/*"
-      ],
-      "@/*": [
-        "./src/*"
-      ]
+      "~/*": ["./src/*"],
+      "@/*": ["./src/*"]
     },
-    "types": [
-      "@nuxt/types",
-      "@nuxtjs/axios",
-      "@nuxtjs/moment",
-      "@types/node",
-      "cookie-universal-nuxt",
-      "vuetify",
-    ]
+    "types": ["@nuxt/types", "@nuxtjs/axios", "@nuxtjs/moment", "@types/node", "cookie-universal-nuxt", "vuetify"]
   },
-  "exclude": [
-    "node_modules",
-    ".nuxt"
-  ],
-  "include": [
-    "src"
-  ]
+  "exclude": ["node_modules", ".nuxt"],
+  "include": ["src"]
 }
