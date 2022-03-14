@@ -1,13 +1,11 @@
-import express from 'express'
-import * as dotenv from 'dotenv'
+import express, { urlencoded, json } from 'express'
+import 'dotenv/config'
 import api from './api'
-
-dotenv.config()
 
 const app = express()
 
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+app.use(urlencoded({ extended: true }))
+app.use(json())
 
 app.use(api)
 

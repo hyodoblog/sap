@@ -1,4 +1,4 @@
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import { RoomGroupDb } from './room/group'
 import { RoomParticipateUserDb } from './room/participate-user'
 import { RoomMessageDb } from './room/message'

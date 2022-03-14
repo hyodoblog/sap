@@ -1,4 +1,4 @@
-import admin from 'firebase/app'
+import firebase from 'firebase/compat/app'
 
 // ****************************
 // db
@@ -8,8 +8,8 @@ import admin from 'firebase/app'
 
 interface Base {
   uid?: string
-  createdAt?: admin.firestore.Timestamp
-  updatedAt?: admin.firestore.Timestamp
+  createdAt?: firebase.firestore.Timestamp
+  updatedAt?: firebase.firestore.Timestamp
 }
 
 // ****************************

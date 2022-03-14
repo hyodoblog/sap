@@ -1,4 +1,4 @@
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import { RoomParticipateUser } from '~/modules/types/models'
 
 export class RoomParticipateUserDb {

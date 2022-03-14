@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
 
