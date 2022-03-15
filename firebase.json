@@ -8,7 +8,7 @@
       "npm --prefix \"$RESOURCE_DIR\" run lint",
       "npm --prefix \"$RESOURCE_DIR\" run build"
     ],
-    "source": "functions"
+    "source": "packages/functions"
   },
   "storage": {
     "rules": "storage.rules"
@@ -16,9 +16,6 @@
   "emulators": {
     "functions": {
       "port": 5001
-    },
-    "pubsub": {
-      "port": 8085
     },
     "ui": {
       "enabled": true
