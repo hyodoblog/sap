@@ -474,6 +474,8 @@ export default (roomItems: Room[]) =>
       // グループマッチングの人数を整理
       const matchingGroupNumItems = algorithmStep1(groupItems, groupLength, participateUserLength)
 
+      console.info(matchingGroupNumItems)
+
       // Step 4
       // Algorithm Step 2
       // すべての参加者を未マッチングにする
