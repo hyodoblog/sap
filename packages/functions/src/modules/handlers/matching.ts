@@ -16,6 +16,7 @@ import { Room, RoomGroup, RoomParticipateUser, RoomMatching } from '../types/mod
 interface HopeItem {
   uid: string
   hopeUidItems: string[]
+  displayName?: string
 }
 
 interface Rate {
@@ -88,7 +89,7 @@ const algorithmStep1 = (
   groupLength: number,
   participateUserLength: number
 ): MatchingGroupNum[] => {
-  const averate = participateUserLength > groupLength ? Math.floor(participateUserLength / groupLength) : 1
+  const average = participateUserLength > groupLength ? Math.floor(participateUserLength / groupLength) : 1
   const matchingGroupNumItems: MatchingGroupNum[] = []
 
   // 平均値をベースに仮割当をする
@@ -97,15 +98,15 @@ const algorithmStep1 = (
   for (const groupItem of groupItems) {
     // 無制限設定のグループ
     if (groupItem.maxNum === null) {
-      totalMatchingNum += averate
+      totalMatchingNum += average
       matchingGroupNumItems.push({
         groupUid: groupItem.uid as string,
-        num: averate,
+        num: average,
       })
       availableGroupItems.push(groupItem)
     }
     // 平均より最大人数が小さい場合
-    else if (groupItem.maxNum <= averate) {
+    else if (groupItem.maxNum <= average) {
       totalMatchingNum += groupItem.maxNum
       matchingGroupNumItems.push({
         groupUid: groupItem.uid as string,
@@ -114,10 +115,10 @@ const algorithmStep1 = (
     }
     // 大きい場合
     else {
-      totalMatchingNum += averate
+      totalMatchingNum += average
       matchingGroupNumItems.push({
         groupUid: groupItem.uid as string,
-        num: averate,
+        num: average,
       })
       availableGroupItems.push(groupItem)
     }
@@ -292,10 +293,7 @@ const deleteHopeParticipateUser = (
     if (groupHopeToParticipateUserUidItems[i].uid === groupUid) {
       for (let j = 0; j < groupHopeToParticipateUserUidItems[i].hopeUidItems.length; j++) {
         if (groupHopeToParticipateUserUidItems[i].hopeUidItems[j] === participateUserUid) {
-          groupHopeToParticipateUserUidItems[i].hopeUidItems = groupHopeToParticipateUserUidItems[i].hopeUidItems.slice(
-            j,
-            1
-          )
+          groupHopeToParticipateUserUidItems[i].hopeUidItems.splice(j, 1)
           return groupHopeToParticipateUserUidItems
         }
       }
@@ -436,14 +434,18 @@ export default (roomItems: Room[]) =>
       // group変数の初期化
       const groupItems = await firestoreGetGroupItems(roomItem.uid as string)
       const groupHopeToParticipateUserUidItems: HopeItem[] = groupItems.map((item) => {
-        return { uid: item.uid as string, hopeUidItems: item.hopeParticipateUserUidItems }
+        return {
+          uid: item.uid as string,
+          hopeUidItems: item.hopeParticipateUserUidItems,
+          displayName: item.displayName,
+        }
       })
       const groupLength = groupItems.length
       const groupRateMaxNum = roomItem.groupHopeMaxNum || groupLength
       // participate user変数の初期化
       const participateUserItems = await firestoreGetParticipateUserItem(roomItem.uid as string)
       const participateUserHopeToGroupUidItems: HopeItem[] = participateUserItems.map((item) => {
-        return { uid: item.uid as string, hopeUidItems: item.hopeGroupUidItems }
+        return { uid: item.uid as string, hopeUidItems: item.hopeGroupUidItems, displayName: item.displayName }
       })
       const participateUserLength = participateUserItems.length
       const participateUserRateMaxNum = roomItem.participateUserHopeMaxNum || participateUserLength
@@ -460,8 +462,6 @@ export default (roomItems: Room[]) =>
         participateUserRateMaxNum
       )
 
-      participateUserRateItems
-
       // Step 2
       // グループをレート順にソート
       groupRateItems.sort(function (a, b) {
@@ -473,8 +473,6 @@ export default (roomItems: Room[]) =>
       // Algorithm Step 1
       // グループマッチングの人数を整理
       const matchingGroupNumItems = algorithmStep1(groupItems, groupLength, participateUserLength)
-
-      console.info(matchingGroupNumItems)
 
       // Step 4
       // Algorithm Step 2
