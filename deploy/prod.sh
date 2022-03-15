@@ -1,9 +1,10 @@
 # 環境変数をexport
 cp .env.prod ./packages/app/.env
-while read env
-do
+cp .env.prod .env
+IFS=$'\n'
+for env in `cat .env.prod`; do
   export $env
-done < .env.prod
+done
 
 cp ./key/production.json ./packages/functions/key/gcloud.json
 cp ./key/production.json ./packages/app/key/gcloud.json
