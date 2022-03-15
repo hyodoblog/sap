@@ -270,7 +270,7 @@ const getParticipateUsersUidIndexToExchange = (
   }
   return null
 }
-const exchangeMatchaingItems = (
+const exchangeMatchingItems = (
   matchingItems: RoomMatching[],
   afterGroupUid: string,
   changeParticipateUserIndex: number,
@@ -339,7 +339,7 @@ const algorithmStep3 = (
         )
         // 入れ替わる場合
         if (exchangeRes !== null) {
-          matchingItems = exchangeMatchaingItems(
+          matchingItems = exchangeMatchingItems(
             matchingItems,
             participateUserHopeToGroupUid,
             exchangeRes.exchangeIndex,
