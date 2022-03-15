@@ -1,7 +1,7 @@
 <template lang="pug">
   v-container(fluid)
     template(v-if="item")
-      .d-flex.justify-space-between.mb-3
+      .d-flex.justify-space-between.align-center.mb-3
         BtnPageBack(:link="$routes.front.rooms")
         div
           v-btn.mr-2(
@@ -13,10 +13,10 @@
             :to="$routes.front.roomDashboardVoting(item.uid)"
           ) 希望状況
 
-      v-row
-        v-col
+      v-row(align="center")
+        v-col(cols="12" sm="8")
           BaseVComponent(:title="`「${item.name}」部屋`" icon="mdi-monitor-dashboard")
-        v-col.text-right
+        v-col.text-right(cols="12" sm="4")
           RoomsDashboardBtnMatching.mr-2(:uid="item.uid")
           v-btn(
             color="warning"

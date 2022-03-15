@@ -7,9 +7,9 @@
     template(v-else)
       BtnPageBack(:link="$routes.front.roomDashboard(item.uid)")
 
-      v-row
+      v-row(align="center")
         v-col
-          .d-flex.justify-space-between
+          .d-flex.justify-space-between.align-center
             BaseVComponent(:title="`「${item.name}」部屋のマッチング状況`" icon="mdi-monitor-dashboard")
             .caption 最終更新日時：{{ $fire.store.getConvertDatetimeJa(matchingItems[0].updatedAt) }}
 

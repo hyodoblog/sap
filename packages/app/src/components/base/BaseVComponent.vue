@@ -1,6 +1,6 @@
 <template lang="pug">
   section.text-left
-    h1.font-weight-light.my-2.headline
+    h1.font-weight-light.my-2.text-h6
       v-icon(style="font-size:24px").mr-2 {{ icon }}
       | {{ title }}
 

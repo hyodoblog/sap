@@ -49,7 +49,7 @@
       height="auto"
     )
       v-card
-        .d-flex.justify-space-between
+        .d-flex.justify-space-between.align-center
           v-btn.ma-2(small fab color="error" @click="add")
             v-icon mdi-plus
           v-btn.ma-2(small fab @click="$modal.hide('example')")
