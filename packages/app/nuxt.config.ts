@@ -1,6 +1,5 @@
 import { NuxtConfig } from '@nuxt/types'
-import * as dotenv from 'dotenv'
-dotenv.config()
+import 'dotenv/config'
 
 const port = 3040
 
@@ -8,6 +7,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const config: NuxtConfig = {
   srcDir: 'src/',
+
   head: {
     titleTemplate: '%s - 研究室マッチングシステム',
     title: '研究室マッチングシステム',
@@ -35,7 +35,9 @@ const config: NuxtConfig = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
+
   css: ['~/assets/styles/theme.scss', '~/assets/styles/common.scss'],
+
   env: {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY as string,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN as string,
@@ -46,41 +48,34 @@ const config: NuxtConfig = {
     FIREBASE_STORE_ROOT_COLLECTION: process.env.FIREBASE_STORE_ROOT_COLLECTION as string,
     BASE_URL: isDev ? `http://localhost:${port}` : (process.env.BASE_URL as string),
   },
+
   server: {
     port: isDev ? port : process.env.PORT,
   },
+
   serverMiddleware: [{ path: '/api', handler: '~/server' }],
+
   plugins: [
     '~/plugins/api',
     '~/plugins/firebase',
     '~/plugins/routes',
     '~/plugins/form-rules',
     '~/plugins/utils',
-
     // components
     { src: '~/plugins/components/vue-js-modal', mode: 'client' },
   ],
+
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
-  modules: [
-    '@nuxtjs/axios',
-    'cookie-universal-nuxt',
-    [
-      '@nuxtjs/google-adsense',
-      {
-        id: process.env.GA_ADSENSE_ID,
-        pageLevelAds: true,
-        analyticsUacct: process.env.GA_TRACKING_ID,
-        analyticsDomainName: 'sap.hyodoblog.com',
-      },
-    ],
-  ],
-  axios: {
-    baseURL: isDev ? `http://localhost:${port}/api` : `${process.env.BASE_URL}/api`,
-  },
   vuetify: {
     customVariables: ['~/assets/styles/vuetify/variables/_index.scss'],
     treeShake: true,
   },
+
+  modules: ['@nuxtjs/axios', 'cookie-universal-nuxt'],
+  axios: {
+    baseURL: isDev ? `http://localhost:${port}/api` : `${process.env.BASE_URL}/api`,
+  },
+
   build: {},
 }
 

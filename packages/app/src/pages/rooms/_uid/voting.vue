@@ -9,8 +9,6 @@
 
       VotingInfo.mb-4(:item="authItem")
 
-      adsbygoogle(v-if="isDev" ad-stot="1699494596")
-
       v-divider.my-4
 
       VotingForm(
@@ -31,8 +29,6 @@
         :maxNum="roomItem.participateUserHopeMaxNum"
         :submitFunc="participateUserHopeSubmit"
       )
-
-      adsbygoogle(v-if="isDev" ad-stot="1699494596")
 </template>
 
 <script lang="ts">
