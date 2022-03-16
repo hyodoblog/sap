@@ -18,7 +18,7 @@
           )
             span.body-2.font-weight-bold 第{{ i }}希望
       v-col.pa-0(cols="9")
-        draggable(
+        Draggable(
           v-model="draggableItems"
           :animation="300"
         )
@@ -81,7 +81,7 @@ import { Room, RoomInvitationType, RoomGroup, RoomParticipateUser } from '~/modu
 
 @Component({
   components: {
-    draggable: () => import('vuedraggable'),
+    Draggable: () => import('vuedraggable').then((res) => res.default),
   },
 })
 export default class RoomDashboardVotingFormComponnet extends Vue {

@@ -30,11 +30,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
-const BaseMaterialCard = () => import('~/components/base/BaseMaterialCard.vue')
 
-@Component({
-  components: { BaseMaterialCard },
-})
+@Component
 export default class RoomsTable extends Vue {
   @Prop({ type: Boolean, required: true }) readonly loading: boolean
   @Prop({ type: Array, required: true }) readonly items: Room[]
