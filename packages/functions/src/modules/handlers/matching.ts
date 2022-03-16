@@ -456,16 +456,25 @@ export default (roomItems: Room[]) =>
       // Step 1
       // レート更新
       const groupRateItems = getInitRateItems(participateUserHopeToGroupUidItems, groupItems, groupRateMaxNum)
-      const participateUserRateItems = getInitRateItems(
-        groupHopeToParticipateUserUidItems,
-        participateUserItems,
-        participateUserRateMaxNum
-      )
+      // const participateUserRateItems = getInitRateItems(
+      //   groupHopeToParticipateUserUidItems,
+      //   participateUserItems,
+      //   participateUserRateMaxNum
+      // )
 
-      // Step 2
-      // グループをレート順にソート
+      // // Step 2
+      // // グループをレート順にソート
       groupRateItems.sort(function (a, b) {
         if (a.rate < b.rate) return 1
+        else return -1
+      })
+
+      groupItems.sort(function (a, b) {
+        const aGroupRateItem = groupRateItems.filter((item) => item.uid === a.uid)[0]
+        const bGroupRateItem = groupRateItems.filter((item) => item.uid === b.uid)[0]
+        if (!aGroupRateItem || !bGroupRateItem) throw new Error('group rate item is not found.')
+
+        if (aGroupRateItem.rate < bGroupRateItem.rate) return 1
         else return -1
       })
 
