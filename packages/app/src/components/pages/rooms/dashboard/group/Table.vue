@@ -150,7 +150,6 @@ export default class RoomDashboardGroupTableComponent extends Vue {
   email = ''
   description = ''
   maxNum: number | null = null
-  hopeParticipateUserUidItems: string[] = []
 
   editOn(item: RoomGroup) {
     this.groupUid = item.uid as string
@@ -158,7 +157,6 @@ export default class RoomDashboardGroupTableComponent extends Vue {
     this.description = item.description === null ? '' : item.description
     this.email = item.email === null ? '' : item.email
     this.maxNum = item.maxNum
-    this.hopeParticipateUserUidItems = item.hopeParticipateUserUidItems
     this.dialog = true
   }
 
@@ -171,8 +169,7 @@ export default class RoomDashboardGroupTableComponent extends Vue {
         email: this.email ? this.email : null,
         maxNum: this.maxNum,
         loginToken: this.$utils.utility.getRandomToken(30),
-        hopeParticipateUserUidItems: this.hopeParticipateUserUidItems,
-      })
+      } as RoomGroup)
       .then(() => this.$store.dispatch('snackbar/success', 'グループを編集しました。'))
       .catch(() => this.$store.dispatch('snackbar/error', 'グループの編集に失敗しました。'))
   }
