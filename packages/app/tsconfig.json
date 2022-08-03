@@ -10,11 +10,7 @@
     "moduleResolution": "Node",
     "removeComments": true,
     "resolveJsonModule": true,
-    "lib": [
-      "ESNext",
-      "ESNext.AsyncIterable",
-      "DOM"
-    ],
+    "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
     "sourceMap": false,
     "strict": true,
     "strictPropertyInitialization": false,

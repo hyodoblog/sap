@@ -170,8 +170,8 @@ export default class RoomDashboardGroupTableComponent extends Vue {
         maxNum: this.maxNum,
         loginToken: this.$utils.utility.getRandomToken(30),
       } as RoomGroup)
-      .then(() => this.$store.dispatch('snackbar/success', 'グループを編集しました。'))
-      .catch(() => this.$store.dispatch('snackbar/error', 'グループの編集に失敗しました。'))
+      .then(() => this.$store.dispatch('snackbar/success', 'グループを編集しました'))
+      .catch(() => this.$store.dispatch('snackbar/error', 'グループの編集に失敗しました'))
   }
 
   // remove form

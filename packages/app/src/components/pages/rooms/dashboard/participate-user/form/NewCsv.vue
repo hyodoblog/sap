@@ -41,11 +41,11 @@ export default class RoomDashboardParticipateUserFormNewCsvComponent extends Vue
       )
     )
       .then(() => {
-        this.$store.dispatch('snackbar/success', '参加者を一括保存しました。')
+        this.$store.dispatch('snackbar/success', '参加者を一括保存しました')
         const roomUid = this.$route.params.uid
         this.$store.dispatch('room/participate-user/init', roomUid)
       })
-      .catch(() => this.$store.dispatch('snackbar/error', '参加者の一括保存に失敗しました。'))
+      .catch(() => this.$store.dispatch('snackbar/error', '参加者の一括保存に失敗しました'))
   }
 }
 </script>

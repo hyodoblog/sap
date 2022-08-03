@@ -80,8 +80,8 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
         this.csvData = csvData
       }
     } catch (err) {
-      if (err === 'バリデーションエラー') this.$store.dispatch('snackbar/error', '入力されたデータに誤りがあります。')
-      else this.$store.dispatch('snackbar/error', '正しい形式のCSVファイルを入力してください。')
+      if (err === 'バリデーションエラー') this.$store.dispatch('snackbar/error', '入力されたデータに誤りがあります')
+      else this.$store.dispatch('snackbar/error', '正しい形式のCSVファイルを入力してください')
     }
   }
 
@@ -91,7 +91,7 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
       const reader = new FileReader()
       reader.onload = () => {
         let result = reader.result
-        if (result === null) reject('空データです。')
+        if (result === null) reject('空データです')
 
         const sjisArray = this.$utils.utility.str2Array(result as string)
 
@@ -137,7 +137,7 @@ export default class RoomDashboardFormDialogCsvComponent extends Vue {
   submit() {
     // @ts-ignore
     if (this.csvData === null) {
-      this.$store.dispatch('snackbar/error', '入力に誤りがあります。')
+      this.$store.dispatch('snackbar/error', '入力に誤りがあります')
       return
     }
 

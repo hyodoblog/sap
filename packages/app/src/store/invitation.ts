@@ -56,7 +56,7 @@ export const actions: ActionTree<InvitationState, RootState> = {
         }
       }
     } catch {
-      this.dispatch('snackbar/error', 'グループの初期化に失敗しました。')
+      this.dispatch('snackbar/error', 'グループの初期化に失敗しました')
     }
   },
 }

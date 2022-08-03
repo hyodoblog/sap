@@ -93,7 +93,7 @@ export default class AuthSigninPage extends Vue {
       // バリデーション
       // @ts-ignore
       if (!this.$refs.form.validate()) {
-        this.$store.dispatch('snackbar/error', '正しく入力してください。')
+        this.$store.dispatch('snackbar/error', '正しく入力してください')
         return
       }
 
@@ -108,7 +108,7 @@ export default class AuthSigninPage extends Vue {
 
       window.location.href = this.$routes.front.rooms
     } catch {
-      this.$store.dispatch('snackbar/error', 'サインインに失敗しました。')
+      this.$store.dispatch('snackbar/error', 'サインインに失敗しました')
     } finally {
       this.isLoading = false
       this.isSignInDisabled = false

@@ -328,18 +328,18 @@ export default class extends mixins(BlockUnloadMixin) {
   submit() {
     // @ts-ignore
     if (!this.$refs.form.validate()) {
-      this.$store.dispatch('snackbar/error', '入力に誤りがあります。')
+      this.$store.dispatch('snackbar/error', '入力に誤りがあります')
       return
     }
     // 日付チェック
     if (this.startAt.getTime() >= this.votingEndAt.getTime()) {
-      this.$store.dispatch('snackbar/error', '希望提出締め切り日時は、開始日時よりも後に設定してください。')
+      this.$store.dispatch('snackbar/error', '希望提出締め切り日時は、開始日時よりも後に設定してください')
       return
     } else if (this.votingEndAt.getTime() >= this.browsingEndAt.getTime()) {
-      this.$store.dispatch('snackbar/error', '閲覧締め切り日時は、希望提出締め切り日時よりも後に設定してください。')
+      this.$store.dispatch('snackbar/error', '閲覧締め切り日時は、希望提出締め切り日時よりも後に設定してください')
       return
     } else if (this.startAt.getTime() >= this.browsingEndAt.getTime()) {
-      this.$store.dispatch('snackbar/error', '閲覧締め切り日時は、開始日時よりも後に設定してください。')
+      this.$store.dispatch('snackbar/error', '閲覧締め切り日時は、開始日時よりも後に設定してください')
       return
     }
 

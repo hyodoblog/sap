@@ -75,10 +75,10 @@ export default class RoomDashboardInvitation extends Vue {
       const roomUid = this.$route.params.uid
       const headers = await this.$fire.auth.getAuthHeaders()
       await this.$api.back.groupAllInvitation({ roomUid }, headers)
-      this.$store.dispatch('snackbar/success', '招待メールを送信しました。')
+      this.$store.dispatch('snackbar/success', '招待メールを送信しました')
       this.dialog = false
     } catch {
-      this.$store.dispatch('snackbar/error', '招待メールの送信に失敗しました。')
+      this.$store.dispatch('snackbar/error', '招待メールの送信に失敗しました')
     } finally {
       this.isDisabled = this.isGroupAllLoaidng = false
     }
@@ -90,10 +90,10 @@ export default class RoomDashboardInvitation extends Vue {
       const roomUid = this.$route.params.uid
       const headers = await this.$fire.auth.getAuthHeaders()
       await this.$api.back.participateUserAllInvitation({ roomUid }, headers)
-      this.$store.dispatch('snackbar/success', '招待メールを送信しました。')
+      this.$store.dispatch('snackbar/success', '招待メールを送信しました')
       this.dialog = false
     } catch {
-      this.$store.dispatch('snackbar/error', '招待メールの送信に失敗しました。')
+      this.$store.dispatch('snackbar/error', '招待メールの送信に失敗しました')
     } finally {
       this.isDisabled = this.isParticipateUserAllLoaidng = false
     }
@@ -105,10 +105,10 @@ export default class RoomDashboardInvitation extends Vue {
       const roomUid = this.$route.params.uid
       const headers = await this.$fire.auth.getAuthHeaders()
       await this.$api.back.allInvitation({ roomUid }, headers)
-      this.$store.dispatch('snackbar/success', '招待メールを送信しました。')
+      this.$store.dispatch('snackbar/success', '招待メールを送信しました')
       this.dialog = false
     } catch {
-      this.$store.dispatch('snackbar/error', '招待メールの送信に失敗しました。')
+      this.$store.dispatch('snackbar/error', '招待メールの送信に失敗しました')
     } finally {
       this.isDisabled = this.isAllLoading = false
     }

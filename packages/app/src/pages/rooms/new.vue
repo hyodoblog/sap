@@ -76,10 +76,10 @@ export default class RoomNewPage extends Vue {
       }
       const headers = await this.$fire.auth.getAuthHeaders()
       await this.$api.back.createRoom({ roomUid, roomItem: item }, headers)
-      this.$store.dispatch('snackbar/success', '部屋を作成しました。')
+      this.$store.dispatch('snackbar/success', '部屋を作成しました')
       this.$router.push(this.$routes.front.rooms)
     } catch {
-      this.$store.dispatch('snackbar/error', '部屋の作成に失敗しました。')
+      this.$store.dispatch('snackbar/error', '部屋の作成に失敗しました')
       throw Error
     }
   }

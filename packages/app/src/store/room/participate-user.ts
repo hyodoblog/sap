@@ -24,7 +24,7 @@ export const actions: ActionTree<RoomParticipateUserState, RootState> = {
       const items = await this.$fire.store.roomParticipateUser.getItems(roomUid)
       commit('SET', items)
     } catch {
-      this.dispatch('snackbar/error', '部屋のグループ情報の初期化に失敗しました。')
+      this.dispatch('snackbar/error', '部屋のグループ情報の初期化に失敗しました')
       commit('RESET')
     }
   },

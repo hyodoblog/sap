@@ -143,8 +143,8 @@ export default class RoomDashboardVotingFormComponnet extends Vue {
     this.isValid = false
     this.isLoading = true
     return this.submitFunc(this.draggableItems)
-      .then(() => this.$store.dispatch('snackbar/success', '保存しました。'))
-      .catch(() => this.$store.dispatch('snackbar/error', '保存に失敗しました。'))
+      .then(() => this.$store.dispatch('snackbar/success', '保存しました'))
+      .catch(() => this.$store.dispatch('snackbar/error', '保存に失敗しました'))
       .finally(() => {
         this.isValid = true
         this.isLoading = false

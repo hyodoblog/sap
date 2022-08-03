@@ -86,7 +86,7 @@ export default async (req: any, res: any) => {
 
     res.status(200).end()
   } catch (err) {
-    console.error('participateUserAllInvitation関数でエラーが発生しました。')
+    console.error('participateUserAllInvitation関数でエラーが発生しました')
     console.error(err)
     res.status(500).end()
   }

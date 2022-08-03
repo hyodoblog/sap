@@ -48,11 +48,11 @@ export default class CoreNavigationComponent extends Vue {
     return this.$store
       .dispatch('user/signOut')
       .then(() => {
-        this.$store.dispatch('snackbar/success', 'サインアウトしました。')
+        this.$store.dispatch('snackbar/success', 'サインアウトしました')
         window.location.href = this.$routes.front.top
       })
       .catch(() => {
-        this.$store.dispatch('snackbar/error', 'サインアウトに失敗しました。')
+        this.$store.dispatch('snackbar/error', 'サインアウトに失敗しました')
       })
   }
 }

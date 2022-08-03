@@ -22,7 +22,7 @@ export default async (req: any, res: any) => {
       } as ApiCreateCookieResParams)
       .end()
   } catch (err) {
-    console.error('adminCreateCookie関数でエラーが発生しました。')
+    console.error('adminCreateCookie関数でエラーが発生しました')
     console.error(err)
     res.status(500).end()
   }

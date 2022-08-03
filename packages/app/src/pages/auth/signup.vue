@@ -108,9 +108,9 @@ export default class AuthSignupPage extends Vue {
       await this.signUp(this.email, this.password)
 
       this.$router.push(this.$routes.front.rooms)
-      this.$store.dispatch('snackbar/success', 'サインアップが完了しました。')
+      this.$store.dispatch('snackbar/success', 'サインアップが完了しました')
     } catch {
-      this.$store.dispatch('snackbar/error', 'サインアップに失敗しました。')
+      this.$store.dispatch('snackbar/error', 'サインアップに失敗しました')
     } finally {
       this.isLoading = false
       this.isSignUpDisabled = false

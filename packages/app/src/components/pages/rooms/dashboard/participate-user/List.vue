@@ -28,9 +28,9 @@ export default class RoomDashboardParticipateUserList extends Vue {
 
   newSubmit() {
     try {
-      this.$store.dispatch('snackbar/error', 'グループを作成しました。')
+      this.$store.dispatch('snackbar/error', 'グループを作成しました')
     } catch {
-      this.$store.dispatch('snackbar/error', 'グループの作成に失敗しました。')
+      this.$store.dispatch('snackbar/error', 'グループの作成に失敗しました')
     }
   }
 

@@ -46,11 +46,11 @@ export default class RoomDashboardGroupFormNewCsvComponent extends Vue {
       )
     )
       .then(() => {
-        this.$store.dispatch('snackbar/success', 'グループを保存しました。')
+        this.$store.dispatch('snackbar/success', 'グループを保存しました')
         const roomUid = this.$route.params.uid
         this.$store.dispatch('room/group/init', roomUid)
       })
-      .catch(() => this.$store.dispatch('snackbar/error', 'グループの保存に失敗しました。'))
+      .catch(() => this.$store.dispatch('snackbar/error', 'グループの保存に失敗しました'))
   }
 }
 </script>

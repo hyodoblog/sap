@@ -46,8 +46,8 @@ export default class RoomDashboardGroupFormNewComponent extends Vue {
         loginToken: this.$utils.utility.getRandomToken(40),
         hopeParticipateUserUidItems: [],
       })
-      .then(() => this.$store.dispatch('snackbar/success', 'グループを保存しました。'))
-      .catch(() => this.$store.dispatch('snackbar/error', 'グループの保存に失敗しました。'))
+      .then(() => this.$store.dispatch('snackbar/success', 'グループを保存しました'))
+      .catch(() => this.$store.dispatch('snackbar/error', 'グループの保存に失敗しました'))
   }
 }
 </script>

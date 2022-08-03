@@ -44,7 +44,7 @@ export const firestoreGetRoom = async (uid: string): Promise<Room> => {
       uid: doc.id,
       ...doc.data(),
     } as Room
-  } else throw new Error('firestoreGetRoomでデータが取得できませんでした。')
+  } else throw new Error('firestoreGetRoomでデータが取得できませんでした')
 }
 
 export const firestoreSetRoom = async (uid: string, item: Room): Promise<void> => {

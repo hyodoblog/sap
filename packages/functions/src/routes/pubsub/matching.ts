@@ -39,7 +39,7 @@ async function main() {
     // matching
     await matchingHandlers(roomItems)
   } catch (err) {
-    console.log('pubsubMatching関数実行でエラーが発生しました。')
+    console.log('pubsubMatching関数実行でエラーが発生しました')
     console.error(err)
   }
 

@@ -27,7 +27,7 @@ export default async (req: any, res: any) => {
       .status(200)
       .end()
   } catch (err) {
-    console.error('adminVerifyCookie関数でエラーが発生しました。')
+    console.error('adminVerifyCookie関数でエラーが発生しました')
     console.error(err)
     res.status(500).end()
   }

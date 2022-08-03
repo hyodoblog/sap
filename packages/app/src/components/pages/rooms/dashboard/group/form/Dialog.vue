@@ -162,7 +162,7 @@ export default class RoomDashboardGroupFormDialogComponent extends Vue {
   submit() {
     // @ts-ignore
     if (!this.$refs.form.validate()) {
-      this.$store.dispatch('snackbar/error', '入力に誤りがあります。')
+      this.$store.dispatch('snackbar/error', '入力に誤りがあります')
       return
     }
 

@@ -62,7 +62,7 @@ export default class AuthForgotPasswordPage extends Vue {
     if (this.$refs.form.validate()) {
       this.isLoading = true
       this.resetEmail(this.email).finally(() => {
-        this.$store.dispatch('snackbar/success', '登録済みの場合、メールアドレスにリセットリンクを送信しました。')
+        this.$store.dispatch('snackbar/success', '登録済みの場合、メールアドレスにリセットリンクを送信しました')
         this.isLoading = false
       })
     }

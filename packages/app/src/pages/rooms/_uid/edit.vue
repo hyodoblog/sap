@@ -141,10 +141,10 @@ export default class RoomNewPage extends Vue {
       }
       const headers = await this.$fire.auth.getAuthHeaders()
       await this.$api.back.updateRoom({ roomUid: this.roomUid, roomItem: item }, headers)
-      this.$store.dispatch('snackbar/success', '部屋を編集しました。')
+      this.$store.dispatch('snackbar/success', '部屋を編集しました')
       this.$router.push(this.$routes.front.roomDashboard(this.roomUid))
     } catch {
-      this.$store.dispatch('snackbar/error', '部屋の編集に失敗しました。')
+      this.$store.dispatch('snackbar/error', '部屋の編集に失敗しました')
       throw Error
     }
   }

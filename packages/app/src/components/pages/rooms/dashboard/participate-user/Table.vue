@@ -154,8 +154,8 @@ export default class RoomDashboardParticipateUserTableComponent extends Vue {
         displayName: this.displayName,
         email: this.email,
       } as RoomParticipateUser)
-      .then(() => this.$store.dispatch('snackbar/success', '参加メンバーを編集しました。'))
-      .catch(() => this.$store.dispatch('snackbar/error', '参加メンバーの編集に失敗しました。'))
+      .then(() => this.$store.dispatch('snackbar/success', '参加メンバーを編集しました'))
+      .catch(() => this.$store.dispatch('snackbar/error', '参加メンバーの編集に失敗しました'))
   }
 
   // remove form

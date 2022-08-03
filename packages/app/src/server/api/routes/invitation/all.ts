@@ -105,7 +105,7 @@ export default async (req: any, res: any) => {
 
     res.status(200).end()
   } catch (err) {
-    console.error('invitationAll関数でエラーが発生しました。')
+    console.error('invitationAll関数でエラーが発生しました')
     console.error(err)
     res.status(500).end()
   }
