@@ -8,11 +8,11 @@ WORKDIR /build
 COPY package.json ./package.json
 COPY package-lock.json ./package-lock.json
 
-RUN npm i
+RUN yarn install
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 # -------------------
 # production
@@ -24,7 +24,8 @@ WORKDIR /app
 COPY package.json ./package.json
 COPY package-lock.json ./package-lock.json
 
-RUN npm i --production
+ENV NODE_ENV production
+RUN yarn install
 
 COPY . .
 
@@ -33,6 +34,6 @@ COPY --from=build /build/.nuxt /app/.nuxt
 ENV PORT 8080
 ENV HOST 0.0.0.0
 
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
 
 EXPOSE 8080
