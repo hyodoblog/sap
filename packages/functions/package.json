@@ -1,7 +1,6 @@
 {
   "name": "functions",
   "scripts": {
-    "clear": "rm -rf dist node_modules package-lock.json",
     "lint": "eslint --ext \".ts\" . --fix",
     "build": "tsc",
     "serve": "npm run build && firebase emulators:start --only functions",

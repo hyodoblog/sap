@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "clear": "rm -rf .nuxt node_modules package-lock.json",
-    "dev": "cp ../../.env.dev .env && cp ../../key/development.json ./key/development.json  && nuxt",
-    "dev:prod": "cp ../../.env.prod .env && cp ../../key/production.json ./key/development.json  && nuxt",
+    "dev": "cp ../../.env.dev .env && nuxt",
+    "dev:prod": "cp ../../.env.prod .env && nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",

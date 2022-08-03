@@ -2,10 +2,6 @@
   "scripts": {
     "emulators:start": "cd functions && npm run build && cd .. && firebase emulators:start",
     "deploy:staging": "bash ./deploy/staging.sh",
-    "deploy:prod": "bash ./deploy/prod.sh",
-
-    "re-i:app": "cd packages/app && npm run clear && npm i",
-    "re-i:functions": "cd packages/functions && npm run clear && npm i",
-    "re-i": "npm run re-i:app & npm run re-i:functions"
+    "deploy:prod": "bash ./deploy/prod.sh"
   }
 }
