@@ -1,5 +1,7 @@
 import { Request } from 'express'
-import { admin } from '../../config/firebase'
+import { DecodedIdToken } from 'firebase-admin/auth'
+import { FieldValue, Timestamp } from 'firebase-admin/firestore'
+import { auth } from '../../config/firebase'
 
 const getIdToken = (req: Request): string => {
   if (!req.headers.authorization) {
@@ -15,11 +17,11 @@ const getIdToken = (req: Request): string => {
   }
 }
 
-export const firebaseVerifyIdToken = async (req: Request): Promise<admin.auth.DecodedIdToken> => {
+export const firebaseVerifyIdToken = async (req: Request): Promise<DecodedIdToken> => {
   const idToken = getIdToken(req)
-  return await admin.auth().verifyIdToken(idToken)
+  return await auth.verifyIdToken(idToken)
 }
 
-export const getServerTimestamp = () => admin.firestore.FieldValue.serverTimestamp()
+export const getServerTimestamp = () => FieldValue.serverTimestamp()
 
-export const converTimestamp = (secondes: number) => admin.firestore.Timestamp.fromMillis(secondes * 1000)
+export const converTimestamp = (secondes: number) => Timestamp.fromMillis(secondes * 1000)

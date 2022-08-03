@@ -1,11 +1,12 @@
-import { admin, roomsRef, usersRef } from '../../config/firebase'
+import { Timestamp } from 'firebase-admin/firestore'
+import { roomsRef, usersRef } from '../../config/firebase'
 import { Room, RoomGroup, RoomParticipateUser, User } from '../../../modules/types/models'
 import { getServerTimestamp } from './firebase'
 
 // *******************
 // Timestamp
 
-export const timestampConvertDatetimeJp = (at: admin.firestore.Timestamp): string => {
+export const timestampConvertDatetimeJp = (at: Timestamp): string => {
   const date = at.toDate()
   return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${('0' + date.getHours()).slice(-2)}時${(
     '0' + date.getMinutes()
@@ -30,7 +31,7 @@ export const firestoreInitUser = async (uid: string, email: string): Promise<voi
 export const firestoreUpdateUser = async (uid: string, item: User): Promise<void> => {
   delete item.uid
   delete item.updatedAt
-  await usersRef.doc(uid).update({ ...item, updatedAt: getServerTimestamp() } as User)
+  await usersRef.doc(uid).update({ ...item, updatedAt: getServerTimestamp() })
 }
 
 // *******************
@@ -61,7 +62,7 @@ export const firestoreUpdateRoom = async (uid: string, item: Room): Promise<void
   await roomsRef.doc(uid).update({
     ...item,
     updatedAt: getServerTimestamp(),
-  } as Room)
+  })
 }
 
 // /rooms/groups

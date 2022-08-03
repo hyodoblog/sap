@@ -1,4 +1,4 @@
-import { admin } from '../../../config/firebase'
+import { auth } from '../../../config/firebase'
 
 // modules handlers
 import { firestoreGetUser, firestoreInitUser } from '../../../modules/handlers/firestore'
@@ -16,7 +16,7 @@ export default async (req: any, res: any) => {
 
     const { sessionCookie, userUid, email } = data
 
-    await admin.auth().verifySessionCookie(sessionCookie, true)
+    await auth.verifySessionCookie(sessionCookie, true)
     const user = await firestoreGetUser(userUid)
     if (user === null) await firestoreInitUser(userUid, email)
 

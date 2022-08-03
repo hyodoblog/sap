@@ -1,9 +1,12 @@
-import { join } from 'path'
 import { Storage } from '@google-cloud/storage'
 import { storageBucketName } from '../../config/env'
 
-const keyFilename = join(__dirname, '/../../../../key/gcloud.json')
-const storage = new Storage({ keyFilename })
+const storage = new Storage({
+  credentials: {
+    client_email: process.env.GCLOUD_CLIENT_EMAIL,
+    private_key: process.env.GCLOUD_PRIVATE_KEY!.replace(/\\n/g, '\n'),
+  },
+})
 
 const bucket = storage.bucket(storageBucketName)
 

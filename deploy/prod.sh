@@ -14,7 +14,7 @@ cp ./key/production.json ./packages/app/key/gcloud.json
 
 cloudFunctions () {
   firebase functions:config:set store.env=${FIREBASE_STORE_ROOT_COLLECTION}
-  firebase functions:config:set gcp.service.account.id=${GCLOUD_SERVICE_ACCOUNT_ID}
+  firebase functions:config:set gcp.service.account.id=${GOOGLE_CLIENT_EMAIL}
   firebase deploy --only functions
 }
 
@@ -32,7 +32,7 @@ cloudRun () {
     --region asia-northeast1 \
     --platform managed \
     --memory 1G \
-    --service-account ${GCLOUD_SERVICE_ACCOUNT_ID} \
+    --service-account ${GOOGLE_CLIENT_EMAIL} \
     --allow-unauthenticated
 }
 

@@ -1,4 +1,4 @@
-import { admin } from '../../../config/firebase'
+import { auth } from '../../../config/firebase'
 import { firebaseVerifyIdToken } from '../../../modules/handlers/firebase'
 
 // 型モジュール
@@ -14,7 +14,7 @@ export default async (req: any, res: any) => {
     if (!decodedIdToken.uid) throw new Error('Not Permission Error.')
 
     const expiresIn = 60 * 60 * 24 * 7 * 1000 // 1週間
-    const token = await admin.auth().createSessionCookie(data.token, { expiresIn })
+    const token = await auth.createSessionCookie(data.token, { expiresIn })
 
     res
       .json({
