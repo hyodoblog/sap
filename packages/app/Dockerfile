@@ -6,7 +6,7 @@ FROM node:16-bullseye as build
 WORKDIR /build
 
 COPY package.json ./package.json
-COPY package-lock.json ./package-lock.json
+COPY yarn.lock ./yarn.lock
 
 RUN yarn install
 
@@ -22,7 +22,7 @@ FROM node:16-bullseye
 WORKDIR /app
 
 COPY package.json ./package.json
-COPY package-lock.json ./package-lock.json
+COPY yarn.lock ./yarn.lock
 
 ENV NODE_ENV production
 RUN yarn install
