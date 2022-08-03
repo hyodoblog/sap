@@ -57,13 +57,6 @@
             @click="submit"
           ) アカウントを作成する
 
-          .mt-5.overline
-            | サインアップすると、
-            br
-            nuxt-link(to="") 利用規約
-            | &
-            nuxt-link(to="") 個人情報保護方針
-
     .text-center.mt-6 すでにアカウントをお持ちですか？
       nuxt-link.font-weight-bold(:to="$routes.front.signin") サインイン
 </template>
