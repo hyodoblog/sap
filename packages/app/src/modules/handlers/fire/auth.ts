@@ -1,14 +1,26 @@
-import firebase from 'firebase/compat/app'
+import {
+  User,
+  Auth,
+  signInWithCustomToken,
+  ActionCodeSettings,
+  sendSignInLinkToEmail,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  verifyPasswordResetCode,
+  isSignInWithEmailLink,
+  sendEmailVerification,
+} from 'firebase/auth'
 
 export class AuthFire {
-  private auth: firebase.auth.Auth
+  private auth: Auth
 
-  constructor(auth: firebase.auth.Auth) {
+  constructor(auth: Auth) {
     this.auth = auth
   }
 
   public async createCustomToken(token: string): Promise<string> {
-    const res = await this.auth.signInWithCustomToken(token)
+    const res = await signInWithCustomToken(this.auth, token)
     if (!res.user) throw Error
     return res.user.uid
   }
@@ -27,21 +39,21 @@ export class AuthFire {
   }
 
   public async sendSignInLinkToEmail(email: string): Promise<void> {
-    const actionCodeSettings: firebase.auth.ActionCodeSettings = {
+    const actionCodeSettings: ActionCodeSettings = {
       url: `${process.env.BASE_URL}/auth/signup`,
       handleCodeInApp: true,
     }
-    await this.auth.sendSignInLinkToEmail(email, actionCodeSettings)
+    await sendSignInLinkToEmail(this.auth, email, actionCodeSettings)
   }
 
-  public async createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.User> {
-    const res = await this.auth.createUserWithEmailAndPassword(email, password)
+  public async createUserWithEmailAndPassword(email: string, password: string): Promise<User> {
+    const res = await createUserWithEmailAndPassword(this.auth, email, password)
     if (!res.user) throw Error
     return res.user
   }
 
-  public async signInWithEmailAndPassword(email: string, password: string): Promise<firebase.User> {
-    const res = await this.auth.signInWithEmailAndPassword(email, password)
+  public async signInWithEmailAndPassword(email: string, password: string): Promise<User> {
+    const res = await signInWithEmailAndPassword(this.auth, email, password)
     if (!res.user) throw Error
     return res.user
   }
@@ -51,20 +63,20 @@ export class AuthFire {
   }
 
   public async sendPasswordResetEmail(email: string): Promise<void> {
-    await this.auth.sendPasswordResetEmail(email)
+    await sendPasswordResetEmail(this.auth, email)
   }
 
   public async verifyPasswordResetCode(code: string): Promise<void> {
-    await this.auth.verifyPasswordResetCode(code)
+    await verifyPasswordResetCode(this.auth, code)
   }
 
   public async isSignInWithEmailLink(): Promise<void> {
-    await this.auth.isSignInWithEmailLink(window.location.href)
+    await isSignInWithEmailLink(this.auth, window.location.href)
   }
 
   // auth
 
-  public currentUser(): firebase.User | null {
+  public currentUser(): User | null {
     return this.auth.currentUser
   }
 
@@ -75,6 +87,6 @@ export class AuthFire {
 
   public async sendEmailVerification(): Promise<void> {
     if (!this.auth.currentUser) throw new Error('not auth.')
-    await this.auth.currentUser.sendEmailVerification()
+    await sendEmailVerification(this.auth.currentUser)
   }
 }

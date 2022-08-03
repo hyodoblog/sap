@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase/compat/app'
+import { Timestamp } from 'firebase/firestore'
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { Room } from '~/modules/types/models'
 
@@ -70,7 +70,7 @@ import { Room } from '~/modules/types/models'
 export default class RoomDashboardInfo extends Vue {
   @Prop({ type: Object, required: true }) readonly item: Room
 
-  convertDatetime(at: firebase.firestore.Timestamp): string {
+  convertDatetime(at: Timestamp): string {
     return this.$fire.store.getConvertDatetimeJa(at)
   }
 }

@@ -1,20 +1,33 @@
-import firebase from 'firebase/compat/app'
+import {
+  CollectionReference,
+  DocumentReference,
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  getDoc,
+  doc,
+  setDoc,
+  serverTimestamp,
+  updateDoc,
+  deleteDoc,
+} from 'firebase/firestore'
 import { RoomParticipateUser } from '~/modules/types/models'
 
 export class RoomParticipateUserDb {
-  private roomsRef: firebase.firestore.CollectionReference
+  private roomsRef: CollectionReference
 
-  constructor(rootRef: firebase.firestore.DocumentReference) {
-    this.roomsRef = rootRef.collection('rooms')
+  constructor(rootRef: DocumentReference) {
+    this.roomsRef = collection(rootRef, 'rooms')
   }
 
-  private participateUsersRef(roomUid: string): firebase.firestore.CollectionReference {
-    return this.roomsRef.doc(roomUid).collection('participateUsers')
+  private participateUsersRef(roomUid: string): CollectionReference {
+    return collection(this.roomsRef, roomUid, 'participateUsers')
   }
 
   public async getItems(roomUid: string): Promise<RoomParticipateUser[]> {
     const items: RoomParticipateUser[] = []
-    const docs = await this.participateUsersRef(roomUid).orderBy('displayName').get()
+    const docs = await getDocs(query(this.participateUsersRef(roomUid), orderBy('displayName')))
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
@@ -25,11 +38,11 @@ export class RoomParticipateUserDb {
   }
 
   public async getItem(roomUid: string, groupUid: string): Promise<RoomParticipateUser> {
-    const doc = await this.participateUsersRef(roomUid).doc(groupUid).get()
-    if (doc.exists) {
+    const _doc = await getDoc(doc(this.participateUsersRef(roomUid), groupUid))
+    if (_doc.exists()) {
       return {
-        uid: doc.id,
-        ...doc.data(),
+        uid: _doc.id,
+        ..._doc.data(),
       } as RoomParticipateUser
     } else throw Error
   }
@@ -39,38 +52,34 @@ export class RoomParticipateUserDb {
     groupUid: string,
     loginToken: string
   ): Promise<RoomParticipateUser> {
-    const doc = await this.participateUsersRef(roomUid).doc(groupUid).get()
-    if (doc.exists && doc.data()?.loginToken === loginToken) {
+    const _doc = await getDoc(doc(this.participateUsersRef(roomUid), groupUid))
+    if (_doc.exists() && _doc.data()?.loginToken === loginToken) {
       return {
-        uid: doc.id,
-        ...doc.data(),
+        uid: _doc.id,
+        ..._doc.data(),
       } as RoomParticipateUser
     } else throw Error
   }
 
   public async setItem(roomUid: string, item: RoomParticipateUser): Promise<void> {
-    await this.participateUsersRef(roomUid)
-      .doc()
-      .set({
-        ...item,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      })
+    await setDoc(doc(this.participateUsersRef(roomUid)), {
+      ...item,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    })
   }
 
   public async updateItem(roomUid: string, groupUid: string, item: RoomParticipateUser): Promise<void> {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
-    await this.participateUsersRef(roomUid)
-      .doc(groupUid)
-      .update({
-        ...item,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      } as RoomParticipateUser)
+    await updateDoc(doc(this.participateUsersRef(roomUid), groupUid), {
+      ...item,
+      updatedAt: serverTimestamp(),
+    })
   }
 
   public async deleteItem(roomUid: string, groupUid: string): Promise<void> {
-    await this.participateUsersRef(roomUid).doc(groupUid).delete()
+    await deleteDoc(doc(this.participateUsersRef(roomUid), groupUid))
   }
 }

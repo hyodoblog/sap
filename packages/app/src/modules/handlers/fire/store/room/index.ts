@@ -1,25 +1,37 @@
-import firebase from 'firebase/compat/app'
+import {
+  collection,
+  CollectionReference,
+  doc,
+  DocumentReference,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+  where,
+} from 'firebase/firestore'
 import { Room } from '~/modules/types/models'
 
 export class RoomDb {
-  private roomsRef: firebase.firestore.CollectionReference
+  private roomsRef: CollectionReference
 
-  constructor(rootRef: firebase.firestore.DocumentReference) {
-    this.roomsRef = rootRef.collection('rooms')
+  constructor(rootRef: DocumentReference) {
+    this.roomsRef = collection(rootRef, 'rooms')
   }
 
   public getUid(): string {
-    return this.roomsRef.doc().id
+    return doc(this.roomsRef).id
   }
 
   public async getItems(userUid: string): Promise<Room[]> {
     const items: Room[] = []
-    const docs = await this.roomsRef.where('userUid', '==', userUid).get()
-    docs.forEach((doc) => {
-      if (doc.exists) {
+    const docs = await getDocs(query(this.roomsRef, where('userUid', '==', userUid)))
+    docs.forEach((_doc) => {
+      if (_doc.exists()) {
         items.push({
-          uid: doc.id,
-          ...doc.data(),
+          uid: _doc.id,
+          ..._doc.data(),
         } as Room)
       }
     })
@@ -27,20 +39,20 @@ export class RoomDb {
   }
 
   public async getItem(uid: string): Promise<Room> {
-    const doc = await this.roomsRef.doc(uid).get()
-    if (doc.exists) {
+    const _doc = await getDoc(doc(this.roomsRef, uid))
+    if (_doc.exists()) {
       return {
-        uid: doc.id,
-        ...doc.data(),
+        uid: _doc.id,
+        ..._doc.data(),
       } as Room
     } else throw Error
   }
 
   public async setItem(item: Room): Promise<void> {
-    await this.roomsRef.doc().set({
+    await setDoc(doc(this.roomsRef), {
       ...item,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     } as Room)
   }
 
@@ -48,9 +60,9 @@ export class RoomDb {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
-    await this.roomsRef.doc(uid).update({
+    await updateDoc(doc(this.roomsRef, uid), {
       ...item,
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    } as Room)
+      updatedAt: serverTimestamp(),
+    })
   }
 }

@@ -1,20 +1,33 @@
-import firebase from 'firebase/compat/app'
+import {
+  CollectionReference,
+  DocumentReference,
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  getDoc,
+  doc,
+  setDoc,
+  serverTimestamp,
+  updateDoc,
+  deleteDoc,
+} from 'firebase/firestore'
 import { RoomGroup } from '~/modules/types/models'
 
 export class RoomGroupDb {
-  private roomRef: firebase.firestore.CollectionReference
+  private roomsRef: CollectionReference
 
-  constructor(rootRef: firebase.firestore.DocumentReference) {
-    this.roomRef = rootRef.collection('rooms')
+  constructor(rootRef: DocumentReference) {
+    this.roomsRef = collection(rootRef, 'rooms')
   }
 
-  private groupsRef(roomUid: string): firebase.firestore.CollectionReference {
-    return this.roomRef.doc(roomUid).collection('groups')
+  private groupsRef(roomUid: string): CollectionReference {
+    return collection(this.roomsRef, roomUid, 'groups')
   }
 
   public async getItems(roomUid: string): Promise<RoomGroup[]> {
     const items: RoomGroup[] = []
-    const docs = await this.groupsRef(roomUid).orderBy('displayName').get()
+    const docs = await getDocs(query(this.groupsRef(roomUid), orderBy('displayName')))
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
@@ -25,48 +38,44 @@ export class RoomGroupDb {
   }
 
   public async getItem(roomUid: string, groupUid: string): Promise<RoomGroup> {
-    const doc = await this.groupsRef(roomUid).doc(groupUid).get()
-    if (doc.exists) {
+    const _doc = await getDoc(doc(this.groupsRef(roomUid), groupUid))
+    if (_doc.exists()) {
       return {
-        uid: doc.id,
-        ...doc.data(),
+        uid: _doc.id,
+        ..._doc.data(),
       } as RoomGroup
     } else throw Error
   }
 
   public async getItemToLoginToken(roomUid: string, groupUid: string, loginToken: string): Promise<RoomGroup> {
-    const doc = await this.groupsRef(roomUid).doc(groupUid).get()
-    if (doc.exists && doc.data()?.loginToken === loginToken) {
+    const _doc = await getDoc(doc(this.groupsRef(roomUid), groupUid))
+    if (_doc.exists() && _doc.data()?.loginToken === loginToken) {
       return {
-        uid: doc.id,
-        ...doc.data(),
+        uid: _doc.id,
+        ..._doc.data(),
       } as RoomGroup
     } else throw Error
   }
 
   public async setItem(roomUid: string, item: RoomGroup): Promise<void> {
-    await this.groupsRef(roomUid)
-      .doc()
-      .set({
-        ...item,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      })
+    await setDoc(doc(this.groupsRef(roomUid)), {
+      ...item,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    })
   }
 
   public async updateItem(roomUid: string, groupUid: string, item: RoomGroup): Promise<void> {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
-    await this.groupsRef(roomUid)
-      .doc(groupUid)
-      .update({
-        ...item,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      } as RoomGroup)
+    await updateDoc(doc(this.groupsRef(roomUid), groupUid), {
+      ...item,
+      updatedAt: serverTimestamp(),
+    })
   }
 
   public async deleteItem(roomUid: string, groupUid: string): Promise<void> {
-    await this.groupsRef(roomUid).doc(groupUid).delete()
+    await deleteDoc(doc(this.groupsRef(roomUid), groupUid))
   }
 }

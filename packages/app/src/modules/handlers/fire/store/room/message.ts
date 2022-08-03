@@ -1,20 +1,31 @@
-import firebase from 'firebase/compat/app'
+import {
+  CollectionReference,
+  DocumentReference,
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+  serverTimestamp,
+  updateDoc,
+  deleteDoc,
+} from 'firebase/firestore'
 import { RoomMessage } from '~/modules/types/models'
 
 export class RoomMessageDb {
-  private roomsRef: firebase.firestore.CollectionReference
+  private roomsRef: CollectionReference
 
-  constructor(rootRef: firebase.firestore.DocumentReference) {
-    this.roomsRef = rootRef.collection('rooms')
+  constructor(rootRef: DocumentReference) {
+    this.roomsRef = collection(rootRef, 'rooms')
   }
 
-  private chatsRef(appUid: string): firebase.firestore.CollectionReference {
-    return this.roomsRef.doc(appUid).collection('chats')
+  private chatsRef(roomUid: string): CollectionReference {
+    return collection(this.roomsRef, roomUid, 'chats')
   }
 
-  public async getItems(appUid: string): Promise<RoomMessage[]> {
+  public async getItems(roomUid: string): Promise<RoomMessage[]> {
     const items: RoomMessage[] = []
-    const docs = await this.chatsRef(appUid).get()
+    const docs = await getDocs(this.chatsRef(roomUid))
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
@@ -24,41 +35,35 @@ export class RoomMessageDb {
     return items
   }
 
-  public async getItem(appUid: string, chatUid: string): Promise<RoomMessage | null> {
-    const doc = await this.chatsRef(appUid).doc(chatUid).get()
-    if (doc.exists) {
+  public async getItem(roomUid: string, groupUid: string): Promise<RoomMessage> {
+    const _doc = await getDoc(doc(this.chatsRef(roomUid), groupUid))
+    if (_doc.exists()) {
       return {
-        uid: doc.id,
-        ...doc.data(),
+        uid: _doc.id,
+        ..._doc.data(),
       } as RoomMessage
-    } else {
-      return null
-    }
+    } else throw Error
   }
 
-  public async setItem(appUid: string, item: RoomMessage): Promise<void> {
-    await this.chatsRef(appUid)
-      .doc()
-      .set({
-        ...item,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      })
+  public async setItem(roomUid: string, item: RoomMessage): Promise<void> {
+    await setDoc(doc(this.chatsRef(roomUid)), {
+      ...item,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    })
   }
 
-  public async updateItem(appUid: string, chatUid: string, item: RoomMessage): Promise<void> {
+  public async updateItem(roomUid: string, groupUid: string, item: RoomMessage): Promise<void> {
     delete item.uid
     delete item.createdAt
     delete item.updatedAt
-    await this.chatsRef(appUid)
-      .doc(chatUid)
-      .update({
-        ...item,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      } as RoomMessage)
+    await updateDoc(doc(this.chatsRef(roomUid), groupUid), {
+      ...item,
+      updatedAt: serverTimestamp(),
+    })
   }
 
-  public async deleteItem(appUid: string, chatUid: string): Promise<void> {
-    await this.chatsRef(appUid).doc(chatUid).delete()
+  public async deleteItem(roomUid: string, groupUid: string): Promise<void> {
+    await deleteDoc(doc(this.chatsRef(roomUid), groupUid))
   }
 }

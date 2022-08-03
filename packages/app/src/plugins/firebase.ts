@@ -1,9 +1,8 @@
-import firebase from 'firebase/compat/app'
-import 'firebase/compat/analytics'
-import 'firebase/compat/auth'
-import 'firebase/compat/functions'
-import 'firebase/compat/firestore'
-import 'firebase/compat/storage'
+import { initializeApp, getApps, getApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
+import { getFunctions } from 'firebase/functions'
+import { getStorage } from 'firebase/storage'
 import { AuthFire } from '~/modules/handlers/fire/auth'
 import { FunctionsFire } from '~/modules/handlers/fire/functions'
 import { StorageFire } from '~/modules/handlers/fire/storage'
@@ -27,19 +26,15 @@ export default function (_: any, inject: (arg0: string, arg1: FirebaseApi) => vo
     measurementId: process.env.MEASUREMENT_ID as string,
   }
 
-  if (!firebase.apps.length) {
-    firebase.initializeApp(config)
+  if (!getApps().length) {
+    initializeApp(config)
   }
 
   const fire: FirebaseApi = {
-    auth: new AuthFire(firebase.auth()),
-    functions: new FunctionsFire(firebase.app().functions('asia-northeast1')),
-    storage: new StorageFire(firebase.storage()),
-    store: new StoreFire(firebase.firestore()),
-  }
-
-  if (process.client) {
-    firebase.analytics()
+    auth: new AuthFire(getAuth()),
+    functions: new FunctionsFire(getFunctions(getApp(), 'asia-northeast1')),
+    storage: new StorageFire(getStorage()),
+    store: new StoreFire(getFirestore()),
   }
 
   inject('fire', fire)

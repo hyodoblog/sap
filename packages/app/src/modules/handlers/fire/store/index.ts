@@ -1,4 +1,4 @@
-import firebase from 'firebase/compat/app'
+import { doc, DocumentReference, Firestore, Timestamp } from 'firebase/firestore'
 import { RoomGroupDb } from './room/group'
 import { RoomParticipateUserDb } from './room/participate-user'
 import { RoomMessageDb } from './room/message'
@@ -17,10 +17,10 @@ export class StoreFire {
   roomMessage: RoomMessageDb
   roomMatching: RoomMatchingDb
 
-  rootRef: firebase.firestore.DocumentReference
+  rootRef: DocumentReference
 
-  constructor(db: firebase.firestore.Firestore) {
-    this.rootRef = db.collection('envs').doc(process.env.FIREBASE_STORE_ROOT_COLLECTION)
+  constructor(db: Firestore) {
+    this.rootRef = doc(db, 'envs', process.env.FIREBASE_STORE_ROOT_COLLECTION!)
 
     // users
     this.user = new UserDb(this.rootRef)
@@ -33,38 +33,38 @@ export class StoreFire {
     this.roomMatching = new RoomMatchingDb(this.rootRef)
   }
 
-  getNowAt(): firebase.firestore.Timestamp {
-    return firebase.firestore.Timestamp.now()
+  getNowAt(): Timestamp {
+    return Timestamp.now()
   }
 
   getNowAtToDate(): Date {
-    return firebase.firestore.Timestamp.now().toDate()
+    return Timestamp.now().toDate()
   }
 
-  getConvertDate(at: firebase.firestore.Timestamp): string {
+  getConvertDate(at: Timestamp): string {
     const date = at.toDate()
     return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
   }
 
-  getConvertDatetimeJa(timestamp: firebase.firestore.Timestamp): string {
+  getConvertDatetimeJa(timestamp: Timestamp): string {
     const date = timestamp.toDate()
     return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${`0${date.getHours()}`.slice(
       -2
     )}時${`0${date.getMinutes()}`.slice(-2)}分`
   }
 
-  getConvertTimeJa(timestamp: firebase.firestore.Timestamp): string {
+  getConvertTimeJa(timestamp: Timestamp): string {
     const date = timestamp.toDate()
     return `${date.getMonth() + 1}月${date.getDate()}日 ${`0${date.getHours()}`.slice(
       -2
     )}時${`0${date.getMinutes()}`.slice(-2)}分`
   }
 
-  convertTimestamp(date: Date | number): firebase.firestore.Timestamp {
+  convertTimestamp(date: Date | number): Timestamp {
     if (typeof date === 'object') {
-      return firebase.firestore.Timestamp.fromDate(date)
+      return Timestamp.fromDate(date)
     } else {
-      return firebase.firestore.Timestamp.fromMillis(date)
+      return Timestamp.fromMillis(date)
     }
   }
 }

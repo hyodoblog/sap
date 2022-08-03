@@ -1,11 +1,23 @@
-import firebase from 'firebase/compat/app'
+import {
+  collection,
+  CollectionReference,
+  doc,
+  DocumentReference,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+  where,
+} from 'firebase/firestore'
 import { User } from '~/modules/types/models'
 
 export class UserDb {
-  private usersRef: firebase.firestore.CollectionReference
+  private usersRef: CollectionReference
 
-  constructor(rootRef: firebase.firestore.DocumentReference) {
-    this.usersRef = rootRef.collection('users')
+  constructor(rootRef: DocumentReference) {
+    this.usersRef = collection(rootRef, 'users')
   }
 
   private getInitData(nickname: string, email: string): User {
@@ -16,14 +28,14 @@ export class UserDb {
   }
 
   public async isUserToEmail(email: string): Promise<boolean> {
-    const docs = await this.usersRef.where('email', '==', email).get()
+    const docs = await getDocs(query(this.usersRef, where('email', '==', email)))
     return !docs.empty
   }
 
   public async getItem(uid: string): Promise<User | null> {
-    const doc = await this.usersRef.doc(uid).get()
-    if (doc.exists) {
-      return doc.data() as User
+    const _doc = await getDoc(doc(this.usersRef, uid))
+    if (_doc.exists()) {
+      return _doc.data() as User
     } else {
       return null
     }
@@ -31,10 +43,10 @@ export class UserDb {
 
   public async setInit(uid: string, nickname: string, email: string): Promise<User> {
     const item = this.getInitData(nickname, email)
-    await this.usersRef.doc(uid).set({
+    await setDoc(doc(this.usersRef, uid), {
       ...item,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     } as User)
     return item
   }
@@ -42,9 +54,9 @@ export class UserDb {
   public async updateItem(uid: string, user: User): Promise<void> {
     delete user.uid
     delete user.updatedAt
-    await this.usersRef.doc(uid).update({
+    await updateDoc(doc(this.usersRef, uid), {
       ...user,
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: serverTimestamp(),
     } as User)
   }
 }

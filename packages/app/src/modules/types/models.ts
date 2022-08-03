@@ -1,4 +1,5 @@
-import firebase from 'firebase/compat/app'
+import { Timestamp } from 'firebase/firestore'
+import { Timestamp as AdminTimestamp } from 'firebase-admin/firestore'
 
 // ****************************
 // db
@@ -8,8 +9,8 @@ import firebase from 'firebase/compat/app'
 
 interface Base {
   uid?: string
-  createdAt?: firebase.firestore.Timestamp
-  updatedAt?: firebase.firestore.Timestamp
+  createdAt?: Timestamp | AdminTimestamp
+  updatedAt?: Timestamp | AdminTimestamp
 }
 
 // ****************************
@@ -41,9 +42,9 @@ export interface Room extends Base {
   participateUserHopeMaxNum: number | null
 
   // time
-  startAt: firebase.firestore.Timestamp
-  votingEndAt: firebase.firestore.Timestamp
-  browsingEndAt: firebase.firestore.Timestamp
+  startAt: Timestamp | AdminTimestamp
+  votingEndAt: Timestamp | AdminTimestamp
+  browsingEndAt: Timestamp | AdminTimestamp
 }
 
 // ****************************

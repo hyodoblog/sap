@@ -1,20 +1,20 @@
-import firebase from 'firebase/compat/app'
+import { collection, CollectionReference, DocumentReference, getDocs } from 'firebase/firestore'
 import { RoomMatching } from '~/modules/types/models'
 
 export class RoomMatchingDb {
-  private roomRef: firebase.firestore.CollectionReference
+  private roomRef: CollectionReference
 
-  constructor(rootRef: firebase.firestore.DocumentReference) {
-    this.roomRef = rootRef.collection('rooms')
+  constructor(rootRef: DocumentReference) {
+    this.roomRef = collection(rootRef, 'rooms')
   }
 
-  private matchingsRef(roomUid: string): firebase.firestore.CollectionReference {
-    return this.roomRef.doc(roomUid).collection('matchings')
+  private matchingsRef(roomUid: string): CollectionReference {
+    return collection(this.roomRef, roomUid, 'matchings')
   }
 
   public async getItems(roomUid: string): Promise<RoomMatching[]> {
     const items: RoomMatching[] = []
-    const docs = await this.matchingsRef(roomUid).get()
+    const docs = await getDocs(this.matchingsRef(roomUid))
     docs.forEach((doc) => {
       items.push({
         uid: doc.id,
