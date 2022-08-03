@@ -1,7 +1,7 @@
 # -------------------
 # build
 
-FROM node:14.15.4-alpine3.10 as build
+FROM node:16-bullseye as build
 
 WORKDIR /build
 
@@ -17,7 +17,7 @@ RUN npm run build
 # -------------------
 # production
 
-FROM node:14.15.4-alpine3.10
+FROM node:16-bullseye
 
 WORKDIR /app
 
