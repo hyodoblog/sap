@@ -1,4 +1,4 @@
-import { admin } from '../../config/firebase'
+import { Timestamp } from 'firebase-admin/firestore'
 
 // ****************************
 // db
@@ -8,8 +8,8 @@ import { admin } from '../../config/firebase'
 
 interface Base {
   uid?: string
-  createdAt?: admin.firestore.Timestamp
-  updatedAt?: admin.firestore.Timestamp
+  createdAt?: Timestamp
+  updatedAt?: Timestamp
 }
 
 // ****************************
@@ -21,6 +21,7 @@ export interface User extends Base {
 
 // ****************************
 // /rooms
+
 export type RoomInvitationType = 'group' | 'participateUser'
 
 export interface Room extends Base {
@@ -40,9 +41,9 @@ export interface Room extends Base {
   participateUserHopeMaxNum: number | null
 
   // time
-  startAt: admin.firestore.Timestamp
-  votingEndAt: admin.firestore.Timestamp
-  browsingEndAt: admin.firestore.Timestamp
+  startAt: Timestamp
+  votingEndAt: Timestamp
+  browsingEndAt: Timestamp
 }
 
 // ****************************

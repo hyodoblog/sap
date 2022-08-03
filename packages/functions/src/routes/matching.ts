@@ -1,4 +1,5 @@
-import { functions, roomsRef } from '../config/firebase'
+import { https, region, RuntimeOptions } from 'firebase-functions'
+import { roomsRef } from '../config/firebase'
 
 // modules handlers
 import matchingHandlers from '../modules/handlers/matching'
@@ -23,7 +24,7 @@ const getRoomItem = async (roomUid: string): Promise<Room> => {
 // ********
 // main関数
 // ********
-async function main(data: any, context: functions.https.CallableContext) {
+async function main(data: any, context: https.CallableContext) {
   console.log('matching関数実行開始')
 
   try {
@@ -50,12 +51,11 @@ async function main(data: any, context: functions.https.CallableContext) {
 // functions設定
 // *************
 
-const runtimeOpts: functions.RuntimeOptions = {
+const runtimeOpts: RuntimeOptions = {
   timeoutSeconds: 540,
   memory: '256MB',
 }
 
-module.exports = module.exports = functions
-  .region('asia-northeast1')
+module.exports = module.exports = region('asia-northeast1')
   .runWith(runtimeOpts)
   .https.onCall((data, context) => main(data, context))

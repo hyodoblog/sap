@@ -1,4 +1,6 @@
-import { admin, functions, getNowAt, roomsRef } from '../../config/firebase'
+import { Timestamp } from 'firebase-admin/firestore'
+import { region, RuntimeOptions } from 'firebase-functions'
+import { getNowAt, roomsRef } from '../../config/firebase'
 
 // modules handlers
 import matchingHandlers from '../../modules/handlers/matching'
@@ -10,7 +12,7 @@ import { Room } from '../../modules/types/models'
 // handlers
 // ********
 
-const getRoomItems = async (nowAt: admin.firestore.Timestamp): Promise<Room[]> => {
+const getRoomItems = async (nowAt: Timestamp): Promise<Room[]> => {
   const items: Room[] = []
   const docs = await roomsRef.where('votingEndAt', '>=', nowAt).get()
   docs.forEach((doc) => {
@@ -50,15 +52,14 @@ async function main() {
 // functions設定
 // *************
 // 本番
-const runtimeOpts: functions.RuntimeOptions = {
+const runtimeOpts: RuntimeOptions = {
   timeoutSeconds: 540,
   memory: '512MB',
 }
 
 // emulator
 if (process.env.FUNCTIONS_EMULATOR === 'true') {
-  module.exports = module.exports = functions
-    .region('asia-northeast1')
+  module.exports = module.exports = region('asia-northeast1')
     .runWith(runtimeOpts)
     .https.onRequest((_, res) => {
       main().finally(() => res.status(200).end())
@@ -66,8 +67,7 @@ if (process.env.FUNCTIONS_EMULATOR === 'true') {
 }
 // 本番 pubsub
 else {
-  module.exports = functions
-    .region('asia-northeast1')
+  module.exports = region('asia-northeast1')
     .runWith(runtimeOpts)
     .pubsub.schedule('*/10 * * * *')
     .timeZone('Asia/Tokyo')

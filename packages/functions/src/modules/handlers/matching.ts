@@ -1,10 +1,11 @@
-import { admin, getServerTimestamp, roomsRef } from '../../config/firebase'
+import { getServerTimestamp, roomsRef } from '../../config/firebase'
 
 // modules handlers
 import { firestoreGetGroupItems, firestoreGetParticipateUserItem } from './firestore'
 
 // modules types
 import { Room, RoomGroup, RoomParticipateUser, RoomMatching } from '../types/models'
+import { CollectionReference } from 'firebase-admin/firestore'
 
 // ********
 // handlers
@@ -405,7 +406,7 @@ const algorithmStep4 = (matchingItems: RoomMatching[], participateUserItems: Roo
 // **********
 // Storeに保存
 
-const deleteAllRoomMatchingItems = async (matchingsRef: admin.firestore.CollectionReference): Promise<void> => {
+const deleteAllRoomMatchingItems = async (matchingsRef: CollectionReference): Promise<void> => {
   const uidItems: string[] = []
   const docs = await matchingsRef.get()
   docs.forEach((doc) => {
