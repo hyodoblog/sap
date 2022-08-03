@@ -2,7 +2,6 @@ import { db, roomsRef } from '../../../config/firebase'
 
 // modules handlers
 import { firebaseVerifyIdToken } from '../../../modules/handlers/firebase'
-import { storageDeleteItem } from '../../../modules/handlers/storage'
 
 // 型モジュール
 import { ApiDeleteRoomReqParams } from '../../../../modules/types/api'
