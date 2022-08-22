@@ -96,9 +96,9 @@ export default class AuthSigninPage extends Vue {
 
       await this.$store.dispatch('user/signIn', { email: this.email, password: this.password })
 
-      this.$store.dispatch('snackbar/error', 'サインインします')
+      this.$store.dispatch('snackbar/success', 'サインインします')
 
-      window.location.href = this.$routes.front.rooms
+      location.href = this.$routes.front.rooms
     } catch {
       this.$store.dispatch('snackbar/error', 'サインインに失敗しました')
     } finally {
