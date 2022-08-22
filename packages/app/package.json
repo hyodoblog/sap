@@ -10,7 +10,7 @@
     "generate": "nuxt generate",
     "eslint": "eslint --ext \".ts,.vue\" . --fix",
     "prettier": "prettier --write .",
-    "lint": "npm run eslint && npm run prettier"
+    "lint": "yarn eslint && yarn prettier"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",

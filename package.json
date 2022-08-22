@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "emulators:start": "cd functions && npm run build && cd .. && firebase emulators:start",
+    "emulators:start": "cd functions && yarn build && cd .. && firebase emulators:start",
     "deploy:staging": "bash ./deploy/staging.sh",
     "deploy:prod": "bash ./deploy/prod.sh"
   }
