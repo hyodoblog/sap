@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import { credential } from 'firebase-admin'
 import { getApps, initializeApp } from 'firebase-admin/app'
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore'
