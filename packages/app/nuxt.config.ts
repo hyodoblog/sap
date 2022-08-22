@@ -1,7 +1,7 @@
 import { NuxtConfig } from '@nuxt/types'
 import 'dotenv/config'
 
-const port = 3040
+const port = 3250
 
 const isDev = process.env.NODE_ENV === 'development'
 
