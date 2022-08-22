@@ -3,7 +3,7 @@
   "scripts": {
     "lint": "eslint --ext \".ts\" . --fix",
     "build": "tsc",
-    "serve": "yarn build && firebase emulators:start --only functions",
+    "dev": "yarn build && firebase emulators:start --only functions",
     "shell": "yarn build && firebase functions:shell",
     "start": "yarn shell",
     "deploy": "firebase deploy --only functions",
