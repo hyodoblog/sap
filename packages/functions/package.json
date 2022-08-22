@@ -1,5 +1,5 @@
 {
-  "name": "functions",
+  "name": "@sap/functions",
   "scripts": {
     "lint": "eslint --ext \".ts\" . --fix",
     "build": "tsc",
