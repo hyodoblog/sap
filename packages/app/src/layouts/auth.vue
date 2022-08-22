@@ -11,7 +11,9 @@
       .pa-2.pa-md-4.flex-grow-1.align-center.justify-center.d-flex.flex-column
         .layout-content.ma-auto.w-full
           nuxt
-        .overline.mt-4 Build by Yusei Hyodo
+        .overline.mt-4
+          | Build by 
+          a(href="https://twitter.com/hyodoblog" target="_blank") Yusei Hyodo
     Snackbar
 </template>
 
