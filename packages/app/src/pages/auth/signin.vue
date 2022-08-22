@@ -50,14 +50,6 @@
 </template>
 
 <script lang="ts">
-/*
-|---------------------------------------------------------------------
-| Sign In Page Component
-|---------------------------------------------------------------------
-|
-| Sign in template for user authentication into the application
-|
-*/
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
