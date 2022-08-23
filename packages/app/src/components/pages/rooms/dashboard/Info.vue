@@ -68,7 +68,7 @@ import { Room } from '~/modules/types/models'
 
 @Component
 export default class RoomDashboardInfo extends Vue {
-  @Prop({ type: Object, required: true }) readonly item: Room
+  @Prop({ type: Object, required: true }) readonly item!: Room
 
   convertDatetime(at: Timestamp): string {
     return this.$fire.store.getConvertDatetimeJa(at)

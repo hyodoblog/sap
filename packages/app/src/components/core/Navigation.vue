@@ -30,7 +30,7 @@ import { User } from '~/modules/types/models'
 
 @Component
 export default class CoreNavigationComponent extends Vue {
-  @PropSync('drawerValue', { type: Boolean || null, default: null }) drawer: boolean | null
+  @PropSync('drawerValue', { type: Boolean || null, default: null }) drawer!: boolean | null
 
   get user(): User {
     return this.$store.state.user.item

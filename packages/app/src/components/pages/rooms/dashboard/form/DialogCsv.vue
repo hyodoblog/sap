@@ -59,9 +59,9 @@ import encoding, { Encoding } from 'encoding-japanese'
 export default class RoomDashboardFormDialogCsvComponent extends Vue {
   @PropSync('dialogValue', { type: Boolean, required: true }) dialog!: boolean
 
-  @Prop({ type: String, required: true }) readonly title: string
-  @Prop({ type: String, required: true }) readonly submitText: string
-  @Prop({ type: Function, required: true }) submitFunc: (csvData: string[][]) => Promise<void>
+  @Prop({ type: String, required: true }) readonly title!: string
+  @Prop({ type: String, required: true }) readonly submitText!: string
+  @Prop({ type: Function, required: true }) submitFunc!: (csvData: string[][]) => Promise<void>
 
   isValid = true
   isLoading = false

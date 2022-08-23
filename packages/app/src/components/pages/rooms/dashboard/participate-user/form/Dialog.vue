@@ -94,13 +94,13 @@ import { Component, Prop, PropSync, Vue } from 'nuxt-property-decorator'
 export default class RoomDashboardParticipateUserFormDialogComponent extends Vue {
   @PropSync('dialogValue', { type: Boolean, required: true }) dialog!: boolean
 
-  @Prop({ type: String, default: '' }) readonly participateUserUid: string
+  @Prop({ type: String, default: '' }) readonly participateUserUid!: string
   @PropSync('displayNameValue', { type: String, required: true }) displayName!: string
   @PropSync('emailValue', { type: String, required: true }) email!: string
 
-  @Prop({ type: String, required: true }) readonly title: string
-  @Prop({ type: String, required: true }) readonly submitText: string
-  @Prop({ type: Function, required: true }) submitFunc: () => Promise<void>
+  @Prop({ type: String, required: true }) readonly title!: string
+  @Prop({ type: String, required: true }) readonly submitText!: string
+  @Prop({ type: Function, required: true }) submitFunc!: () => Promise<void>
 
   get isEdit(): boolean {
     return !!this.participateUserUid

@@ -27,6 +27,6 @@ import { RoomGroup, RoomParticipateUser } from '~/modules/types/models'
 
 @Component
 export default class RoomVotingInfoComponent extends Vue {
-  @Prop({ type: Object, required: true }) item: RoomGroup | RoomParticipateUser
+  @Prop({ type: Object, required: true }) item!: RoomGroup | RoomParticipateUser
 }
 </script>

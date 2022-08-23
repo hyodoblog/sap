@@ -91,7 +91,7 @@ export default class RoomDashboardVotingFormComponnet extends Vue {
   @Prop({ type: Array, required: true }) hopeUidItems!: string[]
   @Prop({ type: Number || null, required: true, default: null }) maxNum!: number | null
 
-  @Prop({ type: Function, required: true }) submitFunc: (
+  @Prop({ type: Function, required: true }) submitFunc!: (
     hopeItems: RoomGroup[] | RoomParticipateUser[]
   ) => Promise<void>
 

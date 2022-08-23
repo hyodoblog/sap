@@ -10,6 +10,6 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class BtnPageBack extends Vue {
-  @Prop({ type: String, required: true }) readonly link: string
+  @Prop({ type: String, required: true }) readonly link!: string
 }
 </script>

@@ -33,8 +33,8 @@ import { Room } from '~/modules/types/models'
 
 @Component
 export default class RoomsTable extends Vue {
-  @Prop({ type: Boolean, required: true }) readonly loading: boolean
-  @Prop({ type: Array, required: true }) readonly items: Room[]
+  @Prop({ type: Boolean, required: true }) readonly loading!: boolean
+  @Prop({ type: Array, required: true }) readonly items!: Room[]
 
   search = ''
 

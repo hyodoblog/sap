@@ -12,8 +12,8 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class extends Vue {
-  @Prop({ type: String, required: true, default: '' }) private readonly title: string
-  @Prop({ type: String, required: true }) private readonly icon: string
-  @Prop({ type: String, default: '' }) private readonly subTitle: string
+  @Prop({ type: String, required: true, default: '' }) private readonly title!: string
+  @Prop({ type: String, required: true }) private readonly icon!: string
+  @Prop({ type: String, default: '' }) private readonly subTitle!: string
 }
 </script>

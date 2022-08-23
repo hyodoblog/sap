@@ -248,9 +248,9 @@ const DatetimeForm = () => import('~/components/form/Datetime.vue')
   components: { DatetimeForm },
 })
 export default class extends mixins(BlockUnloadMixin) {
-  @Prop({ type: String, required: true }) readonly submitText: string
+  @Prop({ type: String, required: true }) readonly submitText!: string
 
-  @Prop({ type: String, default: '' }) readonly uid: string
+  @Prop({ type: String, default: '' }) readonly uid!: string
   @PropSync('nameValue', { type: String, required: true }) name!: string
   @PropSync('descriptionValue', { type: String, required: true }) description!: string
   @PropSync('isPublicValue', { type: Boolean, required: true }) isPublic!: boolean
@@ -275,8 +275,8 @@ export default class extends mixins(BlockUnloadMixin) {
   @PropSync('votingEndAtValue', { type: Date, required: true }) votingEndAt!: Date
   @PropSync('browsingEndAtValue', { type: Date, required: true }) browsingEndAt!: Date
 
-  @Prop({ type: Function, required: true }) submitFunc: () => Promise<void>
-  @Prop({ type: Function, default: () => {} }) resetFunc: () => Promise<void>
+  @Prop({ type: Function, required: true }) submitFunc!: () => Promise<void>
+  @Prop({ type: Function, default: () => {} }) resetFunc!: () => Promise<void>
 
   // form config
   valid = true

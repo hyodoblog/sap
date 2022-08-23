@@ -108,12 +108,12 @@ export default class RoomNewPage extends Vue {
 
   // group
   groupDisplayName: string | null = null
-  groupIsEdit: boolean
+  groupIsEdit: boolean | undefined
   groupHopeMaxNum: number | null = null
 
   // participate user
   participateUserDisplayName: string | null = null
-  participateUserIsEdit: boolean
+  participateUserIsEdit: boolean | undefined
   participateUserHopeMaxNum: number | null = null
 
   // time

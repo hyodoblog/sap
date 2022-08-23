@@ -17,8 +17,7 @@
     "baseUrl": ".",
     "outDir": "dist",
     "paths": {
-      "~/*": ["./src/*"],
-      "@/*": ["./src/*"]
+      "~/*": ["./src/*"]
     },
     "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "cookie-universal-nuxt", "vuetify"]
   },

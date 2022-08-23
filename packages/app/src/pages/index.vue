@@ -3,7 +3,7 @@
     v-app-bar(dense fixed elevate-on-scroll height="80")
       v-container.py-0.px-0.px-sm-2.fill-height(fluid)
         nuxt-link.d-flex.align-center.text-decoration-none.mr-2(to="/dashboard/analytics")
-          img(:src="require('@/assets/imgs/header-logo.png')" height="36")
+          img(:src="require('~/assets/imgs/header-logo.png')" height="36")
 
         v-spacer
 

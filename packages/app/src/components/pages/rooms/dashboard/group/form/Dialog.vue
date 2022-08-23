@@ -134,9 +134,9 @@ export default class RoomDashboardGroupFormDialogComponent extends Vue {
   @PropSync('descriptionValue', { type: String, required: true }) description!: string
   @PropSync('maxNumValue', { type: Number || null, default: null }) maxNum!: number | null
 
-  @Prop({ type: String, required: true }) readonly title: string
-  @Prop({ type: String, required: true }) readonly submitText: string
-  @Prop({ type: Function, required: true }) submitFunc: () => Promise<void>
+  @Prop({ type: String, required: true }) readonly title!: string
+  @Prop({ type: String, required: true }) readonly submitText!: string
+  @Prop({ type: Function, required: true }) submitFunc!: () => Promise<void>
 
   get isEdit(): boolean {
     return !!this.groupUid

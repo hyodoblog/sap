@@ -17,7 +17,7 @@ import 'vue-datetime/dist/vue-datetime.css'
   components: { Datetime },
 })
 export default class FormDatetimeComponnet extends Vue {
-  @Prop({ type: String, default: 'datetime-form' }) readonly datetimeId: string
+  @Prop({ type: String, default: 'datetime-form' }) readonly datetimeId!: string
   @PropSync('datetimeValue', { type: Date, required: true }) datetime!: Date
 
   get datetimeToString(): string {

@@ -46,14 +46,14 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class BaseMaterialCard extends Vue {
-  @Prop({ type: String, default: '' }) private readonly avatar: string
-  @Prop({ type: String, default: 'success' }) private readonly color: string
-  @Prop({ type: Boolean, default: false }) private readonly hoverReveal: boolean
-  @Prop({ type: String, default: undefined }) private readonly icon: string
-  @Prop({ type: Boolean, default: false }) private readonly image: boolean
-  @Prop({ type: Boolean, default: false }) private readonly inline: boolean
-  @Prop({ type: String, default: '' }) private readonly text: string
-  @Prop({ type: String, default: '' }) private readonly title: string
+  @Prop({ type: String, default: '' }) private readonly avatar!: string
+  @Prop({ type: String, default: 'success' }) private readonly color!: string
+  @Prop({ type: Boolean, default: false }) private readonly hoverReveal!: boolean
+  @Prop({ type: String, default: undefined }) private readonly icon!: string
+  @Prop({ type: Boolean, default: false }) private readonly image!: boolean
+  @Prop({ type: Boolean, default: false }) private readonly inline!: boolean
+  @Prop({ type: String, default: '' }) private readonly text!: string
+  @Prop({ type: String, default: '' }) private readonly title!: string
 
   private get classes() {
     return {
