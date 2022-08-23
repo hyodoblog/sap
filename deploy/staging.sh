@@ -1,6 +1,11 @@
 cp .env.staging ./packages/app/.env
 cp .env.staging ./packages/functions/.env
 
+IFS=$'\n'
+for env in `cat .env.staging`; do
+  export $env
+done
+
 # *******************
 # functions
 
@@ -28,6 +33,6 @@ cloudRun () {
     --allow-unauthenticated
 }
 
-cloudFunctions & cloudRun
+# cloudFunctions & cloudRun
 # cloudFunctions
-# cloudRun
+cloudRun

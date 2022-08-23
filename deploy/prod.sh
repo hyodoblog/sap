@@ -2,6 +2,11 @@
 cp .env.prod ./packages/app/.env
 cp .env.prod ./packages/functions/.env
 
+IFS=$'\n'
+for env in `cat .env.prod`; do
+  export $env
+done
+
 # *******************
 # functions
 
