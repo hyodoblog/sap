@@ -7,7 +7,7 @@ import { rootCollection } from './env'
 if (!getApps().length) {
   initializeApp({
     credential: credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
+      projectId: process.env.FB_PROJECT_ID,
       clientEmail: process.env.GCLOUD_CLIENT_EMAIL,
       privateKey: process.env.GCLOUD_PRIVATE_KEY!.replace(/\\n/g, '\n'),
     }),

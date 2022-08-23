@@ -7,7 +7,7 @@ import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore'
 if (!getApps().length) {
   initializeApp({
     credential: credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
+      projectId: process.env.FB_PROJECT_ID,
       clientEmail: process.env.GCLOUD_CLIENT_EMAIL,
       privateKey: process.env.GCLOUD_PRIVATE_KEY!.replace(/\\n/g, '\n'),
     }),
@@ -16,7 +16,7 @@ if (!getApps().length) {
 
 // firestore
 export const db = getFirestore()
-export const envRef = db.collection('envs').doc(process.env.FIREBASE_STORE_ROOT_COLLECTION!)
+export const envRef = db.collection('envs').doc(process.env.FB_STORE_ROOT_COLLECTION!)
 export const usersRef = envRef.collection('users')
 export const roomsRef = envRef.collection('rooms')
 

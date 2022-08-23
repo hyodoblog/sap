@@ -1,10 +1,10 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-const rootCollection = process.env.FIREBASE_STORE_ROOT_COLLECTION as string
+const rootCollection = process.env.FB_STORE_ROOT_COLLECTION as string
 const baseUrl = process.env.BASE_URL as string
 const stripeAccount = process.env.STRIPE_ACCOUNT as string
-const storageBucketName = process.env.FIREBASE_STORAGE_BUCKET as string
+const storageBucketName = process.env.FB_STORAGE_BUCKET as string
 
 const envSendGrid = {
   apiKey: process.env.SENDGRID_API_KEY as string,
