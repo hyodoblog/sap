@@ -51,6 +51,7 @@ const config: NuxtConfig = {
 
   server: {
     port: isDev ? port : process.env.PORT,
+    host: isDev ? 'localhost' : process.env.HOST,
   },
 
   serverMiddleware: [{ path: '/api', handler: '~/server' }],
