@@ -29,7 +29,7 @@ cloudRun () {
     --region asia-northeast1 \
     --platform managed \
     --memory 1G \
-    --service-account ${GCLOUD_SERVICE_ACCOUNT_ID} \
+    --service-account ${GCLOUD_CLIENT_EMAIL} \
     --allow-unauthenticated
 }
 
