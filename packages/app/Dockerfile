@@ -1,7 +1,7 @@
 # -------------------
 # build
 
-FROM node:14.15.4-alpine3.10 as build
+FROM node:14-alpine3.14 as build
 
 WORKDIR /build
 
@@ -17,22 +17,21 @@ RUN yarn build
 # -------------------
 # production
 
-FROM node:14.15.4-alpine3.10
+FROM node:14-alpine3.14
 
 WORKDIR /app
 
 COPY package.json ./package.json
 COPY yarn.lock ./yarn.lock
 
-ENV NODE_ENV production
-RUN yarn install
+RUN yarn install --production
 
 COPY . .
-
 COPY --from=build /build/.nuxt /app/.nuxt
 
 ENV PORT 8080
 ENV HOST 0.0.0.0
+ENV NODE_ENV production
 
 CMD ["yarn", "start"]
 
