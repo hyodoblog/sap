@@ -90,11 +90,6 @@ sw.*
 # Vim swap files
 *.swp
 
-# key file
-
-**/key/*
-!**/key/.keep
-
 # firebase emulators
 
 .runtimeconfig.json
