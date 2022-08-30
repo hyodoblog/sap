@@ -4,3 +4,4 @@
     "deploy:prod": "bash ./deploy/prod.sh"
   }
 }
+ 
