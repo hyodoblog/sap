@@ -20,7 +20,7 @@ cloudFunctions () {
 
 cloudRun () {
   gcloud config set project sap-app-df10e
-  docker build -t sap-app-df10e-staging ./packages/app
+  docker build --platform linux/amd64 -t sap-app-df10e-staging ./packages/app
   docker tag sap-app-df10e-staging gcr.io/sap-app-df10e/staging
   docker push gcr.io/sap-app-df10e/staging
   gcloud beta run deploy staging \
