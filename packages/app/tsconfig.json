@@ -15,12 +15,11 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
-    "outDir": "dist",
     "paths": {
       "~/*": ["./src/*"]
     },
     "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "cookie-universal-nuxt", "vuetify"]
   },
-  "exclude": ["node_modules", ".nuxt"],
-  "include": ["src"]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", ".nuxt", "dist"]
 }
