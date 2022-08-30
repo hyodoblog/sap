@@ -18,12 +18,12 @@ export interface FirebaseApi {
 export default function (_: any, inject: (arg0: string, arg1: FirebaseApi) => void) {
   const config = {
     apiKey: process.env.FB_API_KEY,
-    authDomain: process.env.FB_AUTH_DOMAIN,
+    authDomain: `${process.env.FB_PROJECT_ID}.firebaseapp.com`,
     projectId: process.env.FB_PROJECT_ID,
-    storageBucket: process.env.FB_STORAGE_BUCKET,
+    databaseURL: `https://${process.env.FB_PROJECT_ID}.firebaseio.com`,
+    storageBucket: `${process.env.FB_PROJECT_ID}.appspot.com`,
     messagingSenderId: process.env.FB_MESSAGING_SENDER_ID,
     appId: process.env.FB_APP_ID,
-    measurementId: process.env.MEASUREMENT_ID as string,
   }
 
   if (!getApps().length) {
