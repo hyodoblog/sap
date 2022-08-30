@@ -37,24 +37,23 @@ const getInitRateItems = (
   maxNum: number
 ): Rate[] => {
   const rateItems: Rate[] = []
-  for (const hopeListItem of hopeListItems) {
-    for (let hopeUidItemsIndex = 0; hopeUidItemsIndex < hopeListItem.hopeUidItems.length; hopeUidItemsIndex++) {
-      // rateItemsの更新
-      for (const item of items) {
-        if (item.uid === hopeListItem.hopeUidItems[hopeUidItemsIndex]) {
-          let rate: number
-          // 一位のみアドバンスポイントを掛ける
-          if (hopeUidItemsIndex === 0) {
-            rate = maxNum * topAdbansePoint
-          } else {
-            rate = maxNum - hopeUidItemsIndex
-          }
-          rateItems.push({
-            uid: hopeListItem.hopeUidItems[hopeUidItemsIndex],
-            rate,
-          })
-          break
+  for (const item of items) {
+    for (const hopeListItem of hopeListItems) {
+      const hopeIndex = hopeListItem.hopeUidItems.indexOf(item.uid!)
+
+      if (hopeIndex >= 0) {
+        let rate: number
+        // 一位のみアドバンスポイントを掛ける
+        if (hopeIndex === 0) {
+          rate = maxNum * topAdbansePoint
+        } else {
+          rate = maxNum - hopeIndex
         }
+        rateItems.push({
+          uid: item.uid!,
+          rate,
+        })
+        break
       }
     }
   }
@@ -449,22 +448,17 @@ export default (roomItems: Room[]) =>
         return { uid: item.uid as string, hopeUidItems: item.hopeGroupUidItems, displayName: item.displayName }
       })
       const participateUserLength = participateUserItems.length
-      const participateUserRateMaxNum = roomItem.participateUserHopeMaxNum || participateUserLength
+      // const participateUserRateMaxNum = roomItem.participateUserHopeMaxNum || participateUserLength
 
-      // ----------------------
+      // -----------------------
       // --- アルゴリズムの実装 ---
 
       // Step 1
       // レート更新
       const groupRateItems = getInitRateItems(participateUserHopeToGroupUidItems, groupItems, groupRateMaxNum)
-      // const participateUserRateItems = getInitRateItems(
-      //   groupHopeToParticipateUserUidItems,
-      //   participateUserItems,
-      //   participateUserRateMaxNum
-      // )
 
-      // // Step 2
-      // // グループをレート順にソート
+      // Step 2
+      // グループをレート順にソート
       groupRateItems.sort(function (a, b) {
         if (a.rate < b.rate) return 1
         else return -1
