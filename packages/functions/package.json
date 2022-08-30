@@ -3,7 +3,8 @@
   "scripts": {
     "lint": "eslint --ext \".ts\" . --fix",
     "build": "tsc",
-    "dev": "yarn build && firebase emulators:start --only functions",
+    "dev": "cp ../../.env.dev .env && yarn build && firebase emulators:start --only functions",
+    "dev:prod": "cp ../../.env.prod .env && yarn build && firebase emulators:start --only functions",
     "shell": "yarn build && firebase functions:shell",
     "start": "yarn shell",
     "deploy": "firebase deploy --only functions",
