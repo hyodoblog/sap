@@ -1,7 +1,7 @@
 # -------------------
 # build
 
-FROM node:14-alpine3.14 as build
+FROM node:16-bullseye-slim as build
 
 WORKDIR /build
 
@@ -17,7 +17,7 @@ RUN yarn build
 # -------------------
 # production
 
-FROM node:14-alpine3.14
+FROM node:16-bullseye-slim
 
 WORKDIR /app
 
