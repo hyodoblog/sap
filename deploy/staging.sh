@@ -33,6 +33,6 @@ cloudRun () {
     --allow-unauthenticated
 }
 
-# cloudFunctions & cloudRun
+cloudFunctions & cloudRun
 # cloudFunctions
-cloudRun
+# cloudRun
