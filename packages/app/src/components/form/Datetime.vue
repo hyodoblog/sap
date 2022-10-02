@@ -1,5 +1,5 @@
 <template lang="pug">
-  .d-flex
+  .d-flex.pr-4
     label.pointer.mr-2(
       :for="datetimeId"
       slot="before"
@@ -29,3 +29,11 @@ export default class FormDatetimeComponent extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.vdatetime {
+  input {
+    width: 200px;
+  }
+}
+</style>
