@@ -55,9 +55,9 @@ export class StoreFire {
 
   getConvertTimeJa(timestamp: Timestamp): string {
     const date = timestamp.toDate()
-    return `${date.getMonth() + 1}月${date.getDate()}日 ${`0${date.getHours()}`.slice(
+    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${`0${date.getHours()}`.slice(
       -2
-    )}時${`0${date.getMinutes()}`.slice(-2)}分`
+    )}:${`0${date.getMinutes()}`.slice(-2)}分`
   }
 
   convertTimestamp(date: Date | number): Timestamp {
