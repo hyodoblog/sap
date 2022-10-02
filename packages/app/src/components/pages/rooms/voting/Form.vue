@@ -84,7 +84,7 @@ import { Room, RoomInvitationType, RoomGroup, RoomParticipateUser } from '~/modu
     Draggable: () => import('vuedraggable').then((res) => res.default),
   },
 })
-export default class RoomDashboardVotingFormComponnet extends Vue {
+export default class RoomDashboardVotingFormComponent extends Vue {
   @Prop({ type: Object, required: true }) roomItem!: Room
   @Prop({ type: String, required: true }) type!: RoomInvitationType
   @Prop({ type: Array, required: true }) items!: RoomGroup[] | RoomParticipateUser[]
