@@ -1,4 +1,6 @@
 {
+  "name": "sap",
+  "license": "MIT",
   "scripts": {
     "deploy:staging": "bash ./deploy/staging.sh",
     "deploy:prod": "bash ./deploy/prod.sh"
