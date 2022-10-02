@@ -242,10 +242,11 @@
 <script lang="ts">
 import { Component, Prop, PropSync, mixins, Watch } from 'nuxt-property-decorator'
 import BlockUnloadMixin from '~/mixins/BlockUnload'
-const DatetimeForm = () => import('~/components/form/Datetime.vue')
 
 @Component({
-  components: { DatetimeForm },
+  components: {
+    DatetimeForm: () => import('~/components/form/Datetime.vue'),
+  },
 })
 export default class extends mixins(BlockUnloadMixin) {
   @Prop({ type: String, required: true }) readonly submitText!: string
