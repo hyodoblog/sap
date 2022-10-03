@@ -7,7 +7,7 @@
     template(v-else)
       .d-flex.mb-3.justify-space-between
         .title マッチングページ
-        .caption 最終更新日時：{{ $fire.store.getConvertDatetimeJa(items[0].updatedAt) }}
+        .caption(v-if="items.length > 0") 最終更新日時：{{ $fire.store.getConvertDatetimeJa(items[0].updatedAt) }}
 
       v-simple-table.my-6(dense)
         template(v-slot:default)
