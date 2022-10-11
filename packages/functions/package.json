@@ -16,15 +16,15 @@
   "main": "dist/index.js",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "firebase-admin": "11.0.1",
+    "firebase-admin": "11.1.0",
     "firebase-functions": "^3.24.1"
   },
   "devDependencies": {
     "@types/request-promise": "^4.1.48",
     "@types/stripe": "^8.0.416",
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "@typescript-eslint/parser": "^5.38.1",
-    "eslint": "^8.24.0",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
+    "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
