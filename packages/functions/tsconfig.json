@@ -10,20 +10,18 @@
     "moduleResolution": "Node",
     "removeComments": true,
     "resolveJsonModule": true,
-    "lib": [
-      "ESNext",
-      "ESNext.AsyncIterable",
-      "DOM"
-    ],
+    "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
     "sourceMap": false,
-    "strict": true,
+    "strict": false,
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "outDir": "./dist",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
     },
+    "types": ["@types/node"]
   },
   "exclude": ["dist", "node_modules"],
-  "include": ["src"]
+  "include": ["src"],
+  "compileOnSave": true
 }
