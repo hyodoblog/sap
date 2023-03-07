@@ -5,6 +5,7 @@ import {
   DocumentReference,
   getDoc,
   getDocs,
+  orderBy,
   query,
   serverTimestamp,
   setDoc,
@@ -26,7 +27,7 @@ export class RoomDb {
 
   public async getItems(userUid: string): Promise<Room[]> {
     const items: Room[] = []
-    const docs = await getDocs(query(this.roomsRef, where('userUid', '==', userUid)))
+    const docs = await getDocs(query(this.roomsRef, where('userUid', '==', userUid), orderBy('updatedAt', 'desc')))
     docs.forEach((_doc) => {
       if (_doc.exists()) {
         items.push({
