@@ -37,8 +37,18 @@ const getInitRateItems = (
   maxNum: number
 ): Rate[] => {
   const rateItems: Rate[] = []
+  const getRateIndex = (uid: string): number | null => {
+    for (const [index, rateItem] of rateItems.entries()) {
+      if (rateItem.uid === uid) {
+        return index
+      }
+    }
+    return null
+  }
+
   for (const item of items) {
     for (const hopeListItem of hopeListItems) {
+      const rateIndex = getRateIndex(item.uid)
       const hopeIndex = hopeListItem.hopeUidItems.indexOf(item.uid!)
 
       if (hopeIndex >= 0) {
@@ -49,11 +59,15 @@ const getInitRateItems = (
         } else {
           rate = maxNum - hopeIndex
         }
-        rateItems.push({
-          uid: item.uid!,
-          rate,
-        })
-        break
+
+        if (rateIndex === null) {
+          rateItems.push({
+            uid: item.uid!,
+            rate,
+          })
+        } else {
+          rateItems[rateIndex].rate += rate
+        }
       }
     }
   }
@@ -456,6 +470,7 @@ export default (roomItems: Room[]) =>
       // Step 1
       // レート更新
       const groupRateItems = getInitRateItems(participateUserHopeToGroupUidItems, groupItems, groupRateMaxNum)
+      console.info(groupRateItems)
 
       // Step 2
       // グループをレート順にソート
