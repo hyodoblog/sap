@@ -438,6 +438,18 @@ const setRoomMatchingItems = async (roomUid: string, matchingItems: RoomMatching
     )
   )
 }
+const setGroupRateItems = async (roomUid: string, groupRateItems: Rate[]): Promise<void> => {
+  const groupsRef = roomsRef.doc(roomUid).collection('groups')
+  await Promise.all(
+    groupRateItems.map((groupRateItem) =>
+      groupsRef.doc(groupRateItem.uid).update({
+        rateNum: groupRateItem.rate,
+        createdAt: getServerTimestamp(),
+        updatedAt: getServerTimestamp(),
+      } as Partial<RoomGroup>)
+    )
+  )
+}
 
 // ********
 // main関数
@@ -520,6 +532,7 @@ export default (roomItems: Room[]) =>
 
       // storeに保存
       await setRoomMatchingItems(roomItem.uid as string, matchingItems)
+      await setGroupRateItems(roomItem.uid as string, groupRateItems)
     })
   ).catch((err) => {
     console.log(err)

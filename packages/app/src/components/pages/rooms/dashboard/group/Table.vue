@@ -25,6 +25,7 @@
             td(v-text="item.email")
             td(v-text="item.description" style="max-width: 180px;word-break: break-all;")
             td(v-text="item.maxNum")
+            td(v-text="item.rateNum || ''")
             td.text-right
               v-tooltip(v-if="!!item.email" bottom)
                 template(v-slot:activator="{ attrs, on }")
@@ -116,6 +117,10 @@ export default class RoomDashboardGroupTableComponent extends Vue {
     {
       text: '最大参加人数',
       value: 'maxNum',
+    },
+    {
+      text: 'レート',
+      value: 'rateNum',
     },
     {
       sortable: false,

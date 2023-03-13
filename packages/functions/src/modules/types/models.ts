@@ -62,6 +62,7 @@ export interface RoomGroup extends Base {
   maxNum: number | null
   loginToken: string
   hopeParticipateUserUidItems: string[]
+  rateNum?: number
 }
 
 // ****************************
@@ -71,6 +72,7 @@ export interface RoomParticipateUser extends Base {
   email: string
   loginToken: string
   hopeGroupUidItems: string[]
+  rateNum?: number
 }
 
 // ****************************
