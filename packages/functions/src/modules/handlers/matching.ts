@@ -147,6 +147,13 @@ const algorithmStep1 = (
   if (!isAddMatchingGroupNumItems(matchingGroupNumItems, groupItems)) {
     while (remainParticipateUserNum > 0) {
       for (const matchingGroupNumItem of matchingGroupNumItems) {
+        const groupItem = groupItems.filter(({ uid }) => uid === matchingGroupNumItem.groupUid)[0]
+        if (!groupItem) continue
+        else if (groupItem.maxNum <= matchingGroupNumItem.num) {
+          console.info(groupItem.uid)
+          continue
+        }
+
         matchingGroupNumItem.num++
         remainParticipateUserNum--
         if (remainParticipateUserNum <= 0) {
@@ -161,6 +168,13 @@ const algorithmStep1 = (
     for (const availableGroupItem of availableGroupItems) {
       for (const matchingGroupNumItem of matchingGroupNumItems) {
         if (matchingGroupNumItem.groupUid === availableGroupItem.uid) {
+          const groupItem = groupItems.filter(({ uid }) => uid === matchingGroupNumItem.groupUid)[0]
+          if (!groupItem) continue
+          else if (groupItem.maxNum <= matchingGroupNumItem.num) {
+            console.info(groupItem.uid)
+            continue
+          }
+
           remainParticipateUserNum--
           matchingGroupNumItem.num++
           if (remainParticipateUserNum <= 0) {
@@ -482,16 +496,15 @@ export default (roomItems: Room[]) =>
       // Step 1
       // レート更新
       const groupRateItems = getInitRateItems(participateUserHopeToGroupUidItems, groupItems, groupRateMaxNum)
-      console.info(groupRateItems)
 
       // Step 2
       // グループをレート順にソート
-      groupRateItems.sort(function (a, b) {
+      groupRateItems.sort((a, b) => {
         if (a.rate < b.rate) return 1
         else return -1
       })
 
-      groupItems.sort(function (a, b) {
+      groupItems.sort((a, b) => {
         const aGroupRateItem = groupRateItems.filter((item) => item.uid === a.uid)[0]
         const bGroupRateItem = groupRateItems.filter((item) => item.uid === b.uid)[0]
         if (!aGroupRateItem || !bGroupRateItem) throw new Error('group rate item is not found.')
