@@ -149,10 +149,7 @@ const algorithmStep1 = (
       for (const matchingGroupNumItem of matchingGroupNumItems) {
         const groupItem = groupItems.filter(({ uid }) => uid === matchingGroupNumItem.groupUid)[0]
         if (!groupItem) continue
-        else if (groupItem.maxNum <= matchingGroupNumItem.num) {
-          console.info(groupItem.uid)
-          continue
-        }
+        else if (groupItem.maxNum <= matchingGroupNumItem.num) continue
 
         matchingGroupNumItem.num++
         remainParticipateUserNum--
@@ -170,10 +167,7 @@ const algorithmStep1 = (
         if (matchingGroupNumItem.groupUid === availableGroupItem.uid) {
           const groupItem = groupItems.filter(({ uid }) => uid === matchingGroupNumItem.groupUid)[0]
           if (!groupItem) continue
-          else if (groupItem.maxNum <= matchingGroupNumItem.num) {
-            console.info(groupItem.uid)
-            continue
-          }
+          else if (groupItem.maxNum <= matchingGroupNumItem.num) continue
 
           remainParticipateUserNum--
           matchingGroupNumItem.num++
