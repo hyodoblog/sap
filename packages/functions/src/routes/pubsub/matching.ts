@@ -30,7 +30,7 @@ const getRoomItems = async (nowAt: Timestamp): Promise<Room[]> => {
 // main関数
 // ********
 async function main() {
-  console.log('pubsubMatching関数実行開始')
+  console.info('pubsubMatching関数実行開始')
 
   try {
     const nowAt = getNowAt()
@@ -41,11 +41,11 @@ async function main() {
     // matching
     await matchingHandlers(roomItems)
   } catch (err) {
-    console.log('pubsubMatching関数実行でエラーが発生しました')
+    console.info('pubsubMatching関数実行でエラーが発生しました')
     console.error(err)
   }
 
-  console.log('pubsubMatching関数実行終了')
+  console.info('pubsubMatching関数実行終了')
 }
 
 // *************

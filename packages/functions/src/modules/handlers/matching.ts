@@ -542,6 +542,6 @@ export default (roomItems: Room[]) =>
       await setGroupRateItems(roomItem.uid as string, groupRateItems)
     })
   ).catch((err) => {
-    console.log(err)
+    console.error(err)
     throw new Error(err)
   })

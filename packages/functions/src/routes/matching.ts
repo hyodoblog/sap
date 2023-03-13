@@ -25,7 +25,7 @@ const getRoomItem = async (roomUid: string): Promise<Room> => {
 // main関数
 // ********
 async function main(data: any, context: https.CallableContext) {
-  console.log('matching関数実行開始')
+  console.info('matching関数実行開始')
 
   try {
     if (!context.auth?.uid) throw new Error('not Auth')
@@ -37,14 +37,14 @@ async function main(data: any, context: https.CallableContext) {
 
     // matching
     await matchingHandlers([roomItem])
-    console.log('matching関数実行成功')
+    console.info('matching関数実行成功')
   } catch (err) {
-    console.log('matching関数実行エラー')
+    console.info('matching関数実行エラー')
     console.error(err)
     throw Error
   }
 
-  console.log('matching関数実行終了')
+  console.info('matching関数実行終了')
 }
 
 // *************
