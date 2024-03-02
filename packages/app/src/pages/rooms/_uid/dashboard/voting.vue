@@ -87,27 +87,28 @@ export default class RoomDashboardVotingPage extends Vue {
   }
 
   getHopeParticipateUserUidItems(participateUserUidItems: string[]): string {
-    let dispalyName = ''
+    let displayName = ''
     participateUserUidItems.forEach((uid) => {
-      const participateUserItem = this.roomParticipateUserItems?.filter((item) => item.uid === uid)
-      dispalyName += `${
-        participateUserItem && participateUserUidItems.length > 0
-          ? participateUserItem[0].displayName
+      const participateUserItems = this.roomParticipateUserItems?.filter((item) => item.uid === uid)
+
+      displayName += `${
+        participateUserItems && participateUserItems.length > 0
+          ? participateUserItems[0].displayName
           : `削除済み${this.participateUserDisplayName}`
       }  `
     })
-    return dispalyName
+    return displayName
   }
 
   getHopeGroupUidItems(groupUidItems: string[]): string {
-    let dispalyName = ''
+    let displayName = ''
     groupUidItems.forEach((uid) => {
       const groupItems = this.roomGroupItems?.filter((item) => item.uid === uid)
-      dispalyName += `${
+      displayName += `${
         groupItems && groupItems.length > 0 ? groupItems[0].displayName : `削除済み${this.groupDisplayName}`
       }  `
     })
-    return dispalyName
+    return displayName
   }
 }
 </script>
