@@ -13,7 +13,7 @@
 
       v-row
         v-col
-          .title.mb-2 {{ groupDisplayName }}の投票一覧
+          .title.mb-2 {{ groupDisplayName }}の投票一覧({{ roomGroupItems.length }})
           v-simple-table
             template(v-slot:default)
               thead
@@ -26,7 +26,7 @@
                   td {{ getHopeParticipateUserUidItems(item.hopeParticipateUserUidItems) }}
 
         v-col
-          .title.mb-2 {{ participateUserDisplayName }}の投票一覧
+          .title.mb-2 {{ participateUserDisplayName }}の投票一覧({{ roomParticipateUserItems.length }})
           v-simple-table
             template(v-slot:default)
               thead
@@ -91,7 +91,7 @@ export default class RoomDashboardVotingPage extends Vue {
     participateUserUidItems.forEach((uid) => {
       const participateUserItems = this.roomParticipateUserItems?.filter((item) => item.uid === uid)
 
-      if (participateUserItems && participateUserItems.length > 0) {
+      if (participateUserItems && participateUserItems.length > 0 && participateUserItems[0].displayName) {
         displayName += `${participateUserItems[0].displayName}, `
       }
     })
