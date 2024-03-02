@@ -90,7 +90,7 @@ export default class RoomDashboardVotingPage extends Vue {
     let displayName = ''
     participateUserUidItems.forEach((uid) => {
       const participateUserItems = this.roomParticipateUserItems?.filter((item) => item.uid === uid)
-
+      console.info(participateUserItems ? participateUserItems[0]?.displayName || '' : '')
       if (participateUserItems && participateUserItems.length > 0 && participateUserItems[0].displayName) {
         displayName += `${participateUserItems[0].displayName}, `
       }
