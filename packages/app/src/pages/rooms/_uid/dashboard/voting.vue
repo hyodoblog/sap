@@ -91,11 +91,9 @@ export default class RoomDashboardVotingPage extends Vue {
     participateUserUidItems.forEach((uid) => {
       const participateUserItems = this.roomParticipateUserItems?.filter((item) => item.uid === uid)
 
-      displayName += `${
-        participateUserItems && participateUserItems.length > 0
-          ? participateUserItems[0].displayName
-          : `削除済み${this.participateUserDisplayName}`
-      }  `
+      if (participateUserItems && participateUserItems.length > 0) {
+        displayName += `${participateUserItems[0].displayName}, `
+      }
     })
     return displayName
   }
@@ -104,9 +102,10 @@ export default class RoomDashboardVotingPage extends Vue {
     let displayName = ''
     groupUidItems.forEach((uid) => {
       const groupItems = this.roomGroupItems?.filter((item) => item.uid === uid)
-      displayName += `${
-        groupItems && groupItems.length > 0 ? groupItems[0].displayName : `削除済み${this.groupDisplayName}`
-      }  `
+
+      if (groupItems && groupItems.length > 0) {
+        displayName += `${groupItems[0].displayName}, `
+      }
     })
     return displayName
   }
